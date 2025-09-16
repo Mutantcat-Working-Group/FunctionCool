@@ -34,6 +34,7 @@ const i18nTexts = {
         'memory-score-label': '空间复杂度:',
         'show-code': '显示代码',
         'hide-code': '隐藏代码',
+    'results-count-pattern': '为 "${query}" 找到 ${count} 个结果',
         
         // 无结果页面
         'no-results-title': '未找到匹配的结果',
@@ -78,6 +79,7 @@ const i18nTexts = {
         'memory-score-label': 'Space Complexity:',
         'show-code': 'Show Code',
         'hide-code': 'Hide Code',
+    'results-count-pattern': 'Found ${count} results for "${query}"',
         
         // 无结果页面
         'no-results-title': 'No matching results found',
@@ -125,6 +127,14 @@ function updateTexts(lang) {
             }
         }
     });
+
+    // 批量更新 data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key]) {
+            el.textContent = texts[key];
+        }
+    });
     
     // 更新页面语言属性
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
@@ -134,6 +144,7 @@ function updateTexts(lang) {
     
     // 更新代码显示/隐藏按钮文本
     updateCodeToggleButtons(lang);
+    updateResultsCount(lang);
 }
 
 // 更新搜索结果的中英文显示
@@ -190,18 +201,23 @@ function toggleLanguage() {
 document.addEventListener('DOMContentLoaded', function() {
     const currentLang = getCurrentLanguage();
     setLanguage(currentLang);
-    
-    // 如果是搜索结果页面，更新搜索结果计数文本
-    const resultsCount = document.getElementById('results-count');
-    if (resultsCount && resultsCount.textContent) {
-        const searchQuery = new URLSearchParams(window.location.search).get('q');
-        const resultCount = document.querySelectorAll('.function-card').length;
-        
-        if (searchQuery && currentLang === 'en') {
-            resultsCount.textContent = `Found ${resultCount} results for "${searchQuery}"`;
-        }
-    }
+    updateResultsCount(currentLang);
 });
+
+// 更新结果统计文本
+function updateResultsCount(lang) {
+    const resultsCount = document.getElementById('results-count');
+    if (!resultsCount) return;
+    const searchQuery = new URLSearchParams(window.location.search).get('q');
+    if (!searchQuery || !searchQuery.trim()) { resultsCount.textContent = ''; return; }
+    const resultCount = document.querySelectorAll('.function-card').length;
+    const pattern = i18nTexts[lang]['results-count-pattern'];
+    if (pattern) {
+        resultsCount.textContent = pattern
+            .replace('${query}', searchQuery)
+            .replace('${count}', resultCount);
+    }
+}
 
 // 语言切换后的回调处理
 function onLanguageChange() {

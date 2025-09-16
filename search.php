@@ -148,18 +148,18 @@ $searchResults = searchFunctions($query, $language);
 
                                 <div class="function-details">
                                     <div class="params">
-                                        <strong id="params-label">参数：</strong>
+                                        <strong data-i18n="params-label">参数：</strong>
                                         <?php if (!empty($func['input'])): ?>
                                             <?php for ($i = 0; $i < count($func['input']); $i++): ?>
                                                 <span class="param"><?php echo $func['input_type'][$i] ?? 'unknown'; ?> <?php echo $func['input'][$i]; ?></span>
                                             <?php endfor; ?>
                                         <?php else: ?>
-                                            <span id="no-params">无</span>
+                                            <span data-i18n="no-params">无</span>
                                         <?php endif; ?>
                                     </div>
                                     
                                     <div class="returns">
-                                        <strong id="returns-label">返回：</strong>
+                                        <strong data-i18n="returns-label">返回：</strong>
                                         <?php if (!empty($func['return'])): ?>
                                             <?php for ($i = 0; $i < count($func['return']); $i++): ?>
                                                 <span class="return"><?php echo $func['return_type'][$i] ?? 'unknown'; ?> <?php echo $func['return'][$i]; ?></span>
@@ -172,11 +172,11 @@ $searchResults = searchFunctions($query, $language);
 
                                 <div class="scores">
                                     <div class="score">
-                                        <span id="time-score-label">时间复杂度:</span>
+                                        <span data-i18n="time-score-label">时间复杂度:</span>
                                         <span class="score-value"><?php echo $func['timer_score'] ?? 'N/A'; ?>/100</span>
                                     </div>
                                     <div class="score">
-                                        <span id="memory-score-label">空间复杂度:</span>
+                                        <span data-i18n="memory-score-label">空间复杂度:</span>
                                         <span class="score-value"><?php echo $func['memory_score'] ?? 'N/A'; ?>/100</span>
                                     </div>
                                 </div>
