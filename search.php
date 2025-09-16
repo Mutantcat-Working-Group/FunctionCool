@@ -61,12 +61,16 @@ $searchResults = searchFunctions($query, $language);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>搜索结果 - FunctionCool</title>
     <link rel="stylesheet" href="assets/style.css">
+    <!-- Favicon Start -->
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+    <!-- Favicon End -->
 </head>
 <body>
     <header>
         <div class="container">
             <div class="logo">
-                <h1><a href="index.php" id="site-title">函数库</a></h1>
+                <h1><a href="/" id="site-title">函数库</a></h1>
                 <p id="site-subtitle">全世界开发者的函数库</p>
             </div>
             <div class="language-switcher">
@@ -78,7 +82,7 @@ $searchResults = searchFunctions($query, $language);
     <main>
         <div class="container">
             <div class="search-header">
-                <form class="search-form compact" action="search.php" method="GET">
+                <form class="search-form compact" action="/search" method="GET">
                     <div class="search-input-wrapper">
                         <input 
                             type="text" 
@@ -127,7 +131,7 @@ $searchResults = searchFunctions($query, $language);
                                         <div class="function-name">
                                             <div class="name-wrapper">
                                                 <h3 class="name-zh"><?php echo htmlspecialchars($func['name-zh'] ?? ''); ?></h3>
-                                                <h3 class="name-en" style="display:none;"><?php echo htmlspecialchars($func['name-en'] ?? ''); ?></h3>
+                                                <h3 class="name-en" style="display:none;">&shy;<?php echo htmlspecialchars($func['name-en'] ?? ''); ?></h3>
                                             </div>
                                             <?php if (!empty($func['tags'])): ?>
                                                 <div class="function-tags">
@@ -143,7 +147,7 @@ $searchResults = searchFunctions($query, $language);
                                 
                                 <div class="function-description">
                                     <p class="desc-zh"><?php echo htmlspecialchars($func['description-zh'] ?? ''); ?></p>
-                                    <p class="desc-en" style="display:none;"><?php echo htmlspecialchars($func['description-en'] ?? ''); ?></p>
+                                    <p class="desc-en" style="display:none;">&shy;<?php echo htmlspecialchars($func['description-en'] ?? ''); ?></p>
                                 </div>
 
                                 <div class="function-details">

@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>函数库 - 全世界开发者的函数库 | Programmer's Function Library</title>
     <link rel="stylesheet" href="assets/style.css">
+    <!-- Favicon Start -->
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+    <!-- Favicon End -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3718441900987965"
      crossorigin="anonymous"></script>
 </head>
@@ -27,7 +31,7 @@
                 <h2 id="main-title">搜索函数库</h2>
                 <p id="main-description">快速查找您需要的编程函数和代码示例</p>
                 
-                <form class="search-form" action="search.php" method="GET">
+                <form class="search-form" action="search" method="GET">
                     <div class="search-input-wrapper">
                         <input 
                             type="text" 

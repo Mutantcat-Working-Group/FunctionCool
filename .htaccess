@@ -1,0 +1,39 @@
+#############################################
+# FunctionCool URL Rewrite & Canonical Rules #
+#############################################
+
+RewriteEngine On
+
+# 1. 将非 www 主域 301 重定向到 www.functioncool.xyz
+RewriteCond %{HTTP_HOST} ^functioncool\.xyz$ [NC]
+RewriteRule ^(.*)$ https://www.functioncool.xyz/$1 [L,R=301]
+
+# 2. 设定默认首页为 index.php
+DirectoryIndex index.php
+
+# 3. 访问 /index.php 时统一跳转到根路径 /
+RewriteRule ^index\.php$ / [L,R=301]
+
+# 4. 友好 URL: /search  -> 内部重写到 search.php (支持 /search 和 /search/)
+RewriteRule ^search/?$ search.php [L,QSA]
+
+# 4.1 规范化：直接访问 search.php（含查询参数） 301 到 /search
+RewriteCond %{THE_REQUEST} \s/+search\.php[\s?] [NC]
+RewriteRule ^search\.php$ /search [L,R=301]
+
+# 5. 已存在的文件或目录直接放行
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# （可选）如果需要强制 HTTPS，把下面两行取消注释
+#RewriteCond %{HTTPS} !=on
+#RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 说明：
+# - /          -> index.php (DirectoryIndex)
+# - /index.php -> 301 到 /
+# - /search    -> search.php (内部重写，浏览器地址栏保持 /search)
+# - 裸域 functioncool.xyz/* -> 301 到 https://www.functioncool.xyz/*
+
+#############################################
