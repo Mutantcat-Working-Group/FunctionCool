@@ -115,9 +115,20 @@ $searchResults = searchFunctions($query, $language);
                         <?php foreach ($searchResults as $func): ?>
                             <div class="function-card">
                                 <div class="function-header">
-                                    <div class="function-name">
-                                        <h3 class="name-zh"><?php echo htmlspecialchars($func['name-zh'] ?? ''); ?></h3>
-                                        <h3 class="name-en" style="display:none;"><?php echo htmlspecialchars($func['name-en'] ?? ''); ?></h3>
+                                    <div class="function-name-section">
+                                        <div class="function-name">
+                                            <div class="name-wrapper">
+                                                <h3 class="name-zh"><?php echo htmlspecialchars($func['name-zh'] ?? ''); ?></h3>
+                                                <h3 class="name-en" style="display:none;"><?php echo htmlspecialchars($func['name-en'] ?? ''); ?></h3>
+                                            </div>
+                                            <?php if (!empty($func['tags'])): ?>
+                                                <div class="function-tags">
+                                                    <?php foreach ($func['tags'] as $tag): ?>
+                                                        <span class="tag"><?php echo htmlspecialchars($tag); ?></span>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
                                     <span class="language-tag"><?php echo $func['language']; ?></span>
                                 </div>
@@ -151,14 +162,6 @@ $searchResults = searchFunctions($query, $language);
                                     </div>
                                 </div>
 
-                                <?php if (!empty($func['tags'])): ?>
-                                    <div class="tags">
-                                        <?php foreach ($func['tags'] as $tag): ?>
-                                            <span class="tag"><?php echo htmlspecialchars($tag); ?></span>
-                                        <?php endforeach; ?>
-                                    </div>
-                                <?php endif; ?>
-
                                 <div class="scores">
                                     <div class="score">
                                         <span id="time-score-label">时间复杂度:</span>
@@ -171,8 +174,18 @@ $searchResults = searchFunctions($query, $language);
                                 </div>
 
                                 <div class="code-section">
-                                    <button class="toggle-code" id="show-code">显示代码</button>
-                                    <pre class="code-block" style="display:none;"><code><?php echo htmlspecialchars($func['code'][0] ?? ''); ?></code></pre>
+                                    <div class="code-header">
+                                        <button class="toggle-code" id="show-code">显示代码</button>
+                                        <button class="copy-code" title="复制代码" style="display:none;">
+                                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                                                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="code-container" style="display:none;">
+                                        <pre class="code-block"><code><?php echo htmlspecialchars($func['code'][0] ?? ''); ?></code></pre>
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -203,15 +216,59 @@ $searchResults = searchFunctions($query, $language);
         // 代码显示/隐藏切换
         document.addEventListener('DOMContentLoaded', function() {
             const toggleButtons = document.querySelectorAll('.toggle-code');
+            const copyButtons = document.querySelectorAll('.copy-code');
+            
             toggleButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    const codeBlock = this.nextElementSibling;
-                    if (codeBlock.style.display === 'none') {
-                        codeBlock.style.display = 'block';
+                    const codeContainer = this.closest('.code-section').querySelector('.code-container');
+                    const copyButton = this.closest('.code-section').querySelector('.copy-code');
+                    
+                    if (codeContainer.style.display === 'none') {
+                        codeContainer.style.display = 'block';
+                        copyButton.style.display = 'inline-flex';
                         this.textContent = getCurrentLanguage() === 'zh' ? '隐藏代码' : 'Hide Code';
                     } else {
-                        codeBlock.style.display = 'none';
+                        codeContainer.style.display = 'none';
+                        copyButton.style.display = 'none';
                         this.textContent = getCurrentLanguage() === 'zh' ? '显示代码' : 'Show Code';
+                    }
+                });
+            });
+
+            // 代码复制功能
+            copyButtons.forEach(button => {
+                button.addEventListener('click', async function() {
+                    const codeBlock = this.closest('.code-section').querySelector('code');
+                    const text = codeBlock.textContent;
+                    
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        
+                        // 显示复制成功提示
+                        const originalTitle = this.title;
+                        const originalHTML = this.innerHTML;
+                        this.title = getCurrentLanguage() === 'zh' ? '已复制!' : 'Copied!';
+                        this.innerHTML = `
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        `;
+                        this.style.color = '#22c55e';
+                        
+                        // 2秒后恢复原状
+                        setTimeout(() => {
+                            this.title = originalTitle;
+                            this.innerHTML = originalHTML;
+                            this.style.color = '';
+                        }, 2000);
+                        
+                    } catch (err) {
+                        console.error('复制失败:', err);
+                        // 降级方案：选中文本让用户手动复制
+                        const range = document.createRange();
+                        range.selectNode(codeBlock);
+                        window.getSelection().removeAllRanges();
+                        window.getSelection().addRange(range);
                     }
                 });
             });
