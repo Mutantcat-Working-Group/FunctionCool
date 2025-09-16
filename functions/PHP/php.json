@@ -205,6 +205,6 @@
         "return_type": ["string"],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["<?php\nfunction path_join(array $segments): string {\n    $parts = [];\n    foreach ($segments as $s) {\n        if ($s === '' || $s === null) continue;\n        $parts[] = trim($s, "/\\\\");\n    }\n    return implode(DIRECTORY_SEPARATOR, $parts);\n}"]
+        "code": ["<?php\nfunction path_join(array $segments): string {\n    return implode(DIRECTORY_SEPARATOR, array_map(function($s) {\n        return trim($s, DIRECTORY_SEPARATOR);\n    }, $segments));\n}"]
     }
 ]
