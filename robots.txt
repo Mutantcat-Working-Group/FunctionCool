@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# 阻止潜在的系统或无意义路径（如以后添加）
+Disallow: /admin/
+Disallow: /tmp/
+
+Sitemap: https://www.functioncool.xyz/sitemap.xml

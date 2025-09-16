@@ -238,5 +238,37 @@
         "timer_score": 100,
         "memory_score": 100,
         "code": ["func clamp(x, lo, hi float64) float64 {\n    if x < lo { return lo }\n    if x > hi { return hi }\n    return x\n}"]
+    },
+    {
+        "name-zh": "Base64 编解码",
+        "name-en": "Base64 Encode/Decode",
+        "description-zh": "Base64 编解码字符串",
+        "description-en": "Base64 encode/decode string",
+        "dependencies": ["encoding/base64"],
+        "use_to": ["encoding"],
+        "tags": ["basic", "encoding"],
+        "input": ["s"],
+        "input_type": ["string"],
+        "return": ["enc", "dec", "err"],
+        "return_type": ["string", "string", "error"],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": ["import \"encoding/base64\"\n\nfunc b64Encode(s string) string {\n    return base64.StdEncoding.EncodeToString([]byte(s))\n}\n\nfunc b64Decode(s string) (string, error) {\n    b, err := base64.StdEncoding.DecodeString(s)\n    return string(b), err\n}"]
+    },
+    {
+        "name-zh": "SHA-256",
+        "name-en": "SHA-256",
+        "description-zh": "计算字符串的 SHA-256 十六进制哈希",
+        "description-en": "Compute SHA-256 hex of string",
+        "dependencies": ["crypto/sha256", "encoding/hex"],
+        "use_to": ["hash"],
+        "tags": ["intermediate", "hash"],
+        "input": ["s"],
+        "input_type": ["string"],
+        "return": ["hex"],
+        "return_type": ["string"],
+        "timer_score": 85,
+        "memory_score": 95,
+        "code": ["import (\n    \"crypto/sha256\"\n    \"encoding/hex\"\n)\n\nfunc sha256Hex(s string) string {\n    sum := sha256.Sum256([]byte(s))\n    return hex.EncodeToString(sum[:])\n}"]
     }
 ]

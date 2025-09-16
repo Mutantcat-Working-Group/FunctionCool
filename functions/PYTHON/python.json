@@ -318,5 +318,37 @@
         "timer_score": 100,
         "memory_score": 100,
         "code": ["def clamp(x: float, lo: float, hi: float) -> float:\n    return min(max(x, lo), hi)"]
+    },
+    {
+        "name-zh": "Base64 编解码",
+        "name-en": "Base64 Encode/Decode",
+        "description-zh": "对字节或字符串进行 Base64 编解码",
+        "description-en": "Base64 encode/decode bytes or string",
+        "dependencies": ["base64"],
+        "use_to": ["encoding"],
+        "tags": ["basic", "encoding"],
+        "input": ["s"],
+        "input_type": ["Union[str, bytes]"],
+        "return": ["enc", "dec"],
+        "return_type": ["str", "bytes"],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["import base64\n\ndef b64_encode(s):\n    b = s if isinstance(s, (bytes, bytearray)) else str(s).encode('utf-8')\n    return base64.b64encode(b).decode('ascii')\n\n\ndef b64_decode(s: str) -> bytes:\n    return base64.b64decode(s)"]
+    },
+    {
+        "name-zh": "SHA-256",
+        "name-en": "SHA-256",
+        "description-zh": "计算字节或字符串的 SHA-256 哈希",
+        "description-en": "Compute SHA-256 hash of bytes or string",
+        "dependencies": ["hashlib"],
+        "use_to": ["hash"],
+        "tags": ["intermediate", "hash"],
+        "input": ["s"],
+        "input_type": ["Union[str, bytes]"],
+        "return": ["hex"],
+        "return_type": ["str"],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": ["import hashlib\n\ndef sha256_hex(s) -> str:\n    b = s if isinstance(s, (bytes, bytearray)) else str(s).encode('utf-8')\n    return hashlib.sha256(b).hexdigest()"]
     }
 ]

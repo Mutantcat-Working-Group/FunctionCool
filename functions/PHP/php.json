@@ -158,5 +158,53 @@
         "timer_score": 100,
         "memory_score": 100,
         "code": ["<?php\nfunction now_iso(): string {\n    return date('c');\n}"]
+    },
+    {
+        "name-zh": "Base64 编解码",
+        "name-en": "Base64 Encode/Decode",
+        "description-zh": "对字符串进行 Base64 编解码",
+        "description-en": "Base64 encode/decode string",
+        "dependencies": [],
+        "use_to": ["encoding"],
+        "tags": ["basic", "encoding"],
+        "input": ["s"],
+        "input_type": ["string"],
+        "return": ["enc", "dec"],
+        "return_type": ["string", "string"],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["<?php\nfunction b64_encode_str(string $s): string {\n    return base64_encode($s);\n}\n\nfunction b64_decode_str(string $s): string {\n    return base64_decode($s, true) ?: '';\n}"]
+    },
+    {
+        "name-zh": "SHA-256",
+        "name-en": "SHA-256",
+        "description-zh": "计算字符串的 SHA-256 十六进制哈希",
+        "description-en": "Compute SHA-256 hex of string",
+        "dependencies": [],
+        "use_to": ["hash"],
+        "tags": ["intermediate", "hash"],
+        "input": ["s"],
+        "input_type": ["string"],
+        "return": ["hex"],
+        "return_type": ["string"],
+        "timer_score": 85,
+        "memory_score": 95,
+        "code": ["<?php\nfunction sha256_hex(string $s): string {\n    return hash('sha256', $s);\n}"]
+    },
+    {
+        "name-zh": "路径拼接",
+        "name-en": "Path Join",
+        "description-zh": "使用 DIRECTORY_SEPARATOR 拼接路径",
+        "description-en": "Join paths using DIRECTORY_SEPARATOR",
+        "dependencies": [],
+        "use_to": ["path"],
+        "tags": ["basic", "path"],
+        "input": ["segments"],
+        "input_type": ["array"],
+        "return": ["path"],
+        "return_type": ["string"],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["<?php\nfunction path_join(array $segments): string {\n    $parts = [];\n    foreach ($segments as $s) {\n        if ($s === '' || $s === null) continue;\n        $parts[] = trim($s, "/\\\\");\n    }\n    return implode(DIRECTORY_SEPARATOR, $parts);\n}"]
     }
 ]

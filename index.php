@@ -4,13 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>函数库 - 全世界开发者的函数库 | Programmer's Function Library</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <meta name="description" content="函数库(FunctionCool) - 覆盖 C/C++, Go, Python, Java, JavaScript, Rust, MATLAB, PHP 等多语言的常用函数与代码示例，支持中英文切换，帮助开发者快速查找与复用。">
+    <meta name="keywords" content="函数库, Function Library, 编程函数, 代码示例, C, C++, Go, Python, Java, JavaScript, Rust, MATLAB, PHP, 常用函数, 算法, 代码片段">
+    <meta name="author" content="Mutantcat Working Group">
+    <link rel="canonical" href="https://www.functioncool.xyz/">
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow,sitelinkssearchbox">
+    <meta name="bingbot" content="index,follow">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:site_name" content="函数库 FunctionCool">
+    <meta property="og:title" content="函数库 - 多语言编程函数与代码示例库">
+    <meta property="og:description" content="多语言常用函数速查：C/C++, Go, Python, Java, JavaScript, Rust, MATLAB, PHP。结构化整理 + 性能评分，支持中英文。">
+    <meta property="og:url" content="https://www.functioncool.xyz/">
+    <meta property="og:image" content="https://www.functioncool.xyz/assets/logo.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="函数库 FunctionCool - 多语言函数速查">
+    <meta name="twitter:description" content="收录多语言常用函数与代码示例，支持中英文切换与搜索。">
+    <meta name="twitter:image" content="https://www.functioncool.xyz/assets/logo.png">
+
     <!-- Favicon Start -->
     <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="apple-touch-icon" href="assets/logo.png">
     <!-- Favicon End -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3718441900987965"
-     crossorigin="anonymous"></script>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">{
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "函数库 FunctionCool",
+      "url": "https://www.functioncool.xyz/",
+      "inLanguage": ["zh-CN","en"],
+      "description": "多语言编程函数与代码示例集合，支持搜索与中英文切换。",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.functioncool.xyz/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }</script>
+
+    <link rel="stylesheet" href="assets/style.css">
+    <meta name="google-site-verification" content="gDHkEX8quz2rZV-IhC2VDjSt8Lzva5bln1N3rkkBJPA" />
+    <meta name="msvalidate.01" content="09EFDE13A2FAD0169413AF8FAFCC323A" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3718441900987965" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -31,7 +72,7 @@
                 <h2 id="main-title">搜索函数库</h2>
                 <p id="main-description">快速查找您需要的编程函数和代码示例</p>
                 
-                <form class="search-form" action="search" method="GET">
+                <form class="search-form" action="search" method="GET" role="search" aria-label="站内函数搜索">
                     <div class="search-input-wrapper">
                         <input 
                             type="text" 
@@ -39,6 +80,7 @@
                             name="q" 
                             placeholder="搜索函数名称、描述或标签..." 
                             required
+                            autocomplete="off"
                         >
                     </div>
                     

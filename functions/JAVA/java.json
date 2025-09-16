@@ -270,5 +270,37 @@
         "timer_score": 100,
         "memory_score": 100,
         "code": ["public double clamp(double x, double lo, double hi) {\n    return Math.min(Math.max(x, lo), hi);\n}"]
+    },
+    {
+        "name-zh": "URL 解析",
+        "name-en": "URL Parse",
+        "description-zh": "解析 URL 并返回各部分",
+        "description-en": "Parse URL and return components",
+        "dependencies": ["java.net"],
+        "use_to": ["url"],
+        "tags": ["basic", "url"],
+        "input": ["url"],
+        "input_type": ["String"],
+        "return": ["u"],
+        "return_type": ["java.net.URI"],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["import java.net.URI;\n\npublic URI parseUrl(String url) {\n    return URI.create(url);\n}"]
+    },
+    {
+        "name-zh": "字符串首字母大写",
+        "name-en": "Capitalize",
+        "description-zh": "将字符串首字母大写",
+        "description-en": "Capitalize first letter",
+        "dependencies": [],
+        "use_to": ["string"],
+        "tags": ["basic", "string"],
+        "input": ["s"],
+        "input_type": ["String"],
+        "return": ["t"],
+        "return_type": ["String"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["public String capitalize(String s) {\n    if (s == null || s.isEmpty()) return s;\n    return s.substring(0,1).toUpperCase() + s.substring(1);\n}"]
     }
 ]

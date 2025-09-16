@@ -3,6 +3,29 @@
 $query = isset($_GET['q']) ? trim($_GET['q']) : '';
 $language = isset($_GET['lang']) ? $_GET['lang'] : 'all';
 
+// 用于 SEO 动态标题与描述
+$baseTitle = '搜索结果 - FunctionCool';
+$humanLangMap = [
+    'all' => '全部语言',
+    'C' => 'C',
+    'CPP' => 'C++',
+    'GO' => 'Go',
+    'PYTHON' => 'Python',
+    'JAVA' => 'Java',
+    'JAVASCRIPT' => 'JavaScript',
+    'RUST' => 'Rust',
+    'MATLAB' => 'MATLAB',
+    'PHP' => 'PHP'
+];
+$languageLabel = $humanLangMap[$language] ?? '全部语言';
+$seoTitle = $baseTitle;
+if ($query !== '') {
+    $seoTitle = "{$query} - {$languageLabel} 函数搜索结果 | FunctionCool";
+}
+$metaDescription = $query === ''
+    ? '函数库 FunctionCool 搜索页 - 支持多语言函数、描述、标签搜索，涵盖 C/C++, Go, Python, Java, JavaScript, Rust, MATLAB, PHP。'
+    : "关于 '{$query}' 的 {$languageLabel} 函数搜索结果，涵盖名称、描述、标签及代码示例。";
+
 // 搜索函数
 function searchFunctions($query, $language) {
     $results = [];
@@ -53,13 +76,56 @@ function searchFunctions($query, $language) {
 }
 
 $searchResults = searchFunctions($query, $language);
+$encodedQuery = urlencode($query);
+$canonical = 'https://www.functioncool.xyz/search';
+if ($query !== '') {
+    // 仅对 query 添加，lang 为 all 不附加
+    $canonical .= '?q=' . $encodedQuery . ($language !== 'all' ? '&lang=' . urlencode($language) : '');
+}
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>搜索结果 - FunctionCool</title>
+    <title><?php echo htmlspecialchars($seoTitle); ?></title>
+    <meta name="description" content="<?php echo htmlspecialchars($metaDescription); ?>">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="<?php echo htmlspecialchars($canonical); ?>">
+    <meta name="keywords" content="函数搜索, 编程函数, 代码示例, FunctionCool, 多语言函数库, <?php echo htmlspecialchars($query); ?>, <?php echo $languageLabel; ?>">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="函数库 FunctionCool">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:title" content="<?php echo htmlspecialchars($seoTitle); ?>">
+    <meta property="og:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
+    <meta property="og:url" content="<?php echo htmlspecialchars($canonical); ?>">
+    <meta property="og:image" content="https://www.functioncool.xyz/assets/logo.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo htmlspecialchars($seoTitle); ?>">
+    <meta name="twitter:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
+    <meta name="twitter:image" content="https://www.functioncool.xyz/assets/logo.png">
+
+    <!-- JSON-LD: Breadcrumb + SearchAction (可扩展) -->
+    <script type="application/ld+json">{
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "函数搜索结果",
+      "url": "<?php echo htmlspecialchars($canonical); ?>",
+      "isPartOf": {"@type": "WebSite", "name": "函数库 FunctionCool", "url": "https://www.functioncool.xyz/"},
+      "about": "多语言函数搜索结果页面",
+      "inLanguage": ["zh-CN","en"],
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.functioncool.xyz/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }</script>
+
     <link rel="stylesheet" href="assets/style.css">
     <!-- Favicon Start -->
     <link rel="icon" type="image/png" href="assets/logo.png">
@@ -82,7 +148,7 @@ $searchResults = searchFunctions($query, $language);
     <main>
         <div class="container">
             <div class="search-header">
-                <form class="search-form compact" action="/search" method="GET">
+                <form class="search-form compact" action="/search" method="GET" role="search" aria-label="站内函数搜索">
                     <div class="search-input-wrapper">
                         <input 
                             type="text" 
@@ -91,6 +157,7 @@ $searchResults = searchFunctions($query, $language);
                             value="<?php echo htmlspecialchars($query); ?>"
                             placeholder="搜索函数名称、描述或标签..."
                             aria-label="搜索关键词"
+                            autocomplete="off"
                         >
                     </div>
                     

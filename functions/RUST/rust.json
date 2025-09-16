@@ -222,5 +222,21 @@
         "timer_score": 100,
         "memory_score": 100,
         "code": ["fn lcm(a: i64, b: i64) -> i64 {\n    if a == 0 || b == 0 { return 0; }\n    (a / gcd(a,b)) * b\n}"]
+    },
+    {
+        "name-zh": "大小写转换",
+        "name-en": "To Upper/Lower",
+        "description-zh": "将字符串转换为全大写与全小写",
+        "description-en": "Convert string to upper and lower case",
+        "dependencies": ["std"],
+        "use_to": ["string"],
+        "tags": ["basic", "string"],
+        "input": ["s"],
+        "input_type": ["&str"],
+        "return": ["upper", "lower"],
+        "return_type": ["String", "String"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["fn upper_lower(s: &str) -> (String, String) {\n    (s.to_uppercase(), s.to_lowercase())\n}"]
     }
 ]
