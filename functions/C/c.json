@@ -1,0 +1,18 @@
+[
+    {
+        "name-zh":"加法运算",
+        "name-en":"Addition",
+        "description-zh":"执行两个数的加法",
+        "description-en":"Performs addition of two numbers",
+        "dependencies": ["stdio.h"],
+        "use_to": ["arithmetic operations"],
+        "tags": ["basic", "beginner"],
+        "input":["a","b"],
+        "input_type":["int","int"],
+        "return":["sum"],
+        "return_type":["int"],
+        "timer_score":100,
+        "memory_score":100,
+        "code":["#include <stdio.h> \n\nint add(int a, int b) {\n    return a + b;\n}"]
+    }
+]

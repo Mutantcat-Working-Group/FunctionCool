@@ -1,0 +1,34 @@
+[
+    {
+        "name-zh": "切片长度",
+        "name-en": "Slice Length",
+        "description-zh": "获取切片的长度",
+        "description-en": "Get the length of a slice",
+        "dependencies": [],
+        "use_to": ["slice operations"],
+        "tags": ["basic", "slice", "beginner"],
+        "input": ["slice"],
+        "input_type": ["[]int"],
+        "return": ["length"],
+        "return_type": ["int"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["func sliceLength(slice []int) int {\n    return len(slice)\n}"]
+    },
+    {
+        "name-zh": "HTTP GET请求",
+        "name-en": "HTTP GET Request",
+        "description-zh": "发送HTTP GET请求并返回响应",
+        "description-en": "Send HTTP GET request and return response",
+        "dependencies": ["net/http", "io/ioutil"],
+        "use_to": ["web requests", "API calls"],
+        "tags": ["intermediate", "http", "network"],
+        "input": ["url"],
+        "input_type": ["string"],
+        "return": ["body", "err"],
+        "return_type": ["[]byte", "error"],
+        "timer_score": 70,
+        "memory_score": 80,
+        "code": ["import (\n    \"io/ioutil\"\n    \"net/http\"\n)\n\nfunc httpGet(url string) ([]byte, error) {\n    resp, err := http.Get(url)\n    if err != nil {\n        return nil, err\n    }\n    defer resp.Body.Close()\n    return ioutil.ReadAll(resp.Body)\n}"]
+    }
+]

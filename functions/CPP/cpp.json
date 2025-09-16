@@ -1,0 +1,34 @@
+[
+    {
+        "name-zh": "字符串长度",
+        "name-en": "String Length",
+        "description-zh": "获取字符串的长度",
+        "description-en": "Get the length of a string",
+        "dependencies": ["string"],
+        "use_to": ["string manipulation"],
+        "tags": ["basic", "string", "beginner"],
+        "input": ["str"],
+        "input_type": ["string"],
+        "return": ["length"],
+        "return_type": ["size_t"],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": ["#include <string>\n\nsize_t stringLength(const std::string& str) {\n    return str.length();\n}"]
+    },
+    {
+        "name-zh": "数组排序",
+        "name-en": "Array Sort",
+        "description-zh": "对整数数组进行升序排序",
+        "description-en": "Sort an integer array in ascending order",
+        "dependencies": ["algorithm", "vector"],
+        "use_to": ["sorting", "data manipulation"],
+        "tags": ["intermediate", "sorting", "algorithm"],
+        "input": ["arr"],
+        "input_type": ["vector<int>&"],
+        "return": [],
+        "return_type": ["void"],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": ["#include <algorithm>\n#include <vector>\n\nvoid sortArray(std::vector<int>& arr) {\n    std::sort(arr.begin(), arr.end());\n}"]
+    }
+]

@@ -1,0 +1,50 @@
+[
+    {
+        "name-zh": "列表长度",
+        "name-en": "List Length",
+        "description-zh": "获取列表的长度",
+        "description-en": "Get the length of a list",
+        "dependencies": [],
+        "use_to": ["list operations"],
+        "tags": ["basic", "list", "beginner"],
+        "input": ["lst"],
+        "input_type": ["list"],
+        "return": ["length"],
+        "return_type": ["int"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["def list_length(lst):\n    return len(lst)"]
+    },
+    {
+        "name-zh": "文件读取",
+        "name-en": "File Read",
+        "description-zh": "读取文件内容并返回字符串",
+        "description-en": "Read file content and return as string",
+        "dependencies": [],
+        "use_to": ["file operations", "I/O"],
+        "tags": ["intermediate", "file", "io"],
+        "input": ["filename"],
+        "input_type": ["str"],
+        "return": ["content"],
+        "return_type": ["str"],
+        "timer_score": 85,
+        "memory_score": 75,
+        "code": ["def read_file(filename):\n    with open(filename, 'r', encoding='utf-8') as file:\n        return file.read()"]
+    },
+    {
+        "name-zh": "JSON解析",
+        "name-en": "JSON Parse",
+        "description-zh": "解析JSON字符串并返回Python对象",
+        "description-en": "Parse JSON string and return Python object",
+        "dependencies": ["json"],
+        "use_to": ["data parsing", "API responses"],
+        "tags": ["intermediate", "json", "parsing"],
+        "input": ["json_str"],
+        "input_type": ["str"],
+        "return": ["data"],
+        "return_type": ["dict"],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": ["import json\n\ndef parse_json(json_str):\n    return json.loads(json_str)"]
+    }
+]
