@@ -10,11 +10,15 @@ function searchFunctions($query, $language) {
     if ($query === null || trim($query) === '') {
         return [];
     }
-    $languages = ['C', 'CPP', 'GO', 'PYTHON'];
+    $languages = ['C', 'CPP', 'GO', 'PYTHON', 'JAVA', 'JAVASCRIPT', 'RUST'];
     
     // 如果指定了特定语言，只搜索该语言
     if ($language !== 'all' && in_array($language, $languages)) {
         $languages = [$language];
+        // 特殊情况：搜索CPP时也包含C语言
+        if ($language === 'CPP') {
+            $languages = ['C', 'CPP'];
+        }
     }
     
     foreach ($languages as $lang) {
@@ -93,6 +97,9 @@ $searchResults = searchFunctions($query, $language);
                             <option value="CPP" <?php echo $language === 'CPP' ? 'selected' : ''; ?>>C++</option>
                             <option value="GO" <?php echo $language === 'GO' ? 'selected' : ''; ?>>Go</option>
                             <option value="PYTHON" <?php echo $language === 'PYTHON' ? 'selected' : ''; ?>>Python</option>
+                            <option value="JAVA" <?php echo $language === 'JAVA' ? 'selected' : ''; ?>>Java</option>
+                            <option value="JAVASCRIPT" <?php echo $language === 'JAVASCRIPT' ? 'selected' : ''; ?>>JavaScript</option>
+                            <option value="RUST" <?php echo $language === 'RUST' ? 'selected' : ''; ?>>Rust</option>
                         </select>
                     </div>
                     

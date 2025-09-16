@@ -61,6 +61,18 @@
                                 <input type="radio" name="lang" value="PYTHON">
                                 <span>Python</span>
                             </label>
+                            <label class="lang-option">
+                                <input type="radio" name="lang" value="JAVA">
+                                <span>Java</span>
+                            </label>
+                            <label class="lang-option">
+                                <input type="radio" name="lang" value="JAVASCRIPT">
+                                <span>JavaScript</span>
+                            </label>
+                            <label class="lang-option">
+                                <input type="radio" name="lang" value="RUST">
+                                <span>Rust</span>
+                            </label>
                         </div>
                     </div>
                     

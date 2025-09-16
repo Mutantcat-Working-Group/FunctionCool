@@ -1,0 +1,18 @@
+[
+    {
+        "name-zh": "字符串长度",
+        "name-en": "String Length",
+        "description-zh": "获取字符串的长度",
+        "description-en": "Get the length of a string",
+        "dependencies": [],
+        "use_to": ["string operations"],
+        "tags": ["basic", "string", "beginner"],
+        "input": ["str"],
+        "input_type": ["String"],
+        "return": ["length"],
+        "return_type": ["int"],
+        "timer_score": 95,
+        "memory_score": 98,
+        "code": ["public int getStringLength(String str) {\n    return str.length();\n}"]
+    }
+]

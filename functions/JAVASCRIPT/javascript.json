@@ -1,0 +1,18 @@
+[
+    {
+        "name-zh": "数组长度",
+        "name-en": "Array Length",
+        "description-zh": "获取数组的长度",
+        "description-en": "Get the length of an array",
+        "dependencies": [],
+        "use_to": ["array operations"],
+        "tags": ["basic", "array", "beginner"],
+        "input": ["arr"],
+        "input_type": ["Array"],
+        "return": ["length"],
+        "return_type": ["number"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["function getArrayLength(arr) {\n    return arr.length;\n}"]
+    }
+]

@@ -1,0 +1,18 @@
+[
+    {
+        "name-zh": "向量长度",
+        "name-en": "Vector Length",
+        "description-zh": "获取向量的长度",
+        "description-en": "Get the length of a vector",
+        "dependencies": [],
+        "use_to": ["vector operations"],
+        "tags": ["basic", "vector", "beginner"],
+        "input": ["vec"],
+        "input_type": ["Vec<T>"],
+        "return": ["length"],
+        "return_type": ["usize"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["fn get_vector_length<T>(vec: &Vec<T>) -> usize {\n    vec.len()\n}"]
+    }
+]
