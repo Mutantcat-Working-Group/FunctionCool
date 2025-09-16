@@ -890,6 +890,145 @@ footer p {
     }
 }
 
+/* 更精细的卡片与交互移动端优化 */
+@media (max-width: 640px) {
+    /* 让搜索条在滚动时保持可见，便于重新搜索 */
+    .search-header {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        backdrop-filter: blur(6px);
+    }
+
+    /* 减少整体外边距以提升可视密度 */
+    .results-section {
+        margin-top: 1.2rem;
+    }
+
+    .results-header h2 {
+        font-size: 1.2rem;
+    }
+    .results-header p {
+        font-size: 0.85rem;
+    }
+
+    /* 卡片改为更紧凑视觉 */
+    .function-card {
+        padding: 1rem 1rem 1.1rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        gap: 0.75rem;
+        transition: none; /* 移动端减少性能消耗 */
+    }
+    .function-card:hover {
+        transform: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    }
+
+    .function-header {
+        margin-bottom: 0.4rem;
+        gap: 0.6rem;
+    }
+    .name-wrapper h3 {
+        font-size: 1.15rem;
+    }
+    .function-tags .tag {
+        padding: 0.22rem 0.55rem;
+        font-size: 0.68rem;
+        border-radius: 12px;
+    }
+    .language-tag {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.65rem;
+        box-shadow: none;
+        letter-spacing: 0.3px;
+    }
+
+    .function-description p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 0.2rem;
+    }
+
+    .function-details {
+        padding: 0.65rem 0.75rem 0.75rem;
+        margin-bottom: 0.9rem;
+        border-left-width: 3px;
+    }
+    .function-details strong {
+        font-size: 0.78rem;
+    }
+    .param, .return {
+        font-size: 0.68rem;
+        padding: 0.15rem 0.45rem;
+        margin-right: 0.35rem;
+        margin-bottom: 0.25rem;
+    }
+
+    /* 分数区块堆叠精简 */
+    .scores {
+        padding: 0.6rem 0.75rem;
+        margin-bottom: 0.9rem;
+        gap: 0.6rem;
+        background: #f1f5f9;
+    }
+    .score span:first-child {
+        font-size: 0.68rem;
+        margin-bottom: 0.15rem;
+    }
+    .score-value {
+        font-size: 0.95rem;
+    }
+
+    /* 代码区域按钮触控优化 */
+    .code-header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .toggle-code {
+        padding: 0.55rem 0.95rem;
+        font-size: 0.75rem;
+        border-radius: 6px;
+        box-shadow: none;
+    }
+    .copy-code {
+        height: 36px;
+        min-width: 36px;
+        padding: 0.45rem;
+        border-radius: 6px;
+    }
+    .code-block {
+        padding: 1rem 0.9rem;
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+
+    /* 减弱动画来降低掉帧 */
+    .function-card { animation-duration: 0.35s; }
+    .search-form.compact .search-input-wrapper:focus-within,
+    .language-filter.inline:focus-within,
+    .search-form.compact .search-btn:focus {
+        transform: none;
+        animation: none;
+    }
+
+    /* 减少整体阴影带来的滚动性能开销 */
+    .toggle-code:hover::before { display: none; }
+    .toggle-code:hover { transform: none; box-shadow: none; }
+    .copy-code:hover { transform: none; box-shadow: none; }
+}
+
+/* 极小屏进一步精简 (例如 360px 宽 Android) */
+@media (max-width: 400px) {
+    .function-card { padding: 0.85rem 0.85rem 1rem; }
+    .name-wrapper h3 { font-size: 1.05rem; }
+    .function-details { padding: 0.55rem 0.65rem 0.6rem; }
+    .scores { padding: 0.5rem 0.6rem; }
+    .code-block { font-size: 0.7rem; }
+}
+
 /* 国际化相关样式 */
 .name-en, .desc-en {
     display: none;
