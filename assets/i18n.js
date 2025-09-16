@@ -17,7 +17,7 @@ const i18nTexts = {
         
         // 特性介绍
         'feature-1-title': '多语言支持',
-        'feature-1-desc': '支持C、C++、Go、Python、Java、JavaScript、Rust等主流编程语言',
+        'feature-1-desc': '支持C、C++、Go、Python、Java、JavaScript、Rust、MATLAB等主流编程语言',
         'feature-2-title': '快速搜索',
         'feature-2-desc': '通过函数名、描述、标签快速定位所需函数',
         'feature-3-title': '代码示例',
@@ -61,7 +61,7 @@ const i18nTexts = {
         
         // 特性介绍
         'feature-1-title': 'Multi-language Support',
-        'feature-1-desc': 'Support for mainstream programming languages like C, C++, Go, Python, Java, JavaScript, Rust',
+        'feature-1-desc': 'Support for mainstream programming languages like C, C++, Go, Python, Java, JavaScript, Rust, MATLAB',
         'feature-2-title': 'Fast Search',
         'feature-2-desc': 'Quickly locate functions by name, description, or tags',
         'feature-3-title': 'Code Examples',

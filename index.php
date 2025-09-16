@@ -73,6 +73,10 @@
                                 <input type="radio" name="lang" value="RUST">
                                 <span>Rust</span>
                             </label>
+                            <label class="lang-option">
+                                <input type="radio" name="lang" value="MATLAB">
+                                <span>MATLAB</span>
+                            </label>
                         </div>
                     </div>
                     
