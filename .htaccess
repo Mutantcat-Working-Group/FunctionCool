@@ -17,6 +17,9 @@ RewriteRule ^index\.php$ / [L,R=301]
 # 4. 友好 URL: /search  -> 内部重写到 search.php (支持 /search 和 /search/)
 RewriteRule ^search/?$ search.php [L,QSA]
 
+# 6. MCP API: /mcpapi -> mcpapi.php (支持参数)
+RewriteRule ^mcpapi/?$ mcpapi.php [L,QSA]
+
 # 4.1 规范化：直接访问 search.php（含查询参数） 301 到 /search
 RewriteCond %{THE_REQUEST} \s/+search\.php[\s?] [NC]
 RewriteRule ^search\.php$ /search [L,R=301]
