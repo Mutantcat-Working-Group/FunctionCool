@@ -20,6 +20,13 @@ RewriteRule ^search/?$ search.php [L,QSA]
 # 6. MCP API: /mcpapi -> mcpapi.php (支持参数)
 RewriteRule ^mcpapi/?$ mcpapi.php [L,QSA]
 
+# 6.1 文章笔记: /notes/001 -> notes/note001.php
+RewriteRule ^notes/([0-9]{3,})/?$ notes/note$1.php [L,QSA]
+
+# 6.2 规范化: 直接访问 notes/note001.php 301 到 /notes/001
+RewriteCond %{THE_REQUEST} \s/+notes/note([0-9]{3,})\.php[\s?] [NC]
+RewriteRule ^notes/note([0-9]{3,})\.php$ /notes/$1 [L,R=301]
+
 # 4.1 规范化：直接访问 search.php（含查询参数） 301 到 /search
 RewriteCond %{THE_REQUEST} \s/+search\.php[\s?] [NC]
 RewriteRule ^search\.php$ /search [L,R=301]

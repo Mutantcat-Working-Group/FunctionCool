@@ -48,7 +48,7 @@
       }
     }</script>
 
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/style.css?v=20250917">
     <meta name="google-site-verification" content="gDHkEX8quz2rZV-IhC2VDjSt8Lzva5bln1N3rkkBJPA" />
     <meta name="msvalidate.01" content="09EFDE13A2FAD0169413AF8FAFCC323A" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3718441900987965" crossorigin="anonymous"></script>
@@ -161,6 +161,23 @@
             </div>
         </div>
     </main>
+    
+    <!-- 最新文章模块 -->
+    <div class="container">
+        <section class="latest-posts" aria-label="最新文章">
+            <h2>最新文章</h2>
+            <div class="latest-list">
+                <a class="post-item" href="/notes/001">
+                    <div class="post-meta">
+                        <span class="post-date">2025-09-17</span>
+                        <span class="post-tag">公告</span>
+                    </div>
+                    <h3 class="post-title">函数库助力AI - MCP接口发布</h3>
+                    <p class="post-desc">我们上线了面向自动化平台/MCP工具的函数库检索接口，支持关键词+语言检索与 Token 访问，欢迎接入。</p>
+                </a>
+            </div>
+        </section>
+    </div>
 
     <!-- 信息区块：支持我们 / 勘误与贡献 / 免责声明 -->
     <div class="container">
