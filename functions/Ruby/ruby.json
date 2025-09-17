@@ -1,5 +1,20 @@
 [
   {
+    "name-zh": "主函数示例",
+    "name-en": "Main Function Example",
+    "description-zh": "Ruby程序的入口函数示例，包含命令行参数处理和异常处理",
+    "description-en": "Entry point function example for Ruby programs, including command line arguments and exception handling",
+    "dependencies": ["optparse"],
+    "use_to": ["program entry", "command line"],
+    "tags": ["basic", "entry point", "command line"],
+    "input": ["args"],
+    "input_type": ["Array"],
+    "return": ["status"],
+    "return_type": ["Integer"],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": ["#!/usr/bin/env ruby\n\nrequire 'optparse'\n\n# 主程序类\nclass Main\n  def initialize\n    @options = {}\n  end\n\n  def parse_options(args)\n    OptionParser.new do |opts|\n      opts.banner = \"Usage: #{$PROGRAM_NAME} [options]\"\n\n      opts.on(\"-n\", \"--name NAME\", \"Name to greet\") do |name|\n        @options[:name] = name\n      end\n\n      opts.on(\"-h\", \"--help\", \"Show this help message\") do\n        puts opts\n        exit\n      end\n    end.parse!(args)\n  end\n\n  def run(args = ARGV)\n    # 解析命令行参数\n    parse_options(args)\n    \n    # 打印程序信息\n    puts \"Program: #{$PROGRAM_NAME}\"\n    \n    # 打印命令行参数\n    puts \"Arguments count: #{args.length}\"\n    puts \"Arguments: #{args.inspect}\"\n    \n    # 程序主要逻辑\n    name = @options[:name] || 'World'\n    puts \"Hello, #{name}!\"\n    \n    return 0\n  rescue StandardError => e\n    warn \"Error: #{e.message}\"\n    warn e.backtrace if $DEBUG\n    return 1\n  end\nend\n\n# 如果是直接运行此文件\nif __FILE__ == $PROGRAM_NAME\n  exit Main.new.run\nend"]},
+  {
     "name-zh": "安全 JSON 解析",
     "name-en": "JSON Decode Safe",
     "description-zh": "将 JSON 字符串解析为 Hash/Array，失败返回 nil",

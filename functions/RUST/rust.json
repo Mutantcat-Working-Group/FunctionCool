@@ -1,5 +1,20 @@
 [
     {
+        "name-zh": "主函数示例",
+        "name-en": "Main Function Example",
+        "description-zh": "Rust程序的入口函数示例，包含命令行参数处理和错误处理",
+        "description-en": "Entry point function example for Rust programs, including command line arguments and error handling",
+        "dependencies": ["std::env", "std::process"],
+        "use_to": ["program entry", "command line", "error handling"],
+        "tags": ["basic", "entry point", "command line"],
+        "input": [],
+        "input_type": [],
+        "return": ["Result"],
+        "return_type": ["Result<(), Box<dyn std::error::Error>>"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["use std::env;\nuse std::error::Error;\nuse std::process;\n\n// 运行主程序逻辑\nfn run() -> Result<(), Box<dyn Error>> {\n    // 获取命令行参数\n    let args: Vec<String> = env::args().collect();\n    \n    // 打印程序信息\n    println!(\"Program: {}\", args[0]);\n    \n    // 打印命令行参数\n    println!(\"Arguments count: {}\", args.len() - 1);\n    println!(\"Arguments: {:?}\", &args[1..]);\n    \n    // 程序主要逻辑\n    let name = args.get(1).map(|s| s.as_str()).unwrap_or(\"World\");\n    println!(\"Hello, {}!\", name);\n    \n    Ok(())\n}\n\nfn main() {\n    if let Err(err) = run() {\n        eprintln!(\"Error: {}\", err);\n        process::exit(1);\n    }\n}"]},
+    {
         "name-zh": "向量长度",
         "name-en": "Vector Length",
         "description-zh": "获取向量的长度",

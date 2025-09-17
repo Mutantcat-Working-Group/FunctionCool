@@ -1,5 +1,20 @@
 [
     {
+        "name-zh": "主函数示例",
+        "name-en": "Main Function Example",
+        "description-zh": "PHP程序的入口函数示例，包含命令行参数处理和错误处理",
+        "description-en": "Entry point function example for PHP programs, including command line arguments and error handling",
+        "dependencies": [],
+        "use_to": ["program entry", "command line"],
+        "tags": ["basic", "entry point", "command line"],
+        "input": ["argv"],
+        "input_type": ["array"],
+        "return": ["status"],
+        "return_type": ["int"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["<?php\n\n/**\n * 主程序入口函数\n * @param array $argv 命令行参数数组\n * @return int 退出状态码\n */\nfunction main(array $argv = []): int {\n    try {\n        // 设置错误处理\n        set_error_handler(function($severity, $message, $file, $line) {\n            throw new ErrorException($message, 0, $severity, $file, $line);\n        });\n        \n        // 打印程序信息\n        echo \"Program: {$argv[0]}\\n\";\n        \n        // 打印命令行参数\n        $args = array_slice($argv, 1);\n        echo \"Arguments count: \" . count($args) . \"\\n\";\n        echo \"Arguments: \" . implode(', ', $args) . \"\\n\";\n        \n        // 程序主要逻辑\n        $name = $args[0] ?? 'World';\n        echo \"Hello, {$name}!\\n\";\n        \n        return 0;\n    } catch (Throwable $e) {\n        fwrite(STDERR, \"Error: {$e->getMessage()}\\n\");\n        return 1;\n    }\n}\n\n// 如果是从命令行运行\nif (PHP_SAPI === 'cli' && basename($argv[0]) === basename(__FILE__)) {\n    exit(main($argv));\n}"]},
+    {
         "name-zh": "数组去重",
         "name-en": "Array Unique",
         "description-zh": "返回去除重复值且保持原顺序的数组",
