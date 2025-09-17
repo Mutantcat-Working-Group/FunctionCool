@@ -47,7 +47,7 @@ const i18nTexts = {
         
         // MCP 接口页面
         'home-link': '返回首页',
-        'mcp-title': 'MCP可集成接口',
+        'mcp-title': '函数库-MCP可集成接口',
         'mcp-subtitle': '为自动化工具/平台提供函数库检索服务',
         'mcp-description-title': '接口说明',
         'mcp-description-content': '本接口用于自动化平台、MCP 工具等集成查询函数库。<br>支持按关键词和语言检索，返回 JSON 格式结果。<br>需先获取临时 token，免费 token 有效期 30 分钟。',

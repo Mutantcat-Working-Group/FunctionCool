@@ -123,6 +123,8 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 	<link rel="canonical" href="https://www.functioncool.xyz/mcpapi">
 	<link rel="stylesheet" href="assets/style.css">
 	<script src="assets/i18n.js"></script>
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
 </head>
 <body>
 	<!-- 顶部右侧操作：返回首页 & 语言切换 -->
