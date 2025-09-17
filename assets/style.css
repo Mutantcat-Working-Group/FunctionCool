@@ -50,6 +50,13 @@ header .container {
     opacity: 0.9;
 }
 
+.language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.language-switcher a,
 .language-switcher button {
     background: rgba(255,255,255,0.2);
     border: 1px solid rgba(255,255,255,0.3);
@@ -59,8 +66,14 @@ header .container {
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 0.9rem;
+    text-decoration: none;
+    line-height: 1;            /* 统一行高，避免 <a> 继承 body 的 1.6 导致更高 */
+    display: inline-flex;      /* 垂直居中内容，视觉统一 */
+    align-items: center;
+    justify-content: center;
 }
 
+.language-switcher a:hover,
 .language-switcher button:hover {
     background: rgba(255,255,255,0.3);
     transform: translateY(-1px);

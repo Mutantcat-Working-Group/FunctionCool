@@ -391,7 +391,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 			document.execCommand('copy');
 			document.body.removeChild(textarea);
 		}
-		this.textContent = '已复制';
+		this.textContent = 'OK';
 		setTimeout(()=>{
 			var currentLang = window.getCurrentLanguage ? window.getCurrentLanguage() : 'zh';
 			this.textContent = currentLang === 'zh' ? '一键复制' : 'Copy';

@@ -61,6 +61,7 @@
                 <p id="site-subtitle">全世界开发者的函数库</p>
             </div>
             <div class="language-switcher">
+                <a href="/mcpapi" class="mcp-link" aria-label="MCP API">MCP</a>
                 <button id="lang-btn" onclick="toggleLanguage()">English</button>
             </div>
         </div>
