@@ -271,4 +271,53 @@
         "memory_score": 95,
         "code": ["import (\n    \"crypto/sha256\"\n    \"encoding/hex\"\n)\n\nfunc sha256Hex(s string) string {\n    sum := sha256.Sum256([]byte(s))\n    return hex.EncodeToString(sum[:])\n}"]
     }
+    ,
+    {
+        "name-zh": "HTTP 客户端(超时)",
+        "name-en": "HTTP Client (timeout)",
+        "description-zh": "创建带超时的 http.Client",
+        "description-en": "Create http.Client with timeout",
+        "dependencies": ["net/http", "time"],
+        "use_to": ["http", "client"],
+        "tags": ["network", "http"],
+        "input": ["ms"],
+        "input_type": ["int"],
+        "return": ["client"],
+        "return_type": ["*http.Client"],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["import (\n  \"net/http\"\n  \"time\"\n)\n\nfunc httpClientTimeout(ms int) *http.Client {\n  return &http.Client{ Timeout: time.Duration(ms) * time.Millisecond }\n}"]
+    },
+    {
+        "name-zh": "HTTP POST(JSON)",
+        "name-en": "HTTP POST (JSON)",
+        "description-zh": "POST JSON 并返回响应文本",
+        "description-en": "POST JSON and return response body text",
+        "dependencies": ["net/http", "bytes", "time", "io"],
+        "use_to": ["http", "json"],
+        "tags": ["network", "http", "json"],
+        "input": ["url", "jsonBody", "timeoutMs"],
+        "input_type": ["string", "[]byte", "int"],
+        "return": ["text", "err"],
+        "return_type": ["string", "error"],
+        "timer_score": 70,
+        "memory_score": 85,
+        "code": ["import (\n  \"bytes\"\n  \"io\"\n  \"net/http\"\n  \"time\"\n)\n\nfunc httpPostJSON(url string, jsonBody []byte, timeoutMs int) (string, error) {\n  client := &http.Client{ Timeout: time.Duration(timeoutMs) * time.Millisecond }\n  req, err := http.NewRequest(\"POST\", url, bytes.NewBuffer(jsonBody))\n  if err != nil { return \"\", err }\n  req.Header.Set(\"Content-Type\", \"application/json\")\n  resp, err := client.Do(req)\n  if err != nil { return \"\", err }\n  defer resp.Body.Close()\n  b, err := io.ReadAll(resp.Body)\n  if err != nil { return \"\", err }\n  return string(b), nil\n}"]
+    },
+    {
+        "name-zh": "构建查询参数",
+        "name-en": "Build Query Params",
+        "description-zh": "将 map[string]string 构建为 URL 查询串",
+        "description-en": "Build URL query string from map[string]string",
+        "dependencies": ["net/url"],
+        "use_to": ["url", "string"],
+        "tags": ["url", "string"],
+        "input": ["params"],
+        "input_type": ["map[string]string"],
+        "return": ["query"],
+        "return_type": ["string"],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["import \"net/url\"\n\nfunc buildQuery(params map[string]string) string {\n  v := url.Values{}\n  for k, val := range params { v.Set(k, val) }\n  return v.Encode()\n}"]
+    }
 ]

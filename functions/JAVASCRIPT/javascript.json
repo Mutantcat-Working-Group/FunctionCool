@@ -463,4 +463,37 @@
         "memory_score": 100,
         "code": ["function capitalize(s) {\n    if (!s) return s;\n    return s[0].toUpperCase() + s.slice(1);\n}"]
     }
+    ,
+    {
+        "name-zh": "HTTP GET(JSON,超时)",
+        "name-en": "HTTP GET JSON (timeout)",
+        "description-zh": "使用 fetch 发送 GET 请求，支持 AbortController 超时，解析 JSON 返回，失败返回 null",
+        "description-en": "Fetch GET with AbortController timeout; parse and return JSON or null",
+        "dependencies": [],
+        "use_to": ["http", "json", "network"],
+        "tags": ["network", "http", "json"],
+        "input": ["url", "timeoutMs"],
+        "input_type": ["string", "number"],
+        "return": ["data"],
+        "return_type": ["any"],
+        "timer_score": 70,
+        "memory_score": 85,
+        "code": ["async function fetchJson(url, timeoutMs = 5000) {\n  const ctrl = new AbortController();\n  const t = setTimeout(() => ctrl.abort(), timeoutMs);\n  try {\n    const res = await fetch(url, { signal: ctrl.signal });\n    if (!res.ok) return null;\n    return await res.json();\n  } catch {\n    return null;\n  } finally {\n    clearTimeout(t);\n  }\n}"]
+    },
+    {
+        "name-zh": "HTTP POST(JSON,超时)",
+        "name-en": "HTTP POST JSON (timeout)",
+        "description-zh": "使用 fetch 发送 JSON Body 的 POST 请求，支持超时，返回文本或 null",
+        "description-en": "Fetch POST with JSON body and timeout; return text or null",
+        "dependencies": [],
+        "use_to": ["http", "json", "network"],
+        "tags": ["network", "http", "json"],
+        "input": ["url", "payload", "timeoutMs"],
+        "input_type": ["string", "any", "number"],
+        "return": ["text"],
+        "return_type": ["string|null"],
+        "timer_score": 65,
+        "memory_score": 85,
+        "code": ["async function postJson(url, payload, timeoutMs = 5000) {\n  const ctrl = new AbortController();\n  const t = setTimeout(() => ctrl.abort(), timeoutMs);\n  try {\n    const res = await fetch(url, {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify(payload),\n      signal: ctrl.signal\n    });\n    if (!res.ok) return null;\n    return await res.text();\n  } catch {\n    return null;\n  } finally {\n    clearTimeout(t);\n  }\n}"]
+    }
 ]

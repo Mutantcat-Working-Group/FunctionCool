@@ -351,4 +351,37 @@
         "memory_score": 95,
         "code": ["function f = factorial_int(n)\n    n = floor(n); assert(n >= 0);\n    f = prod(1:n);\nend"]
     }
+    ,
+    {
+        "name-zh": "HTTP GET(JSON)",
+        "name-en": "HTTP GET (JSON)",
+        "description-zh": "使用 webread 请求 JSON 并返回结构体/表",
+        "description-en": "Use webread to fetch JSON and return struct/table",
+        "dependencies": [],
+        "use_to": ["http", "json"],
+        "tags": ["network", "http", "json"],
+        "input": ["url"],
+        "input_type": ["char[]"],
+        "return": ["data"],
+        "return_type": ["struct"],
+        "timer_score": 70,
+        "memory_score": 85,
+        "code": ["function data = http_get_json(url)\n    opts = weboptions('Timeout', 10);\n    data = webread(url, opts);\nend"]
+    },
+    {
+        "name-zh": "下载文件(websave)",
+        "name-en": "Download File (websave)",
+        "description-zh": "使用 websave 下载URL到本地文件，返回保存路径",
+        "description-en": "Download file via websave and return saved path",
+        "dependencies": [],
+        "use_to": ["http", "download"],
+        "tags": ["network", "http", "download"],
+        "input": ["url", "filename"],
+        "input_type": ["char[]", "char[]"],
+        "return": ["filepath"],
+        "return_type": ["char[]"],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": ["function filepath = http_download(url, filename)\n    opts = weboptions('Timeout', 20);\n    filepath = websave(filename, url, opts);\nend"]
+    }
 ]

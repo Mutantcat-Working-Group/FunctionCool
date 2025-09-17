@@ -239,4 +239,21 @@
         "memory_score": 100,
         "code": ["fn upper_lower(s: &str) -> (String, String) {\n    (s.to_uppercase(), s.to_lowercase())\n}"]
     }
+    ,
+    {
+        "name-zh": "HTTP GET 文本(reqwest)",
+        "name-en": "HTTP GET Text (reqwest)",
+        "description-zh": "使用 reqwest 阻塞客户端发送 GET 请求并返回文本，失败返回 Err",
+        "description-en": "Blocking reqwest GET returning text; error on failure",
+        "dependencies": ["reqwest = { version = \"^0.11\", features = [\"blocking\"] }"],
+        "use_to": ["http", "network"],
+        "tags": ["network", "http"],
+        "input": ["url"],
+        "input_type": ["&str"],
+        "return": ["text"],
+        "return_type": ["Result<String, Box<dyn std::error::Error>>"],
+        "timer_score": 65,
+        "memory_score": 80,
+        "code": ["fn http_get_text(url: &str) -> Result<String, Box<dyn std::error::Error>> {\n    let body = reqwest::blocking::get(url)?.text()?;\n    Ok(body)\n}"]
+    }
 ]

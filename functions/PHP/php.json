@@ -207,4 +207,21 @@
         "memory_score": 95,
         "code": ["<?php\nfunction path_join(array $segments): string {\n    return implode(DIRECTORY_SEPARATOR, array_map(function($s) {\n        return trim($s, DIRECTORY_SEPARATOR);\n    }, $segments));\n}"]
     }
+    ,
+    {
+        "name-zh": "HTTP POST(JSON)",
+        "name-en": "HTTP POST (JSON)",
+        "description-zh": "使用 stream_context 发送 JSON Body 的 POST 请求，支持超时，失败返回 null",
+        "description-en": "Send POST with JSON body via stream_context; timeout supported; null on failure",
+        "dependencies": [],
+        "use_to": ["http", "json"],
+        "tags": ["network", "http", "json"],
+        "input": ["url", "data", "timeout"],
+        "input_type": ["string", "mixed", "int"],
+        "return": ["text"],
+        "return_type": ["?string"],
+        "timer_score": 65,
+        "memory_score": 80,
+        "code": ["<?php\nfunction http_post_json(string $url, $data, int $timeout = 5): ?string {\n    $payload = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);\n    $ctx = stream_context_create([\n        'http' => [\n            'method' => 'POST',\n            'header' => \"Content-Type: application/json\\r\\n\" .\n                        \"Accept: application/json\\r\\n\",\n            'content' => $payload,\n            'timeout' => $timeout\n        ]\n    ]);\n    $res = @file_get_contents($url, false, $ctx);\n    return $res === false ? null : $res;\n}"]
+    }
 ]

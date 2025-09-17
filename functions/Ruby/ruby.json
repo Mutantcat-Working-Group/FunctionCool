@@ -224,4 +224,21 @@
     "memory_score": 90,
     "code": ["require 'json'\n\ndef json_encode_safe(obj)\n  JSON.generate(obj)\nrescue StandardError\n  nil\nend"]
   }
+  ,
+  {
+    "name-zh": "HTTP POST(JSON)",
+    "name-en": "HTTP POST (JSON)",
+    "description-zh": "使用 Net::HTTP 发送 JSON Body 的 POST 请求(支持超时)，返回响应文本或 nil",
+    "description-en": "Net::HTTP POST with JSON body (timeouts); return body or nil",
+    "dependencies": ["net/http", "uri", "json"],
+    "use_to": ["http", "json"],
+    "tags": ["network", "http", "json"],
+    "input": ["url", "obj", "timeout"],
+    "input_type": ["String", "Object", "Integer"],
+    "return": ["text"],
+    "return_type": ["String?"],
+    "timer_score": 65,
+    "memory_score": 80,
+    "code": ["require 'net/http'\nrequire 'uri'\nrequire 'json'\n\ndef http_post_json(url, obj, timeout = 5)\n  uri = URI.parse(url)\n  req = Net::HTTP::Post.new(uri)\n  req['Content-Type'] = 'application/json'\n  req.body = JSON.dump(obj)\n  http = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https', open_timeout: timeout, read_timeout: timeout)\n  res = http.request(req)\n  res.is_a?(Net::HTTPSuccess) ? res.body : nil\nrescue StandardError\n  nil\nend"]
+  }
 ]

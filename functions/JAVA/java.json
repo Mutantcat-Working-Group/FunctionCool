@@ -303,4 +303,37 @@
         "memory_score": 100,
         "code": ["public String capitalize(String s) {\n    if (s == null || s.isEmpty()) return s;\n    return s.substring(0,1).toUpperCase() + s.substring(1);\n}"]
     }
+    ,
+    {
+        "name-zh": "HTTP POST(JSON)",
+        "name-en": "HTTP POST (JSON)",
+        "description-zh": "使用 Java 11 HttpClient 发送 JSON Body 的 POST 请求并返回文本",
+        "description-en": "Java 11 HttpClient POST with JSON body and return text",
+        "dependencies": ["java.net.http", "java.net.URI"],
+        "use_to": ["http", "json"],
+        "tags": ["network", "http", "json"],
+        "input": ["url", "json"],
+        "input_type": ["String", "String"],
+        "return": ["text"],
+        "return_type": ["String"],
+        "timer_score": 70,
+        "memory_score": 85,
+        "code": ["import java.net.http.*;\nimport java.net.URI;\nimport java.nio.charset.StandardCharsets;\n\npublic String httpPostJson(String url, String json) throws Exception {\n    HttpClient client = HttpClient.newHttpClient();\n    HttpRequest req = HttpRequest.newBuilder(URI.create(url))\n        .header(\"Content-Type\", \"application/json\")\n        .POST(HttpRequest.BodyPublishers.ofString(json, StandardCharsets.UTF_8))\n        .build();\n    HttpResponse<String> res = client.send(req, HttpResponse.BodyHandlers.ofString());\n    return res.body();\n}"]
+    },
+    {
+        "name-zh": "构建查询参数",
+        "name-en": "Build Query Params",
+        "description-zh": "将 Map 构建为 URL 查询字符串 (UTF-8)",
+        "description-en": "Build URL query string from Map, UTF-8 encoded",
+        "dependencies": ["java.net.URLEncoder", "java.nio.charset.StandardCharsets"],
+        "use_to": ["url", "string"],
+        "tags": ["url", "string"],
+        "input": ["params"],
+        "input_type": ["Map<String, String>"],
+        "return": ["query"],
+        "return_type": ["String"],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["import java.net.URLEncoder;\nimport java.nio.charset.StandardCharsets;\nimport java.util.*;\n\npublic String buildQuery(Map<String,String> params) {\n    StringBuilder sb = new StringBuilder();\n    boolean first = true;\n    for (Map.Entry<String,String> e : params.entrySet()) {\n        if (!first) sb.append('&');\n        first = false;\n        sb.append(URLEncoder.encode(e.getKey(), StandardCharsets.UTF_8))\n          .append('=')\n          .append(URLEncoder.encode(e.getValue(), StandardCharsets.UTF_8));\n    }\n    return sb.toString();\n}"]
+    }
 ]
