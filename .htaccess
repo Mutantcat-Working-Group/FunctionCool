@@ -36,7 +36,10 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# 7. 404 错误页面处理
+# 7. 404 页面直接访问: /404 -> 404.php
+RewriteRule ^404/?$ 404.php [L,QSA]
+
+# 8. 404 错误页面处理
 ErrorDocument 404 /404.php
 
 # （可选）如果需要强制 HTTPS，把下面两行取消注释
@@ -47,6 +50,7 @@ ErrorDocument 404 /404.php
 # - /          -> index.php (DirectoryIndex)
 # - /index.php -> 301 到 /
 # - /search    -> search.php (内部重写，浏览器地址栏保持 /search)
+# - /404       -> 404.php (直接访问404页面)
 # - 裸域 functioncool.xyz/* -> 301 到 https://www.functioncool.xyz/*
 
 #############################################

@@ -50,7 +50,7 @@
 				<h2 style="margin-top:1rem;color:#4f46e5">快速开始</h2>
 				<pre><code>GET https://www.functioncool.xyz/mcpapi?token={your_token}&q={keyword}&lang={language}</code></pre>
 				<p>响应字段：<code>results</code>（函数数组）、<code>query</code>、<code>lang</code>。支持的 <code>lang</code> 包括 C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VARILOG 或 <code>all</code>。</p>
-				<p>欢迎各类 MCP 客户端、自动化平台、插件与机器人接入。如果您在使用过程中遇到问题或有功能建议，欢迎发邮件到 <strong>shun_@outlook.com</strong> 与我们交流。</p>
+				<p>欢迎各类 MCP 客户端、自动化平台、插件与机器人接入。如果您在使用过程中遇到问题或有功能建议，欢迎发邮件到 <strong>feedback@mutantcat.org</strong> 与我们交流。</p>
 			</article>
 		</div>
 	</main>
