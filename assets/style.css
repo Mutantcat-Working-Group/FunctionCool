@@ -82,7 +82,7 @@ header .container {
 /* 主要内容区域 */
 main {
     flex: 1;
-    padding: 2rem 0;
+    padding: 0rem 0;
 }
 
 /* 搜索区域 */
@@ -749,6 +749,77 @@ footer {
 
 footer p {
     opacity: 0.8;
+}
+
+/* 信息区块（支持/勘误/免责声明） */
+.info-section {
+    margin: 2rem 0 3rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.4rem;
+}
+
+.info-card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    padding: 1.2rem 1.2rem 1.1rem;
+    border: 1px solid rgba(102, 126, 234, 0.12);
+}
+
+.info-card h3 {
+    color: #4f46e5; /* 接近 #667eea 的主色系 */
+    font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+}
+
+.info-card p {
+    color: #4b5563;
+    line-height: 1.7;
+    font-size: 0.98rem;
+}
+
+.support-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.support-qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 0.6rem;
+    min-width: 160px;
+    margin: 0 auto;
+}
+
+.support-qr img {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.qr-caption {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 0.35rem;
+}
+
+@media (max-width: 640px) {
+    .info-card { border-radius: 12px; padding: 1rem; }
+    .support-qr { min-width: 140px; }
+    .support-qr img { width: 140px; height: 140px; }
 }
 
 /* 响应式设计 */

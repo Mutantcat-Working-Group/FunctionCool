@@ -162,6 +162,34 @@
         </div>
     </main>
 
+    <!-- 信息区块：支持我们 / 勘误与贡献 / 免责声明 -->
+    <div class="container">
+        <section class="info-section" aria-label="站点说明与支持">
+            <div class="info-grid">
+                <div class="info-card support-card">
+                    <h3>支持我们</h3>
+                    <div class="support-content">
+                        <p>如果您觉得本站对您有所帮助，可以扫描二维码支持我们继续运营</p>
+                        <div class="support-qr">
+                            <img src="assets/zsm.png" alt="支持二维码">
+                            <div class="qr-caption">支持二维码</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>勘误与贡献</h3>
+                    <p>此项目是一个公益项目，我们为了减少成本（可持续发展），每10秒限制单一用户请求次数为20次。如果您想分享一些相关的资料或者发现哪些资料有问题或侵犯了您的权益，请发邮件到 feedback@mutantcat.org，我们会认真处理您的问题和反馈。</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>免责声明</h3>
+                    <p>本站所有资源均来自互联网公开渠道，仅供学习交流使用；本站尽力确保资源的可用性，但无法保证所有内容的绝对准确与完整；如有侵权内容，请联系我们，核实后将立即删除；使用本站资源时应遵守相关法律法规，不得用于商业用途。</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
     <footer>
         <div class="container">
             <p id="footer-text">&copy; 2025 函数库 | Powered by Mutantcat</p>
