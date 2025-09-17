@@ -43,7 +43,35 @@ const i18nTexts = {
         'empty-query-desc': '在上方搜索框中输入您要查找的函数名称或描述。',
         
         // 底部
-        'footer-text': '© 2025 函数库 | Powered by Mutantcat'
+        'footer-text': '© 2025 函数库 | Powered by Mutantcat',
+        
+        // MCP 接口页面
+        'home-link': '返回首页',
+        'mcp-title': 'MCP可集成接口',
+        'mcp-subtitle': '为自动化工具/平台提供函数库检索服务',
+        'mcp-description-title': '接口说明',
+        'mcp-description-content': '本接口用于自动化平台、MCP 工具等集成查询函数库。<br>支持按关键词和语言检索，返回 JSON 格式结果。<br>需先获取临时 token，免费 token 有效期 30 分钟。',
+        'get-token-btn': '获取免费 token',
+        'quicktip-title': '快捷提示词',
+        'quicktip-copy-btn': '一键复制',
+        'api-endpoint-desc': '接口地址：<code>/mcpapi?token={你的token}&q={关键词}&lang={编程语言}</code>',
+        'token-requirement-desc': 'token 需通过下方按钮获取，不能直接爬取，谢谢配合',
+        'response-fields-desc': '返回字段：results（函数列表[数组]）、query、lang',
+        'addr-table-caption': '接口地址表',
+        'region-header': '地区',
+        'address-header': '推荐地址',
+        'international-region': '国际',
+        'china-region': '中国地区',
+        'lang-table-caption': '支持语言及 lang 参数对照表',
+        'language-header': '语言名称',
+        'param-header': 'lang 参数值',
+        'token-result-pattern': '您的 token：${token}（30分钟有效）',
+        'quicktip-zh-title': '【中文】',
+        'quicktip-zh-request': '请向以下地址发送 GET 请求，获取基础函数与相关函数：',
+        'quicktip-zh-params': '参数：token=临时或永久 token；q=搜索关键词；lang=语言代码或 all（可选：C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VARILOG）。响应：JSON，包含 results（函数数组）、query（原查询）、lang（语言）。',
+        'quicktip-en-title': '[English]',
+        'quicktip-en-request': 'Send a GET request to fetch base and related functions:',
+        'quicktip-en-params': 'Params: token=temporary or permanent token; q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VARILOG). Response: JSON with results (array of functions), query (string), lang (string).'
     },
     en: {
         // 网站标题
@@ -88,7 +116,35 @@ const i18nTexts = {
         'empty-query-desc': 'Enter the function name or description you want to find in the search box above.',
         
         // 底部
-        'footer-text': '© 2025 FunctionCool | Powered by Mutantcat'
+        'footer-text': '© 2025 FunctionCool | Powered by Mutantcat',
+        
+        // MCP 接口页面
+        'home-link': 'Home',
+        'mcp-title': 'MCP Integration API',
+        'mcp-subtitle': 'Function library search service for automation tools/platforms',
+        'mcp-description-title': 'API Documentation',
+        'mcp-description-content': 'This API is for automation platforms, MCP tools and other integrations to query function library.<br>Supports keyword and language search, returns JSON format results.<br>Temporary token required, free token valid for 30 minutes.',
+        'get-token-btn': 'Get Free Token',
+        'quicktip-title': 'Quick Prompt',
+        'quicktip-copy-btn': 'Copy',
+        'api-endpoint-desc': 'API Endpoint: <code>/mcpapi?token={your_token}&q={keyword}&lang={language}</code>',
+        'token-requirement-desc': 'Token must be obtained via the button below, direct crawling not allowed',
+        'response-fields-desc': 'Response fields: results (function array), query, lang',
+        'addr-table-caption': 'API Endpoint Addresses',
+        'region-header': 'Region',
+        'address-header': 'Recommended Address',
+        'international-region': 'International',
+        'china-region': 'China',
+        'lang-table-caption': 'Supported Languages & lang Parameter Reference',
+        'language-header': 'Language Name',
+        'param-header': 'lang Parameter Value',
+        'token-result-pattern': 'Your token: ${token} (valid for 30 minutes)',
+        'quicktip-zh-title': '【中文】',
+        'quicktip-zh-request': 'Please send a GET request to the following address to get basic and related functions:',
+        'quicktip-zh-params': 'Parameters: token=temporary or permanent token; q=search keywords; lang=language code or all (options: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VARILOG). Response: JSON containing results (function array), query (original query), lang (language).',
+        'quicktip-en-title': '[English]',
+        'quicktip-en-request': 'Send a GET request to fetch base and related functions:',
+        'quicktip-en-params': 'Params: token=temporary or permanent token; q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VARILOG). Response: JSON with results (array of functions), query (string), lang (string).'
     }
 };
 
@@ -115,6 +171,7 @@ function setLanguage(lang) {
 function updateTexts(lang) {
     const texts = i18nTexts[lang];
     
+    // 处理有 ID 的元素
     Object.keys(texts).forEach(key => {
         const element = document.getElementById(key);
         if (element) {
@@ -123,16 +180,26 @@ function updateTexts(lang) {
             } else if (element.tagName === 'OPTION') {
                 element.textContent = texts[key];
             } else {
-                element.textContent = texts[key];
+                // 检查是否包含 HTML 标签，如果包含则使用 innerHTML，否则使用 textContent
+                if (texts[key].includes('<br>') || texts[key].includes('<code>')) {
+                    element.innerHTML = texts[key];
+                } else {
+                    element.textContent = texts[key];
+                }
             }
         }
     });
 
-    // 批量更新 data-i18n
+    // 批量更新 data-i18n，这是主要的更新逻辑
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (texts[key]) {
-            el.textContent = texts[key];
+            // 同样检查是否包含 HTML
+            if (texts[key].includes('<br>') || texts[key].includes('<code>')) {
+                el.innerHTML = texts[key];
+            } else {
+                el.textContent = texts[key];
+            }
         }
     });
     
@@ -145,6 +212,10 @@ function updateTexts(lang) {
     // 更新代码显示/隐藏按钮文本
     updateCodeToggleButtons(lang);
     updateResultsCount(lang);
+    
+    // 调试信息
+    console.log('Language updated to:', lang);
+    console.log('Updated elements with data-i18n:', document.querySelectorAll('[data-i18n]').length);
 }
 
 // 更新搜索结果的中英文显示
@@ -195,6 +266,11 @@ function toggleLanguage() {
     const currentLang = getCurrentLanguage();
     const newLang = currentLang === 'zh' ? 'en' : 'zh';
     setLanguage(newLang);
+    
+    // MCP 页面特殊处理：更新复制按钮状态
+    if (typeof updateCopyButtonText === 'function') {
+        updateCopyButtonText(newLang);
+    }
 }
 
 // 页面加载时初始化
