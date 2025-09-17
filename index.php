@@ -127,6 +127,10 @@
                                 <input type="radio" name="lang" value="PHP">
                                 <span>PHP</span>
                             </label>
+                            <label class="lang-option">
+                                <input type="radio" name="lang" value="VARILOG">
+                                <span>Verilog</span>
+                            </label>
                         </div>
                     </div>
                     

@@ -15,7 +15,8 @@ $humanLangMap = [
     'JAVASCRIPT' => 'JavaScript',
     'RUST' => 'Rust',
     'MATLAB' => 'MATLAB',
-    'PHP' => 'PHP'
+    'PHP' => 'PHP',
+    'VARILOG' => 'Verilog'
 ];
 $languageLabel = $humanLangMap[$language] ?? '全部语言';
 $seoTitle = $baseTitle;
@@ -33,7 +34,7 @@ function searchFunctions($query, $language) {
     if ($query === null || trim($query) === '') {
         return [];
     }
-    $languages = ['C', 'CPP', 'GO', 'PYTHON', 'JAVA', 'JAVASCRIPT', 'RUST', 'MATLAB', 'PHP'];
+    $languages = ['C', 'CPP', 'GO', 'PYTHON', 'JAVA', 'JAVASCRIPT', 'RUST', 'MATLAB', 'PHP', 'VARILOG'];
     
     // 如果指定了特定语言，只搜索该语言
     if ($language !== 'all' && in_array($language, $languages)) {
@@ -173,6 +174,7 @@ if ($query !== '') {
                             <option value="RUST" <?php echo $language === 'RUST' ? 'selected' : ''; ?>>Rust</option>
                             <option value="MATLAB" <?php echo $language === 'MATLAB' ? 'selected' : ''; ?>>MATLAB</option>
                             <option value="PHP" <?php echo $language === 'PHP' ? 'selected' : ''; ?>>PHP</option>
+                            <option value="VARILOG" <?php echo $language === 'VARILOG' ? 'selected' : ''; ?>>Verilog</option>
                         </select>
                     </div>
                     

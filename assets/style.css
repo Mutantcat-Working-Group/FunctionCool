@@ -10,6 +10,8 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: #f5f7fa;
+    /* 防止移动端偶发的横向滚动条 */
+    overflow-x: hidden;
 }
 
 .container {
@@ -409,6 +411,8 @@ main {
 .results-grid {
     display: grid;
     gap: 2rem;
+    /* 确保网格项在小屏可缩小而不挤出视口 */
+    grid-template-columns: minmax(0, 1fr);
 }
 
 .function-card {
@@ -417,6 +421,9 @@ main {
     padding: 2rem;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
+    /* 允许在 Grid/Flex 下内容缩小；并阻止横向溢出影响页面 */
+    min-width: 0;
+    overflow-x: hidden;
 }
 
 .function-card:hover {
@@ -651,6 +658,9 @@ main {
 
 .code-container {
     position: relative;
+    /* 代码区内部独立滚动，避免撑开外层卡片 */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .code-block {
@@ -659,6 +669,7 @@ main {
     padding: 1.5rem;
     border-radius: 12px;
     overflow-x: auto;
+    max-width: 100%;
     font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;
     font-size: 0.9rem;
     line-height: 1.6;
