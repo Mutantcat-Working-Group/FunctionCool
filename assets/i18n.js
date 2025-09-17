@@ -45,6 +45,17 @@ const i18nTexts = {
         // 底部
         'footer-text': '© 2025 函数库 | Powered by Mutantcat',
         
+        // 404 页面
+        'error-404-title': '页面未找到',
+        'error-404-message': '抱歉，您访问的页面不存在。可能是链接已过期，或者您输入了错误的网址。',
+        'back-home': '返回首页',
+        'goto-search': '搜索函数',
+        'suggestions-title': '您可以尝试：',
+        'suggestion-1': '检查网址拼写是否正确',
+        'suggestion-2': '使用上方的搜索功能查找函数',
+        'suggestion-3': '访问 MCP API 了解接口文档',
+        'suggestion-4': '如果问题持续，请联系我们：shun_@outlook.com',
+        
         // MCP 接口页面
         'home-link': '返回首页',
         'mcp-title': '函数库-MCP可集成接口',
@@ -117,6 +128,17 @@ const i18nTexts = {
         
         // 底部
         'footer-text': '© 2025 FunctionCool | Powered by Mutantcat',
+        
+        // 404 页面
+        'error-404-title': 'Page Not Found',
+        'error-404-message': 'Sorry, the page you are looking for does not exist. The link may have expired, or you may have entered an incorrect URL.',
+        'back-home': 'Back to Home',
+        'goto-search': 'Search Functions',
+        'suggestions-title': 'You can try:',
+        'suggestion-1': 'Check if the URL spelling is correct',
+        'suggestion-2': 'Use the search function above to find functions',
+        'suggestion-3': 'Visit MCP API to learn about interface documentation',
+        'suggestion-4': 'If the problem persists, please contact us: shun_@outlook.com',
         
         // MCP 接口页面
         'home-link': 'Home',

@@ -36,6 +36,9 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
+# 7. 404 错误页面处理
+ErrorDocument 404 /404.php
+
 # （可选）如果需要强制 HTTPS，把下面两行取消注释
 #RewriteCond %{HTTPS} !=on
 #RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
