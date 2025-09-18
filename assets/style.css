@@ -242,6 +242,7 @@ main {
     margin-bottom: 2rem;
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
     border: 1px solid rgba(102, 126, 234, 0.1);
+    margin-top: 20rpx;
 }
 
 .search-form.compact {
