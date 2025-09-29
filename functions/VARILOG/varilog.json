@@ -319,4 +319,72 @@
     "memory_score": 100,
     "code": ["module cmp8(\n    input  wire [7:0] a,\n    input  wire [7:0] b,\n    output wire       gt,\n    output wire       eq,\n    output wire       lt\n);\n    assign gt = (a > b);\n    assign eq = (a == b);\n    assign lt = (a < b);\nendmodule"]
   }
+  ,
+  {
+    "name-zh": "同步FIFO(简化)",
+    "name-en": "Synchronous FIFO (simple)",
+    "description-zh": "参数化深度与宽度的同步FIFO，带空/满标志",
+    "description-en": "Parameterized synchronous FIFO with empty/full flags",
+    "dependencies": [],
+    "use_to": ["buffer", "queue"],
+    "tags": ["verilog", "sequential", "fifo"],
+    "input": ["clk", "rst", "wr_en", "rd_en", "din"],
+    "input_type": ["wire", "wire", "wire", "wire", "wire[WIDTH-1:0]"],
+    "return": ["dout", "empty", "full"],
+    "return_type": ["reg[WIDTH-1:0]", "wire", "wire"],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": ["module fifo_sync #(\n    parameter WIDTH = 8,\n    parameter DEPTH = 16,\n    parameter AW    = $clog2(DEPTH)\n)(\n    input  wire              clk,\n    input  wire              rst,\n    input  wire              wr_en,\n    input  wire              rd_en,\n    input  wire [WIDTH-1:0]  din,\n    output reg  [WIDTH-1:0]  dout,\n    output wire              empty,\n    output wire              full\n);\n    reg [WIDTH-1:0] mem [0:DEPTH-1];\n    reg [AW:0] wptr, rptr; // extra bit for full/empty\n    assign empty = (wptr == rptr);\n    assign full  = (wptr[AW] != rptr[AW]) && (wptr[AW-1:0] == rptr[AW-1:0]);\n    always @(posedge clk) begin\n        if (rst) begin\n            wptr <= 0; rptr <= 0; dout <= {WIDTH{1'b0}};\n        end else begin\n            if (wr_en && !full) begin\n                mem[wptr[AW-1:0]] <= din;\n                wptr <= wptr + 1'b1;\n            end\n            if (rd_en && !empty) begin\n                dout <= mem[rptr[AW-1:0]];\n                rptr <= rptr + 1'b1;\n            end\n        end\n    end\nendmodule"]
+  }
+  ,
+  {
+    "name-zh": "LFSR伪随机序列",
+    "name-en": "LFSR Pseudo-Random",
+    "description-zh": "参数化宽度的线性反馈移位寄存器，生成伪随机序列",
+    "description-en": "Parameterized width linear-feedback shift register",
+    "dependencies": [],
+    "use_to": ["random", "pattern"],
+    "tags": ["verilog", "sequential", "lfsr"],
+    "input": ["clk", "rst", "en"],
+    "input_type": ["wire", "wire", "wire"],
+    "return": ["q"],
+    "return_type": ["reg[W-1:0]"],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": ["module lfsr #(\n    parameter W = 8,\n    parameter TAPS = 8'b1011_0000 // example taps\n)(\n    input  wire clk,\n    input  wire rst,\n    input  wire en,\n    output reg  [W-1:0] q\n);\n    wire fb = ^(q & TAPS[W-1:0]);\n    always @(posedge clk) begin\n        if (rst) q <= {W{1'b1}};\n        else if (en) q <= {q[W-2:0], fb};\n    end\nendmodule"]
+  }
+  ,
+  {
+    "name-zh": "简单同步RAM",
+    "name-en": "Simple Sync RAM",
+    "description-zh": "单端口同步RAM，写使能，时钟读出",
+    "description-en": "Single-port synchronous RAM with write enable and clocked read",
+    "dependencies": [],
+    "use_to": ["memory"],
+    "tags": ["verilog", "sequential", "memory"],
+    "input": ["clk", "we", "addr", "din"],
+    "input_type": ["wire", "wire", "wire[AW-1:0]", "wire[DW-1:0]"],
+    "return": ["dout"],
+    "return_type": ["reg[DW-1:0]"],
+    "timer_score": 90,
+    "memory_score": 100,
+    "code": ["module sync_ram #(\n    parameter DW = 8,\n    parameter AW = 8\n)(\n    input  wire           clk,\n    input  wire           we,\n    input  wire [AW-1:0]  addr,\n    input  wire [DW-1:0]  din,\n    output reg  [DW-1:0]  dout\n);\n    reg [DW-1:0] mem [0:(1<<AW)-1];\n    always @(posedge clk) begin\n        if (we) mem[addr] <= din;\n        dout <= mem[addr];\n    end\nendmodule"]
+  }
+  ,
+  {
+    "name-zh": "可参数移位寄存器",
+    "name-en": "Param Shift Register",
+    "description-zh": "参数化宽度和方向的移位寄存器",
+    "description-en": "Parameterized width and direction shift register",
+    "dependencies": [],
+    "use_to": ["sequential", "shift"],
+    "tags": ["verilog", "sequential"],
+    "input": ["clk", "rst", "en", "din"],
+    "input_type": ["wire", "wire", "wire", "wire"],
+    "return": ["q"],
+    "return_type": ["reg[W-1:0]"],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": ["module shift_reg #(\n    parameter W = 8,\n    parameter LEFT = 1\n)(\n    input  wire       clk,\n    input  wire       rst,\n    input  wire       en,\n    input  wire       din,\n    output reg [W-1:0] q\n);\n    always @(posedge clk) begin\n        if (rst) q <= {W{1'b0}};\n        else if (en) begin\n            if (LEFT) q <= {q[W-2:0], din};\n            else      q <= {din, q[W-1:1]};\n        end\n    end\nendmodule"]
+  }
 ]
