@@ -167,6 +167,14 @@
         <section class="latest-posts" aria-label="最新文章">
             <h2>最新文章</h2>
             <div class="latest-list">
+                <a class="post-item" href="/notes/002">
+                    <div class="post-meta">
+                        <span class="post-date">2025-09-29</span>
+                        <span class="post-tag">教育</span>
+                    </div>
+                    <h3 class="post-title">给大学编程课的有力帮助</h3>
+                    <p class="post-desc">函数库为大学生提供编程学习资源，快速查询常用函数，帮助理解算法和数据结构，提高编程效率。</p>
+                </a>
                 <a class="post-item" href="/notes/001">
                     <div class="post-meta">
                         <span class="post-date">2025-09-17</span>
