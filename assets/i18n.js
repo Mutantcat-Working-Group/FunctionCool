@@ -56,6 +56,9 @@ const i18nTexts = {
         'suggestion-3': '访问 MCP API 了解接口文档',
         'suggestion-4': '如果问题持续，请联系我们：shun_@outlook.com',
         
+        // 友情链接
+        'friend-links': '友情链接：',
+        
         // MCP 接口页面
         'home-link': '返回首页',
         'mcp-title': '函数库-MCP可集成接口',
@@ -139,6 +142,9 @@ const i18nTexts = {
         'suggestion-2': 'Use the search function above to find functions',
         'suggestion-3': 'Visit MCP API to learn about interface documentation',
         'suggestion-4': 'If the problem persists, please contact us: shun_@outlook.com',
+        
+        // 友情链接
+        'friend-links': 'Friendly Links:',
         
         // MCP 接口页面
         'home-link': 'Home',

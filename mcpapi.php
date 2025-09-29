@@ -286,6 +286,12 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 	<footer>
 		<div class="container">
 			<p data-i18n="footer-text">&copy; 2025 函数库 | Powered by Mutantcat</p>
+			<div class="friend-links">
+				<span data-i18n="friend-links">友情链接：</span>
+				<a href="https://www.mutantcat.org/" target="_blank" rel="noopener">异猫工作群</a>
+				<a href="https://www.fcnesyouxi.top/" target="_blank" rel="noopener">FC/MNES游戏</a>
+				<a href="https://www.jqshengtian.top/" target="_blank" rel="noopener">学习资料</a>
+			</div>
 		</div>
 	</footer>
 	<script>

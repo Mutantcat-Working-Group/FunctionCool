@@ -1306,3 +1306,45 @@ footer p {
         color: #a0aec0;
     }
 }
+
+/* 友情链接样式 */
+.friend-links {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    color: #a0aec0;
+    text-align: center;
+}
+
+.friend-links a {
+    color: #a0aec0;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.friend-links a:hover {
+    color: #e2e8f0;
+    text-decoration: underline;
+}
+
+.friend-links span {
+    margin-right: 5px;
+    color: #a0aec0;
+}
+
+@media (max-width: 640px) {
+    .friend-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .friend-links span {
+        margin-bottom: 5px;
+    }
+}
+
+.friend-links a{
+    
+}
