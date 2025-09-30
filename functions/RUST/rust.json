@@ -432,4 +432,38 @@
         "memory_score": 95,
     "code": ["fn quickselect(a: &mut [i64], mut k: usize) -> i64 { // k: 1-based\n    let (mut l, mut r) = (0usize, a.len()-1); k-=1;\n    while l<=r {\n        let pivot = a[r]; let mut i = l;\n        for j in l..r { if a[j] <= pivot { a.swap(i,j); i+=1 } }\n        a.swap(i,r);\n        if i==k { return a[i] } else if i>k { if i==0 { break } r = i-1; } else { l = i+1; }\n    }\n    panic!(\"k out of range\");\n}"]
     }
+    ,
+    {
+        "name-zh": "并查集(独立结构)",
+        "name-en": "Disjoint Set Union (Standalone)",
+        "description-zh": "带路径压缩与按秩合并的并查集，提供 find/unite/same 接口",
+        "description-en": "Disjoint Set Union with path compression and union by rank; find/unite/same APIs",
+        "dependencies": ["std"],
+        "use_to": ["data structure", "union-find"],
+        "tags": ["dsu", "union-find", "data structure"],
+        "input": ["n"],
+        "input_type": ["usize"],
+        "return": ["struct"],
+        "return_type": ["DSU"],
+        "timer_score": 98,
+        "memory_score": 98,
+        "code": ["#[derive(Clone)]\nstruct DSU { p: Vec<usize>, r: Vec<i32> }\nimpl DSU {\n    fn new(n: usize) -> Self { Self { p: (0..n).collect(), r: vec![0; n] } }\n    fn find(&mut self, x: usize) -> usize { if self.p[x]==x { x } else { let px = self.find(self.p[x]); self.p[x]=px; px } }\n    fn unite(&mut self, a: usize, b: usize) -> bool { let mut a=self.find(a); let mut b=self.find(b); if a==b { return false } if self.r[a]<self.r[b] { std::mem::swap(&mut a,&mut b) } self.p[b]=a; if self.r[a]==self.r[b] { self.r[a]+=1 } true }\n    fn same(&mut self, a: usize, b: usize) -> bool { self.find(a)==self.find(b) }\n}\n\n// 用法示例\n// let mut d = DSU::new(5);\n// d.unite(0,1); d.unite(3,4); assert!(d.same(0,1)); assert!(!d.same(1,2));"]
+    }
+    ,
+    {
+        "name-zh": "树状数组(Fenwick/BIT)",
+        "name-en": "Fenwick Tree (BIT)",
+        "description-zh": "支持前缀和/单点更新，查询/更新均为 O(log n)",
+        "description-en": "Prefix sum and point update in O(log n)",
+        "dependencies": ["std"],
+        "use_to": ["data structure", "prefix sum"],
+        "tags": ["fenwick", "bit", "data structure"],
+        "input": ["n"],
+        "input_type": ["usize"],
+        "return": ["struct"],
+        "return_type": ["Fenwick"],
+        "timer_score": 96,
+        "memory_score": 96,
+        "code": ["struct Fenwick { n: usize, bit: Vec<i64> }\nimpl Fenwick {\n    fn new(n: usize) -> Self { Self { n, bit: vec![0; n+1] } }\n    fn add(&mut self, mut idx: usize, delta: i64) {\n        idx += 1; // 1-based\n        while idx <= self.n {\n            self.bit[idx] += delta;\n            idx += idx & (!idx + 1); // idx += idx & -idx\n        }\n    }\n    fn sum_prefix(&self, mut idx: usize) -> i64 {\n        let mut res = 0i64; idx += 1;\n        while idx > 0 {\n            res += self.bit[idx];\n            idx &= idx - 1;\n        }\n        res\n    }\n    fn range_sum(&self, l: usize, r: usize) -> i64 {\n        if r < l { return 0 }\n        self.sum_prefix(r) - if l==0 { 0 } else { self.sum_prefix(l-1) }\n    }\n}\n\n// 用法示例\n// let mut fw = Fenwick::new(5);\n// fw.add(0, 1); fw.add(3, 2); assert_eq!(fw.range_sum(0,3), 3);"]
+    }
 ]

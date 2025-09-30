@@ -400,4 +400,38 @@
         "memory_score": 95,
         "code": ["<?php\nfunction quickselect(array $a, int $k): int { // k: 1-based\n    $l=0; $r=count($a)-1; $k--;\n    while($l<=$r){\n        $pivot=$a[$r]; $i=$l;\n        for($j=$l;$j<$r;$j++){ if($a[$j]<=$pivot){ [$a[$i],$a[$j]] = [$a[$j],$a[$i]]; $i++; } }\n        [$a[$i],$a[$r]] = [$a[$r],$a[$i]];\n        if($i===$k) return $a[$i]; elseif($i>$k) $r=$i-1; else $l=$i+1;\n    }\n    throw new InvalidArgumentException('k out of range');\n}"]
     }
+    ,
+    {
+        "name-zh": "LRU 缓存(哈希+双向链表)",
+        "name-en": "LRU Cache (Hash + LinkedList)",
+        "description-zh": "O(1) 时间支持 get/put 的最近最少使用缓存，使用自建双向链表维护顺序+哈希表定位",
+        "description-en": "Least Recently Used cache with O(1) get/put using custom doubly-linked list and hash map",
+        "dependencies": [],
+        "use_to": ["cache", "data structure"],
+        "tags": ["lru", "cache", "data structure"],
+        "input": ["capacity"],
+        "input_type": ["int"],
+        "return": ["class"],
+        "return_type": ["LRUCache"],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": ["<?php\n/**\n * LRU 缓存: get/put 均为 O(1)\n * 通过一个双端链表维护最近使用顺序 + 哈希表(key=>节点)定位。\n * 这里用 SplDoublyLinkedList 存储 [key,value]，同时 map 里保存 key => nodeIndex。\n * 注意: SplDoublyLinkedList 不支持 O(1) 任意位置删除/移动，这里采用自建链表节点类以获得稳定 O(1)。\n */\nclass LRUNode {\n    public $key; public $val; public $prev = null; public $next = null;\n    public function __construct($key, $val){ $this->key=$key; $this->val=$val; }\n}\n\nclass LRUCache {\n    private int $capacity;\n    private array $map = []; // key => LRUNode\n    private ?LRUNode $head = null; // dummy head\n    private ?LRUNode $tail = null; // dummy tail\n\n    public function __construct(int $capacity){\n        if ($capacity <= 0) throw new InvalidArgumentException('capacity must be > 0');\n        $this->capacity = $capacity;\n        $this->head = new LRUNode(null, null);\n        $this->tail = new LRUNode(null, null);\n        $this->head->next = $this->tail;\n        $this->tail->prev = $this->head;\n    }\n\n    private function addToFront(LRUNode $node): void {\n        $node->prev = $this->head;\n        $node->next = $this->head->next;\n        $this->head->next->prev = $node;\n        $this->head->next = $node;\n    }\n\n    private function removeNode(LRUNode $node): void {\n        $prev = $node->prev; $next = $node->next;\n        if ($prev) $prev->next = $next;\n        if ($next) $next->prev = $prev;\n        $node->prev = $node->next = null;\n    }\n\n    private function moveToFront(LRUNode $node): void {\n        $this->removeNode($node);\n        $this->addToFront($node);\n    }\n\n    private function popTail(): ?LRUNode {\n        $node = $this->tail->prev;\n        if ($node === $this->head) return null;\n        $this->removeNode($node);\n        return $node;\n    }\n\n    public function get($key){\n        if (!isset($this->map[$key])) return null;\n        $node = $this->map[$key];\n        $this->moveToFront($node);\n        return $node->val;\n    }\n\n    public function put($key, $value): void {\n        if (isset($this->map[$key])) {\n            $node = $this->map[$key];\n            $node->val = $value;\n            $this->moveToFront($node);\n            return;\n        }\n        $node = new LRUNode($key, $value);\n        $this->map[$key] = $node;\n        $this->addToFront($node);\n        if (count($this->map) > $this->capacity) {\n            $old = $this->popTail();\n            if ($old && $old->key !== null) { unset($this->map[$old->key]); }\n        }\n    }\n}\n\n// 使用示例:\n// $lru = new LRUCache(2);\n// $lru->put('a', 1); $lru->put('b', 2);\n// $lru->get('a');        // 1，并将 'a' 移到最近\n// $lru->put('c', 3);     // 淘汰 'b'\n// $lru->get('b');        // null\n" ]
+    }
+    ,
+    {
+        "name-zh": "最小栈(支持 getMin)",
+        "name-en": "Min Stack (getMin)",
+        "description-zh": "栈支持 push/pop/top 并以 O(1) 返回最小值，使用辅助栈保存当前最小值",
+        "description-en": "Stack supporting push/pop/top and O(1) getMin using an auxiliary stack",
+        "dependencies": [],
+        "use_to": ["stack", "data structure"],
+        "tags": ["min stack", "stack", "data structure"],
+        "input": [],
+        "input_type": [],
+        "return": ["class"],
+        "return_type": ["MinStack"],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["<?php\nclass MinStack {\n    private array $stk = [];\n    private array $minStk = [];\n\n    public function push($x): void {\n        $this->stk[] = $x;\n        if (empty($this->minStk)) {\n            $this->minStk[] = $x;\n        } else {\n            $m = end($this->minStk);\n            $this->minStk[] = ($x < $m) ? $x : $m;\n        }\n    }\n\n    public function pop(){\n        if (empty($this->stk)) return null;\n        array_pop($this->minStk);\n        return array_pop($this->stk);\n    }\n\n    public function top(){\n        return empty($this->stk) ? null : end($this->stk);\n    }\n\n    public function getMin(){\n        return empty($this->minStk) ? null : end($this->minStk);\n    }\n}\n\n// 使用示例:\n// $s = new MinStack();\n// $s->push(3); $s->push(5); $s->push(2);\n// $s->getMin(); // 2\n// $s->pop();    // 2\n// $s->getMin(); // 3\n" ]
+    }
 ]

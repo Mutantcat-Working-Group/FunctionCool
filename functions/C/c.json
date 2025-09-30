@@ -2290,4 +2290,21 @@
         "memory_score": 80,
     "code": ["#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct { int n; int *t; } SegTree;\n\nSegTree* seg_build(int *a, int n){ SegTree* s=(SegTree*)malloc(sizeof(SegTree)); s->n=n; s->t=(int*)calloc(4*n, sizeof(int));\n    // build\n    int build(int idx,int l,int r){ if(l==r){ s->t[idx]=a[l]; return s->t[idx]; } int m=(l+r)/2; int L=build(idx*2,l,m), R=build(idx*2+1,m+1,r); return s->t[idx]=L+R; }\n    build(1,0,n-1); return s; }\n\nint seg_query(SegTree* s,int idx,int l,int r,int ql,int qr){ if(ql>r||qr<l) return 0; if(ql<=l&&r<=qr) return s->t[idx]; int m=(l+r)/2; return seg_query(s,idx*2,l,m,ql,qr)+seg_query(s,idx*2+1,m+1,r,ql,qr);}\n\nvoid seg_update(SegTree* s,int idx,int l,int r,int pos,int val){ if(l==r){ s->t[idx]=val; return; } int m=(l+r)/2; if(pos<=m) seg_update(s,idx*2,l,m,pos,val); else seg_update(s,idx*2+1,m+1,r,pos,val); s->t[idx]=s->t[idx*2]+s->t[idx*2+1]; }\n\nint main(){ int a[]={1,3,5,7,9,11}; int n=sizeof(a)/sizeof(a[0]); SegTree* s=seg_build(a,n);\n    printf(\"sum[1,3]=%d\\n\", seg_query(s,1,0,n-1,1,3)); seg_update(s,1,0,n-1,1,10); printf(\"after update, sum[1,3]=%d\\n\", seg_query(s,1,0,n-1,1,3)); free(s->t); free(s); return 0; }"]
     }
+    ,
+    {
+        "name-zh": "最小栈(支持 getMin)",
+        "name-en": "Min Stack (getMin)",
+        "description-zh": "使用两个栈：主栈存元素，辅助栈存当前位置最小值，实现 O(1) 获取最小值",
+        "description-en": "Two stacks: main values and current mins; O(1) getMin",
+        "dependencies": ["stdio.h", "stdlib.h", "limits.h"],
+        "use_to": ["stack", "data structure"],
+        "tags": ["min stack", "stack", "data structure"],
+        "input": [],
+        "input_type": [],
+        "return": [],
+        "return_type": ["void"],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["#include <stdio.h>\n#include <stdlib.h>\n#include <limits.h>\n\ntypedef struct { int *data; int top; int cap; } IntStack;\n\nIntStack* stk_new(int cap){ IntStack* s=(IntStack*)malloc(sizeof(IntStack)); s->data=(int*)malloc(sizeof(int)*cap); s->top=-1; s->cap=cap; return s; }\nvoid stk_free(IntStack* s){ if(!s) return; free(s->data); free(s); }\nint stk_empty(IntStack* s){ return s->top<0; }\nvoid stk_push(IntStack* s,int x){ if(s->top+1>=s->cap){ s->cap*=2; s->data=(int*)realloc(s->data,sizeof(int)*s->cap);} s->data[++s->top]=x; }\nint stk_pop(IntStack* s){ return s->top<0? INT_MIN : s->data[s->top--]; }\nint stk_top(IntStack* s){ return s->top<0? INT_MIN : s->data[s->top]; }\n\ntypedef struct { IntStack *val, *min; } MinStack;\n\nMinStack* minstack_new(int cap){ MinStack* m=(MinStack*)malloc(sizeof(MinStack)); m->val=stk_new(cap); m->min=stk_new(cap); return m; }\nvoid minstack_free(MinStack* m){ if(!m) return; stk_free(m->val); stk_free(m->min); free(m);}\nvoid minstack_push(MinStack* m,int x){ stk_push(m->val,x); int cur = stk_empty(m->min)? x : stk_top(m->min); stk_push(m->min, x < cur ? x : cur); }\nint minstack_pop(MinStack* m){ if(stk_empty(m->val)) return INT_MIN; stk_pop(m->min); return stk_pop(m->val); }\nint minstack_top(MinStack* m){ return stk_top(m->val); }\nint minstack_getMin(MinStack* m){ return stk_top(m->min); }\n\nint main(){ MinStack* ms=minstack_new(8); minstack_push(ms,3); minstack_push(ms,5); minstack_push(ms,2); printf(\"min=%d\\n\", minstack_getMin(ms)); minstack_pop(ms); printf(\"min=%d\\n\", minstack_getMin(ms)); minstack_free(ms); return 0; }"]
+    }
 ]

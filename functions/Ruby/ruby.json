@@ -417,4 +417,38 @@
     "memory_score": 95,
     "code": ["def quickselect(a, k) # k: 1-based\n  l = 0; r = a.length - 1; k -= 1\n  while l <= r\n    pivot = a[r]\n    i = l\n    (l...r).each do |j|\n      if a[j] <= pivot\n        a[i], a[j] = a[j], a[i]\n        i += 1\n      end\n    end\n    a[i], a[r] = a[r], a[i]\n    if i == k\n      return a[i]\n    elsif i > k\n      r = i - 1\n    else\n      l = i + 1\n    end\n  end\n  raise ArgumentError, 'k out of range'\nend"]
   }
+  ,
+  {
+    "name-zh": "并查集(独立类)",
+    "name-en": "Disjoint Set Union (Standalone)",
+    "description-zh": "路径压缩+按秩合并的并查集，提供 find/union/same 接口",
+    "description-en": "DSU with path compression and union by rank; find/union/same APIs",
+    "dependencies": [],
+    "use_to": ["data structure", "union-find"],
+    "tags": ["dsu", "union-find", "data structure"],
+    "input": ["n"],
+    "input_type": ["Integer"],
+    "return": ["class"],
+    "return_type": ["DSU"],
+    "timer_score": 96,
+    "memory_score": 96,
+    "code": ["class DSU\n  def initialize(n)\n    @p = (0...n).to_a\n    @r = Array.new(n, 0)\n  end\n  def find(x)\n    @p[x] = find(@p[x]) if @p[x] != x\n    @p[x]\n  end\n  def union(a,b)\n    a = find(a); b = find(b)\n    return false if a == b\n    if @r[a] < @r[b]\n      a, b = b, a\n    end\n    @p[b] = a\n    @r[a] += 1 if @r[a] == @r[b]\n    true\n  end\n  def same(a,b)\n    find(a) == find(b)\n  end\nend\n\n# 用法: d = DSU.new(5); d.union(0,1); d.union(3,4); d.same(0,1) #=> true"]
+  }
+  ,
+  {
+    "name-zh": "LRU 缓存(哈希+双向链表)",
+    "name-en": "LRU Cache (Hash + LinkedList)",
+    "description-zh": "O(1) 时间 get/put 的最近最少使用缓存，使用双向链表维护顺序+哈希定位",
+    "description-en": "O(1) get/put LRU cache using doubly-linked list and hash map",
+    "dependencies": [],
+    "use_to": ["cache", "data structure"],
+    "tags": ["lru", "cache", "data structure"],
+    "input": ["capacity"],
+    "input_type": ["Integer"],
+    "return": ["class"],
+    "return_type": ["LRUCache"],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": ["class LRUNode\n  attr_accessor :key, :val, :prev, :next\n  def initialize(key, val)\n    @key, @val = key, val\n    @prev = @next = nil\n  end\nend\n\nclass LRUCache\n  def initialize(capacity)\n    raise ArgumentError, 'capacity must be > 0' if capacity <= 0\n    @cap = capacity\n    @map = {}\n    @head = LRUNode.new(nil, nil)\n    @tail = LRUNode.new(nil, nil)\n    @head.next = @tail\n    @tail.prev = @head\n  end\n\n  def add_front(node)\n    node.prev = @head\n    node.next = @head.next\n    @head.next.prev = node\n    @head.next = node\n  end\n\n  def remove(node)\n    node.prev.next = node.next\n    node.next.prev = node.prev\n    node.prev = node.next = nil\n  end\n\n  def move_front(node)\n    remove(node)\n    add_front(node)\n  end\n\n  def pop_tail\n    node = @tail.prev\n    return nil if node.equal?(@head)\n    remove(node)\n    node\n  end\n\n  def get(key)\n    node = @map[key]\n    return nil unless node\n    move_front(node)\n    node.val\n  end\n\n  def put(key, value)\n    if (node = @map[key])\n      node.val = value\n      move_front(node)\n      return\n    end\n    node = LRUNode.new(key, value)\n    @map[key] = node\n    add_front(node)\n    if @map.length > @cap\n      old = pop_tail\n      @map.delete(old.key) if old && !old.key.nil?\n    end\n  end\nend\n\n# 用法: lru = LRUCache.new(2); lru.put(:a,1); lru.put(:b,2); lru.get(:a); lru.put(:c,3); lru.get(:b) #=> nil"]
+  }
 ]
