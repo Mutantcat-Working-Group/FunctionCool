@@ -838,6 +838,108 @@
         "timer_score": 95,
         "memory_score": 95,
         "code": ["type DSU struct { p, r []int }\nfunc NewDSU(n int) *DSU { p:=make([]int,n); r:=make([]int,n); for i:=0;i<n;i++{ p[i]=i }; return &DSU{p,r} }\nfunc (d *DSU) Find(x int) int { if d.p[x]==x { return x }; d.p[x]=d.Find(d.p[x]); return d.p[x] }\nfunc (d *DSU) Unite(a, b int) bool { a=d.Find(a); b=d.Find(b); if a==b { return false }; if d.r[a]<d.r[b] { a,b=b,a }; d.p[b]=a; if d.r[a]==d.r[b] { d.r[a]++ }; return true }\nfunc (d *DSU) Same(a, b int) bool { return d.Find(a)==d.Find(b) }"]
+    }
+    ,
+    {
+        "name-zh": "Modbus CRC16",
+        "name-en": "Modbus CRC16",
+        "description-zh": "计算 Modbus CRC16，返回小端2字节",
+        "description-en": "Compute Modbus CRC16, return 2 bytes little-endian",
+        "dependencies": [],
+        "use_to": ["hardware", "modbus", "crc"],
+        "tags": ["checksum", "crc16", "modbus"],
+        "input": ["data"],
+        "input_type": ["[]byte"],
+        "return": ["crcLE"],
+        "return_type": ["[]byte"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["func ModbusCRC16(data []byte) []byte {\n    crc := uint16(0xFFFF)\n    for _, b := range data {\n        crc ^= uint16(b)\n        for i := 0; i < 8; i++ {\n            if (crc & 1) != 0 {\n                crc = (crc >> 1) ^ 0xA001\n            } else {\n                crc >>= 1\n            }\n        }\n    }\n    return []byte{byte(crc & 0xFF), byte(crc >> 8)}\n}"]
+    }
+    ,
+    {
+        "name-zh": "CRC32(IEEE)",
+        "name-en": "CRC32 (IEEE)",
+        "description-zh": "计算 CRC-32(IEEE) 并以大端4字节返回",
+        "description-en": "Compute CRC-32 (IEEE) and return 4 bytes big-endian",
+        "dependencies": ["hash/crc32"],
+        "use_to": ["hardware", "crc", "checksum"],
+        "tags": ["checksum", "crc32", "ieee"],
+        "input": ["data"],
+        "input_type": ["[]byte"],
+        "return": ["crcBE"],
+        "return_type": ["[]byte"],
+        "timer_score": 100,
+        "memory_score": 100,
+    "code": ["import \"hash/crc32\"\n\nfunc CRC32IEEE(data []byte) []byte {\n    v := crc32.ChecksumIEEE(data)\n    return []byte{byte(v >> 24), byte(v >> 16), byte(v >> 8), byte(v)}\n}"]
+    }
+    ,
+    {
+        "name-zh": "Sum8 校验",
+        "name-en": "Sum8 Checksum",
+        "description-zh": "对所有字节求和取低8位(0..255)",
+        "description-en": "Sum of all bytes modulo 256 (0..255)",
+        "dependencies": [],
+        "use_to": ["hardware", "checksum"],
+        "tags": ["checksum", "sum8"],
+        "input": ["data"],
+        "input_type": ["[]byte"],
+        "return": ["sum8"],
+        "return_type": ["byte"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["func ChecksumSum8(data []byte) byte {\n    var s uint32\n    for _, b := range data { s += uint32(b) }\n    return byte(s & 0xFF)\n}"]
+    }
+    ,
+    {
+        "name-zh": "LRC8 校验",
+        "name-en": "LRC8 Checksum",
+        "description-zh": "纵向冗余校验(LRC)，使 (sum + LRC) & 0xFF == 0",
+        "description-en": "Longitudinal Redundancy Check so that (sum + LRC) & 0xFF == 0",
+        "dependencies": [],
+        "use_to": ["hardware", "checksum"],
+        "tags": ["checksum", "lrc"],
+        "input": ["data"],
+        "input_type": ["[]byte"],
+        "return": ["lrc"],
+        "return_type": ["byte"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["func LRC8(data []byte) byte {\n    var s uint32\n    for _, b := range data { s += uint32(b) }\n    return byte((-int32(s)) & 0xFF)\n}"]
+    }
+    ,
+    {
+        "name-zh": "异或校验",
+        "name-en": "XOR Checksum",
+        "description-zh": "逐字节异或校验，返回0..255",
+        "description-en": "Byte-wise XOR checksum, returns 0..255",
+        "dependencies": [],
+        "use_to": ["hardware", "checksum"],
+        "tags": ["checksum", "xor"],
+        "input": ["data"],
+        "input_type": ["[]byte"],
+        "return": ["xor"],
+        "return_type": ["byte"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["func ChecksumXOR(data []byte) byte {\n    var x byte\n    for _, b := range data { x ^= b }\n    return x\n}"]
+    }
+    ,
+    {
+        "name-zh": "奇偶校验位",
+        "name-en": "Parity Bit",
+        "description-zh": "计算一个字节的奇/偶校验位；odd=true为奇校验",
+        "description-en": "Compute parity bit for one byte; odd=true for odd parity",
+        "dependencies": [],
+        "use_to": ["hardware", "parity", "serial"],
+        "tags": ["parity", "bit"],
+        "input": ["b", "odd"],
+        "input_type": ["byte", "bool"],
+        "return": ["parity"],
+        "return_type": ["byte"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["func ParityBit(b byte, odd bool) byte {\n    ones := 0\n    for i := 0; i < 8; i++ { if ((b>>uint(i)) & 1) == 1 { ones++ } }\n    if odd { return byte((ones & 1) ^ 1) }\n    return byte(ones & 1)\n}"]
     },
     {
         "name-zh": "最小栈(MinStack)",
