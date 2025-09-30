@@ -927,4 +927,55 @@
         "memory_score": 100,
         "code": ["#include <vector>\n#include <algorithm>\n\nint lower_bound_index(const std::vector<int>& a, int x) {\n    auto it = std::lower_bound(a.begin(), a.end(), x);\n    if (it == a.end()) return -1;\n    return (int)(it - a.begin());\n}"]
     }
+    ,
+    {
+        "name-zh": "树状数组(BIT)",
+        "name-en": "Fenwick Tree (BIT)",
+        "description-zh": "支持前缀和查询与单点更新的数据结构，时间复杂度O(log n)",
+        "description-en": "Data structure supporting prefix-sum query and point update in O(log n)",
+        "dependencies": ["vector"],
+        "use_to": ["data structure", "range query"],
+        "tags": ["data-structure", "fenwick", "bit"],
+        "input": [],
+        "input_type": [],
+        "return": [],
+        "return_type": [],
+        "timer_score": 90,
+        "memory_score": 92,
+        "code": ["#include <vector>\n\nclass Fenwick {\n  int n;\n  std::vector<long long> bit; // 1-indexed\npublic:\n  explicit Fenwick(int n_): n(n_), bit(n+1, 0) {}\n  explicit Fenwick(const std::vector<long long>& a): n((int)a.size()), bit(n+1, 0) {\n    for (int i = 1; i <= n; ++i) add(i, a[i-1]);\n  }\n  void add(int idx, long long delta) {\n    for (; idx <= n; idx += idx & -idx) bit[idx] += delta;\n  }\n  long long sum(int idx) const {\n    long long r = 0;\n    for (; idx > 0; idx -= idx & -idx) r += bit[idx];\n    return r;\n  }\n  long long rangeSum(int l, int r) const {\n    if (r < l) return 0;\n    return sum(r) - sum(l - 1);\n  }\n};"]
+    }
+    ,
+    {
+        "name-zh": "线段树(区间和, 单点更新)",
+        "name-en": "Segment Tree (range sum)",
+        "description-zh": "支持区间和查询与单点更新的线段树实现",
+        "description-en": "Segment tree supporting range-sum query and point update",
+        "dependencies": ["vector"],
+        "use_to": ["data structure", "range query"],
+        "tags": ["data-structure", "segment-tree"],
+        "input": [],
+        "input_type": [],
+        "return": [],
+        "return_type": [],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": ["#include <vector>\n\nclass SegTree {\n  int n;\n  std::vector<long long> t;\npublic:\n  explicit SegTree(int n_) {\n    n = 1;\n    while (n < n_) n <<= 1;\n    t.assign(2 * n, 0);\n  }\n  explicit SegTree(const std::vector<long long>& a): SegTree((int)a.size()) {\n    for (int i = 0; i < (int)a.size(); ++i) t[n + i] = a[i];\n    for (int i = n - 1; i > 0; --i) t[i] = t[i << 1] + t[i << 1 | 1];\n  }\n  void pointUpdate(int i, long long val) {\n    int p = n + i;\n    t[p] = val;\n    for (p >>= 1; p > 0; p >>= 1) t[p] = t[p << 1] + t[p << 1 | 1];\n  }\n  long long rangeSum(int l, int r) const {\n    long long res = 0;\n    for (l += n, r += n; l <= r; l >>= 1, r >>= 1) {\n      if (l & 1) res += t[l++];\n      if (!(r & 1)) res += t[r--];\n    }\n    return res;\n  }\n};"]
+    }
+    ,
+    {
+        "name-zh": "LRU缓存(整数键值)",
+        "name-en": "LRU Cache (int->int)",
+        "description-zh": "使用双向链表+哈希表实现的LRU缓存，get/put均为O(1)",
+        "description-en": "LRU cache using list + unordered_map with O(1) get/put",
+        "dependencies": ["unordered_map", "list", "utility"],
+        "use_to": ["cache", "data structure"],
+        "tags": ["data-structure", "lru", "cache"],
+        "input": [],
+        "input_type": [],
+        "return": [],
+        "return_type": [],
+        "timer_score": 88,
+        "memory_score": 90,
+        "code": ["#include <unordered_map>\n#include <list>\n#include <utility>\n\nclass LRUCache {\n  int cap;\n  std::list<std::pair<int,int>> lst; // front: most recent\n  std::unordered_map<int, std::list<std::pair<int,int>>::iterator> mp;\n  void touch(std::unordered_map<int, std::list<std::pair<int,int>>::iterator>::iterator it) {\n    int k = it->first;\n    auto node = it->second;\n    int v = node->second;\n    lst.erase(node);\n    lst.push_front({k, v});\n    it->second = lst.begin();\n  }\npublic:\n  explicit LRUCache(int capacity): cap(capacity) {}\n  int get(int key) {\n    auto it = mp.find(key);\n    if (it == mp.end()) return -1;\n    touch(it);\n    return it->second->second;\n  }\n  void put(int key, int value) {\n    auto it = mp.find(key);\n    if (it != mp.end()) {\n      it->second->second = value;\n      touch(it);\n      return;\n    }\n    if ((int)lst.size() == cap) {\n      auto back = lst.back();\n      mp.erase(back.first);\n      lst.pop_back();\n    }\n    lst.push_front({key, value});\n    mp[key] = lst.begin();\n  }\n};"]
+    }
 ]

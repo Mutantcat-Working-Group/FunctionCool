@@ -806,5 +806,53 @@
         "timer_score": 95,
         "memory_score": 95,
         "code": ["func egcd(a, b int64) (g, x, y int64) {\n    if b == 0 { return a, 1, 0 }\n    g1, x1, y1 := egcd(b, a%b)\n    return g1, y1, x1 - (a/b)*y1\n}\nfunc modInverse(a, m int64) int64 {\n    g, x, _ := egcd(a, m)\n    if g != 1 && g != -1 { return -1 }\n    x %= m\n    if x < 0 { x += m }\n    return x\n}"]
+    },
+    {
+        "name-zh": "线段树(区间和, 单点更新)",
+        "name-en": "Segment Tree (range sum)",
+        "description-zh": "支持区间和查询与单点更新的线段树",
+        "description-en": "Segment tree supporting range-sum query and point update",
+        "dependencies": [],
+        "use_to": ["data structure", "range query"],
+        "tags": ["data-structure", "segment-tree"],
+        "input": [],
+        "input_type": [],
+        "return": [],
+        "return_type": [],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": ["type SegTree struct { n int; t []int }\nfunc NewSegTree(a []int) *SegTree { n0:=len(a); n:=1; for n<n0 { n<<=1 }; t:=make([]int, n<<1); for i:=0;i<n0;i++{ t[n+i]=a[i] }; for i:=n-1;i>0;i--{ t[i]=t[i<<1]+t[i<<1|1] }; return &SegTree{n:n, t:t} }\nfunc (s *SegTree) PointUpdate(i, val int){ p:=s.n+i; s.t[p]=val; for p>>=1; p>0; p>>=1 { s.t[p]=s.t[p<<1]+s.t[p<<1|1] } }\nfunc (s *SegTree) RangeSum(l, r int) int { l+=s.n; r+=s.n; res:=0; for l<=r { if (l&1)==1 { res+=s.t[l]; l++ } ; if (r&1)==0 { res+=s.t[r]; r-- } ; l>>=1; r>>=1 } ; return res }"]
+    },
+    {
+        "name-zh": "并查集(独立结构)",
+        "name-en": "Disjoint Set Union (standalone)",
+        "description-zh": "带路径压缩与按秩合并的并查集，支持Find/Unite/Same",
+        "description-en": "Union-Find with path compression and union by rank; supports Find/Unite/Same",
+        "dependencies": [],
+        "use_to": ["data structure", "union-find"],
+        "tags": ["data-structure", "dsu", "union-find"],
+        "input": [],
+        "input_type": [],
+        "return": [],
+        "return_type": [],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["type DSU struct { p, r []int }\nfunc NewDSU(n int) *DSU { p:=make([]int,n); r:=make([]int,n); for i:=0;i<n;i++{ p[i]=i }; return &DSU{p,r} }\nfunc (d *DSU) Find(x int) int { if d.p[x]==x { return x }; d.p[x]=d.Find(d.p[x]); return d.p[x] }\nfunc (d *DSU) Unite(a, b int) bool { a=d.Find(a); b=d.Find(b); if a==b { return false }; if d.r[a]<d.r[b] { a,b=b,a }; d.p[b]=a; if d.r[a]==d.r[b] { d.r[a]++ }; return true }\nfunc (d *DSU) Same(a, b int) bool { return d.Find(a)==d.Find(b) }"]
+    },
+    {
+        "name-zh": "最小栈(MinStack)",
+        "name-en": "Min Stack",
+        "description-zh": "支持O(1)获取最小值的栈，双栈实现",
+        "description-en": "Stack with O(1) getMin implemented by two slices",
+        "dependencies": [],
+        "use_to": ["data structure", "stack"],
+        "tags": ["data-structure", "stack", "minstack"],
+        "input": [],
+        "input_type": [],
+        "return": [],
+        "return_type": [],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["type MinStack struct { s []int; mn []int }\nfunc NewMinStack() *MinStack { return &MinStack{s:make([]int,0), mn:make([]int,0)} }\nfunc (m *MinStack) Push(x int){ m.s = append(m.s, x); if len(m.mn)==0 || x <= m.mn[len(m.mn)-1] { m.mn = append(m.mn, x) } }\nfunc (m *MinStack) Pop() int { x := m.s[len(m.s)-1]; m.s = m.s[:len(m.s)-1]; if x == m.mn[len(m.mn)-1] { m.mn = m.mn[:len(m.mn)-1] }; return x }\nfunc (m *MinStack) Top() int { return m.s[len(m.s)-1] }\nfunc (m *MinStack) GetMin() int { return m.mn[len(m.mn)-1] }\nfunc (m *MinStack) IsEmpty() bool { return len(m.s)==0 }"]
     }
 ]

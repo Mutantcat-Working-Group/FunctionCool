@@ -864,5 +864,53 @@
         "timer_score": 85,
         "memory_score": 90,
         "code": ["import java.util.*;\npublic List<int[]> convexHull(List<int[]> pts){ pts=new ArrayList<>(pts); pts.sort((a,b)-> a[0]==b[0]? Integer.compare(a[1],b[1]) : Integer.compare(a[0],b[0])); if(pts.size()<=1) return pts; List<int[]> lower=new ArrayList<>(), upper=new ArrayList<>(); for(int[] p: pts){ while(lower.size()>=2 && cross(lower.get(lower.size()-2), lower.get(lower.size()-1), p) <= 0) lower.remove(lower.size()-1); lower.add(p); } Collections.reverse(pts); for(int[] p: pts){ while(upper.size()>=2 && cross(upper.get(upper.size()-2), upper.get(upper.size()-1), p) <= 0) upper.remove(upper.size()-1); upper.add(p); } lower.remove(lower.size()-1); upper.remove(upper.size()-1); lower.addAll(upper); return lower; }\nprivate long cross(int[] a,int[] b,int[] c){ return 1L*(b[0]-a[0])*(c[1]-a[1]) - 1L*(b[1]-a[1])*(c[0]-a[0]); }"]
+    },
+    {
+        "name-zh": "并查集(独立类)",
+        "name-en": "Disjoint Set Union (standalone)",
+        "description-zh": "带路径压缩与按秩合并的并查集，支持find/unite/same",
+        "description-en": "Union-Find with path compression and union by rank; supports find/unite/same",
+        "dependencies": [],
+        "use_to": ["data structure", "union-find"],
+        "tags": ["data-structure", "dsu", "union-find"],
+        "input": [],
+        "input_type": [],
+        "return": [],
+        "return_type": [],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["class DSU { int[] p, r; DSU(int n){ p=new int[n]; r=new int[n]; for(int i=0;i<n;i++) p[i]=i; } int find(int x){ return p[x]==x?x:(p[x]=find(p[x])); } boolean unite(int a,int b){ a=find(a); b=find(b); if(a==b) return false; if(r[a]<r[b]){int t=a;a=b;b=t;} p[b]=a; if(r[a]==r[b]) r[a]++; return true; } boolean same(int a,int b){ return find(a)==find(b); } }"]
+    },
+    {
+        "name-zh": "树状数组(BIT)",
+        "name-en": "Fenwick Tree (BIT)",
+        "description-zh": "支持前缀和与单点修改，O(log n) 操作",
+        "description-en": "Support prefix sums and point updates in O(log n)",
+        "dependencies": [],
+        "use_to": ["data structure", "prefix sum"],
+        "tags": ["data-structure", "fenwick", "bit"],
+        "input": [],
+        "input_type": [],
+        "return": [],
+        "return_type": [],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["class Fenwick { int n; long[] t; Fenwick(int n){ this.n=n; t=new long[n+1]; } void add(int i,int delta){ for(i+=1;i<=n;i+=i&-i) t[i]+=delta; } long sum(int i){ long s=0; for(i+=1;i>0;i-=i&-i) s+=t[i]; return s; } long rangeSum(int l,int r){ if(r<l) return 0; return sum(r)-sum(l-1); } }"]
+    },
+    {
+        "name-zh": "最小栈(MinStack)",
+        "name-en": "Min Stack",
+        "description-zh": "支持O(1)获取最小值的栈，双栈实现",
+        "description-en": "Stack with O(1) getMin implemented by two stacks",
+        "dependencies": ["java.util"],
+        "use_to": ["data structure", "stack"],
+        "tags": ["data-structure", "stack", "minstack"],
+        "input": [],
+        "input_type": [],
+        "return": [],
+        "return_type": [],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": ["import java.util.*; class MinStack { Deque<Integer> s=new ArrayDeque<>(), mn=new ArrayDeque<>(); void push(int x){ s.push(x); if(mn.isEmpty()||x<=mn.peek()) mn.push(x); } int pop(){ int x=s.pop(); if(x==mn.peek()) mn.pop(); return x; } int top(){ return s.peek(); } int getMin(){ return mn.peek(); } boolean isEmpty(){ return s.isEmpty(); } }"]
     }
 ]
