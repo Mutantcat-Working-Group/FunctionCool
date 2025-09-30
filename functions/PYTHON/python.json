@@ -1,5 +1,21 @@
 [
     {
+        "name-zh": "Modbus CRC16",
+        "name-en": "Modbus CRC16",
+        "description-zh": "计算 Modbus CRC16 校验码（对全部字节，返回小端2字节）",
+        "description-en": "Compute Modbus CRC16 of all bytes, returns 2 bytes little-endian",
+        "dependencies": [],
+        "use_to": ["hardware", "modbus", "crc"],
+        "tags": ["checksum", "crc16", "modbus"],
+        "input": ["data"],
+        "input_type": ["bytes"],
+        "return": ["crc_le"],
+        "return_type": ["bytes"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["def getmodbuscrc16(data: bytes) -> bytes:\n    \"\"\"计算 Modbus CRC16 校验码，并以小端两字节返回\n    多数 Modbus RTU 帧末尾附加此两字节 CRC (低字节在前)。\n    \"\"\"\n    crc = 0xFFFF\n    for byte in data:\n        crc ^= byte\n        for _ in range(8):\n            if (crc & 0x0001) != 0:\n                crc >>= 1\n                crc ^= 0xA001\n            else:\n                crc >>= 1\n    return crc.to_bytes(2, 'little')"]
+    },
+    {
         "name-zh": "路径拼接",
         "name-en": "Path Join",
         "description-zh": "使用系统路径分隔符拼接路径",
