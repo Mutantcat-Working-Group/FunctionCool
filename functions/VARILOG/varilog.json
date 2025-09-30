@@ -515,4 +515,72 @@
     "memory_score": 95,
     "code": ["module serial_to_parallel #(\n    parameter WIDTH = 8\n)(\n    input  wire              clk,\n    input  wire              rst,\n    input  wire              serial_in,\n    input  wire              load,\n    output reg [WIDTH-1:0]   parallel_out,\n    output reg               done\n);\n    reg [WIDTH-1:0] shift_reg;\n    reg [$clog2(WIDTH)-1:0] bit_counter;\n    reg loading;\n    \n    always @(posedge clk or posedge rst) begin\n        if (rst) begin\n            shift_reg <= {WIDTH{1'b0}};\n            parallel_out <= {WIDTH{1'b0}};\n            bit_counter <= 0;\n            loading <= 1'b0;\n            done <= 1'b0;\n        end else begin\n            done <= 1'b0;\n            \n            if (load && !loading) begin\n                loading <= 1'b1;\n                bit_counter <= 0;\n                shift_reg <= {WIDTH{1'b0}};\n            end else if (loading) begin\n                shift_reg <= {shift_reg[WIDTH-2:0], serial_in};\n                bit_counter <= bit_counter + 1'b1;\n                \n                if (bit_counter == WIDTH - 1) begin\n                    parallel_out <= {shift_reg[WIDTH-2:0], serial_in};\n                    loading <= 1'b0;\n                    done <= 1'b1;\n                end\n            end\n        end\n    end\nendmodule"]
   }
+  ,
+  {
+    "name-zh": "CRC16(Modbus)",
+    "name-en": "CRC16 (Modbus)",
+    "description-zh": "按 Modbus 规范(初值16'hFFFF, 多项式16'hA001) 逐字节计算，LSB first 输出",
+    "description-en": "Modbus CRC16 (init FFFF, poly A001), byte-wise, LSB-first output",
+    "dependencies": [],
+    "use_to": ["crc", "checksum", "modbus"],
+    "tags": ["verilog", "crc", "modbus"],
+    "input": ["clk", "rst", "data_in", "data_valid"],
+    "input_type": ["wire", "wire", "wire[7:0]", "wire"],
+    "return": ["crc_out"],
+    "return_type": ["reg[15:0]"],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": ["module crc16_modbus(\n    input  wire       clk,\n    input  wire       rst,\n    input  wire [7:0] data_in,\n    input  wire       data_valid,\n    output reg [15:0] crc_out\n);\n    integer i;\n    always @(posedge clk or posedge rst) begin\n        if (rst) begin\n            crc_out <= 16'hFFFF;\n        end else if (data_valid) begin\n            crc_out <= crc_out ^ data_in;\n            for (i=0; i<8; i=i+1) begin\n                if (crc_out[0])\n                    crc_out <= (crc_out >> 1) ^ 16'hA001;\n                else\n                    crc_out <= (crc_out >> 1);\n            end\n        end\n    end\nendmodule"]
+  }
+  ,
+  {
+    "name-zh": "CRC32(IEEE)",
+    "name-en": "CRC32 (IEEE)",
+    "description-zh": "CRC32(IEEE) 逐字节计算(反射实现)，输出32位",
+    "description-en": "CRC32 (IEEE) byte-wise reflected implementation, 32-bit output",
+    "dependencies": [],
+    "use_to": ["crc", "checksum"],
+    "tags": ["verilog", "crc"],
+    "input": ["clk", "rst", "data_in", "data_valid"],
+    "input_type": ["wire", "wire", "wire[7:0]", "wire"],
+    "return": ["crc_out"],
+    "return_type": ["reg[31:0]"],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": ["module crc32_ieee(\n    input  wire       clk,\n    input  wire       rst,\n    input  wire [7:0] data_in,\n    input  wire       data_valid,\n    output reg [31:0] crc_out\n);\n    integer i;\n    reg [31:0] x;\n    always @(posedge clk or posedge rst) begin\n        if (rst) begin\n            crc_out <= 32'hFFFF_FFFF;\n        end else if (data_valid) begin\n            x = (crc_out ^ data_in) & 32'hFF;\n            for (i=0; i<8; i=i+1) begin\n                if (x[0]) x = (x >> 1) ^ 32'hEDB88320;\n                else      x = x >> 1;\n            end\n            crc_out <= (crc_out >> 8) ^ x;\n        end\n    end\n    always @(*) begin\n        // 若需要最终值，可在外部对 crc_out ^ 32'hFFFF_FFFF 取反\n    end\nendmodule"]
+  }
+  ,
+  {
+    "name-zh": "奇偶校验位生成器",
+    "name-en": "Parity Generator",
+    "description-zh": "对 8 位输入计算奇/偶校验位(参数 ODD=1 为奇校验)",
+    "description-en": "Compute odd/even parity bit for 8-bit input (ODD=1 for odd)",
+    "dependencies": [],
+    "use_to": ["parity", "serial"],
+    "tags": ["verilog", "parity"],
+    "input": ["data"],
+    "input_type": ["wire[7:0]"],
+    "return": ["parity_bit"],
+    "return_type": ["wire"],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": ["module parity_gen #(parameter ODD = 1) (\n    input  wire [7:0] data,\n    output wire       parity_bit\n);\n    wire p = ^data; // reduction XOR\n    assign parity_bit = ODD ? ~p : p;\nendmodule"]
+  }
+  ,
+  {
+    "name-zh": "LRC8 累加校验器",
+    "name-en": "LRC8 Accumulator",
+    "description-zh": "逐字节累加并输出 LRC8，使 (sum + LRC) & 8'h00 == 0",
+    "description-en": "Byte-wise accumulator to output LRC8 where (sum + LRC) & 0xFF == 0",
+    "dependencies": [],
+    "use_to": ["checksum", "lrc"],
+    "tags": ["verilog", "checksum"],
+    "input": ["clk", "rst", "data_in", "data_valid"],
+    "input_type": ["wire", "wire", "wire[7:0]", "wire"],
+    "return": ["lrc"],
+    "return_type": ["reg[7:0]"],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": ["module lrc8_acc(\n    input  wire       clk,\n    input  wire       rst,\n    input  wire [7:0] data_in,\n    input  wire       data_valid,\n    output reg  [7:0] lrc\n);\n    reg [7:0] sum;\n    always @(posedge clk or posedge rst) begin\n        if (rst) begin\n            sum <= 8'h00;\n            lrc <= 8'h00;\n        end else if (data_valid) begin\n            sum <= sum + data_in;\n            lrc <= (-sum) & 8'hFF;\n        end\n    end\nendmodule"]
+  }
 ]

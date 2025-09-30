@@ -466,4 +466,106 @@
         "memory_score": 96,
         "code": ["struct Fenwick { n: usize, bit: Vec<i64> }\nimpl Fenwick {\n    fn new(n: usize) -> Self { Self { n, bit: vec![0; n+1] } }\n    fn add(&mut self, mut idx: usize, delta: i64) {\n        idx += 1; // 1-based\n        while idx <= self.n {\n            self.bit[idx] += delta;\n            idx += idx & (!idx + 1); // idx += idx & -idx\n        }\n    }\n    fn sum_prefix(&self, mut idx: usize) -> i64 {\n        let mut res = 0i64; idx += 1;\n        while idx > 0 {\n            res += self.bit[idx];\n            idx &= idx - 1;\n        }\n        res\n    }\n    fn range_sum(&self, l: usize, r: usize) -> i64 {\n        if r < l { return 0 }\n        self.sum_prefix(r) - if l==0 { 0 } else { self.sum_prefix(l-1) }\n    }\n}\n\n// 用法示例\n// let mut fw = Fenwick::new(5);\n// fw.add(0, 1); fw.add(3, 2); assert_eq!(fw.range_sum(0,3), 3);"]
     }
+    ,
+    {
+        "name-zh": "Modbus CRC16",
+        "name-en": "Modbus CRC16",
+        "description-zh": "计算 Modbus CRC16，返回小端两字节(Vec<u8>长度2)",
+        "description-en": "Compute Modbus CRC16, return 2 bytes little-endian (Vec<u8>)",
+        "dependencies": ["std"],
+        "use_to": ["hardware", "modbus", "crc"],
+        "tags": ["checksum", "crc16", "modbus"],
+        "input": ["data"],
+        "input_type": ["&[u8]"],
+        "return": ["crc_le"],
+        "return_type": ["Vec<u8>"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["fn modbus_crc16_le(data: &[u8]) -> Vec<u8> {\n    let mut crc: u16 = 0xFFFF;\n    for &b in data {\n        crc ^= b as u16;\n        for _ in 0..8 {\n            if (crc & 1) != 0 { crc = (crc >> 1) ^ 0xA001; } else { crc >>= 1; }\n        }\n    }\n    vec![(crc & 0xFF) as u8, (crc >> 8) as u8]\n}"]
+    }
+    ,
+    {
+        "name-zh": "CRC32(IEEE)",
+        "name-en": "CRC32 (IEEE)",
+        "description-zh": "计算 CRC32(IEEE)，返回大端4字节(Vec<u8>)",
+        "description-en": "Compute CRC32 (IEEE), return 4 bytes big-endian (Vec<u8>)",
+        "dependencies": ["std"],
+        "use_to": ["hardware", "crc", "checksum"],
+        "tags": ["checksum", "crc32", "ieee"],
+        "input": ["data"],
+        "input_type": ["&[u8]"],
+        "return": ["crc_be"],
+        "return_type": ["Vec<u8>"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["fn crc32_ieee_be(data: &[u8]) -> Vec<u8> {\n    const POLY: u32 = 0xEDB88320; // reflected poly for bitwise algo\n    let mut crc: u32 = 0xFFFF_FFFF;\n    for &b in data {\n        let mut x = (crc ^ (b as u32)) & 0xFF;\n        for _ in 0..8 {\n            x = if (x & 1) != 0 { (x >> 1) ^ POLY } else { x >> 1 };\n        }\n        crc = (crc >> 8) ^ x;\n    }\n    crc ^= 0xFFFF_FFFF;\n    crc.to_be_bytes().to_vec()\n}"]
+    }
+    ,
+    {
+        "name-zh": "Sum8 校验",
+        "name-en": "Sum8 Checksum",
+        "description-zh": "对所有字节求和取低8位(0..255)",
+        "description-en": "Sum of all bytes modulo 256 (0..255)",
+        "dependencies": ["std"],
+        "use_to": ["hardware", "checksum"],
+        "tags": ["checksum", "sum8"],
+        "input": ["data"],
+        "input_type": ["&[u8]"],
+        "return": ["sum8"],
+        "return_type": ["u8"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["fn checksum_sum8(data: &[u8]) -> u8 { data.iter().fold(0u16, |acc, &b| acc + b as u16) as u8 }"]
+    }
+    ,
+    {
+        "name-zh": "LRC8 校验",
+        "name-en": "LRC8 Checksum",
+        "description-zh": "纵向冗余校验(LRC)，使 (sum + LRC) & 0xFF == 0",
+        "description-en": "Longitudinal Redundancy Check so that (sum + LRC) & 0xFF == 0",
+        "dependencies": ["std"],
+        "use_to": ["hardware", "checksum"],
+        "tags": ["checksum", "lrc"],
+        "input": ["data"],
+        "input_type": ["&[u8]"],
+        "return": ["lrc"],
+        "return_type": ["u8"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["fn lrc8(data: &[u8]) -> u8 { ((-(data.iter().fold(0u16, |acc, &b| acc + b as u16) as i16)) as i16) as i32 as u8 }"]
+    }
+    ,
+    {
+        "name-zh": "异或校验",
+        "name-en": "XOR Checksum",
+        "description-zh": "逐字节异或校验，返回0..255",
+        "description-en": "Byte-wise XOR checksum, returns 0..255",
+        "dependencies": ["std"],
+        "use_to": ["hardware", "checksum"],
+        "tags": ["checksum", "xor"],
+        "input": ["data"],
+        "input_type": ["&[u8]"],
+        "return": ["xor"],
+        "return_type": ["u8"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["fn checksum_xor(data: &[u8]) -> u8 { data.iter().fold(0u8, |acc, &b| acc ^ b) }"]
+    }
+    ,
+    {
+        "name-zh": "奇偶校验位",
+        "name-en": "Parity Bit",
+        "description-zh": "计算一个字节的奇/偶校验位；odd=true 为奇校验",
+        "description-en": "Compute parity bit for one byte; odd=true for odd parity",
+        "dependencies": ["std"],
+        "use_to": ["hardware", "parity", "serial"],
+        "tags": ["parity", "bit"],
+        "input": ["byte", "odd"],
+        "input_type": ["u8", "bool"],
+        "return": ["parity_bit"],
+        "return_type": ["u8"],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": ["fn parity_bit(byte: u8, odd: bool) -> u8 { let ones = byte.count_ones() as u8; ((ones & 1) ^ (if odd {1} else {0})) as u8 }"]
+    }
 ]
