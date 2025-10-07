@@ -221,7 +221,7 @@
             <div class="friend-links">
                 <span id="friend-links-text">友情链接：</span>
                 <a href="https://www.mutantcat.org/" target="_blank" rel="noopener">异猫工作群</a>
-                <a href="https://www.fcnesyouxi.top/" target="_blank" rel="noopener">FC/MNES游戏</a>
+                <a href="https://www.fcnesyouxi.top/" target="_blank" rel="noopener">FC/NES游戏</a>
                 <a href="https://www.jqshengtian.top/" target="_blank" rel="noopener">学习资料</a>
             </div>
         </div>
