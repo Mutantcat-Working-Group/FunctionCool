@@ -14,7 +14,7 @@ http_response_code(404);
     <link rel="stylesheet" href="assets/style.css?v=20250917">
     <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="apple-touch-icon" href="assets/logo.png">
-    <script src="assets/i18n.js"></script>
+    <script src="assets/i18n.js?v=20260518"></script>
 </head>
 <body>
     <header>

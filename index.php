@@ -235,6 +235,6 @@
         </div>
     </footer>
 
-    <script src="assets/i18n.js"></script>
+    <script src="assets/i18n.js?v=20260518"></script>
 </body>
 </html>

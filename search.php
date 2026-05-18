@@ -301,7 +301,7 @@ if ($query !== '') {
         </div>
     </footer>
 
-    <script src="assets/i18n.js"></script>
+    <script src="assets/i18n.js?v=20260518"></script>
     <script>
         // 代码显示/隐藏切换
         document.addEventListener('DOMContentLoaded', function() {
