@@ -303,13 +303,13 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 				console.log('Initializing language system...');
 				var current = window.getCurrentLanguage ? window.getCurrentLanguage() : 'zh';
 				console.log('Detected current language:', current);
-				
+
 				// 初始化页面语言
 				if (window.setLanguage) {
 					console.log('Setting initial language...');
 					window.setLanguage(current);
 				}
-				
+
 				var langBtn = document.getElementById('lang-btn');
 				if (langBtn) {
 					langBtn.textContent = current === 'zh' ? 'English' : '中文';
@@ -331,8 +331,8 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 					};
 				}
 			}, 100);
-		} catch (e) { 
-			console.error('Language initialization error:', e); 
+		} catch (e) {
+			console.error('Language initialization error:', e);
 		}
 	});
 
@@ -352,59 +352,64 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 			var tokenMatch = tokenResult.textContent.match(/[a-f0-9]{32}/);
 			if (tokenMatch) {
 				var token = tokenMatch[0];
-				var pattern = lang === 'zh' ? 
-					'您的 token：${token}（30分钟有效）' : 
+				var pattern = lang === 'zh' ?
+					'您的 token：${token}（30分钟有效）' :
 					'Your token: ${token} (valid for 30 minutes)';
 				tokenResult.textContent = pattern.replace('${token}', token);
 			}
 		}
 	}
 
-	document.getElementById('get-token-btn').onclick = function() {
-		fetch('?get_token=1').then(r => r.json()).then(data => {
-			// 获取当前语言并使用对应的文本模板
+		document.getElementById('get-token-btn').onclick = function() {
 			var currentLang = window.getCurrentLanguage ? window.getCurrentLanguage() : 'zh';
-			var tokenPattern = currentLang === 'zh' ? 
-				'您的 token：${token}（30分钟有效）' : 
-				'Your token: ${token} (valid for 30 minutes)';
-			document.getElementById('token-result').textContent = tokenPattern.replace('${token}', data.token);
-			
-			// 显示快捷提示词块
-			var quicktipBlock = document.getElementById('quicktip-block');
-			quicktipBlock.style.display = 'block';
-			// 使用初始模板（HTML）进行替换，避免重复点击导致叠加
-			var tipEl = document.getElementById('mcpapi-quicktip');
-			var template = tipEl.getAttribute('data-template');
-			if (!template) {
-				template = tipEl.innerHTML; // 存储原始 HTML 模板
-				tipEl.setAttribute('data-template', template);
+			var tipText = currentLang === 'zh'
+				? '您将临时跳转至赞助商提供的网站，回到此界面可查看您的 token。（点击取消可不查看）'
+				: 'You will be redirected to a sponsor page. Return to this page to view your token.';
+			if (!confirm(tipText)) return;
+			window.open('https://omg10.com/4/11022129', '_blank');
+			fetch('?get_token=1').then(r => r.json()).then(data => {
+				// 获取当前语言并使用对应的文本模板
+				var tokenPattern = currentLang === 'zh' ?
+					'您的 token：${token}（30分钟有效）' :
+					'Your token: ${token} (valid for 30 minutes)';
+				document.getElementById('token-result').textContent = tokenPattern.replace('${token}', data.token);
+
+				// 显示快捷提示词块
+				var quicktipBlock = document.getElementById('quicktip-block');
+				quicktipBlock.style.display = 'block';
+				// 使用初始模板（HTML）进行替换，避免重复点击导致叠加
+				var tipEl = document.getElementById('mcpapi-quicktip');
+				var template = tipEl.getAttribute('data-template');
+				if (!template) {
+					template = tipEl.innerHTML; // 存储原始 HTML 模板
+					tipEl.setAttribute('data-template', template);
+				}
+				// 全局替换中英文占位符
+				var replaced = template
+					.replace(/\{你的token\}/g, data.token)
+					.replace(/\{your_token\}/g, data.token);
+				tipEl.innerHTML = replaced;
+			});
+		};
+		document.getElementById('quicktip-copy').onclick = function() {
+			var tip = document.getElementById('mcpapi-quicktip').innerText;
+			if (navigator.clipboard) {
+				navigator.clipboard.writeText(tip);
+			} else {
+				// 兼容旧浏览器
+				var textarea = document.createElement('textarea');
+				textarea.value = tip;
+				document.body.appendChild(textarea);
+				textarea.select();
+				document.execCommand('copy');
+				document.body.removeChild(textarea);
 			}
-			// 全局替换中英文占位符
-			var replaced = template
-				.replace(/\{你的token\}/g, data.token)
-				.replace(/\{your_token\}/g, data.token);
-			tipEl.innerHTML = replaced;
-		});
-	};
-	document.getElementById('quicktip-copy').onclick = function() {
-		var tip = document.getElementById('mcpapi-quicktip').innerText;
-		if (navigator.clipboard) {
-			navigator.clipboard.writeText(tip);
-		} else {
-			// 兼容旧浏览器
-			var textarea = document.createElement('textarea');
-			textarea.value = tip;
-			document.body.appendChild(textarea);
-			textarea.select();
-			document.execCommand('copy');
-			document.body.removeChild(textarea);
-		}
-		this.textContent = 'OK';
-		setTimeout(()=>{
-			var currentLang = window.getCurrentLanguage ? window.getCurrentLanguage() : 'zh';
-			this.textContent = currentLang === 'zh' ? '一键复制' : 'Copy';
-		}, 1200);
-	};
+			this.textContent = 'OK';
+			setTimeout(()=>{
+				var currentLang = window.getCurrentLanguage ? window.getCurrentLanguage() : 'zh';
+				this.textContent = currentLang === 'zh' ? '一键复制' : 'Copy';
+			}, 1200);
+		};
 	</script>
 </body>
 </html>
