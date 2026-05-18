@@ -14,6 +14,9 @@ DirectoryIndex index.php
 # 3. 访问 /index.php 时统一跳转到根路径 /
 RewriteRule ^index\.php$ / [L,R=301]
 
+# 3.1 Sitemap: /sitemap.xml -> sitemap.php (动态生成)
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
 # 4. 友好 URL: /search  -> 内部重写到 search.php (支持 /search 和 /search/)
 RewriteRule ^search/?$ search.php [L,QSA]
 
