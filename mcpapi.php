@@ -363,7 +363,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 		document.getElementById('get-token-btn').onclick = function() {
 			var currentLang = window.getCurrentLanguage ? window.getCurrentLanguage() : 'zh';
 			var tipText = currentLang === 'zh'
-				? '您将临时跳转至赞助商提供的网站，回到此界面可查看您的 token。（点击取消可不查看）'
+				? '您将临时跳转至赞助商提供的网站，回到此界面可查看您的 token。（点击取消无法获取）'
 				: 'You will be redirected to a sponsor page. Return to this page to view your token.';
 			if (!confirm(tipText)) return;
 			window.open('https://omg10.com/4/11022129', '_blank');
