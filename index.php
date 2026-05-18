@@ -167,6 +167,14 @@
         <section class="latest-posts" aria-label="最新文章">
             <h2>最新文章</h2>
             <div class="latest-list">
+                <a class="post-item" href="/notes/003">
+                    <div class="post-meta">
+                        <span class="post-date">2026-05-18</span>
+                        <span class="post-tag">效率</span>
+                    </div>
+                    <h3 class="post-title">函数库加速开发的秘密</h3>
+                    <p class="post-desc">探索函数库如何通过代码复用、减少重复造轮子、降低认知负荷来加速软件开发，让开发者聚焦业务逻辑而非基础实现。</p>
+                </a>
                 <a class="post-item" href="/notes/002">
                     <div class="post-meta">
                         <span class="post-date">2025-09-29</span>
@@ -217,7 +225,7 @@
 
     <footer>
         <div class="container">
-            <p id="footer-text">&copy; 2025 函数库 | Powered by Mutantcat</p>
+            <p id="footer-text">&copy; 2025-2026 函数库 | Powered by Mutantcat</p>
             <div class="friend-links">
                 <span id="friend-links-text">友情链接：</span>
                 <a href="https://www.mutantcat.org/" target="_blank" rel="noopener">异猫工作群</a>

@@ -43,7 +43,7 @@ const i18nTexts = {
         'empty-query-desc': '在上方搜索框中输入您要查找的函数名称或描述。',
         
         // 底部
-        'footer-text': '© 2025 函数库 | Powered by Mutantcat',
+        'footer-text': '© 2025-2026 函数库 | Powered by Mutantcat',
         
         // 404 页面
         'error-404-title': '页面未找到',
@@ -80,6 +80,7 @@ const i18nTexts = {
         'language-header': '语言名称',
         'param-header': 'lang 参数值',
         'token-result-pattern': '您的 token：${token}（30分钟有效）',
+        'get-token-waiting': '请先查看广告页面，返回后将自动生成免费 Token…',
         'quicktip-zh-title': '【中文】',
         'quicktip-zh-request': '请向以下地址发送 GET 请求，获取基础函数与相关函数：',
         'quicktip-zh-params': '参数：token=临时或永久 token；q=搜索关键词；lang=语言代码或 all（可选：C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VARILOG）。响应：JSON，包含 results（函数数组）、query（原查询）、lang（语言）。',
@@ -130,7 +131,7 @@ const i18nTexts = {
         'empty-query-desc': 'Enter the function name or description you want to find in the search box above.',
         
         // 底部
-        'footer-text': '© 2025 FunctionCool | Powered by Mutantcat',
+        'footer-text': '© 2025-2026 FunctionCool | Powered by Mutantcat',
         
         // 404 页面
         'error-404-title': 'Page Not Found',
@@ -167,6 +168,7 @@ const i18nTexts = {
         'language-header': 'Language Name',
         'param-header': 'lang Parameter Value',
         'token-result-pattern': 'Your token: ${token} (valid for 30 minutes)',
+        'get-token-waiting': 'Please view the ad page, token will be generated when you return...',
         'quicktip-zh-title': '【中文】',
         'quicktip-zh-request': 'Please send a GET request to the following address to get basic and related functions:',
         'quicktip-zh-params': 'Parameters: token=temporary or permanent token; q=search keywords; lang=language code or all (options: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VARILOG). Response: JSON containing results (function array), query (original query), lang (language).',
