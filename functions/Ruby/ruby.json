@@ -2641,7 +2641,8 @@
         "memory_memory": 85,
         "code": [
             "require 'toml-rb'\ndef parse_toml(toml_str)\n  TomlRB.parse(toml_str)\nrescue => e\n  {}\nend"
-        ]
+        ],
+        "memory_score": 85
     },
     {
         "name-zh": "XML解析",
