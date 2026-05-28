@@ -4,736 +4,1659 @@
         "name-en": "Is Palindrome",
         "description-zh": "判断字符串是否为回文串（忽略大小写和非字母字符）",
         "description-en": "Check if string is palindrome (ignore case and non-letters)",
-        "dependencies": ["string", "cctype"],
-        "use_to": ["string manipulation"],
-        "tags": ["basic", "string", "beginner"],
-        "input": ["s"],
-        "input_type": ["string"],
-        "return": ["isPalindrome"],
-        "return_type": ["bool"],
+        "dependencies": [
+            "string",
+            "cctype"
+        ],
+        "use_to": [
+            "string manipulation"
+        ],
+        "tags": [
+            "basic",
+            "string",
+            "beginner"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "isPalindrome"
+        ],
+        "return_type": [
+            "bool"
+        ],
         "timer_score": 95,
         "memory_score": 100,
-        "code": ["#include <string>\n#include <cctype>\n\nbool isPalindrome(const std::string& s) {\n    int left = 0, right = s.length() - 1;\n    while (left < right) {\n        while (left < right && !std::isalnum(s[left])) ++left;\n        while (left < right && !std::isalnum(s[right])) --right;\n        if (std::tolower(s[left]) != std::tolower(s[right])) return false;\n        ++left; --right;\n    }\n    return true;\n}"]},
+        "code": [
+            "#include <string>\n#include <cctype>\n\nbool isPalindrome(const std::string& s) {\n    int left = 0, right = s.length() - 1;\n    while (left < right) {\n        while (left < right && !std::isalnum(s[left])) ++left;\n        while (left < right && !std::isalnum(s[right])) --right;\n        if (std::tolower(s[left]) != std::tolower(s[right])) return false;\n        ++left; --right;\n    }\n    return true;\n}"
+        ]
+    },
     {
         "name-zh": "斐波那契数",
         "name-en": "Fibonacci Number",
         "description-zh": "计算第n个斐波那契数（迭代方法）",
         "description-en": "Calculate nth Fibonacci number (iterative method)",
         "dependencies": [],
-        "use_to": ["math", "teaching"],
-        "tags": ["basic", "math", "beginner"],
-        "input": ["n"],
-        "input_type": ["int"],
-        "return": ["fib"],
-        "return_type": ["long long"],
+        "use_to": [
+            "math",
+            "teaching"
+        ],
+        "tags": [
+            "basic",
+            "math",
+            "beginner"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "fib"
+        ],
+        "return_type": [
+            "long long"
+        ],
         "timer_score": 95,
         "memory_score": 100,
-        "code": ["long long fibonacci(int n) {\n    if (n <= 1) return n;\n    long long prev = 0, curr = 1;\n    for (int i = 2; i <= n; ++i) {\n        long long next = prev + curr;\n        prev = curr;\n        curr = next;\n    }\n    return curr;\n}"]},
+        "code": [
+            "long long fibonacci(int n) {\n    if (n <= 1) return n;\n    long long prev = 0, curr = 1;\n    for (int i = 2; i <= n; ++i) {\n        long long next = prev + curr;\n        prev = curr;\n        curr = next;\n    }\n    return curr;\n}"
+        ]
+    },
     {
         "name-zh": "判断质数",
         "name-en": "Is Prime",
         "description-zh": "判断一个数是否为质数",
         "description-en": "Check if a number is prime",
-        "dependencies": ["cmath"],
-        "use_to": ["math"],
-        "tags": ["basic", "math", "beginner"],
-        "input": ["n"],
-        "input_type": ["int"],
-        "return": ["isPrime"],
-        "return_type": ["bool"],
+        "dependencies": [
+            "cmath"
+        ],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math",
+            "beginner"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "isPrime"
+        ],
+        "return_type": [
+            "bool"
+        ],
         "timer_score": 90,
         "memory_score": 100,
-        "code": ["#include <cmath>\n\nbool isPrime(int n) {\n    if (n <= 1) return false;\n    if (n <= 3) return true;\n    if (n % 2 == 0 || n % 3 == 0) return false;\n    for (int i = 5; i * i <= n; i += 6) {\n        if (n % i == 0 || n % (i + 2) == 0) return false;\n    }\n    return true;\n}"]},
+        "code": [
+            "#include <cmath>\n\nbool isPrime(int n) {\n    if (n <= 1) return false;\n    if (n <= 3) return true;\n    if (n % 2 == 0 || n % 3 == 0) return false;\n    for (int i = 5; i * i <= n; i += 6) {\n        if (n % i == 0 || n % (i + 2) == 0) return false;\n    }\n    return true;\n}"
+        ]
+    },
     {
         "name-zh": "字符串转整数",
         "name-en": "String To Integer",
         "description-zh": "将字符串转换为整数（简化版atoi）",
         "description-en": "Convert string to integer (simplified atoi)",
-        "dependencies": ["string"],
-        "use_to": ["string manipulation", "parsing"],
-        "tags": ["basic", "string", "beginner"],
-        "input": ["s"],
-        "input_type": ["string"],
-        "return": ["number"],
-        "return_type": ["int"],
+        "dependencies": [
+            "string"
+        ],
+        "use_to": [
+            "string manipulation",
+            "parsing"
+        ],
+        "tags": [
+            "basic",
+            "string",
+            "beginner"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "number"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 95,
         "memory_score": 100,
-        "code": ["#include <string>\n\nint stringToInteger(const std::string& s) {\n    int result = 0;\n    int sign = 1;\n    size_t i = 0;\n    \n    // 处理空白字符\n    while (i < s.length() && s[i] == ' ') ++i;\n    \n    // 处理正负号\n    if (i < s.length() && (s[i] == '+' || s[i] == '-')) {\n        sign = (s[i] == '+') ? 1 : -1;\n        ++i;\n    }\n    \n    // 处理数字\n    while (i < s.length() && std::isdigit(s[i])) {\n        result = result * 10 + (s[i] - '0');\n        ++i;\n    }\n    \n    return sign * result;\n}"]},
+        "code": [
+            "#include <string>\n\nint stringToInteger(const std::string& s) {\n    int result = 0;\n    int sign = 1;\n    size_t i = 0;\n    \n    // 处理空白字符\n    while (i < s.length() && s[i] == ' ') ++i;\n    \n    // 处理正负号\n    if (i < s.length() && (s[i] == '+' || s[i] == '-')) {\n        sign = (s[i] == '+') ? 1 : -1;\n        ++i;\n    }\n    \n    // 处理数字\n    while (i < s.length() && std::isdigit(s[i])) {\n        result = result * 10 + (s[i] - '0');\n        ++i;\n    }\n    \n    return sign * result;\n}"
+        ]
+    },
     {
         "name-zh": "整数转字符串",
         "name-en": "Integer To String",
         "description-zh": "将整数转换为字符串",
         "description-en": "Convert integer to string",
-        "dependencies": ["string"],
-        "use_to": ["string manipulation", "formatting"],
-        "tags": ["basic", "string", "beginner"],
-        "input": ["n"],
-        "input_type": ["int"],
-        "return": ["str"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string"
+        ],
+        "use_to": [
+            "string manipulation",
+            "formatting"
+        ],
+        "tags": [
+            "basic",
+            "string",
+            "beginner"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "str"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <string>\n\nstd::string integerToString(int n) {\n    if (n == 0) return \"0\";\n    \n    bool negative = n < 0;\n    if (negative) n = -n;\n    \n    std::string result;\n    while (n > 0) {\n        result = char('0' + n % 10) + result;\n        n /= 10;\n    }\n    \n    if (negative) result = \"-\" + result;\n    return result;\n}"]},
+        "code": [
+            "#include <string>\n\nstd::string integerToString(int n) {\n    if (n == 0) return \"0\";\n    \n    bool negative = n < 0;\n    if (negative) n = -n;\n    \n    std::string result;\n    while (n > 0) {\n        result = char('0' + n % 10) + result;\n        n /= 10;\n    }\n    \n    if (negative) result = \"-\" + result;\n    return result;\n}"
+        ]
+    },
     {
         "name-zh": "数组最大值",
         "name-en": "Array Maximum",
         "description-zh": "查找整数数组中的最大值",
         "description-en": "Find maximum value in integer array",
-        "dependencies": ["vector", "algorithm"],
-        "use_to": ["array", "math"],
-        "tags": ["basic", "array", "beginner"],
-        "input": ["arr"],
-        "input_type": ["vector<int>&"],
-        "return": ["max"],
-        "return_type": ["int"],
+        "dependencies": [
+            "vector",
+            "algorithm"
+        ],
+        "use_to": [
+            "array",
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "array",
+            "beginner"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "vector<int>&"
+        ],
+        "return": [
+            "max"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <vector>\n#include <algorithm>\n\nint findMax(const std::vector<int>& arr) {\n    if (arr.empty()) throw std::runtime_error(\"Empty array\");\n    return *std::max_element(arr.begin(), arr.end());\n}"]},
+        "code": [
+            "#include <vector>\n#include <algorithm>\n\nint findMax(const std::vector<int>& arr) {\n    if (arr.empty()) throw std::runtime_error(\"Empty array\");\n    return *std::max_element(arr.begin(), arr.end());\n}"
+        ]
+    },
     {
         "name-zh": "数组最小值",
         "name-en": "Array Minimum",
         "description-zh": "查找整数数组中的最小值",
         "description-en": "Find minimum value in integer array",
-        "dependencies": ["vector", "algorithm"],
-        "use_to": ["array", "math"],
-        "tags": ["basic", "array", "beginner"],
-        "input": ["arr"],
-        "input_type": ["vector<int>&"],
-        "return": ["min"],
-        "return_type": ["int"],
+        "dependencies": [
+            "vector",
+            "algorithm"
+        ],
+        "use_to": [
+            "array",
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "array",
+            "beginner"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "vector<int>&"
+        ],
+        "return": [
+            "min"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <vector>\n#include <algorithm>\n\nint findMin(const std::vector<int>& arr) {\n    if (arr.empty()) throw std::runtime_error(\"Empty array\");\n    return *std::min_element(arr.begin(), arr.end());\n}"]},
+        "code": [
+            "#include <vector>\n#include <algorithm>\n\nint findMin(const std::vector<int>& arr) {\n    if (arr.empty()) throw std::runtime_error(\"Empty array\");\n    return *std::min_element(arr.begin(), arr.end());\n}"
+        ]
+    },
     {
         "name-zh": "字符串拼接",
         "name-en": "String Concatenate",
         "description-zh": "将两个字符串拼接在一起",
         "description-en": "Concatenate two strings together",
-        "dependencies": ["string"],
-        "use_to": ["string manipulation"],
-        "tags": ["basic", "string", "beginner"],
-        "input": ["s1", "s2"],
-        "input_type": ["string", "string"],
-        "return": ["concatenated"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string"
+        ],
+        "use_to": [
+            "string manipulation"
+        ],
+        "tags": [
+            "basic",
+            "string",
+            "beginner"
+        ],
+        "input": [
+            "s1",
+            "s2"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "concatenated"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <string>\n\nstd::string concatenateStrings(const std::string& s1, const std::string& s2) {\n    return s1 + s2;\n}"]},
+        "code": [
+            "#include <string>\n\nstd::string concatenateStrings(const std::string& s1, const std::string& s2) {\n    return s1 + s2;\n}"
+        ]
+    },
     {
         "name-zh": "数组元素计数",
         "name-en": "Array Count Element",
         "description-zh": "统计数组中特定元素的出现次数",
         "description-en": "Count occurrences of specific element in array",
-        "dependencies": ["vector", "algorithm"],
-        "use_to": ["array", "counting"],
-        "tags": ["basic", "array", "beginner"],
-        "input": ["arr", "element"],
-        "input_type": ["vector<int>&", "int"],
-        "return": ["count"],
-        "return_type": ["int"],
+        "dependencies": [
+            "vector",
+            "algorithm"
+        ],
+        "use_to": [
+            "array",
+            "counting"
+        ],
+        "tags": [
+            "basic",
+            "array",
+            "beginner"
+        ],
+        "input": [
+            "arr",
+            "element"
+        ],
+        "input_type": [
+            "vector<int>&",
+            "int"
+        ],
+        "return": [
+            "count"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <vector>\n#include <algorithm>\n\nint countElement(const std::vector<int>& arr, int element) {\n    return std::count(arr.begin(), arr.end(), element);\n}"]},
+        "code": [
+            "#include <vector>\n#include <algorithm>\n\nint countElement(const std::vector<int>& arr, int element) {\n    return std::count(arr.begin(), arr.end(), element);\n}"
+        ]
+    },
     {
         "name-zh": "字符串子串",
         "name-en": "String Substring",
         "description-zh": "获取字符串的子串",
         "description-en": "Get substring from string",
-        "dependencies": ["string"],
-        "use_to": ["string manipulation"],
-        "tags": ["basic", "string", "beginner"],
-        "input": ["s", "start", "length"],
-        "input_type": ["string", "size_t", "size_t"],
-        "return": ["substring"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string"
+        ],
+        "use_to": [
+            "string manipulation"
+        ],
+        "tags": [
+            "basic",
+            "string",
+            "beginner"
+        ],
+        "input": [
+            "s",
+            "start",
+            "length"
+        ],
+        "input_type": [
+            "string",
+            "size_t",
+            "size_t"
+        ],
+        "return": [
+            "substring"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <string>\n\nstd::string getSubstring(const std::string& s, size_t start, size_t length) {\n    return s.substr(start, length);\n}"]},
+        "code": [
+            "#include <string>\n\nstd::string getSubstring(const std::string& s, size_t start, size_t length) {\n    return s.substr(start, length);\n}"
+        ]
+    },
     {
         "name-zh": "字符串反转",
         "name-en": "String Reverse",
         "description-zh": "将字符串反转（可用于回文判断）",
         "description-en": "Reverse a string (useful for palindrome check)",
-        "dependencies": ["string", "algorithm"],
-        "use_to": ["string manipulation"],
-        "tags": ["basic", "string", "beginner"],
-        "input": ["s"],
-        "input_type": ["string"],
-        "return": ["reversed"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string",
+            "algorithm"
+        ],
+        "use_to": [
+            "string manipulation"
+        ],
+        "tags": [
+            "basic",
+            "string",
+            "beginner"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "reversed"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <string>\n#include <algorithm>\n\nstd::string reverseString(std::string s) {\n    std::reverse(s.begin(), s.end());\n    return s;\n}"]},
+        "code": [
+            "#include <string>\n#include <algorithm>\n\nstd::string reverseString(std::string s) {\n    std::reverse(s.begin(), s.end());\n    return s;\n}"
+        ]
+    },
     {
         "name-zh": "线性查找",
         "name-en": "Linear Search",
         "description-zh": "在数组中查找元素，返回第一个匹配的索引，未找到返回-1",
         "description-en": "Search for element in array, return first match index or -1 if not found",
-        "dependencies": ["vector"],
-        "use_to": ["searching"],
-        "tags": ["basic", "search", "beginner"],
-        "input": ["arr", "target"],
-        "input_type": ["vector<int>&", "int"],
-        "return": ["index"],
-        "return_type": ["int"],
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "searching"
+        ],
+        "tags": [
+            "basic",
+            "search",
+            "beginner"
+        ],
+        "input": [
+            "arr",
+            "target"
+        ],
+        "input_type": [
+            "vector<int>&",
+            "int"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <vector>\n\nint linearSearch(const std::vector<int>& arr, int target) {\n    for (int i = 0; i < (int)arr.size(); ++i) {\n        if (arr[i] == target) return i;\n    }\n    return -1;\n}"]},
+        "code": [
+            "#include <vector>\n\nint linearSearch(const std::vector<int>& arr, int target) {\n    for (int i = 0; i < (int)arr.size(); ++i) {\n        if (arr[i] == target) return i;\n    }\n    return -1;\n}"
+        ]
+    },
     {
         "name-zh": "冒泡排序",
         "name-en": "Bubble Sort",
         "description-zh": "使用冒泡排序算法对整数数组进行排序（教学用）",
         "description-en": "Sort integer array using bubble sort algorithm (for teaching)",
-        "dependencies": ["vector"],
-        "use_to": ["sorting", "teaching"],
-        "tags": ["basic", "sorting", "beginner"],
-        "input": ["arr"],
-        "input_type": ["vector<int>&"],
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "sorting",
+            "teaching"
+        ],
+        "tags": [
+            "basic",
+            "sorting",
+            "beginner"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "vector<int>&"
+        ],
         "return": [],
-        "return_type": ["void"],
+        "return_type": [
+            "void"
+        ],
         "timer_score": 80,
         "memory_score": 100,
-        "code": ["#include <vector>\n\nvoid bubbleSort(std::vector<int>& arr) {\n    int n = arr.size();\n    for (int i = 0; i < n - 1; ++i) {\n        for (int j = 0; j < n - i - 1; ++j) {\n            if (arr[j] > arr[j + 1]) {\n                std::swap(arr[j], arr[j + 1]);\n            }\n        }\n    }\n}"]},
+        "code": [
+            "#include <vector>\n\nvoid bubbleSort(std::vector<int>& arr) {\n    int n = arr.size();\n    for (int i = 0; i < n - 1; ++i) {\n        for (int j = 0; j < n - i - 1; ++j) {\n            if (arr[j] > arr[j + 1]) {\n                std::swap(arr[j], arr[j + 1]);\n            }\n        }\n    }\n}"
+        ]
+    },
     {
         "name-zh": "选择排序",
         "name-en": "Selection Sort",
         "description-zh": "使用选择排序算法对整数数组进行排序（教学用）",
         "description-en": "Sort integer array using selection sort algorithm (for teaching)",
-        "dependencies": ["vector"],
-        "use_to": ["sorting", "teaching"],
-        "tags": ["basic", "sorting", "beginner"],
-        "input": ["arr"],
-        "input_type": ["vector<int>&"],
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "sorting",
+            "teaching"
+        ],
+        "tags": [
+            "basic",
+            "sorting",
+            "beginner"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "vector<int>&"
+        ],
         "return": [],
-        "return_type": ["void"],
+        "return_type": [
+            "void"
+        ],
         "timer_score": 85,
         "memory_score": 100,
-        "code": ["#include <vector>\n\nvoid selectionSort(std::vector<int>& arr) {\n    int n = arr.size();\n    for (int i = 0; i < n - 1; ++i) {\n        int min_idx = i;\n        for (int j = i + 1; j < n; ++j) {\n            if (arr[j] < arr[min_idx]) {\n                min_idx = j;\n            }\n        }\n        if (min_idx != i) {\n            std::swap(arr[i], arr[min_idx]);\n        }\n    }\n}"]},
+        "code": [
+            "#include <vector>\n\nvoid selectionSort(std::vector<int>& arr) {\n    int n = arr.size();\n    for (int i = 0; i < n - 1; ++i) {\n        int min_idx = i;\n        for (int j = i + 1; j < n; ++j) {\n            if (arr[j] < arr[min_idx]) {\n                min_idx = j;\n            }\n        }\n        if (min_idx != i) {\n            std::swap(arr[i], arr[min_idx]);\n        }\n    }\n}"
+        ]
+    },
     {
         "name-zh": "插入排序",
         "name-en": "Insertion Sort",
         "description-zh": "使用插入排序算法对整数数组进行排序（教学用）",
         "description-en": "Sort integer array using insertion sort algorithm (for teaching)",
-        "dependencies": ["vector"],
-        "use_to": ["sorting", "teaching"],
-        "tags": ["basic", "sorting", "beginner"],
-        "input": ["arr"],
-        "input_type": ["vector<int>&"],
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "sorting",
+            "teaching"
+        ],
+        "tags": [
+            "basic",
+            "sorting",
+            "beginner"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "vector<int>&"
+        ],
         "return": [],
-        "return_type": ["void"],
+        "return_type": [
+            "void"
+        ],
         "timer_score": 85,
         "memory_score": 100,
-        "code": ["#include <vector>\n\nvoid insertionSort(std::vector<int>& arr) {\n    int n = arr.size();\n    for (int i = 1; i < n; ++i) {\n        int key = arr[i];\n        int j = i - 1;\n        while (j >= 0 && arr[j] > key) {\n            arr[j + 1] = arr[j];\n            --j;\n        }\n        arr[j + 1] = key;\n    }\n}"]},
+        "code": [
+            "#include <vector>\n\nvoid insertionSort(std::vector<int>& arr) {\n    int n = arr.size();\n    for (int i = 1; i < n; ++i) {\n        int key = arr[i];\n        int j = i - 1;\n        while (j >= 0 && arr[j] > key) {\n            arr[j + 1] = arr[j];\n            --j;\n        }\n        arr[j + 1] = key;\n    }\n}"
+        ]
+    },
     {
         "name-zh": "主函数示例",
         "name-en": "Main Function Example",
         "description-zh": "C++程序的入口函数示例，包含命令行参数处理和异常处理",
         "description-en": "Entry point function example for C++ programs, including command line arguments and exception handling",
-        "dependencies": ["iostream", "string", "stdexcept"],
-        "use_to": ["program entry", "command line", "exception handling"],
-        "tags": ["basic", "entry point", "command line", "exception"],
-        "input": ["argc", "argv"],
-        "input_type": ["int", "char**"],
-        "return": ["status"],
-        "return_type": ["int"],
+        "dependencies": [
+            "iostream",
+            "string",
+            "stdexcept"
+        ],
+        "use_to": [
+            "program entry",
+            "command line",
+            "exception handling"
+        ],
+        "tags": [
+            "basic",
+            "entry point",
+            "command line",
+            "exception"
+        ],
+        "input": [
+            "argc",
+            "argv"
+        ],
+        "input_type": [
+            "int",
+            "char**"
+        ],
+        "return": [
+            "status"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <iostream>\n#include <string>\n#include <stdexcept>\n\nint main(int argc, char* argv[]) {\n    try {\n        // 打印程序名称\n        std::cout << \"Program: \" << argv[0] << std::endl;\n        \n        // 打印命令行参数\n        std::cout << \"Arguments count: \" << argc << std::endl;\n        for(int i = 1; i < argc; i++) {\n            std::cout << \"Argument \" << i << \": \" << argv[i] << std::endl;\n        }\n        \n        // 程序主要逻辑\n        std::cout << \"Hello, World!\" << std::endl;\n        \n        return EXIT_SUCCESS;\n    }\n    catch(const std::exception& e) {\n        std::cerr << \"Error: \" << e.what() << std::endl;\n        return EXIT_FAILURE;\n    }\n    catch(...) {\n        std::cerr << \"Unknown error occurred\" << std::endl;\n        return EXIT_FAILURE;\n    }\n}"]},
+        "code": [
+            "#include <iostream>\n#include <string>\n#include <stdexcept>\n\nint main(int argc, char* argv[]) {\n    try {\n        // 打印程序名称\n        std::cout << \"Program: \" << argv[0] << std::endl;\n        \n        // 打印命令行参数\n        std::cout << \"Arguments count: \" << argc << std::endl;\n        for(int i = 1; i < argc; i++) {\n            std::cout << \"Argument \" << i << \": \" << argv[i] << std::endl;\n        }\n        \n        // 程序主要逻辑\n        std::cout << \"Hello, World!\" << std::endl;\n        \n        return EXIT_SUCCESS;\n    }\n    catch(const std::exception& e) {\n        std::cerr << \"Error: \" << e.what() << std::endl;\n        return EXIT_FAILURE;\n    }\n    catch(...) {\n        std::cerr << \"Unknown error occurred\" << std::endl;\n        return EXIT_FAILURE;\n    }\n}"
+        ]
+    },
     {
         "name-zh": "Base64编码",
         "name-en": "Base64 Encode",
         "description-zh": "将字符串编码为Base64格式",
         "description-en": "Encode string to Base64 format",
-        "dependencies": ["string", "vector"],
-        "use_to": ["encoding", "crypto"],
-        "tags": ["intermediate", "encoding", "crypto"],
-        "input": ["data"],
-        "input_type": ["string"],
-        "return": ["encoded"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string",
+            "vector"
+        ],
+        "use_to": [
+            "encoding",
+            "crypto"
+        ],
+        "tags": [
+            "intermediate",
+            "encoding",
+            "crypto"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "encoded"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["#include <string>\n#include <vector>\n\nstd::string base64_encode(const std::string& data) {\n    static const char base64_chars[] = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\";\n    std::string encoded;\n    int i = 0, j = 0;\n    unsigned char char_array_3[3], char_array_4[4];\n    const unsigned char* bytes_to_encode = reinterpret_cast<const unsigned char*>(data.c_str());\n    size_t in_len = data.length();\n    \n    while (in_len--) {\n        char_array_3[i++] = *(bytes_to_encode++);\n        if (i == 3) {\n            char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;\n            char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);\n            char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);\n            char_array_4[3] = char_array_3[2] & 0x3f;\n            for(i = 0; i < 4; i++) encoded += base64_chars[char_array_4[i]];\n            i = 0;\n        }\n    }\n    if (i) {\n        for(j = i; j < 3; j++) char_array_3[j] = '\\0';\n        char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;\n        char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);\n        char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);\n        for(j = 0; j < i + 1; j++) encoded += base64_chars[char_array_4[j]];\n        while(i++ < 3) encoded += '=';\n    }\n    return encoded;\n}"]
+        "code": [
+            "#include <string>\n#include <vector>\n\nstd::string base64_encode(const std::string& data) {\n    static const char base64_chars[] = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\";\n    std::string encoded;\n    int i = 0, j = 0;\n    unsigned char char_array_3[3], char_array_4[4];\n    const unsigned char* bytes_to_encode = reinterpret_cast<const unsigned char*>(data.c_str());\n    size_t in_len = data.length();\n    \n    while (in_len--) {\n        char_array_3[i++] = *(bytes_to_encode++);\n        if (i == 3) {\n            char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;\n            char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);\n            char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);\n            char_array_4[3] = char_array_3[2] & 0x3f;\n            for(i = 0; i < 4; i++) encoded += base64_chars[char_array_4[i]];\n            i = 0;\n        }\n    }\n    if (i) {\n        for(j = i; j < 3; j++) char_array_3[j] = '\\0';\n        char_array_4[0] = (char_array_3[0] & 0xfc) >> 2;\n        char_array_4[1] = ((char_array_3[0] & 0x03) << 4) + ((char_array_3[1] & 0xf0) >> 4);\n        char_array_4[2] = ((char_array_3[1] & 0x0f) << 2) + ((char_array_3[2] & 0xc0) >> 6);\n        for(j = 0; j < i + 1; j++) encoded += base64_chars[char_array_4[j]];\n        while(i++ < 3) encoded += '=';\n    }\n    return encoded;\n}"
+        ]
     },
     {
         "name-zh": "凯撒密码加密",
         "name-en": "Caesar Cipher Encrypt",
         "description-zh": "使用凯撒密码加密字符串（仅处理英文字母）",
         "description-en": "Encrypt string using Caesar cipher (letters only)",
-        "dependencies": ["string"],
-        "use_to": ["crypto"],
-        "tags": ["basic", "crypto"],
-        "input": ["text", "shift"],
-        "input_type": ["string", "int"],
-        "return": ["encrypted"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string"
+        ],
+        "use_to": [
+            "crypto"
+        ],
+        "tags": [
+            "basic",
+            "crypto"
+        ],
+        "input": [
+            "text",
+            "shift"
+        ],
+        "input_type": [
+            "string",
+            "int"
+        ],
+        "return": [
+            "encrypted"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <string>\n\nstd::string caesar_encrypt(const std::string& text, int shift) {\n    std::string result = text;\n    for (char& c : result) {\n        if (std::isalpha(c)) {\n            char base = std::isupper(c) ? 'A' : 'a';\n            c = (c - base + shift) % 26 + base;\n        }\n    }\n    return result;\n}"]
+        "code": [
+            "#include <string>\n\nstd::string caesar_encrypt(const std::string& text, int shift) {\n    std::string result = text;\n    for (char& c : result) {\n        if (std::isalpha(c)) {\n            char base = std::isupper(c) ? 'A' : 'a';\n            c = (c - base + shift) % 26 + base;\n        }\n    }\n    return result;\n}"
+        ]
     },
     {
         "name-zh": "异或加密",
         "name-en": "XOR Encrypt",
         "description-zh": "使用异或运算加密字符串（可用于加解密）",
         "description-en": "Encrypt string using XOR operation (can be used for both encryption and decryption)",
-        "dependencies": ["string"],
-        "use_to": ["crypto"],
-        "tags": ["intermediate", "crypto"],
-        "input": ["text", "key"],
-        "input_type": ["string", "string"],
-        "return": ["encrypted"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string"
+        ],
+        "use_to": [
+            "crypto"
+        ],
+        "tags": [
+            "intermediate",
+            "crypto"
+        ],
+        "input": [
+            "text",
+            "key"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "encrypted"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["#include <string>\n\nstd::string xor_encrypt(const std::string& text, const std::string& key) {\n    if (key.empty()) return text;\n    std::string result = text;\n    for (size_t i = 0; i < text.length(); ++i) {\n        result[i] ^= key[i % key.length()];\n    }\n    return result;\n}"]
+        "code": [
+            "#include <string>\n\nstd::string xor_encrypt(const std::string& text, const std::string& key) {\n    if (key.empty()) return text;\n    std::string result = text;\n    for (size_t i = 0; i < text.length(); ++i) {\n        result[i] ^= key[i % key.length()];\n    }\n    return result;\n}"
+        ]
     },
     {
         "name-zh": "Base64解码",
         "name-en": "Base64 Decode",
         "description-zh": "将Base64字符串解码为原始字符串",
         "description-en": "Decode Base64 string to original string",
-        "dependencies": ["string", "vector"],
-        "use_to": ["decoding", "crypto"],
-        "tags": ["intermediate", "encoding", "crypto"],
-        "input": ["encoded"],
-        "input_type": ["string"],
-        "return": ["decoded"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string",
+            "vector"
+        ],
+        "use_to": [
+            "decoding",
+            "crypto"
+        ],
+        "tags": [
+            "intermediate",
+            "encoding",
+            "crypto"
+        ],
+        "input": [
+            "encoded"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "decoded"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["#include <string>\n#include <vector>\n\nstd::string base64_decode(const std::string& encoded) {\n    static const std::string base64_chars = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\";\n    std::string decoded;\n    int i = 0, j = 0;\n    unsigned char char_array_4[4], char_array_3[3];\n    size_t in_len = encoded.length();\n    \n    while (in_len-- && encoded[in_len] != '=' && base64_chars.find(encoded[in_len]) != std::string::npos) {\n        int in_ = 0;\n        for (i = 0; i < 4; i++) {\n            if (in_len-- && encoded[in_len] != '=' && base64_chars.find(encoded[in_len]) != std::string::npos)\n                char_array_4[i] = base64_chars.find(encoded[in_len]);\n            else char_array_4[i] = 0;\n        }\n        char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);\n        char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);\n        char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];\n        for (i = 0; i < 3; i++) decoded += char_array_3[i];\n    }\n    return decoded;\n}"]
+        "code": [
+            "#include <string>\n#include <vector>\n\nstd::string base64_decode(const std::string& encoded) {\n    static const std::string base64_chars = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/\";\n    std::string decoded;\n    int i = 0, j = 0;\n    unsigned char char_array_4[4], char_array_3[3];\n    size_t in_len = encoded.length();\n    \n    while (in_len-- && encoded[in_len] != '=' && base64_chars.find(encoded[in_len]) != std::string::npos) {\n        int in_ = 0;\n        for (i = 0; i < 4; i++) {\n            if (in_len-- && encoded[in_len] != '=' && base64_chars.find(encoded[in_len]) != std::string::npos)\n                char_array_4[i] = base64_chars.find(encoded[in_len]);\n            else char_array_4[i] = 0;\n        }\n        char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);\n        char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);\n        char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];\n        for (i = 0; i < 3; i++) decoded += char_array_3[i];\n    }\n    return decoded;\n}"
+        ]
     },
     {
         "name-zh": "凯撒密码解密",
         "name-en": "Caesar Cipher Decrypt",
         "description-zh": "使用凯撒密码解密字符串（仅处理英文字母）",
         "description-en": "Decrypt string using Caesar cipher (letters only)",
-        "dependencies": ["string"],
-        "use_to": ["crypto"],
-        "tags": ["basic", "crypto"],
-        "input": ["text", "shift"],
-        "input_type": ["string", "int"],
-        "return": ["decrypted"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string"
+        ],
+        "use_to": [
+            "crypto"
+        ],
+        "tags": [
+            "basic",
+            "crypto"
+        ],
+        "input": [
+            "text",
+            "shift"
+        ],
+        "input_type": [
+            "string",
+            "int"
+        ],
+        "return": [
+            "decrypted"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <string>\n\nstd::string caesar_decrypt(const std::string& text, int shift) {\n    return caesar_encrypt(text, -shift);\n}"]
+        "code": [
+            "#include <string>\n\nstd::string caesar_decrypt(const std::string& text, int shift) {\n    return caesar_encrypt(text, -shift);\n}"
+        ]
     },
     {
         "name-zh": "字符串长度",
         "name-en": "String Length",
         "description-zh": "获取字符串的长度",
         "description-en": "Get the length of a string",
-        "dependencies": ["string"],
-        "use_to": ["string manipulation"],
-        "tags": ["basic", "string", "beginner"],
-        "input": ["str"],
-        "input_type": ["string"],
-        "return": ["length"],
-        "return_type": ["size_t"],
+        "dependencies": [
+            "string"
+        ],
+        "use_to": [
+            "string manipulation"
+        ],
+        "tags": [
+            "basic",
+            "string",
+            "beginner"
+        ],
+        "input": [
+            "str"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "length"
+        ],
+        "return_type": [
+            "size_t"
+        ],
         "timer_score": 95,
         "memory_score": 100,
-        "code": ["#include <string>\n\nsize_t stringLength(const std::string& str) {\n    return str.length();\n}"]
+        "code": [
+            "#include <string>\n\nsize_t stringLength(const std::string& str) {\n    return str.length();\n}"
+        ]
     },
     {
         "name-zh": "数组排序",
         "name-en": "Array Sort",
         "description-zh": "对整数数组进行升序排序",
         "description-en": "Sort an integer array in ascending order",
-        "dependencies": ["algorithm", "vector"],
-        "use_to": ["sorting", "data manipulation"],
-        "tags": ["intermediate", "sorting", "algorithm"],
-        "input": ["arr"],
-        "input_type": ["vector<int>&"],
+        "dependencies": [
+            "algorithm",
+            "vector"
+        ],
+        "use_to": [
+            "sorting",
+            "data manipulation"
+        ],
+        "tags": [
+            "intermediate",
+            "sorting",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "vector<int>&"
+        ],
         "return": [],
-        "return_type": ["void"],
+        "return_type": [
+            "void"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["#include <algorithm>\n#include <vector>\n\nvoid sortArray(std::vector<int>& arr) {\n    std::sort(arr.begin(), arr.end());\n}"]
+        "code": [
+            "#include <algorithm>\n#include <vector>\n\nvoid sortArray(std::vector<int>& arr) {\n    std::sort(arr.begin(), arr.end());\n}"
+        ]
     },
     {
         "name-zh": "向量求和",
         "name-en": "Vector Sum",
         "description-zh": "对整数向量求和",
         "description-en": "Sum elements of an integer vector",
-        "dependencies": ["numeric", "vector"],
-        "use_to": ["math", "vector"],
-        "tags": ["basic", "math"],
-        "input": ["v"],
-        "input_type": ["vector<int>&"],
-        "return": ["sum"],
-        "return_type": ["int"],
+        "dependencies": [
+            "numeric",
+            "vector"
+        ],
+        "use_to": [
+            "math",
+            "vector"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "vector<int>&"
+        ],
+        "return": [
+            "sum"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <numeric>\n#include <vector>\n\nint sumVector(const std::vector<int>& v) {\n    return std::accumulate(v.begin(), v.end(), 0);\n}"]
+        "code": [
+            "#include <numeric>\n#include <vector>\n\nint sumVector(const std::vector<int>& v) {\n    return std::accumulate(v.begin(), v.end(), 0);\n}"
+        ]
     },
     {
         "name-zh": "向量最大最小",
         "name-en": "Vector Max Min",
         "description-zh": "返回向量的最大值与最小值",
         "description-en": "Return max and min of a vector",
-        "dependencies": ["algorithm", "vector"],
-        "use_to": ["math", "vector"],
-        "tags": ["basic", "math"],
-        "input": ["v"],
-        "input_type": ["vector<int>&"],
-        "return": ["max", "min"],
-        "return_type": ["int", "int"],
+        "dependencies": [
+            "algorithm",
+            "vector"
+        ],
+        "use_to": [
+            "math",
+            "vector"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "vector<int>&"
+        ],
+        "return": [
+            "max",
+            "min"
+        ],
+        "return_type": [
+            "int",
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <algorithm>\n#include <vector>\n\nstd::pair<int,int> maxMin(const std::vector<int>& v) {\n    if (v.empty()) return {0, 0};\n    auto [mn, mx] = std::minmax_element(v.begin(), v.end());\n    return {*mx, *mn};\n}"]
+        "code": [
+            "#include <algorithm>\n#include <vector>\n\nstd::pair<int,int> maxMin(const std::vector<int>& v) {\n    if (v.empty()) return {0, 0};\n    auto [mn, mx] = std::minmax_element(v.begin(), v.end());\n    return {*mx, *mn};\n}"
+        ]
     },
     {
         "name-zh": "字符串转小写",
         "name-en": "String To Lower",
         "description-zh": "将字符串转换为小写",
         "description-en": "Convert string to lowercase",
-        "dependencies": ["string", "algorithm", "cctype"],
-        "use_to": ["string manipulation"],
-        "tags": ["basic", "string"],
-        "input": ["s"],
-        "input_type": ["string"],
-        "return": ["lower"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string",
+            "algorithm",
+            "cctype"
+        ],
+        "use_to": [
+            "string manipulation"
+        ],
+        "tags": [
+            "basic",
+            "string"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "lower"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <string>\n#include <algorithm>\n#include <cctype>\n\nstd::string toLower(std::string s) {\n    std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return std::tolower(c); });\n    return s;\n}"]
+        "code": [
+            "#include <string>\n#include <algorithm>\n#include <cctype>\n\nstd::string toLower(std::string s) {\n    std::transform(s.begin(), s.end(), s.begin(), [](unsigned char c){ return std::tolower(c); });\n    return s;\n}"
+        ]
     },
     {
         "name-zh": "字符串分割",
         "name-en": "String Split",
         "description-zh": "按分隔符分割字符串为向量",
         "description-en": "Split string by delimiter to vector",
-        "dependencies": ["string", "sstream", "vector"],
-        "use_to": ["string", "parsing"],
-        "tags": ["intermediate", "string"],
-        "input": ["s", "delim"],
-        "input_type": ["string", "char"],
-        "return": ["parts"],
-        "return_type": ["vector<string>"],
+        "dependencies": [
+            "string",
+            "sstream",
+            "vector"
+        ],
+        "use_to": [
+            "string",
+            "parsing"
+        ],
+        "tags": [
+            "intermediate",
+            "string"
+        ],
+        "input": [
+            "s",
+            "delim"
+        ],
+        "input_type": [
+            "string",
+            "char"
+        ],
+        "return": [
+            "parts"
+        ],
+        "return_type": [
+            "vector<string>"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["#include <string>\n#include <sstream>\n#include <vector>\n\nstd::vector<std::string> split(const std::string& s, char delim) {\n    std::vector<std::string> parts;\n    std::stringstream ss(s);\n    std::string item;\n    while (std::getline(ss, item, delim)) parts.push_back(item);\n    return parts;\n}"]
+        "code": [
+            "#include <string>\n#include <sstream>\n#include <vector>\n\nstd::vector<std::string> split(const std::string& s, char delim) {\n    std::vector<std::string> parts;\n    std::stringstream ss(s);\n    std::string item;\n    while (std::getline(ss, item, delim)) parts.push_back(item);\n    return parts;\n}"
+        ]
     },
     {
         "name-zh": "读取文本文件",
         "name-en": "Read Text File",
         "description-zh": "读取整个文件为字符串",
         "description-en": "Read entire file into a string",
-        "dependencies": ["fstream", "sstream", "string"],
-        "use_to": ["file", "io"],
-        "tags": ["intermediate", "io"],
-        "input": ["path"],
-        "input_type": ["string"],
-        "return": ["content", "ok"],
-        "return_type": ["string", "bool"],
+        "dependencies": [
+            "fstream",
+            "sstream",
+            "string"
+        ],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "intermediate",
+            "io"
+        ],
+        "input": [
+            "path"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "content",
+            "ok"
+        ],
+        "return_type": [
+            "string",
+            "bool"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["#include <fstream>\n#include <sstream>\n#include <string>\n\nstd::pair<std::string,bool> readFile(const std::string& path) {\n    std::ifstream in(path);\n    if (!in) return {\"\", false};\n    std::ostringstream ss;\n    ss << in.rdbuf();\n    return {ss.str(), true};\n}"]
+        "code": [
+            "#include <fstream>\n#include <sstream>\n#include <string>\n\nstd::pair<std::string,bool> readFile(const std::string& path) {\n    std::ifstream in(path);\n    if (!in) return {\"\", false};\n    std::ostringstream ss;\n    ss << in.rdbuf();\n    return {ss.str(), true};\n}"
+        ]
     },
     {
         "name-zh": "写入文本文件",
         "name-en": "Write Text File",
         "description-zh": "将字符串写入文件(覆盖)",
         "description-en": "Write string to file (overwrite)",
-        "dependencies": ["fstream", "string"],
-        "use_to": ["file", "io"],
-        "tags": ["intermediate", "io"],
-        "input": ["path", "content"],
-        "input_type": ["string", "string"],
-        "return": ["ok"],
-        "return_type": ["bool"],
+        "dependencies": [
+            "fstream",
+            "string"
+        ],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "intermediate",
+            "io"
+        ],
+        "input": [
+            "path",
+            "content"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "ok"
+        ],
+        "return_type": [
+            "bool"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["#include <fstream>\n#include <string>\n\nbool writeFile(const std::string& path, const std::string& content) {\n    std::ofstream out(path);\n    if (!out) return false;\n    out << content;\n    return static_cast<bool>(out);\n}"]
+        "code": [
+            "#include <fstream>\n#include <string>\n\nbool writeFile(const std::string& path, const std::string& content) {\n    std::ofstream out(path);\n    if (!out) return false;\n    out << content;\n    return static_cast<bool>(out);\n}"
+        ]
     },
     {
         "name-zh": "当前时间戳(毫秒)",
         "name-en": "Now Millis",
         "description-zh": "返回当前系统时间戳(毫秒)",
         "description-en": "Return current time in milliseconds",
-        "dependencies": ["chrono"],
-        "use_to": ["time"],
-        "tags": ["basic", "time"],
+        "dependencies": [
+            "chrono"
+        ],
+        "use_to": [
+            "time"
+        ],
+        "tags": [
+            "basic",
+            "time"
+        ],
         "input": [],
         "input_type": [],
-        "return": ["ms"],
-        "return_type": ["long long"],
+        "return": [
+            "ms"
+        ],
+        "return_type": [
+            "long long"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <chrono>\n\nlong long nowMillis() {\n    using namespace std::chrono;\n    return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();\n}"]
+        "code": [
+            "#include <chrono>\n\nlong long nowMillis() {\n    using namespace std::chrono;\n    return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();\n}"
+        ]
     },
     {
         "name-zh": "词频统计",
         "name-en": "Word Frequency",
         "description-zh": "使用哈希表统计字符串向量中词频",
         "description-en": "Count word frequency using unordered_map",
-        "dependencies": ["unordered_map", "string", "vector"],
-        "use_to": ["map", "count"],
-        "tags": ["intermediate", "collection"],
-        "input": ["words"],
-        "input_type": ["vector<string>&"],
-        "return": ["freq"],
-        "return_type": ["unordered_map<string,int>"],
+        "dependencies": [
+            "unordered_map",
+            "string",
+            "vector"
+        ],
+        "use_to": [
+            "map",
+            "count"
+        ],
+        "tags": [
+            "intermediate",
+            "collection"
+        ],
+        "input": [
+            "words"
+        ],
+        "input_type": [
+            "vector<string>&"
+        ],
+        "return": [
+            "freq"
+        ],
+        "return_type": [
+            "unordered_map<string,int>"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["#include <unordered_map>\n#include <string>\n#include <vector>\n\nstd::unordered_map<std::string,int> wordFreq(const std::vector<std::string>& words) {\n    std::unordered_map<std::string,int> m;\n    for (const auto& w : words) ++m[w];\n    return m;\n}"]
+        "code": [
+            "#include <unordered_map>\n#include <string>\n#include <vector>\n\nstd::unordered_map<std::string,int> wordFreq(const std::vector<std::string>& words) {\n    std::unordered_map<std::string,int> m;\n    for (const auto& w : words) ++m[w];\n    return m;\n}"
+        ]
     },
     {
         "name-zh": "统计置位个数",
         "name-en": "Count Set Bits",
         "description-zh": "返回无符号整数二进制表示中为1的位数 (popcount)",
         "description-en": "Return number of set bits (popcount) in an unsigned int",
-        "dependencies": ["cstdint"],
-        "use_to": ["bit", "utility"],
-        "tags": ["bit", "lowlevel", "utility"],
-        "input": ["x"],
-        "input_type": ["unsigned int"],
-        "return": ["count"],
-        "return_type": ["int"],
+        "dependencies": [
+            "cstdint"
+        ],
+        "use_to": [
+            "bit",
+            "utility"
+        ],
+        "tags": [
+            "bit",
+            "lowlevel",
+            "utility"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "unsigned int"
+        ],
+        "return": [
+            "count"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <cstdint>\n\nint countSetBits(unsigned int x) {\n    // Kernighan algorithm\n    int c = 0;\n    while (x) {\n        x &= (x - 1);\n        ++c;\n    }\n    return c;\n}"]
+        "code": [
+            "#include <cstdint>\n\nint countSetBits(unsigned int x) {\n    // Kernighan algorithm\n    int c = 0;\n    while (x) {\n        x &= (x - 1);\n        ++c;\n    }\n    return c;\n}"
+        ]
     },
     {
         "name-zh": "32位比特反转",
         "name-en": "Bit Reverse 32",
         "description-zh": "反转32位无符号整数的所有二进制位顺序",
         "description-en": "Reverse all 32 bits of an unsigned integer",
-        "dependencies": ["cstdint"],
-        "use_to": ["bit", "utility"],
-        "tags": ["bit", "lowlevel"],
-        "input": ["x"],
-        "input_type": ["unsigned int"],
-        "return": ["reversed"],
-        "return_type": ["unsigned int"],
+        "dependencies": [
+            "cstdint"
+        ],
+        "use_to": [
+            "bit",
+            "utility"
+        ],
+        "tags": [
+            "bit",
+            "lowlevel"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "unsigned int"
+        ],
+        "return": [
+            "reversed"
+        ],
+        "return_type": [
+            "unsigned int"
+        ],
         "timer_score": 95,
         "memory_score": 100,
-        "code": ["#include <cstdint>\n\nunsigned int bitReverse32(unsigned int x) {\n    x = (x >> 1) & 0x55555555u | (x & 0x55555555u) << 1;\n    x = (x >> 2) & 0x33333333u | (x & 0x33333333u) << 2;\n    x = (x >> 4) & 0x0F0F0F0Fu | (x & 0x0F0F0F0Fu) << 4;\n    x = (x >> 8) & 0x00FF00FFu | (x & 0x00FF00FFu) << 8;\n    x = (x >> 16) | (x << 16);\n    return x;\n}"]
+        "code": [
+            "#include <cstdint>\n\nunsigned int bitReverse32(unsigned int x) {\n    x = (x >> 1) & 0x55555555u | (x & 0x55555555u) << 1;\n    x = (x >> 2) & 0x33333333u | (x & 0x33333333u) << 2;\n    x = (x >> 4) & 0x0F0F0F0Fu | (x & 0x0F0F0F0Fu) << 4;\n    x = (x >> 8) & 0x00FF00FFu | (x & 0x00FF00FFu) << 8;\n    x = (x >> 16) | (x << 16);\n    return x;\n}"
+        ]
     },
     {
         "name-zh": "最低有效位索引",
         "name-en": "LSB Index",
         "description-zh": "返回无符号整数最低(最右)置位的位索引, 若为0返回-1",
         "description-en": "Return index of least significant set bit, or -1 if zero",
-        "dependencies": ["cstdint"],
-        "use_to": ["bit", "utility"],
-        "tags": ["bit", "lowlevel"],
-        "input": ["x"],
-        "input_type": ["unsigned int"],
-        "return": ["index"],
-        "return_type": ["int"],
+        "dependencies": [
+            "cstdint"
+        ],
+        "use_to": [
+            "bit",
+            "utility"
+        ],
+        "tags": [
+            "bit",
+            "lowlevel"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "unsigned int"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <cstdint>\n\nint lsbIndex(unsigned int x) {\n    if (!x) return -1;\n    int i = 0;\n    while ((x & 1u) == 0u) { x >>= 1; ++i; }\n    return i;\n}"]
+        "code": [
+            "#include <cstdint>\n\nint lsbIndex(unsigned int x) {\n    if (!x) return -1;\n    int i = 0;\n    while ((x & 1u) == 0u) { x >>= 1; ++i; }\n    return i;\n}"
+        ]
     },
     {
         "name-zh": "最高有效位索引",
         "name-en": "MSB Index",
         "description-zh": "返回无符号整数最高(最左)置位的位索引, 若为0返回-1",
         "description-en": "Return index of most significant set bit, or -1 if zero",
-        "dependencies": ["cstdint"],
-        "use_to": ["bit", "utility"],
-        "tags": ["bit", "lowlevel"],
-        "input": ["x"],
-        "input_type": ["unsigned int"],
-        "return": ["index"],
-        "return_type": ["int"],
+        "dependencies": [
+            "cstdint"
+        ],
+        "use_to": [
+            "bit",
+            "utility"
+        ],
+        "tags": [
+            "bit",
+            "lowlevel"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "unsigned int"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <cstdint>\n\nint msbIndex(unsigned int x) {\n    if (!x) return -1;\n    int i = 31;\n    while ((x & (1u << 31)) == 0u) { x <<= 1; --i; }\n    return i;\n}"]
+        "code": [
+            "#include <cstdint>\n\nint msbIndex(unsigned int x) {\n    if (!x) return -1;\n    int i = 31;\n    while ((x & (1u << 31)) == 0u) { x <<= 1; --i; }\n    return i;\n}"
+        ]
     },
     {
         "name-zh": "16位字节交换",
         "name-en": "Byte Swap 16",
         "description-zh": "交换16位数的高低字节 (大小端转换辅助)",
         "description-en": "Swap bytes of a 16-bit unsigned value (endianness helper)",
-        "dependencies": ["cstdint"],
-        "use_to": ["bit", "endian"],
-        "tags": ["bit", "endian", "utility"],
-        "input": ["x"],
-        "input_type": ["unsigned int"],
-        "return": ["swapped"],
-        "return_type": ["unsigned int"],
+        "dependencies": [
+            "cstdint"
+        ],
+        "use_to": [
+            "bit",
+            "endian"
+        ],
+        "tags": [
+            "bit",
+            "endian",
+            "utility"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "unsigned int"
+        ],
+        "return": [
+            "swapped"
+        ],
+        "return_type": [
+            "unsigned int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <cstdint>\n\nunsigned int byteswap16(unsigned int x) {\n    return (x >> 8) | ((x & 0xFFu) << 8);\n}"]
+        "code": [
+            "#include <cstdint>\n\nunsigned int byteswap16(unsigned int x) {\n    return (x >> 8) | ((x & 0xFFu) << 8);\n}"
+        ]
     },
     {
         "name-zh": "32位字节交换",
         "name-en": "Byte Swap 32",
         "description-zh": "交换32位数的四个字节顺序",
         "description-en": "Swap the four bytes in a 32-bit unsigned value",
-        "dependencies": ["cstdint"],
-        "use_to": ["bit", "endian"],
-        "tags": ["bit", "endian", "utility"],
-        "input": ["x"],
-        "input_type": ["unsigned int"],
-        "return": ["swapped"],
-        "return_type": ["unsigned int"],
+        "dependencies": [
+            "cstdint"
+        ],
+        "use_to": [
+            "bit",
+            "endian"
+        ],
+        "tags": [
+            "bit",
+            "endian",
+            "utility"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "unsigned int"
+        ],
+        "return": [
+            "swapped"
+        ],
+        "return_type": [
+            "unsigned int"
+        ],
         "timer_score": 95,
         "memory_score": 100,
-        "code": ["#include <cstdint>\n\nunsigned int byteswap32(unsigned int x) {\n    return ((x & 0x000000FFu) << 24) |\n           ((x & 0x0000FF00u) << 8)  |\n           ((x & 0x00FF0000u) >> 8)  |\n           ((x & 0xFF000000u) >> 24);\n}"]
+        "code": [
+            "#include <cstdint>\n\nunsigned int byteswap32(unsigned int x) {\n    return ((x & 0x000000FFu) << 24) |\n           ((x & 0x0000FF00u) << 8)  |\n           ((x & 0x00FF0000u) >> 8)  |\n           ((x & 0xFF000000u) >> 24);\n}"
+        ]
     },
     {
         "name-zh": "转二进制字符串",
         "name-en": "To Binary String",
         "description-zh": "将无符号整数转换为32位二进制字符串",
         "description-en": "Convert unsigned int to 32-bit binary string",
-        "dependencies": ["string"],
-        "use_to": ["bit", "format"],
-        "tags": ["bit", "string", "utility"],
-        "input": ["x"],
-        "input_type": ["unsigned int"],
-        "return": ["bin"],
-        "return_type": ["string"],
+        "dependencies": [
+            "string"
+        ],
+        "use_to": [
+            "bit",
+            "format"
+        ],
+        "tags": [
+            "bit",
+            "string",
+            "utility"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "unsigned int"
+        ],
+        "return": [
+            "bin"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["#include <string>\n\nstd::string toBinaryString(unsigned int x) {\n    std::string s(32, '0');\n    for (int i = 31; i >= 0; --i) {\n        if (x & 1u) s[i] = '1';\n        x >>= 1;\n    }\n    return s;\n}"]
+        "code": [
+            "#include <string>\n\nstd::string toBinaryString(unsigned int x) {\n    std::string s(32, '0');\n    for (int i = 31; i >= 0; --i) {\n        if (x & 1u) s[i] = '1';\n        x >>= 1;\n    }\n    return s;\n}"
+        ]
     },
     {
         "name-zh": "解析十六进制32位",
         "name-en": "Parse Hex U32",
         "description-zh": "解析形如0x或不含前缀的十六进制字符串为32位无符号整数",
         "description-en": "Parse hex string (with or without 0x) into uint32 value",
-        "dependencies": ["string", "cstdint", "sstream"],
-        "use_to": ["parsing", "bit"],
-        "tags": ["hex", "parsing", "utility"],
-        "input": ["hex"],
-        "input_type": ["string"],
-        "return": ["value", "ok"],
-        "return_type": ["uint32_t", "bool"],
+        "dependencies": [
+            "string",
+            "cstdint",
+            "sstream"
+        ],
+        "use_to": [
+            "parsing",
+            "bit"
+        ],
+        "tags": [
+            "hex",
+            "parsing",
+            "utility"
+        ],
+        "input": [
+            "hex"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "value",
+            "ok"
+        ],
+        "return_type": [
+            "uint32_t",
+            "bool"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["#include <string>\n#include <cstdint>\n#include <sstream>\n\nstd::pair<uint32_t,bool> parseHexU32(std::string hex) {\n    if (hex.rfind(\"0x\", 0) == 0 || hex.rfind(\"0X\", 0) == 0) hex = hex.substr(2);\n    if (hex.empty() || hex.size() > 8) return {0u, false};\n    uint32_t val = 0;\n    for (char c : hex) {\n        val <<= 4;\n        if (c >= '0' && c <= '9') val |= (c - '0');\n        else if (c >= 'a' && c <= 'f') val |= (c - 'a' + 10);\n        else if (c >= 'A' && c <= 'F') val |= (c - 'A' + 10);\n        else return {0u, false};\n    }\n    return {val, true};\n}"]
+        "code": [
+            "#include <string>\n#include <cstdint>\n#include <sstream>\n\nstd::pair<uint32_t,bool> parseHexU32(std::string hex) {\n    if (hex.rfind(\"0x\", 0) == 0 || hex.rfind(\"0X\", 0) == 0) hex = hex.substr(2);\n    if (hex.empty() || hex.size() > 8) return {0u, false};\n    uint32_t val = 0;\n    for (char c : hex) {\n        val <<= 4;\n        if (c >= '0' && c <= '9') val |= (c - '0');\n        else if (c >= 'a' && c <= 'f') val |= (c - 'a' + 10);\n        else if (c >= 'A' && c <= 'F') val |= (c - 'A' + 10);\n        else return {0u, false};\n    }\n    return {val, true};\n}"
+        ]
     },
     {
         "name-zh": "是否2的幂",
         "name-en": "Is Power Of Two",
         "description-zh": "判断无符号整数是否为2的幂(>0)",
         "description-en": "Check if unsigned int is a power of two (>0)",
-        "dependencies": ["cstdint"],
-        "use_to": ["bit"],
-        "tags": ["bit", "utility"],
-        "input": ["x"],
-        "input_type": ["unsigned int"],
-        "return": ["ok"],
-        "return_type": ["bool"],
+        "dependencies": [
+            "cstdint"
+        ],
+        "use_to": [
+            "bit"
+        ],
+        "tags": [
+            "bit",
+            "utility"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "unsigned int"
+        ],
+        "return": [
+            "ok"
+        ],
+        "return_type": [
+            "bool"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <cstdint>\n\nbool isPowerOfTwo(unsigned int x) {\n    return x && ((x & (x - 1)) == 0);\n}"]
+        "code": [
+            "#include <cstdint>\n\nbool isPowerOfTwo(unsigned int x) {\n    return x && ((x & (x - 1)) == 0);\n}"
+        ]
     },
     {
         "name-zh": "对齐到2次幂",
         "name-en": "Align Pow2",
         "description-zh": "将正整数向上对齐到最近的2的幂(若x为0返回1)",
         "description-en": "Align positive integer up to nearest power of two (0 -> 1)",
-        "dependencies": ["cstdint"],
-        "use_to": ["bit", "memory"],
-        "tags": ["bit", "alignment", "utility"],
-        "input": ["x"],
-        "input_type": ["unsigned int"],
-        "return": ["aligned"],
-        "return_type": ["unsigned int"],
+        "dependencies": [
+            "cstdint"
+        ],
+        "use_to": [
+            "bit",
+            "memory"
+        ],
+        "tags": [
+            "bit",
+            "alignment",
+            "utility"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "unsigned int"
+        ],
+        "return": [
+            "aligned"
+        ],
+        "return_type": [
+            "unsigned int"
+        ],
         "timer_score": 95,
         "memory_score": 100,
-        "code": ["#include <cstdint>\n\nunsigned int alignPow2(unsigned int x) {\n    if (x <= 1) return 1;\n    --x;\n    x |= x >> 1;\n    x |= x >> 2;\n    x |= x >> 4;\n    x |= x >> 8;\n    x |= x >> 16;\n    return x + 1;\n}"]
+        "code": [
+            "#include <cstdint>\n\nunsigned int alignPow2(unsigned int x) {\n    if (x <= 1) return 1;\n    --x;\n    x |= x >> 1;\n    x |= x >> 2;\n    x |= x >> 4;\n    x |= x >> 8;\n    x |= x >> 16;\n    return x + 1;\n}"
+        ]
     },
     {
         "name-zh": "滑动窗口最大值",
         "name-en": "Sliding Window Max",
         "description-zh": "使用双端队列O(n)求每个窗口的最大值",
         "description-en": "Compute maximum for each sliding window in O(n) using deque",
-        "dependencies": ["vector", "deque"],
-        "use_to": ["sliding window", "algorithm"],
-        "tags": ["algorithm", "window", "deque"],
-        "input": ["nums", "k"],
-        "input_type": ["vector<int>&", "int"],
-        "return": ["maxVals"],
-        "return_type": ["vector<int>"],
+        "dependencies": [
+            "vector",
+            "deque"
+        ],
+        "use_to": [
+            "sliding window",
+            "algorithm"
+        ],
+        "tags": [
+            "algorithm",
+            "window",
+            "deque"
+        ],
+        "input": [
+            "nums",
+            "k"
+        ],
+        "input_type": [
+            "vector<int>&",
+            "int"
+        ],
+        "return": [
+            "maxVals"
+        ],
+        "return_type": [
+            "vector<int>"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["#include <vector>\n#include <deque>\n\nstd::vector<int> slidingWindowMax(const std::vector<int>& nums, int k) {\n    std::deque<int> dq; // store indices\n    std::vector<int> out;\n    if (k <= 0 || nums.empty()) return out;\n    for (int i = 0; i < (int)nums.size(); ++i) {\n        while (!dq.empty() && dq.front() <= i - k) dq.pop_front();\n        while (!dq.empty() && nums[dq.back()] <= nums[i]) dq.pop_back();\n        dq.push_back(i);\n        if (i >= k - 1) out.push_back(nums[dq.front()]);\n    }\n    return out;\n}"]
+        "code": [
+            "#include <vector>\n#include <deque>\n\nstd::vector<int> slidingWindowMax(const std::vector<int>& nums, int k) {\n    std::deque<int> dq; // store indices\n    std::vector<int> out;\n    if (k <= 0 || nums.empty()) return out;\n    for (int i = 0; i < (int)nums.size(); ++i) {\n        while (!dq.empty() && dq.front() <= i - k) dq.pop_front();\n        while (!dq.empty() && nums[dq.back()] <= nums[i]) dq.pop_back();\n        dq.push_back(i);\n        if (i >= k - 1) out.push_back(nums[dq.front()]);\n    }\n    return out;\n}"
+        ]
     },
     {
         "name-zh": "滑动窗口和",
         "name-en": "Sliding Window Sum",
         "description-zh": "计算数组每个大小为k窗口的元素和",
         "description-en": "Compute sum of elements for each window of size k",
-        "dependencies": ["vector"],
-        "use_to": ["sliding window", "math"],
-        "tags": ["algorithm", "window"],
-        "input": ["nums", "k"],
-        "input_type": ["vector<int>&", "int"],
-        "return": ["sums"],
-        "return_type": ["vector<long long>"],
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "sliding window",
+            "math"
+        ],
+        "tags": [
+            "algorithm",
+            "window"
+        ],
+        "input": [
+            "nums",
+            "k"
+        ],
+        "input_type": [
+            "vector<int>&",
+            "int"
+        ],
+        "return": [
+            "sums"
+        ],
+        "return_type": [
+            "vector<long long>"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["#include <vector>\n\nstd::vector<long long> slidingWindowSum(const std::vector<int>& nums, int k) {\n    std::vector<long long> out;\n    if (k <= 0 || nums.empty()) return out;\n    long long cur = 0;\n    for (int i = 0; i < (int)nums.size(); ++i) {\n        cur += nums[i];\n        if (i >= k) cur -= nums[i - k];\n        if (i >= k - 1) out.push_back(cur);\n    }\n    return out;\n}"]
+        "code": [
+            "#include <vector>\n\nstd::vector<long long> slidingWindowSum(const std::vector<int>& nums, int k) {\n    std::vector<long long> out;\n    if (k <= 0 || nums.empty()) return out;\n    long long cur = 0;\n    for (int i = 0; i < (int)nums.size(); ++i) {\n        cur += nums[i];\n        if (i >= k) cur -= nums[i - k];\n        if (i >= k - 1) out.push_back(cur);\n    }\n    return out;\n}"
+        ]
     },
     {
         "name-zh": "滑动窗口移动平均",
         "name-en": "Moving Average",
         "description-zh": "计算窗口大小k的移动平均值(双指针累加)",
         "description-en": "Compute moving average with window size k using running sum",
-        "dependencies": ["vector"],
-        "use_to": ["sliding window", "math"],
-        "tags": ["algorithm", "window"],
-        "input": ["nums", "k"],
-        "input_type": ["vector<int>&", "int"],
-        "return": ["avg"],
-        "return_type": ["vector<double>"],
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "sliding window",
+            "math"
+        ],
+        "tags": [
+            "algorithm",
+            "window"
+        ],
+        "input": [
+            "nums",
+            "k"
+        ],
+        "input_type": [
+            "vector<int>&",
+            "int"
+        ],
+        "return": [
+            "avg"
+        ],
+        "return_type": [
+            "vector<double>"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["#include <vector>\n\nstd::vector<double> movingAverage(const std::vector<int>& nums, int k) {\n    std::vector<double> out;\n    if (k <= 0 || nums.empty()) return out;\n    long long cur = 0;\n    for (int i = 0; i < (int)nums.size(); ++i) {\n        cur += nums[i];\n        if (i >= k) cur -= nums[i - k];\n        if (i >= k - 1) out.push_back((double)cur / k);\n    }\n    return out;\n}"]
+        "code": [
+            "#include <vector>\n\nstd::vector<double> movingAverage(const std::vector<int>& nums, int k) {\n    std::vector<double> out;\n    if (k <= 0 || nums.empty()) return out;\n    long long cur = 0;\n    for (int i = 0; i < (int)nums.size(); ++i) {\n        cur += nums[i];\n        if (i >= k) cur -= nums[i - k];\n        if (i >= k - 1) out.push_back((double)cur / k);\n    }\n    return out;\n}"
+        ]
     },
     {
         "name-zh": "均值",
         "name-en": "Mean",
         "description-zh": "计算 double 向量的平均值",
         "description-en": "Compute mean of a vector<double>",
-        "dependencies": ["numeric", "vector"],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["v"],
-        "input_type": ["vector<double>&"],
-        "return": ["m"],
-        "return_type": ["double"],
+        "dependencies": [
+            "numeric",
+            "vector"
+        ],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "vector<double>&"
+        ],
+        "return": [
+            "m"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <numeric>\n#include <vector>\n\ndouble mean(const std::vector<double>& v) {\n    if (v.empty()) return std::numeric_limits<double>::quiet_NaN();\n    double s = std::accumulate(v.begin(), v.end(), 0.0);\n    return s / v.size();\n}"]
+        "code": [
+            "#include <numeric>\n#include <vector>\n\ndouble mean(const std::vector<double>& v) {\n    if (v.empty()) return std::numeric_limits<double>::quiet_NaN();\n    double s = std::accumulate(v.begin(), v.end(), 0.0);\n    return s / v.size();\n}"
+        ]
     },
     {
         "name-zh": "中位数",
         "name-en": "Median",
         "description-zh": "计算 double 向量的中位数",
         "description-en": "Compute median of a vector<double>",
-        "dependencies": ["algorithm", "vector"],
-        "use_to": ["math"],
-        "tags": ["intermediate", "math"],
-        "input": ["v"],
-        "input_type": ["vector<double>&"],
-        "return": ["med"],
-        "return_type": ["double"],
+        "dependencies": [
+            "algorithm",
+            "vector"
+        ],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "math"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "vector<double>&"
+        ],
+        "return": [
+            "med"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["#include <algorithm>\n#include <vector>\n\ndouble median(std::vector<double> v) {\n    if (v.empty()) return std::numeric_limits<double>::quiet_NaN();\n    std::sort(v.begin(), v.end());\n    size_t n = v.size();\n    if (n % 2 == 1) return v[n/2];\n    return (v[n/2 - 1] + v[n/2]) / 2.0;\n}"]
+        "code": [
+            "#include <algorithm>\n#include <vector>\n\ndouble median(std::vector<double> v) {\n    if (v.empty()) return std::numeric_limits<double>::quiet_NaN();\n    std::sort(v.begin(), v.end());\n    size_t n = v.size();\n    if (n % 2 == 1) return v[n/2];\n    return (v[n/2 - 1] + v[n/2]) / 2.0;\n}"
+        ]
     },
     {
         "name-zh": "标准差",
         "name-en": "Standard Deviation",
         "description-zh": "计算样本标准差",
         "description-en": "Compute sample standard deviation",
-        "dependencies": ["numeric", "vector", "cmath"],
-        "use_to": ["math"],
-        "tags": ["intermediate", "math"],
-        "input": ["v"],
-        "input_type": ["vector<double>&"],
-        "return": ["sd"],
-        "return_type": ["double"],
+        "dependencies": [
+            "numeric",
+            "vector",
+            "cmath"
+        ],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "math"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "vector<double>&"
+        ],
+        "return": [
+            "sd"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["#include <numeric>\n#include <vector>\n#include <cmath>\n\ndouble stdev(const std::vector<double>& v) {\n    if (v.size() < 2) return std::numeric_limits<double>::quiet_NaN();\n    double m = mean(v);\n    double s = 0.0;\n    for (double x : v) { double d = x - m; s += d * d; }\n    return std::sqrt(s / (v.size() - 1));\n}"]
+        "code": [
+            "#include <numeric>\n#include <vector>\n#include <cmath>\n\ndouble stdev(const std::vector<double>& v) {\n    if (v.size() < 2) return std::numeric_limits<double>::quiet_NaN();\n    double m = mean(v);\n    double s = 0.0;\n    for (double x : v) { double d = x - m; s += d * d; }\n    return std::sqrt(s / (v.size() - 1));\n}"
+        ]
     },
     {
         "name-zh": "GCD",
@@ -741,15 +1664,33 @@
         "description-zh": "欧几里得算法计算整数 GCD",
         "description-en": "Euclid algorithm for integer GCD",
         "dependencies": [],
-        "use_to": ["math", "number theory"],
-        "tags": ["basic", "math"],
-        "input": ["a", "b"],
-        "input_type": ["long long", "long long"],
-        "return": ["g"],
-        "return_type": ["long long"],
+        "use_to": [
+            "math",
+            "number theory"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "long long",
+            "long long"
+        ],
+        "return": [
+            "g"
+        ],
+        "return_type": [
+            "long long"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["long long gcd_ll(long long a, long long b) {\n    if (a < 0) a = -a; if (b < 0) b = -b;\n    while (b != 0) { long long t = b; b = a % b; a = t; }\n    return a;\n}"]
+        "code": [
+            "long long gcd_ll(long long a, long long b) {\n    if (a < 0) a = -a; if (b < 0) b = -b;\n    while (b != 0) { long long t = b; b = a % b; a = t; }\n    return a;\n}"
+        ]
     },
     {
         "name-zh": "LCM",
@@ -757,15 +1698,33 @@
         "description-zh": "计算整数 LCM",
         "description-en": "Compute integer LCM",
         "dependencies": [],
-        "use_to": ["math", "number theory"],
-        "tags": ["basic", "math"],
-        "input": ["a", "b"],
-        "input_type": ["long long", "long long"],
-        "return": ["l"],
-        "return_type": ["long long"],
+        "use_to": [
+            "math",
+            "number theory"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "long long",
+            "long long"
+        ],
+        "return": [
+            "l"
+        ],
+        "return_type": [
+            "long long"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["long long lcm_ll(long long a, long long b) {\n    if (a == 0 || b == 0) return 0;\n    long long g = gcd_ll(a, b);\n    return (a / g) * b;\n}"]
+        "code": [
+            "long long lcm_ll(long long a, long long b) {\n    if (a == 0 || b == 0) return 0;\n    long long g = gcd_ll(a, b);\n    return (a / g) * b;\n}"
+        ]
     },
     {
         "name-zh": "Clamp",
@@ -773,15 +1732,34 @@
         "description-zh": "将数值限制在区间内",
         "description-en": "Clamp value into [lo, hi]",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["x", "lo", "hi"],
-        "input_type": ["double", "double", "double"],
-        "return": ["y"],
-        "return_type": ["double"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "x",
+            "lo",
+            "hi"
+        ],
+        "input_type": [
+            "double",
+            "double",
+            "double"
+        ],
+        "return": [
+            "y"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["double clamp(double x, double lo, double hi) {\n    return std::min(std::max(x, lo), hi);\n}"]
+        "code": [
+            "double clamp(double x, double lo, double hi) {\n    return std::min(std::max(x, lo), hi);\n}"
+        ]
     },
     {
         "name-zh": "阶乘",
@@ -789,289 +1767,1230 @@
         "description-zh": "计算非负整数阶乘(64位)",
         "description-en": "Compute factorial for non-negative integer (64-bit)",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["n"],
-        "input_type": ["unsigned int"],
-        "return": ["f"],
-        "return_type": ["unsigned long long"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "unsigned int"
+        ],
+        "return": [
+            "f"
+        ],
+        "return_type": [
+            "unsigned long long"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["unsigned long long factorial(unsigned int n) {\n    unsigned long long r = 1;\n    for (unsigned int i = 2; i <= n; ++i) r *= i;\n    return r;\n}"]
+        "code": [
+            "unsigned long long factorial(unsigned int n) {\n    unsigned long long r = 1;\n    for (unsigned int i = 2; i <= n; ++i) r *= i;\n    return r;\n}"
+        ]
     },
     {
         "name-zh": "Dijkstra最短路",
         "name-en": "Dijkstra Shortest Path",
         "description-zh": "在非负权有向图上用优先队列求单源最短路",
         "description-en": "Single-source shortest paths on directed graph with non-negative weights using priority_queue",
-        "dependencies": ["vector", "queue", "utility", "limits", "functional"],
-        "use_to": ["graph", "shortest path"],
-        "tags": ["graph", "dijkstra", "algorithm"],
-        "input": ["n", "adj", "src"],
-        "input_type": ["int", "vector<vector<pair<int,int>>> &", "int"],
-        "return": ["dist"],
-        "return_type": ["vector<long long>"],
+        "dependencies": [
+            "vector",
+            "queue",
+            "utility",
+            "limits",
+            "functional"
+        ],
+        "use_to": [
+            "graph",
+            "shortest path"
+        ],
+        "tags": [
+            "graph",
+            "dijkstra",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "adj",
+            "src"
+        ],
+        "input_type": [
+            "int",
+            "vector<vector<pair<int,int>>> &",
+            "int"
+        ],
+        "return": [
+            "dist"
+        ],
+        "return_type": [
+            "vector<long long>"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["#include <vector>\n#include <queue>\n#include <utility>\n#include <limits>\n#include <functional>\n\nstd::vector<long long> dijkstra(int n, const std::vector<std::vector<std::pair<int,int>>>& adj, int src) {\n    const long long INF = std::numeric_limits<long long>::max() / 4;\n    std::vector<long long> dist(n, INF);\n    using P = std::pair<long long,int>;\n    std::priority_queue<P, std::vector<P>, std::greater<P>> pq;\n    dist[src] = 0;\n    pq.push({0, src});\n    while (!pq.empty()) {\n        auto [d, u] = pq.top(); pq.pop();\n        if (d != dist[u]) continue;\n        for (const auto& e : adj[u]) {\n            int v = e.first; int w = e.second;\n            if (dist[u] + w < dist[v]) {\n                dist[v] = dist[u] + w;\n                pq.push({dist[v], v});\n            }\n        }\n    }\n    return dist;\n}"]
+        "code": [
+            "#include <vector>\n#include <queue>\n#include <utility>\n#include <limits>\n#include <functional>\n\nstd::vector<long long> dijkstra(int n, const std::vector<std::vector<std::pair<int,int>>>& adj, int src) {\n    const long long INF = std::numeric_limits<long long>::max() / 4;\n    std::vector<long long> dist(n, INF);\n    using P = std::pair<long long,int>;\n    std::priority_queue<P, std::vector<P>, std::greater<P>> pq;\n    dist[src] = 0;\n    pq.push({0, src});\n    while (!pq.empty()) {\n        auto [d, u] = pq.top(); pq.pop();\n        if (d != dist[u]) continue;\n        for (const auto& e : adj[u]) {\n            int v = e.first; int w = e.second;\n            if (dist[u] + w < dist[v]) {\n                dist[v] = dist[u] + w;\n                pq.push({dist[v], v});\n            }\n        }\n    }\n    return dist;\n}"
+        ]
     },
     {
         "name-zh": "Kruskal最小生成树",
         "name-en": "Kruskal Minimum Spanning Tree",
         "description-zh": "使用并查集的 Kruskal 算法计算无向图最小生成树权值(不连通返回-1)",
         "description-en": "Compute MST total weight using Kruskal with DSU for undirected graph (-1 if disconnected)",
-        "dependencies": ["vector", "algorithm"],
-        "use_to": ["graph", "mst"],
-        "tags": ["graph", "mst", "kruskal", "algorithm"],
-        "input": ["n", "edges"],
-        "input_type": ["int", "vector<Edge> &"],
-        "return": ["mstWeight"],
-        "return_type": ["int"],
+        "dependencies": [
+            "vector",
+            "algorithm"
+        ],
+        "use_to": [
+            "graph",
+            "mst"
+        ],
+        "tags": [
+            "graph",
+            "mst",
+            "kruskal",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "edges"
+        ],
+        "input_type": [
+            "int",
+            "vector<Edge> &"
+        ],
+        "return": [
+            "mstWeight"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 88,
         "memory_score": 90,
-        "code": ["#include <vector>\n#include <algorithm>\n\nstruct Edge { int u, v, w; };\n\nstruct DSU {\n    std::vector<int> p, r;\n    DSU(int n): p(n), r(n, 0) { for (int i = 0; i < n; ++i) p[i] = i; }\n    int find(int x) { return p[x] == x ? x : p[x] = find(p[x]); }\n    bool unite(int a, int b) { a = find(a); b = find(b); if (a == b) return false; if (r[a] < r[b]) std::swap(a, b); p[b] = a; if (r[a] == r[b]) ++r[a]; return true; }\n};\n\nint kruskal_mst(int n, std::vector<Edge> edges) {\n    std::sort(edges.begin(), edges.end(), [](const Edge& a, const Edge& b){ return a.w < b.w; });\n    DSU dsu(n);\n    int total = 0, cnt = 0;\n    for (const auto& e : edges) {\n        if (dsu.unite(e.u, e.v)) { total += e.w; if (++cnt == n - 1) break; }\n    }\n    return (cnt == n - 1) ? total : -1;\n}"]
+        "code": [
+            "#include <vector>\n#include <algorithm>\n\nstruct Edge { int u, v, w; };\n\nstruct DSU {\n    std::vector<int> p, r;\n    DSU(int n): p(n), r(n, 0) { for (int i = 0; i < n; ++i) p[i] = i; }\n    int find(int x) { return p[x] == x ? x : p[x] = find(p[x]); }\n    bool unite(int a, int b) { a = find(a); b = find(b); if (a == b) return false; if (r[a] < r[b]) std::swap(a, b); p[b] = a; if (r[a] == r[b]) ++r[a]; return true; }\n};\n\nint kruskal_mst(int n, std::vector<Edge> edges) {\n    std::sort(edges.begin(), edges.end(), [](const Edge& a, const Edge& b){ return a.w < b.w; });\n    DSU dsu(n);\n    int total = 0, cnt = 0;\n    for (const auto& e : edges) {\n        if (dsu.unite(e.u, e.v)) { total += e.w; if (++cnt == n - 1) break; }\n    }\n    return (cnt == n - 1) ? total : -1;\n}"
+        ]
     },
     {
         "name-zh": "编辑距离(Levenshtein)",
         "name-en": "Levenshtein Edit Distance",
         "description-zh": "动态规划计算两个字符串的编辑距离(插入/删除/替换)",
         "description-en": "Dynamic programming to compute edit distance between two strings",
-        "dependencies": ["vector", "string"],
-        "use_to": ["string", "dynamic programming"],
-        "tags": ["dp", "string", "edit distance"],
-        "input": ["a", "b"],
-        "input_type": ["string", "string"],
-        "return": ["distance"],
-        "return_type": ["int"],
+        "dependencies": [
+            "vector",
+            "string"
+        ],
+        "use_to": [
+            "string",
+            "dynamic programming"
+        ],
+        "tags": [
+            "dp",
+            "string",
+            "edit distance"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "distance"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 85,
         "memory_score": 85,
-        "code": ["#include <vector>\n#include <string>\n\nint edit_distance(const std::string& a, const std::string& b) {\n    int m = (int)a.size(), n = (int)b.size();\n    std::vector<int> prev(n + 1), cur(n + 1);\n    for (int j = 0; j <= n; ++j) prev[j] = j;\n    for (int i = 1; i <= m; ++i) {\n        cur[0] = i;\n        for (int j = 1; j <= n; ++j) {\n            int cost = (a[i - 1] == b[j - 1]) ? 0 : 1;\n            int del = prev[j] + 1;\n            int ins = cur[j - 1] + 1;\n            int rep = prev[j - 1] + cost;\n            int t = del < ins ? del : ins;\n            cur[j] = t < rep ? t : rep;\n        }\n        std::swap(prev, cur);\n    }\n    return prev[n];\n}"]
+        "code": [
+            "#include <vector>\n#include <string>\n\nint edit_distance(const std::string& a, const std::string& b) {\n    int m = (int)a.size(), n = (int)b.size();\n    std::vector<int> prev(n + 1), cur(n + 1);\n    for (int j = 0; j <= n; ++j) prev[j] = j;\n    for (int i = 1; i <= m; ++i) {\n        cur[0] = i;\n        for (int j = 1; j <= n; ++j) {\n            int cost = (a[i - 1] == b[j - 1]) ? 0 : 1;\n            int del = prev[j] + 1;\n            int ins = cur[j - 1] + 1;\n            int rep = prev[j - 1] + cost;\n            int t = del < ins ? del : ins;\n            cur[j] = t < rep ? t : rep;\n        }\n        std::swap(prev, cur);\n    }\n    return prev[n];\n}"
+        ]
     },
     {
         "name-zh": "最长上升子序列O(n log n)",
         "name-en": "LIS O(n log n)",
         "description-zh": "使用耐心排序+二分求LIS长度，O(n log n)",
         "description-en": "Patience sorting with binary search for LIS length in O(n log n)",
-        "dependencies": ["vector", "algorithm"],
-        "use_to": ["sequence", "dynamic programming"],
-        "tags": ["dp", "lis", "algorithm"],
-        "input": ["a"],
-        "input_type": ["vector<int> &"],
-        "return": ["length"],
-        "return_type": ["int"],
+        "dependencies": [
+            "vector",
+            "algorithm"
+        ],
+        "use_to": [
+            "sequence",
+            "dynamic programming"
+        ],
+        "tags": [
+            "dp",
+            "lis",
+            "algorithm"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "vector<int> &"
+        ],
+        "return": [
+            "length"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 92,
         "memory_score": 92,
-        "code": ["#include <vector>\n#include <algorithm>\n\nint lis_length(const std::vector<int>& a) {\n    std::vector<int> tails;\n    for (int x : a) {\n        auto it = std::lower_bound(tails.begin(), tails.end(), x);\n        if (it == tails.end()) tails.push_back(x); else *it = x;\n    }\n    return (int)tails.size();\n}"]
+        "code": [
+            "#include <vector>\n#include <algorithm>\n\nint lis_length(const std::vector<int>& a) {\n    std::vector<int> tails;\n    for (int x : a) {\n        auto it = std::lower_bound(tails.begin(), tails.end(), x);\n        if (it == tails.end()) tails.push_back(x); else *it = x;\n    }\n    return (int)tails.size();\n}"
+        ]
     },
     {
         "name-zh": "KMP字符串匹配",
         "name-en": "KMP String Match",
         "description-zh": "前缀函数的KMP字符串匹配，返回所有匹配起始下标",
         "description-en": "KMP string matching with prefix function, return all match start indices",
-        "dependencies": ["vector", "string"],
-        "use_to": ["string", "search"],
-        "tags": ["string", "kmp", "algorithm"],
-        "input": ["text", "pattern"],
-        "input_type": ["string", "string"],
-        "return": ["indices"],
-        "return_type": ["vector<int>"],
+        "dependencies": [
+            "vector",
+            "string"
+        ],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "kmp",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "indices"
+        ],
+        "return_type": [
+            "vector<int>"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["#include <vector>\n#include <string>\n\nstd::vector<int> kmp_search(const std::string& text, const std::string& pat) {\n    int n = (int)text.size(), m = (int)pat.size();\n    if (m == 0) return {};\n    std::vector<int> lps(m, 0);\n    for (int i = 1, len = 0; i < m; ) {\n        if (pat[i] == pat[len]) lps[i++] = ++len;\n        else if (len) len = lps[len - 1]; else lps[i++] = 0;\n    }\n    std::vector<int> res;\n    for (int i = 0, j = 0; i < n; ) {\n        if (text[i] == pat[j]) { ++i; ++j; if (j == m) { res.push_back(i - m); j = lps[j - 1]; } }\n        else if (j) j = lps[j - 1]; else ++i;\n    }\n    return res;\n}"]
+        "code": [
+            "#include <vector>\n#include <string>\n\nstd::vector<int> kmp_search(const std::string& text, const std::string& pat) {\n    int n = (int)text.size(), m = (int)pat.size();\n    if (m == 0) return {};\n    std::vector<int> lps(m, 0);\n    for (int i = 1, len = 0; i < m; ) {\n        if (pat[i] == pat[len]) lps[i++] = ++len;\n        else if (len) len = lps[len - 1]; else lps[i++] = 0;\n    }\n    std::vector<int> res;\n    for (int i = 0, j = 0; i < n; ) {\n        if (text[i] == pat[j]) { ++i; ++j; if (j == m) { res.push_back(i - m); j = lps[j - 1]; } }\n        else if (j) j = lps[j - 1]; else ++i;\n    }\n    return res;\n}"
+        ]
     },
     {
         "name-zh": "埃拉托斯特尼筛法",
         "name-en": "Sieve of Eratosthenes",
         "description-zh": "在[2,n]内标记素数，时间复杂度O(n log log n)",
         "description-en": "Mark primes in [2,n] using Sieve of Eratosthenes in O(n log log n)",
-        "dependencies": ["vector"],
-        "use_to": ["prime", "number theory"],
-        "tags": ["math", "prime", "sieve", "algorithm"],
-        "input": ["n"],
-        "input_type": ["int"],
-        "return": ["isPrime"],
-        "return_type": ["vector<int>"],
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "prime",
+            "number theory"
+        ],
+        "tags": [
+            "math",
+            "prime",
+            "sieve",
+            "algorithm"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "isPrime"
+        ],
+        "return_type": [
+            "vector<int>"
+        ],
         "timer_score": 95,
         "memory_score": 90,
-        "code": ["#include <vector>\n\nstd::vector<int> sieve_is_prime(int n) {\n    std::vector<int> is(n + 1, 1);\n    if (n >= 0) is[0] = 0;\n    if (n >= 1) is[1] = 0;\n    for (int p = 2; p * p <= n; ++p) {\n        if (is[p]) {\n            for (long long x = 1LL * p * p; x <= n; x += p) is[(int)x] = 0;\n        }\n    }\n    return is;\n}"]
+        "code": [
+            "#include <vector>\n\nstd::vector<int> sieve_is_prime(int n) {\n    std::vector<int> is(n + 1, 1);\n    if (n >= 0) is[0] = 0;\n    if (n >= 1) is[1] = 0;\n    for (int p = 2; p * p <= n; ++p) {\n        if (is[p]) {\n            for (long long x = 1LL * p * p; x <= n; x += p) is[(int)x] = 0;\n        }\n    }\n    return is;\n}"
+        ]
     },
     {
         "name-zh": "拓扑排序(Kahn)",
         "name-en": "Topological Sort (Kahn)",
         "description-zh": "Kahn算法基于入度的拓扑排序，返回拓扑序列",
         "description-en": "Kahn algorithm for topological ordering using indegrees",
-        "dependencies": ["vector", "queue"],
-        "use_to": ["graph", "topological sort"],
-        "tags": ["graph", "topo", "kahn", "algorithm"],
-        "input": ["n", "adj"],
-        "input_type": ["int", "vector<vector<int>> &"],
-        "return": ["order"],
-        "return_type": ["vector<int>"],
+        "dependencies": [
+            "vector",
+            "queue"
+        ],
+        "use_to": [
+            "graph",
+            "topological sort"
+        ],
+        "tags": [
+            "graph",
+            "topo",
+            "kahn",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "adj"
+        ],
+        "input_type": [
+            "int",
+            "vector<vector<int>> &"
+        ],
+        "return": [
+            "order"
+        ],
+        "return_type": [
+            "vector<int>"
+        ],
         "timer_score": 88,
         "memory_score": 92,
-        "code": ["#include <vector>\n#include <queue>\n\nstd::vector<int> topo_sort_kahn(int n, const std::vector<std::vector<int>>& adj) {\n    std::vector<int> indeg(n, 0);\n    for (int u = 0; u < n; ++u) for (int v : adj[u]) ++indeg[v];\n    std::queue<int> q;\n    for (int i = 0; i < n; ++i) if (indeg[i] == 0) q.push(i);\n    std::vector<int> order;\n    while (!q.empty()) {\n        int u = q.front(); q.pop();\n        order.push_back(u);\n        for (int v : adj[u]) if (--indeg[v] == 0) q.push(v);\n    }\n    return order;\n}"]
+        "code": [
+            "#include <vector>\n#include <queue>\n\nstd::vector<int> topo_sort_kahn(int n, const std::vector<std::vector<int>>& adj) {\n    std::vector<int> indeg(n, 0);\n    for (int u = 0; u < n; ++u) for (int v : adj[u]) ++indeg[v];\n    std::queue<int> q;\n    for (int i = 0; i < n; ++i) if (indeg[i] == 0) q.push(i);\n    std::vector<int> order;\n    while (!q.empty()) {\n        int u = q.front(); q.pop();\n        order.push_back(u);\n        for (int v : adj[u]) if (--indeg[v] == 0) q.push(v);\n    }\n    return order;\n}"
+        ]
     },
     {
         "name-zh": "lower_bound示例(第一个>=x)",
         "name-en": "lower_bound example (first >= x)",
         "description-zh": "使用std::lower_bound返回第一个>=x的位置，若不存在返回-1",
         "description-en": "Return index of first element >= x using std::lower_bound, -1 if none",
-        "dependencies": ["vector", "algorithm"],
-        "use_to": ["search", "binary search"],
-        "tags": ["algorithm", "binary-search"],
-        "input": ["a", "x"],
-        "input_type": ["vector<int> &", "int"],
-        "return": ["index"],
-        "return_type": ["int"],
+        "dependencies": [
+            "vector",
+            "algorithm"
+        ],
+        "use_to": [
+            "search",
+            "binary search"
+        ],
+        "tags": [
+            "algorithm",
+            "binary-search"
+        ],
+        "input": [
+            "a",
+            "x"
+        ],
+        "input_type": [
+            "vector<int> &",
+            "int"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <vector>\n#include <algorithm>\n\nint lower_bound_index(const std::vector<int>& a, int x) {\n    auto it = std::lower_bound(a.begin(), a.end(), x);\n    if (it == a.end()) return -1;\n    return (int)(it - a.begin());\n}"]
-    }
-    ,
+        "code": [
+            "#include <vector>\n#include <algorithm>\n\nint lower_bound_index(const std::vector<int>& a, int x) {\n    auto it = std::lower_bound(a.begin(), a.end(), x);\n    if (it == a.end()) return -1;\n    return (int)(it - a.begin());\n}"
+        ]
+    },
     {
         "name-zh": "树状数组(BIT)",
         "name-en": "Fenwick Tree (BIT)",
         "description-zh": "支持前缀和查询与单点更新的数据结构，时间复杂度O(log n)",
         "description-en": "Data structure supporting prefix-sum query and point update in O(log n)",
-        "dependencies": ["vector"],
-        "use_to": ["data structure", "range query"],
-        "tags": ["data-structure", "fenwick", "bit"],
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "data structure",
+            "range query"
+        ],
+        "tags": [
+            "data-structure",
+            "fenwick",
+            "bit"
+        ],
         "input": [],
         "input_type": [],
         "return": [],
         "return_type": [],
         "timer_score": 90,
         "memory_score": 92,
-        "code": ["#include <vector>\n\nclass Fenwick {\n  int n;\n  std::vector<long long> bit; // 1-indexed\npublic:\n  explicit Fenwick(int n_): n(n_), bit(n+1, 0) {}\n  explicit Fenwick(const std::vector<long long>& a): n((int)a.size()), bit(n+1, 0) {\n    for (int i = 1; i <= n; ++i) add(i, a[i-1]);\n  }\n  void add(int idx, long long delta) {\n    for (; idx <= n; idx += idx & -idx) bit[idx] += delta;\n  }\n  long long sum(int idx) const {\n    long long r = 0;\n    for (; idx > 0; idx -= idx & -idx) r += bit[idx];\n    return r;\n  }\n  long long rangeSum(int l, int r) const {\n    if (r < l) return 0;\n    return sum(r) - sum(l - 1);\n  }\n};"]
-    }
-    ,
+        "code": [
+            "#include <vector>\n\nclass Fenwick {\n  int n;\n  std::vector<long long> bit; // 1-indexed\npublic:\n  explicit Fenwick(int n_): n(n_), bit(n+1, 0) {}\n  explicit Fenwick(const std::vector<long long>& a): n((int)a.size()), bit(n+1, 0) {\n    for (int i = 1; i <= n; ++i) add(i, a[i-1]);\n  }\n  void add(int idx, long long delta) {\n    for (; idx <= n; idx += idx & -idx) bit[idx] += delta;\n  }\n  long long sum(int idx) const {\n    long long r = 0;\n    for (; idx > 0; idx -= idx & -idx) r += bit[idx];\n    return r;\n  }\n  long long rangeSum(int l, int r) const {\n    if (r < l) return 0;\n    return sum(r) - sum(l - 1);\n  }\n};"
+        ]
+    },
     {
         "name-zh": "线段树(区间和, 单点更新)",
         "name-en": "Segment Tree (range sum)",
         "description-zh": "支持区间和查询与单点更新的线段树实现",
         "description-en": "Segment tree supporting range-sum query and point update",
-        "dependencies": ["vector"],
-        "use_to": ["data structure", "range query"],
-        "tags": ["data-structure", "segment-tree"],
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "data structure",
+            "range query"
+        ],
+        "tags": [
+            "data-structure",
+            "segment-tree"
+        ],
         "input": [],
         "input_type": [],
         "return": [],
         "return_type": [],
         "timer_score": 85,
         "memory_score": 85,
-        "code": ["#include <vector>\n\nclass SegTree {\n  int n;\n  std::vector<long long> t;\npublic:\n  explicit SegTree(int n_) {\n    n = 1;\n    while (n < n_) n <<= 1;\n    t.assign(2 * n, 0);\n  }\n  explicit SegTree(const std::vector<long long>& a): SegTree((int)a.size()) {\n    for (int i = 0; i < (int)a.size(); ++i) t[n + i] = a[i];\n    for (int i = n - 1; i > 0; --i) t[i] = t[i << 1] + t[i << 1 | 1];\n  }\n  void pointUpdate(int i, long long val) {\n    int p = n + i;\n    t[p] = val;\n    for (p >>= 1; p > 0; p >>= 1) t[p] = t[p << 1] + t[p << 1 | 1];\n  }\n  long long rangeSum(int l, int r) const {\n    long long res = 0;\n    for (l += n, r += n; l <= r; l >>= 1, r >>= 1) {\n      if (l & 1) res += t[l++];\n      if (!(r & 1)) res += t[r--];\n    }\n    return res;\n  }\n};"]
-    }
-    ,
+        "code": [
+            "#include <vector>\n\nclass SegTree {\n  int n;\n  std::vector<long long> t;\npublic:\n  explicit SegTree(int n_) {\n    n = 1;\n    while (n < n_) n <<= 1;\n    t.assign(2 * n, 0);\n  }\n  explicit SegTree(const std::vector<long long>& a): SegTree((int)a.size()) {\n    for (int i = 0; i < (int)a.size(); ++i) t[n + i] = a[i];\n    for (int i = n - 1; i > 0; --i) t[i] = t[i << 1] + t[i << 1 | 1];\n  }\n  void pointUpdate(int i, long long val) {\n    int p = n + i;\n    t[p] = val;\n    for (p >>= 1; p > 0; p >>= 1) t[p] = t[p << 1] + t[p << 1 | 1];\n  }\n  long long rangeSum(int l, int r) const {\n    long long res = 0;\n    for (l += n, r += n; l <= r; l >>= 1, r >>= 1) {\n      if (l & 1) res += t[l++];\n      if (!(r & 1)) res += t[r--];\n    }\n    return res;\n  }\n};"
+        ]
+    },
     {
         "name-zh": "LRU缓存(整数键值)",
         "name-en": "LRU Cache (int->int)",
         "description-zh": "使用双向链表+哈希表实现的LRU缓存，get/put均为O(1)",
         "description-en": "LRU cache using list + unordered_map with O(1) get/put",
-        "dependencies": ["unordered_map", "list", "utility"],
-        "use_to": ["cache", "data structure"],
-        "tags": ["data-structure", "lru", "cache"],
+        "dependencies": [
+            "unordered_map",
+            "list",
+            "utility"
+        ],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "data-structure",
+            "lru",
+            "cache"
+        ],
         "input": [],
         "input_type": [],
         "return": [],
         "return_type": [],
         "timer_score": 88,
         "memory_score": 90,
-        "code": ["#include <unordered_map>\n#include <list>\n#include <utility>\n\nclass LRUCache {\n  int cap;\n  std::list<std::pair<int,int>> lst; // front: most recent\n  std::unordered_map<int, std::list<std::pair<int,int>>::iterator> mp;\n  void touch(std::unordered_map<int, std::list<std::pair<int,int>>::iterator>::iterator it) {\n    int k = it->first;\n    auto node = it->second;\n    int v = node->second;\n    lst.erase(node);\n    lst.push_front({k, v});\n    it->second = lst.begin();\n  }\npublic:\n  explicit LRUCache(int capacity): cap(capacity) {}\n  int get(int key) {\n    auto it = mp.find(key);\n    if (it == mp.end()) return -1;\n    touch(it);\n    return it->second->second;\n  }\n  void put(int key, int value) {\n    auto it = mp.find(key);\n    if (it != mp.end()) {\n      it->second->second = value;\n      touch(it);\n      return;\n    }\n    if ((int)lst.size() == cap) {\n      auto back = lst.back();\n      mp.erase(back.first);\n      lst.pop_back();\n    }\n    lst.push_front({key, value});\n    mp[key] = lst.begin();\n  }\n};"]
+        "code": [
+            "#include <unordered_map>\n#include <list>\n#include <utility>\n\nclass LRUCache {\n  int cap;\n  std::list<std::pair<int,int>> lst; // front: most recent\n  std::unordered_map<int, std::list<std::pair<int,int>>::iterator> mp;\n  void touch(std::unordered_map<int, std::list<std::pair<int,int>>::iterator>::iterator it) {\n    int k = it->first;\n    auto node = it->second;\n    int v = node->second;\n    lst.erase(node);\n    lst.push_front({k, v});\n    it->second = lst.begin();\n  }\npublic:\n  explicit LRUCache(int capacity): cap(capacity) {}\n  int get(int key) {\n    auto it = mp.find(key);\n    if (it == mp.end()) return -1;\n    touch(it);\n    return it->second->second;\n  }\n  void put(int key, int value) {\n    auto it = mp.find(key);\n    if (it != mp.end()) {\n      it->second->second = value;\n      touch(it);\n      return;\n    }\n    if ((int)lst.size() == cap) {\n      auto back = lst.back();\n      mp.erase(back.first);\n      lst.pop_back();\n    }\n    lst.push_front({key, value});\n    mp[key] = lst.begin();\n  }\n};"
+        ]
     },
     {
         "name-zh": "Modbus CRC16",
         "name-en": "Modbus CRC16",
         "description-zh": "计算 Modbus CRC16，返回小端2字节",
         "description-en": "Compute Modbus CRC16 and return 2 bytes little-endian",
-        "dependencies": ["vector", "cstdint"],
-        "use_to": ["hardware", "modbus", "crc"],
-        "tags": ["checksum", "crc16", "modbus"],
-        "input": ["data"],
-        "input_type": ["vector<uint8_t>&"],
-        "return": ["crcLE"],
-        "return_type": ["vector<uint8_t>"],
+        "dependencies": [
+            "vector",
+            "cstdint"
+        ],
+        "use_to": [
+            "hardware",
+            "modbus",
+            "crc"
+        ],
+        "tags": [
+            "checksum",
+            "crc16",
+            "modbus"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "vector<uint8_t>&"
+        ],
+        "return": [
+            "crcLE"
+        ],
+        "return_type": [
+            "vector<uint8_t>"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <vector>\n#include <cstdint>\n\nstd::vector<uint8_t> modbus_crc16_le(const std::vector<uint8_t>& data) {\n    uint16_t crc = 0xFFFFu;\n    for (uint8_t b : data) {\n        crc ^= b;\n        for (int i = 0; i < 8; ++i) {\n            if (crc & 1u) crc = (crc >> 1) ^ 0xA001u;\n            else crc >>= 1;\n        }\n    }\n    return { static_cast<uint8_t>(crc & 0xFFu), static_cast<uint8_t>(crc >> 8) };\n}"]
+        "code": [
+            "#include <vector>\n#include <cstdint>\n\nstd::vector<uint8_t> modbus_crc16_le(const std::vector<uint8_t>& data) {\n    uint16_t crc = 0xFFFFu;\n    for (uint8_t b : data) {\n        crc ^= b;\n        for (int i = 0; i < 8; ++i) {\n            if (crc & 1u) crc = (crc >> 1) ^ 0xA001u;\n            else crc >>= 1;\n        }\n    }\n    return { static_cast<uint8_t>(crc & 0xFFu), static_cast<uint8_t>(crc >> 8) };\n}"
+        ]
     },
     {
         "name-zh": "CRC32(IEEE)",
         "name-en": "CRC32 (IEEE)",
         "description-zh": "计算 CRC-32(IEEE) 并以大端4字节返回",
         "description-en": "Compute CRC-32 (IEEE) and return 4 bytes big-endian",
-        "dependencies": ["vector", "cstdint"],
-        "use_to": ["hardware", "crc", "checksum"],
-        "tags": ["checksum", "crc32", "ieee"],
-        "input": ["data"],
-        "input_type": ["vector<uint8_t>&"],
-        "return": ["crcBE"],
-        "return_type": ["vector<uint8_t>"],
+        "dependencies": [
+            "vector",
+            "cstdint"
+        ],
+        "use_to": [
+            "hardware",
+            "crc",
+            "checksum"
+        ],
+        "tags": [
+            "checksum",
+            "crc32",
+            "ieee"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "vector<uint8_t>&"
+        ],
+        "return": [
+            "crcBE"
+        ],
+        "return_type": [
+            "vector<uint8_t>"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <vector>\n#include <cstdint>\n\nstd::vector<uint8_t> crc32_ieee_be(const std::vector<uint8_t>& data) {\n    uint32_t crc = 0xFFFFFFFFu;\n    for (uint8_t b : data) {\n        crc ^= b;\n        for (int i = 0; i < 8; ++i) {\n            if (crc & 1u) crc = (crc >> 1) ^ 0xEDB88320u;\n            else crc >>= 1;\n        }\n    }\n    crc ^= 0xFFFFFFFFu;\n    return {\n        static_cast<uint8_t>((crc >> 24) & 0xFFu),\n        static_cast<uint8_t>((crc >> 16) & 0xFFu),\n        static_cast<uint8_t>((crc >> 8) & 0xFFu),\n        static_cast<uint8_t>(crc & 0xFFu)\n    };\n}"]
+        "code": [
+            "#include <vector>\n#include <cstdint>\n\nstd::vector<uint8_t> crc32_ieee_be(const std::vector<uint8_t>& data) {\n    uint32_t crc = 0xFFFFFFFFu;\n    for (uint8_t b : data) {\n        crc ^= b;\n        for (int i = 0; i < 8; ++i) {\n            if (crc & 1u) crc = (crc >> 1) ^ 0xEDB88320u;\n            else crc >>= 1;\n        }\n    }\n    crc ^= 0xFFFFFFFFu;\n    return {\n        static_cast<uint8_t>((crc >> 24) & 0xFFu),\n        static_cast<uint8_t>((crc >> 16) & 0xFFu),\n        static_cast<uint8_t>((crc >> 8) & 0xFFu),\n        static_cast<uint8_t>(crc & 0xFFu)\n    };\n}"
+        ]
     },
     {
         "name-zh": "Sum8 校验",
         "name-en": "Sum8 Checksum",
         "description-zh": "对所有字节求和取低8位(0..255)",
         "description-en": "Sum of all bytes modulo 256 (0..255)",
-        "dependencies": ["vector", "cstdint"],
-        "use_to": ["hardware", "checksum"],
-        "tags": ["checksum", "sum8"],
-        "input": ["data"],
-        "input_type": ["vector<uint8_t>&"],
-        "return": ["sum8"],
-        "return_type": ["uint8_t"],
+        "dependencies": [
+            "vector",
+            "cstdint"
+        ],
+        "use_to": [
+            "hardware",
+            "checksum"
+        ],
+        "tags": [
+            "checksum",
+            "sum8"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "vector<uint8_t>&"
+        ],
+        "return": [
+            "sum8"
+        ],
+        "return_type": [
+            "uint8_t"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <vector>\n#include <cstdint>\n\nuint8_t checksum_sum8(const std::vector<uint8_t>& data) {\n    uint32_t s = 0;\n    for (uint8_t b : data) s += b;\n    return static_cast<uint8_t>(s & 0xFFu);\n}"]
+        "code": [
+            "#include <vector>\n#include <cstdint>\n\nuint8_t checksum_sum8(const std::vector<uint8_t>& data) {\n    uint32_t s = 0;\n    for (uint8_t b : data) s += b;\n    return static_cast<uint8_t>(s & 0xFFu);\n}"
+        ]
     },
     {
         "name-zh": "LRC8 校验",
         "name-en": "LRC8 Checksum",
         "description-zh": "纵向冗余校验(LRC)，使 (sum + LRC) & 0xFF == 0",
         "description-en": "Longitudinal Redundancy Check so that (sum + LRC) & 0xFF == 0",
-        "dependencies": ["vector", "cstdint"],
-        "use_to": ["hardware", "checksum"],
-        "tags": ["checksum", "lrc"],
-        "input": ["data"],
-        "input_type": ["vector<uint8_t>&"],
-        "return": ["lrc"],
-        "return_type": ["uint8_t"],
+        "dependencies": [
+            "vector",
+            "cstdint"
+        ],
+        "use_to": [
+            "hardware",
+            "checksum"
+        ],
+        "tags": [
+            "checksum",
+            "lrc"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "vector<uint8_t>&"
+        ],
+        "return": [
+            "lrc"
+        ],
+        "return_type": [
+            "uint8_t"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <vector>\n#include <cstdint>\n\nuint8_t lrc8(const std::vector<uint8_t>& data) {\n    uint32_t s = 0;\n    for (uint8_t b : data) s += b;\n    return static_cast<uint8_t>((-static_cast<int32_t>(s)) & 0xFF);\n}"]
+        "code": [
+            "#include <vector>\n#include <cstdint>\n\nuint8_t lrc8(const std::vector<uint8_t>& data) {\n    uint32_t s = 0;\n    for (uint8_t b : data) s += b;\n    return static_cast<uint8_t>((-static_cast<int32_t>(s)) & 0xFF);\n}"
+        ]
     },
     {
         "name-zh": "异或校验",
         "name-en": "XOR Checksum",
         "description-zh": "逐字节异或校验，返回0..255",
         "description-en": "Byte-wise XOR checksum, returns 0..255",
-        "dependencies": ["vector", "cstdint"],
-        "use_to": ["hardware", "checksum"],
-        "tags": ["checksum", "xor"],
-        "input": ["data"],
-        "input_type": ["vector<uint8_t>&"],
-        "return": ["xor"],
-        "return_type": ["uint8_t"],
+        "dependencies": [
+            "vector",
+            "cstdint"
+        ],
+        "use_to": [
+            "hardware",
+            "checksum"
+        ],
+        "tags": [
+            "checksum",
+            "xor"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "vector<uint8_t>&"
+        ],
+        "return": [
+            "xor"
+        ],
+        "return_type": [
+            "uint8_t"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <vector>\n#include <cstdint>\n\nuint8_t checksum_xor(const std::vector<uint8_t>& data) {\n    uint8_t x = 0;\n    for (uint8_t b : data) x ^= b;\n    return x;\n}"]
+        "code": [
+            "#include <vector>\n#include <cstdint>\n\nuint8_t checksum_xor(const std::vector<uint8_t>& data) {\n    uint8_t x = 0;\n    for (uint8_t b : data) x ^= b;\n    return x;\n}"
+        ]
     },
     {
         "name-zh": "奇偶校验位",
         "name-en": "Parity Bit",
         "description-zh": "计算一个字节的奇/偶校验位；odd=true为奇校验",
         "description-en": "Compute parity bit for one byte; odd=true for odd parity",
-        "dependencies": ["cstdint"],
-        "use_to": ["hardware", "parity", "serial"],
-        "tags": ["parity", "bit"],
-        "input": ["b", "odd"],
-        "input_type": ["uint8_t", "bool"],
-        "return": ["parity"],
-        "return_type": ["uint8_t"],
+        "dependencies": [
+            "cstdint"
+        ],
+        "use_to": [
+            "hardware",
+            "parity",
+            "serial"
+        ],
+        "tags": [
+            "parity",
+            "bit"
+        ],
+        "input": [
+            "b",
+            "odd"
+        ],
+        "input_type": [
+            "uint8_t",
+            "bool"
+        ],
+        "return": [
+            "parity"
+        ],
+        "return_type": [
+            "uint8_t"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["#include <cstdint>\n\nuint8_t parity_bit(uint8_t b, bool odd) {\n    int ones = 0;\n    for (int i = 0; i < 8; ++i) if ((b >> i) & 1u) ++ones;\n    if (odd) return static_cast<uint8_t>((ones & 1) ^ 1);\n    return static_cast<uint8_t>(ones & 1);\n}"]
+        "code": [
+            "#include <cstdint>\n\nuint8_t parity_bit(uint8_t b, bool odd) {\n    int ones = 0;\n    for (int i = 0; i < 8; ++i) if ((b >> i) & 1u) ++ones;\n    if (odd) return static_cast<uint8_t>((ones & 1) ^ 1);\n    return static_cast<uint8_t>(ones & 1);\n}"
+        ]
+    },
+    {
+        "name-zh": "STL 排序",
+        "name-en": "STL Sort",
+        "description-zh": "使用 std::sort 对向量排序",
+        "description-en": "Sort vector using std::sort",
+        "dependencies": [
+            "algorithm",
+            "vector"
+        ],
+        "use_to": [
+            "sort"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "vec"
+        ],
+        "input_type": [
+            "vector<int>"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "vector<int>"
+        ],
+        "timer_score": 95,
+        "memory_score": 90,
+        "code": [
+            "#include <algorithm>\n#include <vector>\nstd::vector<int> stl_sort(std::vector<int> v) {\n    std::sort(v.begin(), v.end());\n    return v;\n}"
+        ]
+    },
+    {
+        "name-zh": "STL 二分查找",
+        "name-en": "STL Binary Search",
+        "description-zh": "使用 std::binary_search 在有序向量中查找",
+        "description-en": "Binary search using std::binary_search",
+        "dependencies": [
+            "algorithm"
+        ],
+        "use_to": [
+            "search"
+        ],
+        "tags": [
+            "search",
+            "algorithm"
+        ],
+        "input": [
+            "vec",
+            "target"
+        ],
+        "input_type": [
+            "vector<int>",
+            "int"
+        ],
+        "return": [
+            "found"
+        ],
+        "return_type": [
+            "bool"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "#include <algorithm>\nbool stl_binary_search(const std::vector<int>& v, int target) {\n    return std::binary_search(v.begin(), v.end(), target);\n}"
+        ]
+    },
+    {
+        "name-zh": "STL 最大最小",
+        "name-en": "STL Min Max",
+        "description-zh": "使用 std::minmax 找最大最小值",
+        "description-en": "Find min/max using std::minmax",
+        "dependencies": [
+            "algorithm"
+        ],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "math",
+            "algorithm"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "int",
+            "int"
+        ],
+        "return": [
+            "pair"
+        ],
+        "return_type": [
+            "pair<int,int>"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "#include <algorithm>\nauto [mn, mx] = std::minmax(a, b);"
+        ]
+    },
+    {
+        "name-zh": "哈希映射统计",
+        "name-en": "HashMap Count",
+        "description-zh": "使用 unordered_map 统计元素出现频率",
+        "description-en": "Count element frequencies using unordered_map",
+        "dependencies": [
+            "unordered_map"
+        ],
+        "use_to": [
+            "hash",
+            "count"
+        ],
+        "tags": [
+            "hash",
+            "basic"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "vector<int>"
+        ],
+        "return": [
+            "counts"
+        ],
+        "return_type": [
+            "unordered_map<int,int>"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "#include <unordered_map>\nstd::unordered_map<int,int> count_freq(const std::vector<int>& arr) {\n    std::unordered_map<int,int> cnt;\n    for(int v: arr) cnt[v]++;\n    return cnt;\n}"
+        ]
+    },
+    {
+        "name-zh": "前缀和数组",
+        "name-en": "Prefix Sum Array",
+        "description-zh": "计算前缀和数组",
+        "description-en": "Compute prefix sum array",
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "prefix sum",
+            "array"
+        ],
+        "tags": [
+            "prefix sum",
+            "array"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "vector<int>"
+        ],
+        "return": [
+            "prefix"
+        ],
+        "return_type": [
+            "vector<int>"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "std::vector<long long> prefix_sum(const std::vector<int>& a) {\n    std::vector<long long> p(a.size()+1, 0);\n    for(size_t i=0;i<a.size();i++) p[i+1]=p[i]+a[i];\n    return p;\n}"
+        ]
+    },
+    {
+        "name-zh": "LRU 缓存（std::list+unordered_map）",
+        "name-en": "LRU Cache (std::list+unordered_map)",
+        "description-zh": "O(1) 时间复杂度的 LRU 缓存实现",
+        "description-en": "LRU cache with O(1) time complexity",
+        "dependencies": [
+            "list",
+            "unordered_map"
+        ],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "class"
+        ],
+        "return_type": [
+            "LRUCache"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "#include <list>\n#include <unordered_map>\nclass LRUCache {\n    int cap_; std::list<std::pair<int,int>> lst_;\n    std::unordered_map<int,std::list<std::pair<int,int>>::iterator> mp_;\npublic:\n    LRUCache(int c): cap_(c){}\n    int get(int k){ auto it=mp_.find(k); if(it==mp_.end()) return -1;\n        lst_.splice(lst_.begin(),lst_,it->second); return it->second->second; }\n    void put(int k,int v){ if(get(k)!=-1){ mp_[k]->second=v; return; }\n        if(mp_.size()==cap_){ auto rm=lst_.back(); mp_.erase(rm.first); lst_.pop_back(); }\n        lst_.push_front({k,v}); mp_[k]=lst_.begin(); }\n};"
+        ]
+    },
+    {
+        "name-zh": "线程安全队列",
+        "name-en": "Thread-safe Queue",
+        "description-zh": "使用 mutex 和 condition_variable 实现线程安全队列",
+        "description-en": "Thread-safe queue with mutex and condition_variable",
+        "dependencies": [
+            "mutex",
+            "condition_variable",
+            "queue"
+        ],
+        "use_to": [
+            "concurrency",
+            "queue"
+        ],
+        "tags": [
+            "concurrent",
+            "queue"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "class"
+        ],
+        "return_type": [
+            "ThreadSafeQueue"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "#include <mutex>\n#include <condition_variable>\n#include <queue>\ntemplate<typename T>\nclass ThreadSafeQueue {\n    std::queue<T> q_;\n    std::mutex mu_;\n    std::condition_variable cv_;\npublic:\n    void push(T v){ std::lock_guard<std::mutex> l(mu_); q_.push(v); cv_.notify_one(); }\n    T pop(){ std::unique_lock<std::mutex> l(mu_); cv_.wait(l,[&]{return !q_.empty();}); T v=q_.front(); q_.pop(); return v; }\n    bool try_pop(T& v){ std::lock_guard<std::mutex> l(mu_); if(q_.empty()) return false; v=q_.front(); q_.pop(); return true; }\n};"
+        ]
+    },
+    {
+        "name-zh": "读写锁",
+        "name-en": "Read Write Lock",
+        "description-zh": "使用 pthread 实现读写锁",
+        "description-en": "Read-write lock using pthread",
+        "dependencies": [
+            "pthread"
+        ],
+        "use_to": [
+            "concurrency",
+            "lock"
+        ],
+        "tags": [
+            "concurrent",
+            "lock"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "class"
+        ],
+        "return_type": [
+            "RWLock"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "#include <pthread.h>\nclass RWLock {\n    pthread_rwlock_t lock_;\npublic:\n    RWLock(){ pthread_rwlock_init(&lock_, nullptr); }\n    ~RWLock(){ pthread_rwlock_destroy(&lock_); }\n    void read_lock(){ pthread_rwlock_rdlock(&lock_); }\n    void write_lock(){ pthread_rwlock_wrlock(&lock_); }\n    void unlock(){ pthread_rwlock_unlock(&lock_); }\n};"
+        ]
+    },
+    {
+        "name-zh": "单例模式（线程安全）",
+        "name-en": "Singleton (Thread-safe)",
+        "description-zh": "线程安全的单例模式实现",
+        "description-en": "Thread-safe singleton pattern",
+        "dependencies": [],
+        "use_to": [
+            "design pattern",
+            "singleton"
+        ],
+        "tags": [
+            "pattern",
+            "singleton"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "instance"
+        ],
+        "return_type": [
+            "Singleton"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "class Singleton {\n    static Singleton* inst_;\n    Singleton(){}\npublic:\n    static Singleton* get(){ if(!inst_) inst_ = new Singleton(); return inst_; }\n};"
+        ]
+    },
+    {
+        "name-zh": "定时器（Chrono）",
+        "name-en": "Timer (Chrono)",
+        "description-zh": "使用 std::chrono 高精度计时",
+        "description-en": "High-precision timer using std::chrono",
+        "dependencies": [
+            "chrono"
+        ],
+        "use_to": [
+            "time",
+            "benchmark"
+        ],
+        "tags": [
+            "time",
+            "basic"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "elapsed"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "#include <chrono>\nclass Timer {\n    std::chrono::high_resolution_clock::time_point t_;\npublic:\n    Timer(): t_(std::chrono::high_resolution_clock::now()){}\n    double elapsed_ms(){ return std::chrono::duration<double,std::milli>(\n        std::chrono::high_resolution_clock::now()-t_).count(); }\n    void reset(){ t_ = std::chrono::high_resolution_clock::now(); }\n};"
+        ]
+    },
+    {
+        "name-zh": "UUID 生成",
+        "name-en": "UUID Generate",
+        "description-zh": "生成随机 UUID 字符串（C++11）",
+        "description-en": "Generate random UUID string (C++11)",
+        "dependencies": [
+            "random"
+        ],
+        "use_to": [
+            "uuid",
+            "id"
+        ],
+        "tags": [
+            "basic",
+            "uuid"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "uuid"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "#include <random>\n#include <sstream>\nstd::string uuid_v4() {\n    std::random_device rd;\n    std::mt19937 gen(rd());\n    std::uniform_int_distribution<> dis(0,15);\n    std::ostringstream ss;\n    for(int i=0;i<36;i++){\n        if(i==8||i==13||i==18||i==23) ss<<'-';\n        else if(i==14) ss<<'4';\n        else if(i==19) ss<<(dis(gen)&0x3|0x8);\n        else ss<<std::hex<<dis(gen);\n    }\n    return ss.str();\n}"
+        ]
+    },
+    {
+        "name-zh": "CRC32 校验",
+        "name-en": "CRC32 Checksum",
+        "description-zh": "计算字节数组的 CRC32 校验和",
+        "description-en": "Compute CRC32 checksum of byte array",
+        "dependencies": [
+            "zlib"
+        ],
+        "use_to": [
+            "checksum",
+            "crc"
+        ],
+        "tags": [
+            "checksum",
+            "crc32"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "crc"
+        ],
+        "return_type": [
+            "uint32_t"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "#include <zlib.h>\nuint32_t crc32_str(const std::string& data) {\n    return crc32(0L, (const Bytef*)data.data(), data.size());\n}"
+        ]
+    },
+    {
+        "name-zh": "Base64 编解码",
+        "name-en": "Base64 Encode/Decode",
+        "description-zh": "对字符串进行 Base64 编码和解码",
+        "description-en": "Base64 encode/decode string",
+        "dependencies": [
+            "openssl"
+        ],
+        "use_to": [
+            "encoding",
+            "base64"
+        ],
+        "tags": [
+            "encoding",
+            "basic"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "encoded"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "#include <openssl/bio.h>\n#include <openssl/evp.h>\nstd::string base64_encode(const std::string& in) {\n    BIO* b64 = BIO_new(BIO_f_base64()); BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);\n    BIO* bmem = BIO_new(BIO_s_mem()); b64 = BIO_push(b64, bmem);\n    BIO_write(b64, in.data(), in.size()); BIO_flush(b64);\n    char* ptr; long len = BIO_get_mem_data(bmem, &ptr);\n    return std::string(ptr, len);\n}\nstd::string base64_decode(const std::string& in) {\n    BIO* b64 = BIO_new(BIO_f_base64()); BIO_set_flags(b64, BIO_FLAGS_BASE64_NO_NL);\n    BIO* bmem = BIO_new(BIO_s_mem()); b64 = BIO_push(b64, bmem);\n    BIO_write(b64, in.data(), in.size()); BIO_flush(b64);\n    char* ptr; long len = BIO_get_mem_data(bmem, &ptr);\n    return std::string(ptr, len);\n}"
+        ]
+    },
+    {
+        "name-zh": "MD5 哈希",
+        "name-en": "MD5 Hash",
+        "description-zh": "计算字符串的 MD5 哈希（十六进制）",
+        "description-en": "Compute MD5 hash as hex string",
+        "dependencies": [
+            "openssl"
+        ],
+        "use_to": [
+            "hash",
+            "md5"
+        ],
+        "tags": [
+            "hash",
+            "md5"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "hex"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "#include <openssl/md5.h>\n#include <iomanip>\nstd::string md5_hex(const std::string& s) {\n    unsigned char md[MD5_DIGEST_LENGTH]; MD5((unsigned char*)s.data(), s.size(), md);\n    std::ostringstream s2; for(int i=0;i<MD5_DIGEST_LENGTH;i++) s2<<std::hex<<(int)md[i];\n    return s2.str();\n}"
+        ]
+    },
+    {
+        "name-zh": "SHA256 哈希",
+        "name-en": "SHA256 Hash",
+        "description-zh": "计算字符串的 SHA256 哈希（十六进制）",
+        "description-en": "Compute SHA256 hash as hex string",
+        "dependencies": [
+            "openssl"
+        ],
+        "use_to": [
+            "hash",
+            "sha256"
+        ],
+        "tags": [
+            "hash",
+            "sha256"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "hex"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 85,
+        "memory_score": 95,
+        "code": [
+            "#include <openssl/sha.h>\n#include <iomanip>\nstd::string sha256_hex(const std::string& s) {\n    unsigned char md[SHA256_DIGEST_LENGTH]; SHA256((unsigned char*)s.data(), s.size(), md);\n    std::ostringstream ss; for(int i=0;i<SHA256_DIGEST_LENGTH;i++) ss<<std::hex<<(int)md[i];\n    return ss.str();\n}"
+        ]
+    },
+    {
+        "name-zh": "正则匹配（Boost）",
+        "name-en": "Regex Match (Boost)",
+        "description-zh": "使用 Boost.Regex 进行正则匹配",
+        "description-en": "Regex matching using Boost.Regex",
+        "dependencies": [
+            "boost/regex"
+        ],
+        "use_to": [
+            "regex"
+        ],
+        "tags": [
+            "regex",
+            "basic"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "matches"
+        ],
+        "return_type": [
+            "vector<string>"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "#include <boost/regex.hpp>\nstd::vector<std::string> regex_match_all(const std::string& text, const std::string& pat) {\n    boost::regex re(pat);\n    boost::sregex_iterator it(text.begin(), text.end(), re), end;\n    std::vector<std::string> res;\n    for(; it != end; ++it) res.push_back(it->str());\n    return res;\n}"
+        ]
+    },
+    {
+        "name-zh": "INI 解析",
+        "name-en": "Parse INI",
+        "description-zh": "解析 INI 格式配置文件",
+        "description-en": "Parse INI config file",
+        "dependencies": [],
+        "use_to": [
+            "config",
+            "file"
+        ],
+        "tags": [
+            "config",
+            "basic"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "map<string,map<string,string>>"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "#include <map>\n#include <string>\n#include <sstream>\nstd::map<std::string,std::map<std::string,std::string>> parse_ini(const std::string& content) {\n    std::map<std::string,std::map<std::string,std::string>> cfg;\n    std::string section;\n    std::istringstream iss(content); std::string line;\n    while(std::getline(iss,line)) {\n        if(line.empty()||line[0]=='#'||line[0]==';') continue;\n        if(line[0]=='['){ size_t p=line.find(']'); section=line.substr(1,p-1); }\n        else{ size_t p=line.find('='); if(p!=std::string::npos) cfg[section][line.substr(0,p)]=line.substr(p+1); }\n    }\n    return cfg;\n}"
+        ]
+    },
+    {
+        "name-zh": "LRU 缓存（std::list+map）",
+        "name-en": "LRU Cache (list+map)",
+        "description-zh": "O(1) 的 LRU 缓存实现（无 Boost 依赖）",
+        "description-en": "O(1) LRU cache without Boost dependency",
+        "dependencies": [
+            "list",
+            "map"
+        ],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "class"
+        ],
+        "return_type": [
+            "LRUCache"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "#include <list>\n#include <map>\ntemplate<typename K, typename V>\nclass LRUCache {\n    int cap_;\n    std::list<std::pair<K,V>> lst_;\n    std::map<K, std::list<std::pair<K,V>>::iterator> mp_;\npublic:\n    LRUCache(int c): cap_(c){}\n    V get(K key){ auto it=mp_.find(key); if(it==mp_.end()) throw std::runtime_error(\"not found\");\n        lst_.splice(lst_.begin(), lst_, it->second); return it->second->second; }\n    void put(K key, V val){ if(get(key), true){}catch(...){}\n        if(mp_.size()==cap_){ auto rm=lst_.back(); mp_.erase(rm.first); lst_.pop_back(); }\n        lst_.push_front({key,val}); mp_[key]=lst_.begin(); }\n};"
+        ]
     }
 ]

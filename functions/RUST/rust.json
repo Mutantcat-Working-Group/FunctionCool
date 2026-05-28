@@ -1904,5 +1904,630 @@
         "code": [
             "use std::time::{SystemTime,UNIX_EPOCH}; fn format_time(t: SystemTime, fmt: &str) -> String { let chrono_offset=1970; let secs=t.duration_since(UNIX_EPOCH).unwrap().as_secs(); format!(\"{}\", secs) }"
         ]
+    },
+    {
+        "name-zh": "快速排序",
+        "name-en": "Quick Sort",
+        "description-zh": "简单快速排序实现",
+        "description-en": "Simple quick sort implementation",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "Vec<i32>"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "Vec<i32>"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "fn quick_sort(v: &mut [i32]) {\n    if v.len() <= 1 { return; }\n    let p = v.len() / 2;\n    let mut i = 0;\n    for j in 0..v.len() {\n        if v[j] < v[p] { v.swap(i, j); i += 1; }\n    }\n    v.swap(i, p);\n    let (lo, hi) = v.split_at_mut(i);\n    if !lo.is_empty() { quick_sort(lo); }\n    if !hi.is_empty() { quick_sort(&mut hi[1..]); }\n}"
+        ]
+    },
+    {
+        "name-zh": "归并排序",
+        "name-en": "Merge Sort",
+        "description-zh": "自顶向下归并排序",
+        "description-en": "Top-down merge sort",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "Vec<i32>"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "Vec<i32>"
+        ],
+        "timer_score": 80,
+        "memory_score": 75,
+        "code": [
+            "fn merge_sort(v: &[i32]) -> Vec<i32> {\n    if v.len() <= 1 { return v.to_vec(); }\n    let m = v.len() / 2;\n    let l = merge_sort(&v[..m]);\n    let r = merge_sort(&v[m..]);\n    merge(&l, &r)\n}\nfn merge(l: &[i32], r: &[i32]) -> Vec<i32> {\n    let mut res = Vec::with_capacity(l.len() + r.len());\n    let mut i = 0; let mut j = 0;\n    while i < l.len() && j < r.len() {\n        if l[i] <= r[j] { res.push(l[i]); i += 1; } else { res.push(r[j]); j += 1; }\n    }\n    res.extend_from_slice(&l[i..]); res.extend_from_slice(&r[j..]);\n    res\n}"
+        ]
+    },
+    {
+        "name-zh": "二分查找",
+        "name-en": "Binary Search",
+        "description-zh": "有序向量二分查找",
+        "description-en": "Binary search in sorted vector",
+        "dependencies": [],
+        "use_to": [
+            "search",
+            "algorithm"
+        ],
+        "tags": [
+            "search",
+            "algorithm"
+        ],
+        "input": [
+            "v",
+            "target"
+        ],
+        "input_type": [
+            "Vec<i32>",
+            "i32"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "Option<usize>"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "fn binary_search(v: &[i32], target: i32) -> Option<usize> {\n    let mut l = 0; let mut r = v.len();\n    while l < r {\n        let m = (l + r) / 2;\n        if v[m] == target { return Some(m); }\n        else if v[m] < target { l = m + 1; } else { r = m; }\n    }\n    None\n}"
+        ]
+    },
+    {
+        "name-zh": "哈希集",
+        "name-en": "HashSet",
+        "description-zh": "创建并操作哈希集合",
+        "description-en": "Create and operate on hash set",
+        "dependencies": [],
+        "use_to": [
+            "set",
+            "hash"
+        ],
+        "tags": [
+            "set",
+            "basic"
+        ],
+        "input": [
+            "items"
+        ],
+        "input_type": [
+            "Vec<i32>"
+        ],
+        "return": [
+            "set"
+        ],
+        "return_type": [
+            "std::collections::HashSet<i32>"
+        ],
+        "timer_score": 95,
+        "memory_score": 85,
+        "code": [
+            "use std::collections::HashSet;\nfn to_hashset(items: &[i32]) -> HashSet<i32> {\n    items.iter().cloned().collect()\n}\nfn set_intersection(a: &HashSet<i32>, b: &HashSet<i32>) -> HashSet<i32> {\n    a.intersection(b).cloned().collect()\n}\nfn set_union(a: &HashSet<i32>, b: &HashSet<i32>) -> HashSet<i32> {\n    a.union(b).cloned().collect()\n}\nfn set_difference(a: &HashSet<i32>, b: &HashSet<i32>) -> HashSet<i32> {\n    a.difference(b).cloned().collect()\n}"
+        ]
+    },
+    {
+        "name-zh": "命令行参数解析",
+        "name-en": "Parse CLI Args",
+        "description-zh": "简单解析命令行键值参数",
+        "description-en": "Simple key-value CLI argument parser",
+        "dependencies": [
+            "std"
+        ],
+        "use_to": [
+            "cli",
+            "args"
+        ],
+        "tags": [
+            "basic",
+            "cli"
+        ],
+        "input": [
+            "args"
+        ],
+        "input_type": [
+            "Vec<String>"
+        ],
+        "return": [
+            "params"
+        ],
+        "return_type": [
+            "std::collections::HashMap<String,String>"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "use std::collections::HashMap;\nfn parse_args(args: &[String]) -> HashMap<String, String> {\n    let mut m = HashMap::new();\n    for a in args {\n        if a.starts_with(\"--\") {\n            let kv: Vec<&str> = a[2..].splitn(2, '=').collect();\n            if kv.len() == 2 { m.insert(kv[0].to_string(), kv[1].to_string()); }\n        }\n    }\n    m\n}"
+        ]
+    },
+    {
+        "name-zh": "文件存在检查",
+        "name-en": "File Exists",
+        "description-zh": "检查文件或目录是否存在",
+        "description-en": "Check if file or directory exists",
+        "dependencies": [
+            "std::fs",
+            "std::path"
+        ],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "file",
+            "basic"
+        ],
+        "input": [
+            "path"
+        ],
+        "input_type": [
+            "&str"
+        ],
+        "return": [
+            "exists"
+        ],
+        "return_type": [
+            "bool"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "use std::path::Path;\nfn file_exists(path: &str) -> bool {\n    Path::new(path).exists()\n}"
+        ]
+    },
+    {
+        "name-zh": "读取目录",
+        "name-en": "Read Directory",
+        "description-zh": "读取目录下所有文件条目",
+        "description-en": "Read all entries in a directory",
+        "dependencies": [
+            "std::fs"
+        ],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "file",
+            "basic"
+        ],
+        "input": [
+            "dir"
+        ],
+        "input_type": [
+            "&str"
+        ],
+        "return": [
+            "entries"
+        ],
+        "return_type": [
+            "Vec<String>"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "use std::fs;\nfn read_dir(dir: &str) -> Vec<String> {\n    fs::read_dir(dir).unwrap().iter()\n        .filter_map(|e| e.ok())\n        .map(|e| e.file_name().to_string_lossy().into_owned())\n        .collect()\n}"
+        ]
+    },
+    {
+        "name-zh": "创建目录",
+        "name-en": "Create Directory",
+        "description-zh": "递归创建目录",
+        "description-en": "Create directory recursively",
+        "dependencies": [
+            "std::fs"
+        ],
+        "use_to": [
+            "file",
+            "dir"
+        ],
+        "tags": [
+            "file",
+            "basic"
+        ],
+        "input": [
+            "path"
+        ],
+        "input_type": [
+            "&str"
+        ],
+        "return": [
+            "ok"
+        ],
+        "return_type": [
+            "Result<(),std::io::Error>"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "use std::fs;\nfn create_dir(path: &str) -> std::io::Result<()> {\n    fs::create_dir_all(path)\n}"
+        ]
+    },
+    {
+        "name-zh": "复制文件",
+        "name-en": "Copy File",
+        "description-zh": "复制文件内容",
+        "description-en": "Copy file content",
+        "dependencies": [
+            "std::fs"
+        ],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "file",
+            "basic"
+        ],
+        "input": [
+            "src",
+            "dst"
+        ],
+        "input_type": [
+            "&str",
+            "&str"
+        ],
+        "return": [
+            "ok"
+        ],
+        "return_type": [
+            "Result<(),std::io::Error>"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "use std::fs;\nfn copy_file(src: &str, dst: &str) -> std::io::Result<()> {\n    fs::copy(src, dst)?;\n    Ok(())\n}"
+        ]
+    },
+    {
+        "name-zh": "删除文件",
+        "name-en": "Delete File",
+        "description-zh": "删除文件",
+        "description-en": "Delete file",
+        "dependencies": [
+            "std::fs"
+        ],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "file",
+            "basic"
+        ],
+        "input": [
+            "path"
+        ],
+        "input_type": [
+            "&str"
+        ],
+        "return": [
+            "ok"
+        ],
+        "return_type": [
+            "Result<(),std::io::Error>"
+        ],
+        "timer_score": 90,
+        "memory_score": 100,
+        "code": [
+            "use std::fs;\nfn delete_file(path: &str) -> std::io::Result<()> {\n    fs::remove_file(path)\n}"
+        ]
+    },
+    {
+        "name-zh": "定时器",
+        "name-en": "Timer / Stopwatch",
+        "description-zh": "记录代码执行时间",
+        "description-en": "Measure code execution time",
+        "dependencies": [
+            "std::time"
+        ],
+        "use_to": [
+            "time",
+            "benchmark"
+        ],
+        "tags": [
+            "time",
+            "basic"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "elapsed"
+        ],
+        "return_type": [
+            "std::time::Duration"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "use std::time::Instant;\nstruct Stopwatch { start: Instant }\nimpl Stopwatch {\n    fn new() -> Self { Self { start: Instant::now() } }\n    fn elapsed(&self) -> std::time::Duration { self.start.elapsed() }\n}"
+        ]
+    },
+    {
+        "name-zh": "雪花ID",
+        "name-en": "Snowflake ID",
+        "description-zh": "生成分布式唯一 ID（简化的雪花算法）",
+        "description-en": "Generate distributed unique ID (simplified snowflake)",
+        "dependencies": [
+            "std::sync::atomic",
+            "std::sync::atomic::Ordering"
+        ],
+        "use_to": [
+            "id",
+            "distributed"
+        ],
+        "tags": [
+            "intermediate",
+            "id"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "id"
+        ],
+        "return_type": [
+            "u64"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "use std::sync::atomic::{AtomicU64, Ordering};\nstatic SNOWFLAKE: AtomicU64 = AtomicU64::new(0);\nfn next_snowflake_id() -> u64 {\n    SNOWFLAKE.fetch_add(1, Ordering::Relaxed)\n}"
+        ]
+    },
+    {
+        "name-zh": "Once 单例",
+        "name-en": "Once Singleton",
+        "description-zh": "确保闭包只执行一次（用于单例初始化）",
+        "description-en": "Ensure closure runs only once (for singleton init)",
+        "dependencies": [
+            "std::sync::Once"
+        ],
+        "use_to": [
+            "concurrency",
+            "singleton"
+        ],
+        "tags": [
+            "intermediate",
+            "concurrency"
+        ],
+        "input": [
+            "fn"
+        ],
+        "input_type": [
+            "fn()"
+        ],
+        "return": [
+            "result"
+        ],
+        "return_type": [
+            "T"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "use std::sync::Once;\nstatic INIT: Once = Once::new();\nstatic mut VALUE: Option<u32> = None;\nfn do_once<F: FnOnce()>(f: F) {\n    INIT.call_once(|| unsafe { VALUE = Some(f()); });\n}"
+        ]
+    },
+    {
+        "name-zh": "读写锁",
+        "name-en": "Read Write Lock",
+        "description-zh": "使用 RwLock 进行读写锁操作",
+        "description-en": "Read-write lock using RwLock",
+        "dependencies": [
+            "std::sync"
+        ],
+        "use_to": [
+            "concurrency",
+            "lock"
+        ],
+        "tags": [
+            "concurrent",
+            "lock"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "rwlock"
+        ],
+        "return_type": [
+            "std::sync::RwLock<T>"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "use std::sync::{RwLock, RwLockReadGuard, RwLockWriteGuard};\nstruct SafeData { lock: RwLock<Vec<i32>> }\nimpl SafeData {\n    fn new() -> Self { Self { lock: RwLock::new(Vec::new()) } }\n    fn read(&self) -> RwLockReadGuard<Vec<i32>> { self.lock.read().unwrap() }\n    fn write(&self) -> RwLockWriteGuard<Vec<i32>> { self.lock.write().unwrap() }\n}"
+        ]
+    },
+    {
+        "name-zh": "信号量",
+        "name-en": "Semaphore",
+        "description-zh": "使用 Semaphore 控制并发数量",
+        "description-en": "Control concurrency count with Semaphore",
+        "dependencies": [
+            "std::sync"
+        ],
+        "use_to": [
+            "concurrency",
+            "semaphore"
+        ],
+        "tags": [
+            "concurrent",
+            "semaphore"
+        ],
+        "input": [
+            "permits"
+        ],
+        "input_type": [
+            "usize"
+        ],
+        "return": [
+            "sem"
+        ],
+        "return_type": [
+            "std::sync::Semaphore"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "use std::sync::{Arc, Semaphore};\nfn new_semaphore(permits: usize) -> Arc<Semaphore> {\n    Arc::new(Semaphore::new(permits))\n}"
+        ]
+    },
+    {
+        "name-zh": "Barrier 同步",
+        "name-en": "Barrier Sync",
+        "description-zh": "使用 Barrier 让多线程相互等待",
+        "description-en": "Use Barrier to make threads wait for each other",
+        "dependencies": [
+            "std::sync"
+        ],
+        "use_to": [
+            "concurrency",
+            "barrier"
+        ],
+        "tags": [
+            "concurrent",
+            "barrier"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "usize"
+        ],
+        "return": [
+            "barrier"
+        ],
+        "return_type": [
+            "std::sync::Barrier"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "use std::sync::{Arc, Barrier};\nfn new_barrier(n: usize) -> Arc<Barrier> {\n    Arc::new(Barrier::new(n))\n}"
+        ]
+    },
+    {
+        "name-zh": "线程本地存储",
+        "name-en": "Thread Local Storage",
+        "description-zh": "使用 thread_local 定义线程局部变量",
+        "description-en": "Define thread-local variable with thread_local",
+        "dependencies": [
+            "std::thread"
+        ],
+        "use_to": [
+            "concurrency",
+            "tls"
+        ],
+        "tags": [
+            "concurrent",
+            "tls"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "value"
+        ],
+        "return_type": [
+            "thread_local!"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "use std::cell::RefCell;\nthread_local! static COUNTER: RefCell<i32> = RefCell::new(0);\nfn inc_counter() { COUNTER.with(|c| *c.borrow_mut() += 1); }\nfn get_counter() -> i32 { COUNTER.with(|c| *c.borrow()) }"
+        ]
+    },
+    {
+        "name-zh": "Result 链式处理",
+        "name-en": "Result Chain",
+        "description-zh": "使用 ? 和 and_then 链式处理 Result",
+        "description-en": "Chain Result processing with ? and and_then",
+        "dependencies": [],
+        "use_to": [
+            "result",
+            "error"
+        ],
+        "tags": [
+            "basic",
+            "result"
+        ],
+        "input": [
+            "r"
+        ],
+        "input_type": [
+            "Result<T,E>"
+        ],
+        "return": [
+            "chained"
+        ],
+        "return_type": [
+            "Result<U,E>"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "fn chain_result<T: Copy, U, E: Clone>(r: Result<T, E>) -> Result<U, E> {\n    r.and_then(|v| {\n        let _: u32 = v as u32;\n        Ok(v as u32)\n    })\n}"
+        ]
+    },
+    {
+        "name-zh": "Option 链式处理",
+        "name-en": "Option Chain",
+        "description-zh": "链式调用 Option 的 map/filter/or/unwrap_or",
+        "description-en": "Chain Option with map/filter/or/unwrap_or",
+        "dependencies": [],
+        "use_to": [
+            "option"
+        ],
+        "tags": [
+            "basic",
+            "option"
+        ],
+        "input": [
+            "opt",
+            "pred"
+        ],
+        "input_type": [
+            "Option<T>",
+            "fn(T)->bool"
+        ],
+        "return": [
+            "chained"
+        ],
+        "return_type": [
+            "Option<T>"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "fn option_chain<T: Copy>(opt: Option<T>, pred: fn(T) -> bool) -> Option<T> {\n    opt.filter(pred)\n}"
+        ]
     }
 ]

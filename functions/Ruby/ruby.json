@@ -1565,5 +1565,624 @@
         "code": [
             "def hash_key_exists?(hash,key)\n  hash.key?(key)\nend"
         ]
+    },
+    {
+        "name-zh": "快速排序",
+        "name-en": "Quick Sort",
+        "description-zh": "简单快速排序实现",
+        "description-en": "Simple quick sort implementation",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "Array"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "Array"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "def quick_sort(arr)\n  return arr if arr.length <= 1\n  pivot = arr[arr.length / 2]\n  quick_sort(arr.select { |x| x < pivot }) + quick_sort(arr.select { |x| x == pivot }) + quick_sort(arr.select { |x| x > pivot })\nend"
+        ]
+    },
+    {
+        "name-zh": "归并排序",
+        "name-en": "Merge Sort",
+        "description-zh": "自顶向下归并排序",
+        "description-en": "Top-down merge sort",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "Array"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "Array"
+        ],
+        "timer_score": 80,
+        "memory_score": 75,
+        "code": [
+            "def merge_sort(arr)\n  return arr if arr.length <= 1\n  m = arr.length / 2\n  merge(merge_sort(arr[0...m]), merge_sort(arr[m..-1]))\nend\ndef merge(a, b)\n  res = []\n  until a.empty? || b.empty?\n    res << (a[0] <= b[0] ? a.shift : b.shift)\n  end\n  res + a + b\nend"
+        ]
+    },
+    {
+        "name-zh": "二分查找",
+        "name-en": "Binary Search",
+        "description-zh": "有序数组二分查找",
+        "description-en": "Binary search in sorted array",
+        "dependencies": [],
+        "use_to": [
+            "search",
+            "algorithm"
+        ],
+        "tags": [
+            "search",
+            "algorithm"
+        ],
+        "input": [
+            "arr",
+            "target"
+        ],
+        "input_type": [
+            "Array",
+            "Object"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "Integer"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "def binary_search(arr, target)\n  l, r = 0, arr.length - 1\n  while l <= r\n    m = (l + r) / 2\n    return m if arr[m] == target\n    arr[m] < target ? l = m + 1 : r = m - 1\n  end\n  -1\nend"
+        ]
+    },
+    {
+        "name-zh": "栈封装",
+        "name-en": "Stack",
+        "description-zh": "LIFO 栈封装",
+        "description-en": "LIFO stack wrapper",
+        "dependencies": [],
+        "use_to": [
+            "stack",
+            "data structure"
+        ],
+        "tags": [
+            "stack",
+            "data structure"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "stack"
+        ],
+        "return_type": [
+            "Stack"
+        ],
+        "timer_score": 95,
+        "memory_score": 90,
+        "code": [
+            "class Stack\n  def initialize; @s = []; end\n  def push(v); @s.push(v); end\n  def pop; @s.pop; end\n  def peek; @s[-1]; end\n  def empty?; @s.empty?; end\n  def size; @s.size; end\nend"
+        ]
+    },
+    {
+        "name-zh": "队列封装",
+        "name-en": "Queue",
+        "description-zh": "FIFO 队列封装",
+        "description-en": "FIFO queue wrapper",
+        "dependencies": [],
+        "use_to": [
+            "queue",
+            "data structure"
+        ],
+        "tags": [
+            "queue",
+            "data structure"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "queue"
+        ],
+        "return_type": [
+            "Queue"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "class Queue\n  def initialize; @q = []; end\n  def enqueue(v); @q.push(v); end\n  def dequeue; @q.shift; end\n  def peek; @q[0]; end\n  def empty?; @q.empty?; end\n  def size; @q.size; end\nend"
+        ]
+    },
+    {
+        "name-zh": "LRU 缓存",
+        "name-en": "LRU Cache",
+        "description-zh": "基于 Hash 和数组的 LRU 缓存",
+        "description-en": "LRU cache using Hash and array",
+        "dependencies": [],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "Integer"
+        ],
+        "return": [
+            "cache"
+        ],
+        "return_type": [
+            "LRUCache"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "class LRUCache\n  def initialize(cap)\n    @cap = cap; @cache = {}; @order = []\n  end\n  def get(k)\n    return nil unless @cache.key?(k)\n    @order.delete(k); @order << k; @cache[k]\n  end\n  def put(k, v)\n    if @cache.key?(k); @order.delete(k); else @cache.delete(@order.shift) if @cache.size >= @cap; end\n    @cache[k] = v; @order << k\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "计时器",
+        "name-en": "Stopwatch",
+        "description-zh": "记录代码执行时间（秒）",
+        "description-en": "Measure code execution time in seconds",
+        "dependencies": [],
+        "use_to": [
+            "time",
+            "benchmark"
+        ],
+        "tags": [
+            "time",
+            "basic"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "elapsed"
+        ],
+        "return_type": [
+            "Float"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "require 'benchmark'\ndef stopwatch\n  start = Benchmark.realtime\n  yield\n  Benchmark.realtime - start\nend"
+        ]
+    },
+    {
+        "name-zh": "URL 解析",
+        "name-en": "URL Parse",
+        "description-zh": "解析 URL 为组成部分",
+        "description-en": "Parse URL into components",
+        "dependencies": [
+            "uri"
+        ],
+        "use_to": [
+            "url"
+        ],
+        "tags": [
+            "basic",
+            "url"
+        ],
+        "input": [
+            "url"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "parsed"
+        ],
+        "return_type": [
+            "URI::Parser"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "require 'uri'\ndef parse_url(url)\n  uri = URI.parse(url)\n  { scheme: uri.scheme, host: uri.host, port: uri.port, path: uri.path, query: uri.query }\nend"
+        ]
+    },
+    {
+        "name-zh": "HTTP GET（Net::HTTP）",
+        "name-en": "HTTP GET (Net::HTTP)",
+        "description-zh": "使用 Net::HTTP 发送 GET 请求",
+        "description-en": "Send GET request using Net::HTTP",
+        "dependencies": [
+            "net/http",
+            "uri"
+        ],
+        "use_to": [
+            "http",
+            "network"
+        ],
+        "tags": [
+            "network",
+            "http"
+        ],
+        "input": [
+            "url",
+            "timeout"
+        ],
+        "input_type": [
+            "String",
+            "Integer"
+        ],
+        "return": [
+            "body"
+        ],
+        "return_type": [
+            "String?"
+        ],
+        "timer_score": 75,
+        "memory_score": 80,
+        "code": [
+            "require 'net/http'\nrequire 'uri'\ndef http_get(url, timeout = 5)\n  uri = URI.parse(url)\n  http = Net::HTTP.new(uri.host, uri.port, nil, nil, nil, nil, { open_timeout: timeout, read_timeout: timeout })\n  http.use_ssl = uri.scheme == 'https'\n  res = http.get(uri)\n  res.is_a?(Net::HTTPSuccess) ? res.body : nil\nrescue StandardError\n  nil\nend"
+        ]
+    },
+    {
+        "name-zh": "JSON 序列化（美化输出）",
+        "name-en": "JSON Pretty Print",
+        "description-zh": "将对象序列化为美化格式的 JSON",
+        "description-en": "Serialize object to pretty-printed JSON",
+        "dependencies": [
+            "json"
+        ],
+        "use_to": [
+            "json",
+            "serialization"
+        ],
+        "tags": [
+            "json",
+            "basic"
+        ],
+        "input": [
+            "obj"
+        ],
+        "input_type": [
+            "Object"
+        ],
+        "return": [
+            "json"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "require 'json'\ndef json_pretty(obj)\n  JSON.pretty_generate(obj)\nend"
+        ]
+    },
+    {
+        "name-zh": "YAML 解析",
+        "name-en": "YAML Parse",
+        "description-zh": "将 YAML 字符串解析为对象",
+        "description-en": "Parse YAML string to object",
+        "dependencies": [
+            "yaml"
+        ],
+        "use_to": [
+            "yaml",
+            "parsing"
+        ],
+        "tags": [
+            "intermediate",
+            "yaml"
+        ],
+        "input": [
+            "yaml_str"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "data"
+        ],
+        "return_type": [
+            "Object"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "require 'yaml'\ndef yaml_parse(yaml_str)\n  YAML.safe_load(yaml_str)\nend"
+        ]
+    },
+    {
+        "name-zh": "YAML 序列化",
+        "name-en": "YAML Serialize",
+        "description-zh": "将对象序列化为 YAML 字符串",
+        "description-en": "Serialize object to YAML string",
+        "dependencies": [
+            "yaml"
+        ],
+        "use_to": [
+            "yaml",
+            "serialization"
+        ],
+        "tags": [
+            "intermediate",
+            "yaml"
+        ],
+        "input": [
+            "obj"
+        ],
+        "input_type": [
+            "Object"
+        ],
+        "return": [
+            "yaml"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "require 'yaml'\ndef yaml_dump(obj)\n  obj.to_yaml\nend"
+        ]
+    },
+    {
+        "name-zh": "正则全局匹配",
+        "name-en": "Regex Global Match",
+        "description-zh": "获取所有匹配的字符串数组",
+        "description-en": "Get array of all matched strings",
+        "dependencies": [],
+        "use_to": [
+            "regex",
+            "string"
+        ],
+        "tags": [
+            "basic",
+            "regex"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "String",
+            "String"
+        ],
+        "return": [
+            "matches"
+        ],
+        "return_type": [
+            "Array"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "def regex_matches(text, pattern)\n  text.scan(/#{pattern}/).flatten\nend"
+        ]
+    },
+    {
+        "name-zh": "无限序列",
+        "name-en": "Infinite Sequence",
+        "description-zh": "生成斐波那契无限序列（枚举器）",
+        "description-en": "Generate infinite Fibonacci sequence (enumerator)",
+        "dependencies": [],
+        "use_to": [
+            "sequence",
+            "infinite"
+        ],
+        "tags": [
+            "intermediate",
+            "sequence"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "enum"
+        ],
+        "return_type": [
+            "Enumerator"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "def fibonacci_enum\n  Enumerator.new do |y|\n    a, b = 0, 1\n    loop { y << a; a, b = b, a + b }\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "范围枚举器",
+        "name-en": "Range Iterator",
+        "description-zh": "生成范围内整数的有穷枚举器",
+        "description-en": "Generate finite enumerator for integer range",
+        "dependencies": [],
+        "use_to": [
+            "enumerable",
+            "range"
+        ],
+        "tags": [
+            "basic",
+            "enumerable"
+        ],
+        "input": [
+            "start",
+            "end",
+            "step"
+        ],
+        "input_type": [
+            "Integer",
+            "Integer",
+            "Integer"
+        ],
+        "return": [
+            "enum"
+        ],
+        "return_type": [
+            "Enumerator"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "def range_enum(start, finish, step = 1)\n  Enumerator.new do |y|\n    i = start\n    while i <= finish\n      y << i\n      i += step\n    end\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "块组合（pipe）",
+        "name-en": "Block Compose (pipe)",
+        "description-zh": "将多个块从左到右组合执行",
+        "description-en": "Compose multiple blocks left to right",
+        "dependencies": [],
+        "use_to": [
+            "functional",
+            "block"
+        ],
+        "tags": [
+            "intermediate",
+            "functional"
+        ],
+        "input": [
+            "fns"
+        ],
+        "input_type": [
+            "Array"
+        ],
+        "return": [
+            "composed"
+        ],
+        "return_type": [
+            "Proc"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "def pipe(*fns)\n  ->(x) { fns.reduce(x) { |v, f| f.call(v) } }\nend"
+        ]
+    },
+    {
+        "name-zh": "Memoize 记忆化",
+        "name-en": "Memoize",
+        "description-zh": "将函数结果缓存到 Hash 中",
+        "description-en": "Cache function results in a Hash",
+        "dependencies": [],
+        "use_to": [
+            "cache",
+            "memoize"
+        ],
+        "tags": [
+            "intermediate",
+            "cache"
+        ],
+        "input": [
+            "fn"
+        ],
+        "input_type": [
+            "Proc"
+        ],
+        "return": [
+            "memoized"
+        ],
+        "return_type": [
+            "Proc"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "def memoize(fn)\n  cache = {}\n  ->(*args) { cache[args] ||= fn.call(*args) }\nend"
+        ]
+    },
+    {
+        "name-zh": "类嗣性检查",
+        "name-en": "Kind Of",
+        "description-zh": "判断对象是否是指定类的实例",
+        "description-en": "Check if object is instance of specified class",
+        "dependencies": [],
+        "use_to": [
+            "type",
+            "object"
+        ],
+        "tags": [
+            "basic",
+            "type"
+        ],
+        "input": [
+            "obj",
+            "klass"
+        ],
+        "input_type": [
+            "Object",
+            "Class"
+        ],
+        "return": [
+            "isKind"
+        ],
+        "return_type": [
+            "Boolean"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "def kind_of?(obj, klass)\n  obj.is_a?(klass)\nend"
+        ]
+    },
+    {
+        "name-zh": "Monkey Patch 类方法",
+        "name-en": "Monkey Patch Class Method",
+        "description-zh": "动态为类添加或替换方法",
+        "description-en": "Dynamically add or replace class methods",
+        "dependencies": [],
+        "use_to": [
+            "metaprogramming",
+            "patch"
+        ],
+        "tags": [
+            "advanced",
+            "metaprogramming"
+        ],
+        "input": [
+            "cls",
+            "name",
+            "block"
+        ],
+        "input_type": [
+            "Class",
+            "Symbol",
+            "Proc"
+        ],
+        "return": [
+            "cls"
+        ],
+        "return_type": [
+            "Class"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "def monkey_patch(cls, name, &block)\n  cls.define_method(name, &block)\n  cls\nend"
+        ]
     }
 ]

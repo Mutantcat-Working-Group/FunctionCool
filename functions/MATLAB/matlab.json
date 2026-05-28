@@ -2610,5 +2610,854 @@
         "code": [
             "function t = now_timestamp()\n    t = posixtime(datetime('now'));\nend"
         ]
+    },
+    {
+        "name-zh": "快速排序",
+        "name-en": "Quick Sort",
+        "description-zh": "原地快速排序（简单版）",
+        "description-en": "In-place quick sort (simple)",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "function s = quick_sort(v)\n    if length(v) <= 1, s = v; return; end\n    p = v(length(v) / 2); s = [quick_sort(v(v < p)), v(v == p), quick_sort(v(v > p))];\nend"
+        ]
+    },
+    {
+        "name-zh": "归并排序",
+        "name-en": "Merge Sort",
+        "description-zh": "自顶向下归并排序",
+        "description-en": "Top-down merge sort",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 75,
+        "code": [
+            "function s = merge_sort(v)\n    if length(v) <= 1, s = v; return; end\n    m = floor(length(v) / 2);\n    s = merge(merge_sort(v(1:m)), merge_sort(v(m+1:end)));\nend\nfunction r = merge(a, b)\n    r = [];\n    while ~isempty(a) && ~isempty(b)\n        if a(1) <= b(1), r = [r, a(1)]; a(1) = [];\n        else r = [r, b(1)]; b(1) = []; end\n    end\n    r = [r, a, b];\nend"
+        ]
+    },
+    {
+        "name-zh": "二分查找",
+        "name-en": "Binary Search",
+        "description-zh": "有序向量二分查找，返回索引",
+        "description-en": "Binary search in sorted vector, return index",
+        "dependencies": [],
+        "use_to": [
+            "search",
+            "algorithm"
+        ],
+        "tags": [
+            "search",
+            "algorithm"
+        ],
+        "input": [
+            "v",
+            "target"
+        ],
+        "input_type": [
+            "double[]",
+            "double"
+        ],
+        "return": [
+            "idx"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function idx = binary_search(v, target)\n    l = 1; r = length(v);\n    while l <= r\n        m = floor((l + r) / 2);\n        if v(m) == target, idx = m; return;\n        elseif v(m) < target, l = m + 1;\n        else r = m - 1;\n        end\n    end\n    idx = -1;\nend"
+        ]
+    },
+    {
+        "name-zh": "冒泡排序优化版",
+        "name-en": "Optimized Bubble Sort",
+        "description-zh": "带提前终止优化的冒泡排序",
+        "description-en": "Optimized bubble sort with early termination",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 75,
+        "memory_score": 100,
+        "code": [
+            "function s = bubble_sort_opt(v)\n    n = length(v); swapped = true;\n    while swapped\n        swapped = false;\n        for i = 1:n-1\n            if v(i) > v(i+1), t = v(i); v(i) = v(i+1); v(i+1) = t; swapped = true; end\n        end\n    end\n    s = v;\nend"
+        ]
+    },
+    {
+        "name-zh": "插入排序",
+        "name-en": "Insertion Sort",
+        "description-zh": "简单插入排序实现",
+        "description-en": "Simple insertion sort implementation",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 90,
+        "code": [
+            "function s = insertion_sort(v)\n    for i = 2:length(v)\n        key = v(i); j = i - 1;\n        while j >= 1 && v(j) > key, v(j+1) = v(j); j = j - 1; end\n        v(j+1) = key;\n    end\n    s = v;\nend"
+        ]
+    },
+    {
+        "name-zh": "选择排序",
+        "name-en": "Selection Sort",
+        "description-zh": "简单选择排序实现",
+        "description-en": "Simple selection sort implementation",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": [
+            "function s = selection_sort(v)\n    n = length(v);\n    for i = 1:n\n        [~, m] = min(v(i:end)); m = m + i - 1;\n        t = v(i); v(i) = v(m); v(m) = t;\n    end\n    s = v;\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵加法",
+        "name-en": "Matrix Add",
+        "description-zh": "两个同型矩阵相加",
+        "description-en": "Add two matrices of same size",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "math"
+        ],
+        "tags": [
+            "matrix",
+            "basic"
+        ],
+        "input": [
+            "A",
+            "B"
+        ],
+        "input_type": [
+            "double[][]",
+            "double[]"
+        ],
+        "return": [
+            "C"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function C = matrix_add(A, B)\n    C = A + B;\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵减法",
+        "name-en": "Matrix Subtract",
+        "description-zh": "两个同型矩阵相减",
+        "description-en": "Subtract two matrices of same size",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "math"
+        ],
+        "tags": [
+            "matrix",
+            "basic"
+        ],
+        "input": [
+            "A",
+            "B"
+        ],
+        "input_type": [
+            "double[][]",
+            "double[]"
+        ],
+        "return": [
+            "C"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function C = matrix_subtract(A, B)\n    C = A - B;\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵点乘",
+        "name-en": "Matrix Element-wise Multiply",
+        "description-zh": "两个矩阵对应元素相乘",
+        "description-en": "Element-wise multiplication of two matrices",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "math"
+        ],
+        "tags": [
+            "matrix",
+            "basic"
+        ],
+        "input": [
+            "A",
+            "B"
+        ],
+        "input_type": [
+            "double[][]",
+            "double[]"
+        ],
+        "return": [
+            "C"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function C = matrix_ewise_multiply(A, B)\n    C = A .* B;\nend"
+        ]
+    },
+    {
+        "name-zh": "向量点积",
+        "name-en": "Vector Dot Product",
+        "description-zh": "计算两个向量的点积",
+        "description-en": "Compute dot product of two vectors",
+        "dependencies": [],
+        "use_to": [
+            "vector",
+            "math"
+        ],
+        "tags": [
+            "vector",
+            "math"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
+        "return": [
+            "dot"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function dot = dot_product(a, b)\n    dot = dot(a, b);\nend"
+        ]
+    },
+    {
+        "name-zh": "向量叉积",
+        "name-en": "Vector Cross Product",
+        "description-zh": "计算两个三维向量的叉积",
+        "description-en": "Compute cross product of two 3D vectors",
+        "dependencies": [],
+        "use_to": [
+            "vector",
+            "math"
+        ],
+        "tags": [
+            "vector",
+            "math"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
+        "return": [
+            "cross"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function c = cross_product(a, b)\n    c = cross(a, b);\nend"
+        ]
+    },
+    {
+        "name-zh": "向量范数",
+        "name-en": "Vector Norm",
+        "description-zh": "计算向量的 L2 范数",
+        "description-en": "Compute L2 norm of vector",
+        "dependencies": [],
+        "use_to": [
+            "vector",
+            "math"
+        ],
+        "tags": [
+            "vector",
+            "math"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "norm"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function n = vector_norm(v)\n    n = norm(v);\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵范数",
+        "name-en": "Matrix Norm",
+        "description-zh": "计算矩阵的 Frobenius 范数",
+        "description-en": "Compute Frobenius norm of matrix",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "math"
+        ],
+        "tags": [
+            "matrix",
+            "math"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "norm"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function n = matrix_norm(A)\n    n = norm(A, 'fro');\nend"
+        ]
+    },
+    {
+        "name-zh": "QR 分解",
+        "name-en": "QR Decomposition",
+        "description-zh": "对矩阵进行 QR 分解",
+        "description-en": "QR decomposition of matrix",
+        "dependencies": [],
+        "use_to": [
+            "linear algebra",
+            "decomposition"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "Q",
+            "R"
+        ],
+        "return_type": [
+            "double[][]",
+            "double[][]"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "function [Q, R] = qr_decompose(A)\n    [Q, R] = qr(A);\nend"
+        ]
+    },
+    {
+        "name-zh": "奇异值分解",
+        "name-en": "SVD",
+        "description-zh": "对矩阵进行奇异值分解",
+        "description-en": "Singular value decomposition",
+        "dependencies": [],
+        "use_to": [
+            "linear algebra",
+            "decomposition"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "U",
+            "S",
+            "V"
+        ],
+        "return_type": [
+            "double[][]",
+            "double[]",
+            "double[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "function [U, S, V] = svd_decompose(A)\n    [U, S, V] = svd(A);\nend"
+        ]
+    },
+    {
+        "name-zh": "特征值分解",
+        "name-en": "Eigen Decomposition",
+        "description-zh": "对矩阵进行特征值分解",
+        "description-en": "Eigen decomposition of matrix",
+        "dependencies": [],
+        "use_to": [
+            "linear algebra"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "V",
+            "D"
+        ],
+        "return_type": [
+            "double[][]",
+            "double[][]"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "function [V, D] = eig_decompose(A)\n    [V, D] = eig(A);\nend"
+        ]
+    },
+    {
+        "name-zh": "随机矩阵",
+        "name-en": "Random Matrix",
+        "description-zh": "生成指定大小的随机矩阵（均匀分布）",
+        "description-en": "Generate random matrix of specified size (uniform)",
+        "dependencies": [],
+        "use_to": [
+            "random",
+            "matrix"
+        ],
+        "tags": [
+            "basic",
+            "random"
+        ],
+        "input": [
+            "rows",
+            "cols"
+        ],
+        "input_type": [
+            "double",
+            "double"
+        ],
+        "return": [
+            "A"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function A = random_matrix(rows, cols)\n    A = rand(rows, cols);\nend"
+        ]
+    },
+    {
+        "name-zh": "随机正态矩阵",
+        "name-en": "Random Normal Matrix",
+        "description-zh": "生成指定大小的正态分布随机矩阵",
+        "description-en": "Generate random matrix with normal distribution",
+        "dependencies": [],
+        "use_to": [
+            "random",
+            "matrix"
+        ],
+        "tags": [
+            "basic",
+            "random"
+        ],
+        "input": [
+            "rows",
+            "cols"
+        ],
+        "input_type": [
+            "double",
+            "double"
+        ],
+        "return": [
+            "A"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function A = random_normal_matrix(rows, cols)\n    A = randn(rows, cols);\nend"
+        ]
+    },
+    {
+        "name-zh": "单位矩阵",
+        "name-en": "Identity Matrix",
+        "description-zh": "生成指定大小的单位矩阵",
+        "description-en": "Generate identity matrix of specified size",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "basic"
+        ],
+        "tags": [
+            "matrix",
+            "basic"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "double"
+        ],
+        "return": [
+            "I"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function I = identity_matrix(n)\n    I = eye(n);\nend"
+        ]
+    },
+    {
+        "name-zh": "全零矩阵",
+        "name-en": "Zeros Matrix",
+        "description-zh": "生成全零矩阵",
+        "description-en": "Generate matrix of all zeros",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "basic"
+        ],
+        "tags": [
+            "matrix",
+            "basic"
+        ],
+        "input": [
+            "rows",
+            "cols"
+        ],
+        "input_type": [
+            "double",
+            "double"
+        ],
+        "return": [
+            "A"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function A = zeros_matrix(rows, cols)\n    A = zeros(rows, cols);\nend"
+        ]
+    },
+    {
+        "name-zh": "全一矩阵",
+        "name-en": "Ones Matrix",
+        "description-zh": "生成全一矩阵",
+        "description-en": "Generate matrix of all ones",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "basic"
+        ],
+        "tags": [
+            "matrix",
+            "basic"
+        ],
+        "input": [
+            "rows",
+            "cols"
+        ],
+        "input_type": [
+            "double",
+            "double"
+        ],
+        "return": [
+            "A"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function A = ones_matrix(rows, cols)\n    A = ones(rows, cols);\nend"
+        ]
+    },
+    {
+        "name-zh": "分位数",
+        "name-en": "Quantile",
+        "description-zh": "计算向量的分位数",
+        "description-en": "Compute quantiles of vector",
+        "dependencies": [],
+        "use_to": [
+            "statistics"
+        ],
+        "tags": [
+            "basic",
+            "statistics"
+        ],
+        "input": [
+            "x",
+            "p"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
+        "return": [
+            "q"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "function q = quantile(x, p)\n    q = quantile(x, p);\nend"
+        ]
+    },
+    {
+        "name-zh": "偏度",
+        "name-en": "Skewness",
+        "description-zh": "计算向量的偏度",
+        "description-en": "Compute skewness of vector",
+        "dependencies": [],
+        "use_to": [
+            "statistics"
+        ],
+        "tags": [
+            "statistics",
+            "basic"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "sk"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "function sk = skewness(x)\n    sk = skewness(x(:));\nend"
+        ]
+    },
+    {
+        "name-zh": "峰度",
+        "name-en": "Kurtosis",
+        "description-zh": "计算向量的峰度",
+        "description-en": "Compute kurtosis of vector",
+        "dependencies": [],
+        "use_to": [
+            "statistics"
+        ],
+        "tags": [
+            "statistics",
+            "basic"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "ku"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "function ku = kurtosis(x)\n    ku = kurtosis(x(:));\nend"
+        ]
+    },
+    {
+        "name-zh": "进程休眠",
+        "name-en": "Pause",
+        "description-zh": "暂停执行指定秒数",
+        "description-en": "Pause execution for specified seconds",
+        "dependencies": [],
+        "use_to": [
+            "time"
+        ],
+        "tags": [
+            "time",
+            "basic"
+        ],
+        "input": [
+            "seconds"
+        ],
+        "input_type": [
+            "double"
+        ],
+        "return": [],
+        "return_type": [],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function pause_seconds(seconds)\n    pause(seconds);\nend"
+        ]
+    },
+    {
+        "name-zh": "计时器函数",
+        "name-en": "Tic Toc",
+        "description-zh": "使用 tic/toc 测量代码执行时间",
+        "description-en": "Measure code execution time using tic/toc",
+        "dependencies": [],
+        "use_to": [
+            "time",
+            "benchmark"
+        ],
+        "tags": [
+            "time",
+            "basic"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "elapsed"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function elapsed = timer_function()\n    tic;\n    % code to measure\n    elapsed = toc;\nend"
+        ]
     }
 ]

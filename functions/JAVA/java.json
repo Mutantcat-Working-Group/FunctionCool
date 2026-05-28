@@ -2685,5 +2685,781 @@
         "code": [
             "import java.util.*; public Set<Object> setUnion(Set<?> a,Set<?> b){ Set<Object> r=new HashSet<>(a); r.addAll(b); return r; }"
         ]
+    },
+    {
+        "name-zh": "LRU 缓存（LinkedHashMap）",
+        "name-en": "LRU Cache (LinkedHashMap)",
+        "description-zh": "基于 LinkedHashMap 的 LRU 缓存实现",
+        "description-en": "LRU cache implementation using LinkedHashMap",
+        "dependencies": [
+            "java.util"
+        ],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "cache"
+        ],
+        "return_type": [
+            "Map"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import java.util.*;\npublic class LRUCache extends LinkedHashMap<Integer,Integer> {\n    private int capacity;\n    public LRUCache(int capacity) { super(capacity+1, 1.0f, true); this.capacity = capacity; }\n    protected boolean removeEldestEntry(Map.Entry eldest) { return size() > capacity; }\n}"
+        ]
+    },
+    {
+        "name-zh": "无界阻塞队列",
+        "name-en": "Unbounded Blocking Queue",
+        "description-zh": "使用 LinkedList 实现的无界阻塞队列",
+        "description-en": "Unbounded blocking queue using LinkedList",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "queue",
+            "concurrency"
+        ],
+        "tags": [
+            "queue",
+            "concurrent"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "queue"
+        ],
+        "return_type": [
+            "BlockingQueue"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import java.util.concurrent.*;\nBlockingQueue<Object> queue = new LinkedBlockingQueue<>();"
+        ]
+    },
+    {
+        "name-zh": "有界阻塞队列",
+        "name-en": "Bounded Blocking Queue",
+        "description-zh": "使用 ArrayBlockingQueue 实现的有界阻塞队列",
+        "description-en": "Bounded blocking queue using ArrayBlockingQueue",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "queue",
+            "concurrency"
+        ],
+        "tags": [
+            "queue",
+            "concurrent"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "queue"
+        ],
+        "return_type": [
+            "BlockingQueue"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import java.util.concurrent.*;\nBlockingQueue<Object> bqueue = new ArrayBlockingQueue<>(capacity);"
+        ]
+    },
+    {
+        "name-zh": "线程池",
+        "name-en": "Thread Pool",
+        "description-zh": "创建固定大小的线程池",
+        "description-en": "Create fixed-size thread pool",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "concurrency",
+            "thread"
+        ],
+        "tags": [
+            "concurrent",
+            "thread"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "executor"
+        ],
+        "return_type": [
+            "ExecutorService"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import java.util.concurrent.*;\nExecutorService pool = Executors.newFixedThreadPool(n);"
+        ]
+    },
+    {
+        "name-zh": "定时线程池",
+        "name-en": "Scheduled Thread Pool",
+        "description-zh": "创建定时任务线程池",
+        "description-en": "Create scheduled task thread pool",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "concurrency",
+            "schedule"
+        ],
+        "tags": [
+            "concurrent",
+            "thread"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "pool"
+        ],
+        "return_type": [
+            "ScheduledExecutorService"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import java.util.concurrent.*;\nScheduledExecutorService scheduler = Executors.newScheduledThreadPool(n);"
+        ]
+    },
+    {
+        "name-zh": "信号量",
+        "name-en": "Semaphore",
+        "description-zh": "使用信号量控制并发访问数量",
+        "description-en": "Control concurrent access count with semaphore",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "concurrency",
+            "semaphore"
+        ],
+        "tags": [
+            "concurrent",
+            "semaphore"
+        ],
+        "input": [
+            "permits"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "sem"
+        ],
+        "return_type": [
+            "Semaphore"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import java.util.concurrent.*;\nSemaphore sem = new Semaphore(permits);"
+        ]
+    },
+    {
+        "name-zh": "CountDownLatch",
+        "name-en": "CountDownLatch",
+        "description-zh": "等待多个线程完成后再执行",
+        "description-en": "Wait for multiple threads to complete before proceeding",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "concurrency",
+            "latch"
+        ],
+        "tags": [
+            "concurrent",
+            "latch"
+        ],
+        "input": [
+            "count"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "latch"
+        ],
+        "return_type": [
+            "CountDownLatch"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import java.util.concurrent.*;\nCountDownLatch latch = new CountDownLatch(count);"
+        ]
+    },
+    {
+        "name-zh": "CyclicBarrier",
+        "name-en": "CyclicBarrier",
+        "description-zh": "多个线程相互等待，到齐后同时执行",
+        "description-en": "Multiple threads wait for each other, then execute together",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "concurrency",
+            "barrier"
+        ],
+        "tags": [
+            "concurrent",
+            "barrier"
+        ],
+        "input": [
+            "parties"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "barrier"
+        ],
+        "return_type": [
+            "CyclicBarrier"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import java.util.concurrent.*;\nCyclicBarrier barrier = new CyclicBarrier(parties);"
+        ]
+    },
+    {
+        "name-zh": "读锁写锁",
+        "name-en": "Read Write Lock",
+        "description-zh": "使用读写锁分离读和写操作",
+        "description-en": "Separate read and write operations with read-write lock",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "concurrency",
+            "lock"
+        ],
+        "tags": [
+            "concurrent",
+            "lock"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "rwlock"
+        ],
+        "return_type": [
+            "ReadWriteLock"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "import java.util.concurrent.locks.*;\nReadWriteLock rw = new ReentrantReadWriteLock();\nLock r = rw.readLock(); Lock w = rw.writeLock();"
+        ]
+    },
+    {
+        "name-zh": "原子整数",
+        "name-en": "Atomic Integer",
+        "description-zh": "原子整数，支持 CAS 操作",
+        "description-en": "Atomic integer with CAS operations",
+        "dependencies": [
+            "java.util.concurrent.atomic"
+        ],
+        "use_to": [
+            "concurrency",
+            "atomic"
+        ],
+        "tags": [
+            "concurrent",
+            "atomic"
+        ],
+        "input": [
+            "init"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "ai"
+        ],
+        "return_type": [
+            "AtomicInteger"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "import java.util.concurrent.atomic.*;\nAtomicInteger ai = new AtomicInteger(init);\nai.incrementAndGet(); ai.get(); ai.compareAndSet(expected, newValue);"
+        ]
+    },
+    {
+        "name-zh": "原子长整型",
+        "name-en": "Atomic Long",
+        "description-zh": "原子长整型，支持无锁并发",
+        "description-en": "Atomic long with lock-free concurrency",
+        "dependencies": [
+            "java.util.concurrent.atomic"
+        ],
+        "use_to": [
+            "concurrency",
+            "atomic"
+        ],
+        "tags": [
+            "concurrent",
+            "atomic"
+        ],
+        "input": [
+            "init"
+        ],
+        "input_type": [
+            "long"
+        ],
+        "return": [
+            "al"
+        ],
+        "return_type": [
+            "AtomicLong"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "import java.util.concurrent.atomic.*;\nAtomicLong al = new AtomicLong(init);\nal.incrementAndGet(); al.get();"
+        ]
+    },
+    {
+        "name-zh": "并发安全哈希映射",
+        "name-en": "Concurrent HashMap",
+        "description-zh": "线程安全的 HashMap",
+        "description-en": "Thread-safe HashMap",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "concurrent",
+            "hashmap"
+        ],
+        "tags": [
+            "concurrent",
+            "hashmap"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "map"
+        ],
+        "return_type": [
+            "ConcurrentHashMap"
+        ],
+        "timer_score": 95,
+        "memory_score": 90,
+        "code": [
+            "import java.util.concurrent.*;\nConcurrentHashMap<Object,Object> map = new ConcurrentHashMap<>();"
+        ]
+    },
+    {
+        "name-zh": "CompletableFuture 异步",
+        "name-en": "CompletableFuture Async",
+        "description-zh": "使用 CompletableFuture 进行异步编程",
+        "description-en": "Async programming with CompletableFuture",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "async",
+            "concurrency"
+        ],
+        "tags": [
+            "async",
+            "concurrent"
+        ],
+        "input": [
+            "supply"
+        ],
+        "input_type": [
+            "Supplier"
+        ],
+        "return": [
+            "future"
+        ],
+        "return_type": [
+            "CompletableFuture"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "import java.util.concurrent.*;\nCompletableFuture<Object> f = CompletableFuture.supplyAsync(() -> { /* async task */ return null; });\nf.thenApply(r -> r).thenAccept(System.out::println).exceptionally(e -> { e.printStackTrace(); return null; });"
+        ]
+    },
+    {
+        "name-zh": "Stream 过滤",
+        "name-en": "Stream Filter",
+        "description-zh": "使用 Stream API 过滤集合元素",
+        "description-en": "Filter collection elements using Stream API",
+        "dependencies": [
+            "java.util.stream",
+            "java.util"
+        ],
+        "use_to": [
+            "stream",
+            "collection"
+        ],
+        "tags": [
+            "stream",
+            "collection"
+        ],
+        "input": [
+            "list",
+            "pred"
+        ],
+        "input_type": [
+            "List",
+            "Predicate"
+        ],
+        "return": [
+            "filtered"
+        ],
+        "return_type": [
+            "List"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "import java.util.*; import java.util.stream.*;\npublic static <T> List<T> streamFilter(List<T> list, Predicate<T> pred) {\n    return list.stream().filter(pred).collect(Collectors.toList());\n}"
+        ]
+    },
+    {
+        "name-zh": "Stream 映射",
+        "name-en": "Stream Map",
+        "description-zh": "使用 Stream API 映射集合元素",
+        "description-en": "Map collection elements using Stream API",
+        "dependencies": [
+            "java.util.stream",
+            "java.util"
+        ],
+        "use_to": [
+            "stream",
+            "collection"
+        ],
+        "tags": [
+            "stream",
+            "collection"
+        ],
+        "input": [
+            "list",
+            "mapper"
+        ],
+        "input_type": [
+            "List",
+            "Function"
+        ],
+        "return": [
+            "mapped"
+        ],
+        "return_type": [
+            "List"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "import java.util.*; import java.util.stream.*;\npublic static <T,R> List<R> streamMap(List<T> list, Function<T,R> mapper) {\n    return list.stream().map(mapper).collect(Collectors.toList());\n}"
+        ]
+    },
+    {
+        "name-zh": "Stream 归约",
+        "name-en": "Stream Reduce",
+        "description-zh": "使用 Stream API 对元素归约",
+        "description-en": "Reduce elements using Stream API",
+        "dependencies": [
+            "java.util.stream",
+            "java.util"
+        ],
+        "use_to": [
+            "stream",
+            "reduce"
+        ],
+        "tags": [
+            "stream",
+            "reduce"
+        ],
+        "input": [
+            "list",
+            "identity",
+            "accumulator"
+        ],
+        "input_type": [
+            "List",
+            "T",
+            "BinaryOperator"
+        ],
+        "return": [
+            "result"
+        ],
+        "return_type": [
+            "T"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "import java.util.*; import java.util.stream.*;\npublic static <T> T streamReduce(List<T> list, T identity, BinaryOperator<T> acc) {\n    return list.stream().reduce(identity, acc);\n}"
+        ]
+    },
+    {
+        "name-zh": "UUID 生成",
+        "name-en": "UUID Generate",
+        "description-zh": "生成随机 UUID 字符串",
+        "description-en": "Generate random UUID string",
+        "dependencies": [
+            "java.util"
+        ],
+        "use_to": [
+            "uuid",
+            "id"
+        ],
+        "tags": [
+            "basic",
+            "uuid"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "uuid"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "import java.util.UUID;\nString uuid = UUID.randomUUID().toString();"
+        ]
+    },
+    {
+        "name-zh": "CRC32 校验",
+        "name-en": "CRC32 Checksum",
+        "description-zh": "计算数据的 CRC32 校验和",
+        "description-en": "Compute CRC32 checksum of data",
+        "dependencies": [
+            "java.util.zip"
+        ],
+        "use_to": [
+            "checksum",
+            "crc"
+        ],
+        "tags": [
+            "checksum",
+            "crc32"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "byte[]"
+        ],
+        "return": [
+            "crc"
+        ],
+        "return_type": [
+            "long"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "import java.util.zip.CRC32;\npublic long crc32(byte[] data) { CRC32 c = new CRC32(); c.update(data); return c.getValue(); }"
+        ]
+    },
+    {
+        "name-zh": "GZIP 压缩",
+        "name-en": "GZIP Compress",
+        "description-zh": "使用 GZIP 压缩字节数组",
+        "description-en": "GZIP compress byte array",
+        "dependencies": [
+            "java.util.zip"
+        ],
+        "use_to": [
+            "compression",
+            "compress"
+        ],
+        "tags": [
+            "compression",
+            "basic"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "byte[]"
+        ],
+        "return": [
+            "compressed"
+        ],
+        "return_type": [
+            "byte[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import java.util.zip.GZIPOutputStream;\npublic byte[] gzipCompress(byte[] data) throws Exception {\n    ByteArrayOutputStream bos = new ByteArrayOutputStream();\n    GZIPOutputStream gz = new GZIPOutputStream(bos);\n    gz.write(data); gz.close();\n    return bos.toByteArray();\n}"
+        ]
+    },
+    {
+        "name-zh": "GZIP 解压",
+        "name-en": "GZIP Decompress",
+        "description-zh": "使用 GZIP 解压字节数组",
+        "description-en": "GZIP decompress byte array",
+        "dependencies": [
+            "java.util.zip"
+        ],
+        "use_to": [
+            "compression",
+            "decompress"
+        ],
+        "tags": [
+            "compression",
+            "basic"
+        ],
+        "input": [
+            "compressed"
+        ],
+        "input_type": [
+            "byte[]"
+        ],
+        "return": [
+            "data"
+        ],
+        "return_type": [
+            "byte[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import java.util.zip.GZIPInputStream;\npublic byte[] gzipDecompress(byte[] data) throws Exception {\n    ByteArrayInputStream bis = new ByteArrayInputStream(data);\n    GZIPInputStream gz = new GZIPInputStream(bis);\n    return gz.readAllBytes();\n}"
+        ]
+    },
+    {
+        "name-zh": "Base64 编解码",
+        "name-en": "Base64 Encode/Decode",
+        "description-zh": "使用 Java 8 Base64 进行编解码",
+        "description-en": "Base64 encode/decode using Java 8 Base64",
+        "dependencies": [
+            "java.util"
+        ],
+        "use_to": [
+            "encoding",
+            "base64"
+        ],
+        "tags": [
+            "basic",
+            "encoding"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "byte[]"
+        ],
+        "return": [
+            "encoded"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "import java.util.Base64;\nString encoded = Base64.getEncoder().encodeToString(data);\nbyte[] decoded = Base64.getDecoder().decode(encoded);"
+        ]
+    },
+    {
+        "name-zh": "计算 NDCG",
+        "name-en": "NDCG Score",
+        "description-zh": "计算排序质量 NDCG 指标",
+        "description-en": "Compute ranking quality NDCG metric",
+        "dependencies": [],
+        "use_to": [
+            "ranking",
+            "evaluation"
+        ],
+        "tags": [
+            "ranking",
+            "evaluation"
+        ],
+        "input": [
+            "pred",
+            "actual"
+        ],
+        "input_type": [
+            "double[]",
+            "int[]"
+        ],
+        "return": [
+            "ndcg"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "public double ndcg(double[] predScores, int[] actualRelevance) {\n    int n = predScores.length;\n    Double[] idx = new Double[n]; for(int i=0;i<n;i++) idx[i]=i;\n    java.util.Arrays.sort(idx, (a,b)->Double.compare(predScores[(int)b], predScores[(int)a]));\n    double dcg = 0;\n    for(int i=0;i<n;i++) dcg += (Math.pow(2, actualRelevance[(int)(idx[i])]) - 1) / Math.log2(i+2);\n    int[] sortedRel = java.util.Arrays.stream(actualRelevance).sorted().reversed().toArray();\n    double idcg = 0;\n    for(int i=0;i<n;i++) idcg += (Math.pow(2, sortedRel[i]) - 1) / Math.log2(i+2);\n    return idcg == 0 ? 0 : dcg / idcg;\n}"
+        ]
+    },
+    {
+        "name-zh": "计算 MAP",
+        "name-en": "MAP Score",
+        "description-zh": "计算平均精度均值（Mean Average Precision）",
+        "description-en": "Compute Mean Average Precision",
+        "dependencies": [],
+        "use_to": [
+            "ranking",
+            "evaluation"
+        ],
+        "tags": [
+            "ranking",
+            "evaluation"
+        ],
+        "input": [
+            "query_to_results"
+        ],
+        "input_type": [
+            "Map<String, List<Integer>>"
+        ],
+        "return": [
+            "map"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "public double computeMAP(java.util.Map<String, java.util.List<Integer>> queryToResults) {\n    double sum = 0;\n    for(var entry : queryToResults.entrySet()) {\n        var results = entry.getValue();\n        double avgPrec = 0, hits = 0;\n        for(int i = 0; i < results.size(); i++) {\n            if(results.get(i) == 1) { hits++; avgPrec += hits / (i + 1); }\n        }\n        sum += avgPrec / (hits > 0 ? hits : 1);\n    }\n    return sum / queryToResults.size();\n}"
+        ]
     }
 ]

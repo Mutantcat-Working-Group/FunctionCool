@@ -1559,5 +1559,587 @@
         "code": [
             "<?php\nfunction execution_time(): float {\n    static $start = null;\n    if ($start === null) { $start = microtime(true); return 0; }\n    return microtime(true) - $start;\n}"
         ]
+    },
+    {
+        "name-zh": "快速排序",
+        "name-en": "Quick Sort",
+        "description-zh": "原地快速排序（简单版）",
+        "description-en": "In-place quick sort",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "array"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "array"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "<?php\nfunction quick_sort(array &$a, int $l=0, int $r=null): array {\n    if($r===null) $r=count($a)-1;\n    if($l>=$r) return $a;\n    $p=$a[$l+r>>1]; $i=$l-1; $j=$r+1;\n    while(true){\n        while($a[++$i]<$p); while($a[--$j]>$p);\n        if($i>=$j) break;\n        [$a[$i],$a[$j]]=[$a[$j],$a[$i]];\n    }\n    quick_sort($a,$l,$j); quick_sort($a,$j+1,$r);\n    return $a;\n}"
+        ]
+    },
+    {
+        "name-zh": "归并排序",
+        "name-en": "Merge Sort",
+        "description-zh": "自顶向下归并排序",
+        "description-en": "Top-down merge sort",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "array"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "array"
+        ],
+        "timer_score": 80,
+        "memory_score": 75,
+        "code": [
+            "<?php\nfunction merge_sort(array $a): array {\n    $n=count($a);\n    if($n<=1) return $a;\n    $m=(int)($n/2);\n    $left=merge_sort(array_slice($a,0,$m));\n    $right=merge_sort(array_slice($a,$m));\n    return merge($left,$right);\n}\nfunction merge(array $l,array $r):array{\n    $res=[]; $i=$j=0;\n    while($i<count($l)&&$j<count($r)) $res[]=$l[$i]<=$r[$j]?$l[$i++]:$r[$j++];\n    while($i<count($l)) $res[]=$l[$i++];\n    while($j<count($r)) $res[]=$r[$j++];\n    return $res;\n}"
+        ]
+    },
+    {
+        "name-zh": "二分查找",
+        "name-en": "Binary Search",
+        "description-zh": "有序数组二分查找，返回索引或-1",
+        "description-en": "Binary search in sorted array, return index or -1",
+        "dependencies": [],
+        "use_to": [
+            "search",
+            "algorithm"
+        ],
+        "tags": [
+            "search",
+            "algorithm"
+        ],
+        "input": [
+            "arr",
+            "target"
+        ],
+        "input_type": [
+            "array",
+            "mixed"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "<?php\nfunction binary_search(array $a, $target): int {\n    $l=0; $r=count($a)-1;\n    while($l<=$r){\n        $m=$l+$r>>1;\n        if($a[$m]==$target) return $m;\n        elseif($a[$m]<$target) $l=$m+1; else $r=$m-1;\n    }\n    return -1;\n}"
+        ]
+    },
+    {
+        "name-zh": "桶排序",
+        "name-en": "Bucket Sort",
+        "description-zh": "桶排序（适用于整数范围已知的情况）",
+        "description-en": "Bucket sort for integers with known range",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr",
+            "max"
+        ],
+        "input_type": [
+            "array",
+            "int"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "array"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "<?php\nfunction bucket_sort(array $a, int $max): array {\n    $buckets=array_fill(0,$max+1,0);\n    foreach($a as $v) $buckets[$v]++;\n    $res=[];\n    foreach($buckets as $v=>$cnt) for($i=0;$i<$cnt;$i++) $res[]=$v;\n    return $res;\n}"
+        ]
+    },
+    {
+        "name-zh": "队列封装",
+        "name-en": "Queue",
+        "description-zh": "FIFO 队列封装",
+        "description-en": "FIFO queue wrapper",
+        "dependencies": [],
+        "use_to": [
+            "queue",
+            "data structure"
+        ],
+        "tags": [
+            "queue",
+            "data structure"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "class"
+        ],
+        "return_type": [
+            "Queue"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "<?php\nclass Queue{\n    private array $q=[];\n    public function enqueue($v): void{ $this->q[]=$v; }\n    public function dequeue(){ return array_shift($this->q); }\n    public function peek(){ return $this->q[0] ?? null; }\n    public function isEmpty(): bool{ return empty($this->q); }\n    public function size(): int{ return count($this->q); }\n}"
+        ]
+    },
+    {
+        "name-zh": "优先队列（最小堆）",
+        "name-en": "Min Heap / Priority Queue",
+        "description-zh": "使用 SplMinHeap 实现最小堆优先队列",
+        "description-en": "Min-heap priority queue using SplMinHeap",
+        "dependencies": [],
+        "use_to": [
+            "heap",
+            "data structure"
+        ],
+        "tags": [
+            "heap",
+            "data structure"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "class"
+        ],
+        "return_type": [
+            "SplMinHeap"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "<?php\nfunction min_heap_insert(SplMinHeap &$heap, $value): void{ $heap->insert($value); }\nfunction min_heap_extract(SplMinHeap &$heap){ return $heap->isEmpty()?null:$heap->extract(); }\nfunction min_heap_peek(SplMinHeap $heap){ return $heap->isEmpty()?null:$heap->top(); }"
+        ]
+    },
+    {
+        "name-zh": "单向链表",
+        "name-en": "Singly Linked List",
+        "description-zh": "单向链表，支持在头部/尾部插入和删除",
+        "description-en": "Singly linked list with head/tail insert and delete",
+        "dependencies": [],
+        "use_to": [
+            "linked list",
+            "data structure"
+        ],
+        "tags": [
+            "linked list",
+            "data structure"
+        ],
+        "input": [
+            "value"
+        ],
+        "input_type": [
+            "mixed"
+        ],
+        "return": [
+            "node"
+        ],
+        "return_type": [
+            "LinkedListNode"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "<?php\nclass LinkedListNode{public $val;public ?LinkedListNode $next=null;public function __construct($val){$this->val=$val;}}\nclass LinkedList{public ?LinkedListNode $head=null;public function prepend($val):void{$n=new LinkedListNode($val);$n->next=$this->head;$this->head=$n;}\npublic function append($val):void{$n=new LinkedListNode($val);if(!$this->head){$this->head=$n;return;}$t=$this->head;while($t->next)$t=$t->next;$t->next=$n;}\npublic function toArray():array{$r=[];$c=$this->head;while($c){$r[]=$c->val;$c=$c->next;}return $r;}\npublic function isEmpty():bool{return $this->head===null;}\npublic function size():int{$c=$this->head;$n=0;while($c){$n++;$c=$c->next;}return $n;}\n}"
+        ]
+    },
+    {
+        "name-zh": "树状数组",
+        "name-en": "Fenwick Tree",
+        "description-zh": "树状数组，支持前缀和与单点更新 O(log n)",
+        "description-en": "Fenwick tree supporting prefix sum and point update in O(log n)",
+        "dependencies": [],
+        "use_to": [
+            "data structure",
+            "prefix sum"
+        ],
+        "tags": [
+            "fenwick",
+            "bit",
+            "data structure"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "class"
+        ],
+        "return_type": [
+            "FenwickTree"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "<?php\nclass FenwickTree{private array $t;private int $n;\npublic function __construct(int $n){$this->n=$n;$this->t=array_fill(0,$n+1,0);}\npublic function add(int $i,int $delta):void{for($i++;$i<=$this->n;$i+=($i&-i))$this->t[$i]+=$delta;}\npublic function sum(int $i):int{$s=0;for($i++;$i>0;$i-=($i&-i))$s+=$this->t[$i];return $s;}\npublic function rangeSum(int $l,int $r):int{return $this->sum($r)-($l>0?$this->sum($l-1):0);}\n}"
+        ]
+    },
+    {
+        "name-zh": "线段树",
+        "name-en": "Segment Tree",
+        "description-zh": "线段树，支持区间和单点更新 O(log n)",
+        "description-en": "Segment tree for range sum and point update in O(log n)",
+        "dependencies": [],
+        "use_to": [
+            "data structure",
+            "segment tree"
+        ],
+        "tags": [
+            "segment tree",
+            "data structure"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "array"
+        ],
+        "return": [
+            "class"
+        ],
+        "return_type": [
+            "SegmentTree"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "<?php\nclass SegmentTree{\n    private array $tree; private int $n;\n    public function __construct(array $a){$this->n=count($a);$this->tree=array_fill(0,$this->n*4,0);$this->build($a,0,0,$this->n-1);}\n    private function build(array $a,int $node,int $l,int $r):void{\n        if($l==$r){$this->tree[$node]=$a[$l];return;}\n        $m=($l+$r)>>1;$this->build($a,$node*2+1,$l,$m);$this->build($a,$node*2+2,$m+1,$r);$this->tree[$node]=$this->tree[$node*2+1]+$this->tree[$node*2+2];\n    }\n    public function update(int $idx,int $val):void{$this->updateR(0,0,$this->n-1,$idx,$val);}\n    private function updateR(int $node,int $l,int $r,int $idx,int $val):void{\n        if($l==$r){$this->tree[$node]=$val;return;}\n        $m=($l+$r)>>1;if($idx<=$m)$this->updateR($node*2+1,$l,$m,$idx,$val);else $this->updateR($node*2+2,$m+1,$r,$idx,$val);$this->tree[$node]=$this->tree[$node*2+1]+$this->tree[$node*2+2];\n    }\n    public function query(int $ql,int $qr):int{return $this->queryR(0,0,$this->n-1,$ql,$qr);}\n    private function queryR(int $node,int $l,int $r,int $ql,int $qr):int{\n        if($ql>$r||$qr<$l) return 0;\n        if($ql<=$l&&$r<=$qr) return $this->tree[$node];\n        $m=($l+$r)>>1;return $this->queryR($node*2+1,$l,$m,$ql,$qr)+$this->queryR($node*2+2,$m+1,$r,$ql,$qr);\n    }\n}"
+        ]
+    },
+    {
+        "name-zh": "CRC32 校验",
+        "name-en": "CRC32 Checksum",
+        "description-zh": "计算数据的 CRC32 校验和（返回十六进制字符串）",
+        "description-en": "Compute CRC32 checksum of data, return hex string",
+        "dependencies": [],
+        "use_to": [
+            "checksum",
+            "crc"
+        ],
+        "tags": [
+            "checksum",
+            "crc32"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "crc"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "<?php\nfunction crc32_hex(string $data): string {\n    return str_pad(dechex(crc32($data)), 8, '0', STR_PAD_LEFT);\n}"
+        ]
+    },
+    {
+        "name-zh": "MD5 哈希",
+        "name-en": "MD5 Hash",
+        "description-zh": "计算字符串的 MD5 哈希（十六进制）",
+        "description-en": "Compute MD5 hash of string as hex",
+        "dependencies": [],
+        "use_to": [
+            "hash",
+            "md5"
+        ],
+        "tags": [
+            "hash",
+            "md5"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "hex"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "<?php\nfunction md5_hex(string $s): string { return md5($s); }"
+        ]
+    },
+    {
+        "name-zh": "URL 编码解码",
+        "name-en": "URL Encode/Decode",
+        "description-zh": "对字符串进行 URL 编码和解码",
+        "description-en": "URL encode and decode string",
+        "dependencies": [],
+        "use_to": [
+            "url",
+            "encoding"
+        ],
+        "tags": [
+            "url",
+            "encoding"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "encoded"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "<?php\nfunction url_encode_str(string $s): string { return urlencode($s); }\nfunction url_decode_str(string $s): string { return urldecode($s); }"
+        ]
+    },
+    {
+        "name-zh": "HTML 转义",
+        "name-en": "HTML Escape",
+        "description-zh": "转义 HTML 特殊字符（防止 XSS）",
+        "description-en": "Escape HTML special characters (prevent XSS)",
+        "dependencies": [],
+        "use_to": [
+            "security",
+            "html"
+        ],
+        "tags": [
+            "security",
+            "html"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "escaped"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "<?php\nfunction html_escape(string $s): string { return htmlspecialchars($s, ENT_QUOTES|ENT_HTML5, 'UTF-8'); }\nfunction html_unescape(string $s): string { return htmlspecialchars_decode($s, ENT_QUOTES|ENT_HTML5); }"
+        ]
+    },
+    {
+        "name-zh": "生成范围数组",
+        "name-en": "Range Array",
+        "description-zh": "生成指定范围内的整数数组",
+        "description-en": "Generate array of integers in range",
+        "dependencies": [],
+        "use_to": [
+            "array",
+            "utility"
+        ],
+        "tags": [
+            "basic",
+            "array"
+        ],
+        "input": [
+            "start",
+            "end",
+            "step"
+        ],
+        "input_type": [
+            "int",
+            "int",
+            "int"
+        ],
+        "return": [
+            "arr"
+        ],
+        "return_type": [
+            "array"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "<?php\nfunction range_array(int $start, int $end, int $step=1): array {\n    if($step==0) return [];\n    $res=[];\n    if($step>0) for($i=$start;$i<$end;$i+=$step) $res[]=$i;\n    else for($i=$start;$i>$end;$i+=$step) $res[]=$i;\n    return $res;\n}"
+        ]
+    },
+    {
+        "name-zh": "数组分块",
+        "name-en": "Array Chunk",
+        "description-zh": "将数组按固定大小分块",
+        "description-en": "Split array into chunks of fixed size",
+        "dependencies": [],
+        "use_to": [
+            "array"
+        ],
+        "tags": [
+            "basic",
+            "array"
+        ],
+        "input": [
+            "arr",
+            "size"
+        ],
+        "input_type": [
+            "array",
+            "int"
+        ],
+        "return": [
+            "chunks"
+        ],
+        "return_type": [
+            "array"
+        ],
+        "timer_score": 95,
+        "memory_score": 90,
+        "code": [
+            "<?php\nfunction array_chunk_fixed(array $arr, int $size): array {\n    return array_chunk($arr, $size);\n}"
+        ]
+    },
+    {
+        "name-zh": "二维数组转置",
+        "name-en": "2D Array Transpose",
+        "description-zh": "将二维数组转置（行列互换）",
+        "description-en": "Transpose 2D array (swap rows and columns)",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "array"
+        ],
+        "tags": [
+            "matrix",
+            "array"
+        ],
+        "input": [
+            "matrix"
+        ],
+        "input_type": [
+            "array[]"
+        ],
+        "return": [
+            "transposed"
+        ],
+        "return_type": [
+            "array[]"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "<?php\nfunction array_transpose(array $matrix): array {\n    return array_map(null, ...$matrix);\n}"
+        ]
+    },
+    {
+        "name-zh": "计算数组积",
+        "name-en": "Array Product",
+        "description-zh": "计算数组所有元素的乘积",
+        "description-en": "Compute product of all elements in array",
+        "dependencies": [],
+        "use_to": [
+            "array",
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "array"
+        ],
+        "return": [
+            "product"
+        ],
+        "return_type": [
+            "int|float"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "<?php\nfunction array_product(array $arr) {\n    return array_reduce($arr, fn($carry, $v) => $carry * $v, 1);\n}"
+        ]
+    },
+    {
+        "name-zh": "多维数组排序",
+        "name-en": "Multi-dim Sort",
+        "description-zh": "按指定键对二维数组排序",
+        "description-en": "Sort 2D array by specified key",
+        "dependencies": [],
+        "use_to": [
+            "array",
+            "sort"
+        ],
+        "tags": [
+            "intermediate",
+            "sort"
+        ],
+        "input": [
+            "arr",
+            "key",
+            "order"
+        ],
+        "input_type": [
+            "array[]",
+            "string",
+            "string"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "array[]"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "<?php\nfunction array_sort_by_key(array $arr, string $key, string $order='asc'): array {\n    usort($arr, fn($a,$b) => $order==='asc' ? $a[$key]<=>$b[$key] : $b[$key]<=>$a[$key]);\n    return $arr;\n}"
+        ]
     }
 ]
