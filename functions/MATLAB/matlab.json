@@ -5,255 +5,540 @@
         "description-zh": "绘制二维折线图",
         "description-en": "Plot 2D line graph",
         "dependencies": [],
-        "use_to": ["plot", "visualization"],
-        "tags": ["basic", "plot"],
-        "input": ["x", "y"],
-        "input_type": ["double[]", "double[]"],
+        "use_to": [
+            "plot",
+            "visualization"
+        ],
+        "tags": [
+            "basic",
+            "plot"
+        ],
+        "input": [
+            "x",
+            "y"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function plot_line(x, y)\n    figure;\n    plot(x, y, 'LineWidth', 2);\n    grid on;\n    xlabel('X');\n    ylabel('Y');\nend"]},
+        "code": [
+            "function plot_line(x, y)\n    figure;\n    plot(x, y, 'LineWidth', 2);\n    grid on;\n    xlabel('X');\n    ylabel('Y');\nend"
+        ]
+    },
     {
         "name-zh": "绘制散点图",
         "name-en": "Plot Scatter",
         "description-zh": "绘制二维散点图",
         "description-en": "Plot 2D scatter graph",
         "dependencies": [],
-        "use_to": ["plot", "visualization"],
-        "tags": ["basic", "plot"],
-        "input": ["x", "y"],
-        "input_type": ["double[]", "double[]"],
+        "use_to": [
+            "plot",
+            "visualization"
+        ],
+        "tags": [
+            "basic",
+            "plot"
+        ],
+        "input": [
+            "x",
+            "y"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function plot_scatter(x, y)\n    figure;\n    scatter(x, y, 'filled');\n    grid on;\n    xlabel('X');\n    ylabel('Y');\nend"]},
+        "code": [
+            "function plot_scatter(x, y)\n    figure;\n    scatter(x, y, 'filled');\n    grid on;\n    xlabel('X');\n    ylabel('Y');\nend"
+        ]
+    },
     {
         "name-zh": "绘制直方图",
         "name-en": "Plot Histogram",
         "description-zh": "绘制数据直方图",
         "description-en": "Plot data histogram",
         "dependencies": [],
-        "use_to": ["plot", "statistics"],
-        "tags": ["basic", "plot", "statistics"],
-        "input": ["data"],
-        "input_type": ["double[]"],
+        "use_to": [
+            "plot",
+            "statistics"
+        ],
+        "tags": [
+            "basic",
+            "plot",
+            "statistics"
+        ],
+        "input": [
+            "data"
+        ],
+        "input_type": [
+            "double[]"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function plot_histogram(data)\n    figure;\n    histogram(data);\n    grid on;\n    xlabel('Value');\n    ylabel('Frequency');\nend"]},
+        "code": [
+            "function plot_histogram(data)\n    figure;\n    histogram(data);\n    grid on;\n    xlabel('Value');\n    ylabel('Frequency');\nend"
+        ]
+    },
     {
         "name-zh": "相关系数",
         "name-en": "Correlation",
         "description-zh": "计算两个向量的皮尔逊相关系数",
         "description-en": "Compute Pearson correlation coefficient",
         "dependencies": [],
-        "use_to": ["statistics"],
-        "tags": ["basic", "statistics"],
-        "input": ["x", "y"],
-        "input_type": ["double[]", "double[]"],
-        "return": ["r"],
-        "return_type": ["double"],
+        "use_to": [
+            "statistics"
+        ],
+        "tags": [
+            "basic",
+            "statistics"
+        ],
+        "input": [
+            "x",
+            "y"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
+        "return": [
+            "r"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function r = correlation(x, y)\n    r = corr(x(:), y(:));\nend"]},
+        "code": [
+            "function r = correlation(x, y)\n    r = corr(x(:), y(:));\nend"
+        ]
+    },
     {
         "name-zh": "数据归一化",
         "name-en": "Normalize Data",
         "description-zh": "将数据归一化到[0,1]区间",
         "description-en": "Normalize data to [0,1] range",
         "dependencies": [],
-        "use_to": ["preprocessing", "statistics"],
-        "tags": ["basic", "preprocessing"],
-        "input": ["x"],
-        "input_type": ["double[]"],
-        "return": ["y"],
-        "return_type": ["double[]"],
+        "use_to": [
+            "preprocessing",
+            "statistics"
+        ],
+        "tags": [
+            "basic",
+            "preprocessing"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "y"
+        ],
+        "return_type": [
+            "double[]"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function y = normalize_data(x)\n    x = x(:);\n    y = (x - min(x)) ./ (max(x) - min(x));\nend"]},
+        "code": [
+            "function y = normalize_data(x)\n    x = x(:);\n    y = (x - min(x)) ./ (max(x) - min(x));\nend"
+        ]
+    },
     {
         "name-zh": "图像读取",
         "name-en": "Image Read",
         "description-zh": "读取图像文件",
         "description-en": "Read image file",
         "dependencies": [],
-        "use_to": ["image", "io"],
-        "tags": ["basic", "image"],
-        "input": ["path"],
-        "input_type": ["char[]"],
-        "return": ["img"],
-        "return_type": ["uint8[][]"],
+        "use_to": [
+            "image",
+            "io"
+        ],
+        "tags": [
+            "basic",
+            "image"
+        ],
+        "input": [
+            "path"
+        ],
+        "input_type": [
+            "char[]"
+        ],
+        "return": [
+            "img"
+        ],
+        "return_type": [
+            "uint8[][]"
+        ],
         "timer_score": 85,
         "memory_score": 85,
-        "code": ["function img = image_read(path)\n    img = imread(path);\nend"]},
+        "code": [
+            "function img = image_read(path)\n    img = imread(path);\nend"
+        ]
+    },
     {
         "name-zh": "图像保存",
         "name-en": "Image Write",
         "description-zh": "保存图像到文件",
         "description-en": "Write image to file",
         "dependencies": [],
-        "use_to": ["image", "io"],
-        "tags": ["basic", "image"],
-        "input": ["img", "path"],
-        "input_type": ["uint8[][]", "char[]"],
+        "use_to": [
+            "image",
+            "io"
+        ],
+        "tags": [
+            "basic",
+            "image"
+        ],
+        "input": [
+            "img",
+            "path"
+        ],
+        "input_type": [
+            "uint8[][]",
+            "char[]"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 85,
         "memory_score": 85,
-        "code": ["function image_write(img, path)\n    imwrite(img, path);\nend"]},
+        "code": [
+            "function image_write(img, path)\n    imwrite(img, path);\nend"
+        ]
+    },
     {
         "name-zh": "图像灰度化",
         "name-en": "Image Grayscale",
         "description-zh": "将RGB图像转换为灰度图",
         "description-en": "Convert RGB image to grayscale",
         "dependencies": [],
-        "use_to": ["image", "processing"],
-        "tags": ["basic", "image"],
-        "input": ["rgb"],
-        "input_type": ["uint8[][]"],
-        "return": ["gray"],
-        "return_type": ["uint8[][]"],
+        "use_to": [
+            "image",
+            "processing"
+        ],
+        "tags": [
+            "basic",
+            "image"
+        ],
+        "input": [
+            "rgb"
+        ],
+        "input_type": [
+            "uint8[][]"
+        ],
+        "return": [
+            "gray"
+        ],
+        "return_type": [
+            "uint8[][]"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function gray = image_grayscale(rgb)\n    gray = rgb2gray(rgb);\nend"]},
+        "code": [
+            "function gray = image_grayscale(rgb)\n    gray = rgb2gray(rgb);\nend"
+        ]
+    },
     {
         "name-zh": "图像调整大小",
         "name-en": "Image Resize",
         "description-zh": "调整图像大小",
         "description-en": "Resize image",
         "dependencies": [],
-        "use_to": ["image", "processing"],
-        "tags": ["basic", "image"],
-        "input": ["img", "scale"],
-        "input_type": ["uint8[][]", "double"],
-        "return": ["resized"],
-        "return_type": ["uint8[][]"],
+        "use_to": [
+            "image",
+            "processing"
+        ],
+        "tags": [
+            "basic",
+            "image"
+        ],
+        "input": [
+            "img",
+            "scale"
+        ],
+        "input_type": [
+            "uint8[][]",
+            "double"
+        ],
+        "return": [
+            "resized"
+        ],
+        "return_type": [
+            "uint8[][]"
+        ],
         "timer_score": 85,
         "memory_score": 85,
-        "code": ["function resized = image_resize(img, scale)\n    resized = imresize(img, scale);\nend"]},
+        "code": [
+            "function resized = image_resize(img, scale)\n    resized = imresize(img, scale);\nend"
+        ]
+    },
     {
         "name-zh": "图像旋转",
         "name-en": "Image Rotate",
         "description-zh": "旋转图像指定角度",
         "description-en": "Rotate image by specified angle",
         "dependencies": [],
-        "use_to": ["image", "processing"],
-        "tags": ["basic", "image"],
-        "input": ["img", "angle"],
-        "input_type": ["uint8[][]", "double"],
-        "return": ["rotated"],
-        "return_type": ["uint8[][]"],
+        "use_to": [
+            "image",
+            "processing"
+        ],
+        "tags": [
+            "basic",
+            "image"
+        ],
+        "input": [
+            "img",
+            "angle"
+        ],
+        "input_type": [
+            "uint8[][]",
+            "double"
+        ],
+        "return": [
+            "rotated"
+        ],
+        "return_type": [
+            "uint8[][]"
+        ],
         "timer_score": 85,
         "memory_score": 85,
-        "code": ["function rotated = image_rotate(img, angle)\n    rotated = imrotate(img, angle, 'bilinear', 'crop');\nend"]},
+        "code": [
+            "function rotated = image_rotate(img, angle)\n    rotated = imrotate(img, angle, 'bilinear', 'crop');\nend"
+        ]
+    },
     {
         "name-zh": "矩阵求逆",
         "name-en": "Matrix Inverse",
         "description-zh": "计算非奇异方阵的逆矩阵",
         "description-en": "Compute inverse of non-singular square matrix",
         "dependencies": [],
-        "use_to": ["matrix", "linear algebra"],
-        "tags": ["basic", "matrix"],
-        "input": ["A"],
-        "input_type": ["double[][]"],
-        "return": ["B"],
-        "return_type": ["double[][]"],
+        "use_to": [
+            "matrix",
+            "linear algebra"
+        ],
+        "tags": [
+            "basic",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "B"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function B = matrix_inverse(A)\n    B = inv(A);\nend"]},
+        "code": [
+            "function B = matrix_inverse(A)\n    B = inv(A);\nend"
+        ]
+    },
     {
         "name-zh": "矩阵行列式",
         "name-en": "Matrix Determinant",
         "description-zh": "计算方阵的行列式",
         "description-en": "Compute determinant of square matrix",
         "dependencies": [],
-        "use_to": ["matrix", "linear algebra"],
-        "tags": ["basic", "matrix"],
-        "input": ["A"],
-        "input_type": ["double[][]"],
-        "return": ["d"],
-        "return_type": ["double"],
+        "use_to": [
+            "matrix",
+            "linear algebra"
+        ],
+        "tags": [
+            "basic",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "d"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function d = matrix_determinant(A)\n    d = det(A);\nend"]},
+        "code": [
+            "function d = matrix_determinant(A)\n    d = det(A);\nend"
+        ]
+    },
     {
         "name-zh": "矩阵秩",
         "name-en": "Matrix Rank",
         "description-zh": "计算矩阵的秩",
         "description-en": "Compute rank of matrix",
         "dependencies": [],
-        "use_to": ["matrix", "linear algebra"],
-        "tags": ["basic", "matrix"],
-        "input": ["A"],
-        "input_type": ["double[][]"],
-        "return": ["r"],
-        "return_type": ["double"],
+        "use_to": [
+            "matrix",
+            "linear algebra"
+        ],
+        "tags": [
+            "basic",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "r"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function r = matrix_rank(A)\n    r = rank(A);\nend"]},
+        "code": [
+            "function r = matrix_rank(A)\n    r = rank(A);\nend"
+        ]
+    },
     {
         "name-zh": "矩阵特征值",
         "name-en": "Matrix Eigenvalues",
         "description-zh": "计算方阵的特征值",
         "description-en": "Compute eigenvalues of square matrix",
         "dependencies": [],
-        "use_to": ["matrix", "linear algebra"],
-        "tags": ["intermediate", "matrix"],
-        "input": ["A"],
-        "input_type": ["double[][]"],
-        "return": ["e"],
-        "return_type": ["double[]"],
+        "use_to": [
+            "matrix",
+            "linear algebra"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "e"
+        ],
+        "return_type": [
+            "double[]"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function e = matrix_eigenvalues(A)\n    e = eig(A);\nend"]},
+        "code": [
+            "function e = matrix_eigenvalues(A)\n    e = eig(A);\nend"
+        ]
+    },
     {
         "name-zh": "矩阵条件数",
         "name-en": "Matrix Condition Number",
         "description-zh": "计算矩阵的2范数条件数",
         "description-en": "Compute 2-norm condition number of matrix",
         "dependencies": [],
-        "use_to": ["matrix", "numerical analysis"],
-        "tags": ["intermediate", "matrix"],
-        "input": ["A"],
-        "input_type": ["double[][]"],
-        "return": ["k"],
-        "return_type": ["double"],
+        "use_to": [
+            "matrix",
+            "numerical analysis"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "k"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function k = matrix_condition(A)\n    k = cond(A);\nend"]},
+        "code": [
+            "function k = matrix_condition(A)\n    k = cond(A);\nend"
+        ]
+    },
     {
         "name-zh": "主函数示例",
         "name-en": "Main Function Example",
         "description-zh": "MATLAB程序的入口函数示例，包含输入参数处理和错误处理",
         "description-en": "Entry point function example for MATLAB programs, including input arguments and error handling",
         "dependencies": [],
-        "use_to": ["program entry", "input handling"],
-        "tags": ["basic", "entry point", "input"],
-        "input": ["varargin"],
-        "input_type": ["cell"],
-        "return": ["status"],
-        "return_type": ["double"],
+        "use_to": [
+            "program entry",
+            "input handling"
+        ],
+        "tags": [
+            "basic",
+            "entry point",
+            "input"
+        ],
+        "input": [
+            "varargin"
+        ],
+        "input_type": [
+            "cell"
+        ],
+        "return": [
+            "status"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function status = main(varargin)\n    try\n        % 输入参数处理\n        p = inputParser;\n        addParameter(p, 'name', 'World', @ischar);\n        parse(p, varargin{:});\n        \n        % 获取参数\n        name = p.Results.name;\n        \n        % 打印程序信息\n        fprintf('Program: %s\\n', mfilename('fullpath'));\n        \n        % 打印输入参数\n        fprintf('Arguments count: %d\\n', nargin);\n        fprintf('Arguments: ');\n        disp(varargin);\n        \n        % 程序主要逻辑\n        fprintf('Hello, %s!\\n', name);\n        \n        % 返回成功状态\n        status = 0;\n    catch ME\n        % 错误处理\n        fprintf(2, 'Error: %s\\n', ME.message);\n        if ~isempty(ME.stack)\n            fprintf(2, 'Stack trace:\\n');\n            for i = 1:length(ME.stack)\n                fprintf(2, '  File: %s, Line: %d, Function: %s\\n', ...\n                    ME.stack(i).file, ME.stack(i).line, ME.stack(i).name);\n            end\n        end\n        status = 1;\n    end\nend\n\n% 如果直接运行此文件\nif ~isempty(which('main')) && strcmp(mfilename, 'main')\n    exit(main('name', 'MATLAB'));\nend"]},
+        "code": [
+            "function status = main(varargin)\n    try\n        % 输入参数处理\n        p = inputParser;\n        addParameter(p, 'name', 'World', @ischar);\n        parse(p, varargin{:});\n        \n        % 获取参数\n        name = p.Results.name;\n        \n        % 打印程序信息\n        fprintf('Program: %s\\n', mfilename('fullpath'));\n        \n        % 打印输入参数\n        fprintf('Arguments count: %d\\n', nargin);\n        fprintf('Arguments: ');\n        disp(varargin);\n        \n        % 程序主要逻辑\n        fprintf('Hello, %s!\\n', name);\n        \n        % 返回成功状态\n        status = 0;\n    catch ME\n        % 错误处理\n        fprintf(2, 'Error: %s\\n', ME.message);\n        if ~isempty(ME.stack)\n            fprintf(2, 'Stack trace:\\n');\n            for i = 1:length(ME.stack)\n                fprintf(2, '  File: %s, Line: %d, Function: %s\\n', ...\n                    ME.stack(i).file, ME.stack(i).line, ME.stack(i).name);\n            end\n        end\n        status = 1;\n    end\nend\n\n% 如果直接运行此文件\nif ~isempty(which('main')) && strcmp(mfilename, 'main')\n    exit(main('name', 'MATLAB'));\nend"
+        ]
+    },
     {
         "name-zh": "向量长度",
         "name-en": "Vector Length",
         "description-zh": "获取向量的长度",
         "description-en": "Get the length of a vector",
         "dependencies": [],
-        "use_to": ["vector operations"],
-        "tags": ["basic", "vector", "beginner"],
-        "input": ["v"],
-        "input_type": ["double[]"],
-        "return": ["len"],
-        "return_type": ["double"],
+        "use_to": [
+            "vector operations"
+        ],
+        "tags": [
+            "basic",
+            "vector",
+            "beginner"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "len"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function len = vector_length(v)\n    len = length(v);\nend"]
+        "code": [
+            "function len = vector_length(v)\n    len = length(v);\nend"
+        ]
     },
     {
         "name-zh": "向量求和",
@@ -261,15 +546,31 @@
         "description-zh": "对数值向量求和",
         "description-en": "Sum elements of a numeric vector",
         "dependencies": [],
-        "use_to": ["math", "vector"],
-        "tags": ["basic", "math"],
-        "input": ["v"],
-        "input_type": ["double[]"],
-        "return": ["s"],
-        "return_type": ["double"],
+        "use_to": [
+            "math",
+            "vector"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "s"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function s = vector_sum(v)\n    s = sum(v);\nend"]
+        "code": [
+            "function s = vector_sum(v)\n    s = sum(v);\nend"
+        ]
     },
     {
         "name-zh": "向量平均值",
@@ -277,15 +578,30 @@
         "description-zh": "计算向量的平均值",
         "description-en": "Compute mean of a vector",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["v"],
-        "input_type": ["double[]"],
-        "return": ["m"],
-        "return_type": ["double"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "m"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function m = vector_mean(v)\n    m = mean(v);\nend"]
+        "code": [
+            "function m = vector_mean(v)\n    m = mean(v);\nend"
+        ]
     },
     {
         "name-zh": "最大最小值",
@@ -293,15 +609,32 @@
         "description-zh": "返回数组的最大值与最小值",
         "description-en": "Return max and min of an array",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["a"],
-        "input_type": ["double[]"],
-        "return": ["mx", "mn"],
-        "return_type": ["double", "double"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "mx",
+            "mn"
+        ],
+        "return_type": [
+            "double",
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function [mx, mn] = max_min(a)\n    mx = max(a);\n    mn = min(a);\nend"]
+        "code": [
+            "function [mx, mn] = max_min(a)\n    mx = max(a);\n    mn = min(a);\nend"
+        ]
     },
     {
         "name-zh": "唯一元素",
@@ -309,15 +642,30 @@
         "description-zh": "返回数组的唯一元素(去重)",
         "description-en": "Return unique elements of an array",
         "dependencies": [],
-        "use_to": ["array operations"],
-        "tags": ["intermediate", "array"],
-        "input": ["a"],
-        "input_type": ["double[]"],
-        "return": ["u"],
-        "return_type": ["double[]"],
+        "use_to": [
+            "array operations"
+        ],
+        "tags": [
+            "intermediate",
+            "array"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "u"
+        ],
+        "return_type": [
+            "double[]"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function u = unique_array(a)\n    u = unique(a);\nend"]
+        "code": [
+            "function u = unique_array(a)\n    u = unique(a);\nend"
+        ]
     },
     {
         "name-zh": "排序",
@@ -325,15 +673,30 @@
         "description-zh": "对数组进行升序排序",
         "description-en": "Sort array ascending",
         "dependencies": [],
-        "use_to": ["sorting"],
-        "tags": ["basic", "sorting"],
-        "input": ["a"],
-        "input_type": ["double[]"],
-        "return": ["b"],
-        "return_type": ["double[]"],
+        "use_to": [
+            "sorting"
+        ],
+        "tags": [
+            "basic",
+            "sorting"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "b"
+        ],
+        "return_type": [
+            "double[]"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function b = sort_array(a)\n    b = sort(a);\nend"]
+        "code": [
+            "function b = sort_array(a)\n    b = sort(a);\nend"
+        ]
     },
     {
         "name-zh": "字符串包含",
@@ -341,15 +704,32 @@
         "description-zh": "判断子串是否存在",
         "description-en": "Check if substring exists",
         "dependencies": [],
-        "use_to": ["string"],
-        "tags": ["basic", "string"],
-        "input": ["str", "substr"],
-        "input_type": ["char[]", "char[]"],
-        "return": ["tf"],
-        "return_type": ["logical"],
+        "use_to": [
+            "string"
+        ],
+        "tags": [
+            "basic",
+            "string"
+        ],
+        "input": [
+            "str",
+            "substr"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "tf"
+        ],
+        "return_type": [
+            "logical"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function tf = string_contains(str, substr)\n    tf = contains(string(str), string(substr));\nend"]
+        "code": [
+            "function tf = string_contains(str, substr)\n    tf = contains(string(str), string(substr));\nend"
+        ]
     },
     {
         "name-zh": "字符串分割",
@@ -357,15 +737,32 @@
         "description-zh": "按分隔符合并分割字符串",
         "description-en": "Split string by delimiter",
         "dependencies": [],
-        "use_to": ["string"],
-        "tags": ["basic", "string"],
-        "input": ["str", "delim"],
-        "input_type": ["char[]", "char[]"],
-        "return": ["parts"],
-        "return_type": ["string[]"],
+        "use_to": [
+            "string"
+        ],
+        "tags": [
+            "basic",
+            "string"
+        ],
+        "input": [
+            "str",
+            "delim"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "parts"
+        ],
+        "return_type": [
+            "string[]"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function parts = string_split(str, delim)\n    parts = split(string(str), string(delim));\nend"]
+        "code": [
+            "function parts = string_split(str, delim)\n    parts = split(string(str), string(delim));\nend"
+        ]
     },
     {
         "name-zh": "读文本文件",
@@ -373,15 +770,31 @@
         "description-zh": "读取文本文件为字符串",
         "description-en": "Read text file to string",
         "dependencies": [],
-        "use_to": ["file", "io"],
-        "tags": ["intermediate", "io"],
-        "input": ["path"],
-        "input_type": ["char[]"],
-        "return": ["txt"],
-        "return_type": ["char[]"],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "intermediate",
+            "io"
+        ],
+        "input": [
+            "path"
+        ],
+        "input_type": [
+            "char[]"
+        ],
+        "return": [
+            "txt"
+        ],
+        "return_type": [
+            "char[]"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function txt = read_text_file(path)\n    fid = fopen(path, 'r');\n    assert(fid ~= -1);\n    c = onCleanup(@() fclose(fid));\n    txt = fread(fid, '*char')';\nend"]
+        "code": [
+            "function txt = read_text_file(path)\n    fid = fopen(path, 'r');\n    assert(fid ~= -1);\n    c = onCleanup(@() fclose(fid));\n    txt = fread(fid, '*char')';\nend"
+        ]
     },
     {
         "name-zh": "写文本文件",
@@ -389,15 +802,33 @@
         "description-zh": "将字符串写入文件(覆盖)",
         "description-en": "Write string to file (overwrite)",
         "dependencies": [],
-        "use_to": ["file", "io"],
-        "tags": ["intermediate", "io"],
-        "input": ["path", "txt"],
-        "input_type": ["char[]", "char[]"],
-        "return": ["ok"],
-        "return_type": ["logical"],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "intermediate",
+            "io"
+        ],
+        "input": [
+            "path",
+            "txt"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "ok"
+        ],
+        "return_type": [
+            "logical"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function ok = write_text_file(path, txt)\n    fid = fopen(path, 'w');\n    if fid == -1, ok = false; return; end\n    c = onCleanup(@() fclose(fid));\n    count = fwrite(fid, txt);\n    ok = count == numel(txt);\nend"]
+        "code": [
+            "function ok = write_text_file(path, txt)\n    fid = fopen(path, 'w');\n    if fid == -1, ok = false; return; end\n    c = onCleanup(@() fclose(fid));\n    count = fwrite(fid, txt);\n    ok = count == numel(txt);\nend"
+        ]
     },
     {
         "name-zh": "当前时间(ISO)",
@@ -405,15 +836,27 @@
         "description-zh": "返回当前时间的 ISO 字符串",
         "description-en": "Return current time in ISO string",
         "dependencies": [],
-        "use_to": ["time", "format"],
-        "tags": ["basic", "time"],
+        "use_to": [
+            "time",
+            "format"
+        ],
+        "tags": [
+            "basic",
+            "time"
+        ],
         "input": [],
         "input_type": [],
-        "return": ["iso"],
-        "return_type": ["char[]"],
+        "return": [
+            "iso"
+        ],
+        "return_type": [
+            "char[]"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function iso = now_iso()\n    t = datetime('now');\n    iso = char(t, 'yyyy-MM-dd''T''HH:mm:ss.SSS');\nend"]
+        "code": [
+            "function iso = now_iso()\n    t = datetime('now');\n    iso = char(t, 'yyyy-MM-dd''T''HH:mm:ss.SSS');\nend"
+        ]
     },
     {
         "name-zh": "随机整数",
@@ -421,15 +864,32 @@
         "description-zh": "生成闭区间随机整数",
         "description-en": "Generate random integer inclusive",
         "dependencies": [],
-        "use_to": ["random"],
-        "tags": ["basic", "random"],
-        "input": ["a", "b"],
-        "input_type": ["double", "double"],
-        "return": ["r"],
-        "return_type": ["double"],
+        "use_to": [
+            "random"
+        ],
+        "tags": [
+            "basic",
+            "random"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "double",
+            "double"
+        ],
+        "return": [
+            "r"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function r = random_int(a, b)\n    r = randi([a, b]);\nend"]
+        "code": [
+            "function r = random_int(a, b)\n    r = randi([a, b]);\nend"
+        ]
     },
     {
         "name-zh": "线性插值",
@@ -437,15 +897,34 @@
         "description-zh": "对数据进行一维线性插值",
         "description-en": "1-D linear interpolation",
         "dependencies": [],
-        "use_to": ["interp"],
-        "tags": ["intermediate", "math"],
-        "input": ["x", "y", "xi"],
-        "input_type": ["double[]", "double[]", "double[]"],
-        "return": ["yi"],
-        "return_type": ["double[]"],
+        "use_to": [
+            "interp"
+        ],
+        "tags": [
+            "intermediate",
+            "math"
+        ],
+        "input": [
+            "x",
+            "y",
+            "xi"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]",
+            "double[]"
+        ],
+        "return": [
+            "yi"
+        ],
+        "return_type": [
+            "double[]"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function yi = linear_interp(x, y, xi)\n    yi = interp1(x, y, xi, 'linear', 'extrap');\nend"]
+        "code": [
+            "function yi = linear_interp(x, y, xi)\n    yi = interp1(x, y, xi, 'linear', 'extrap');\nend"
+        ]
     },
     {
         "name-zh": "矩阵转置",
@@ -453,15 +932,30 @@
         "description-zh": "计算矩阵的转置",
         "description-en": "Compute matrix transpose",
         "dependencies": [],
-        "use_to": ["matrix"],
-        "tags": ["basic", "matrix"],
-        "input": ["A"],
-        "input_type": ["double[][]"],
-        "return": ["B"],
-        "return_type": ["double[][]"],
+        "use_to": [
+            "matrix"
+        ],
+        "tags": [
+            "basic",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "B"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function B = matrix_transpose(A)\n    B = A.';\nend"]
+        "code": [
+            "function B = matrix_transpose(A)\n    B = A.';\nend"
+        ]
     },
     {
         "name-zh": "矩阵乘法",
@@ -469,15 +963,32 @@
         "description-zh": "矩阵乘法",
         "description-en": "Matrix multiplication",
         "dependencies": [],
-        "use_to": ["matrix"],
-        "tags": ["basic", "matrix"],
-        "input": ["A", "B"],
-        "input_type": ["double[][]", "double[][]"],
-        "return": ["C"],
-        "return_type": ["double[][]"],
+        "use_to": [
+            "matrix"
+        ],
+        "tags": [
+            "basic",
+            "matrix"
+        ],
+        "input": [
+            "A",
+            "B"
+        ],
+        "input_type": [
+            "double[][]",
+            "double[][]"
+        ],
+        "return": [
+            "C"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function C = matrix_multiply(A, B)\n    C = A * B;\nend"]
+        "code": [
+            "function C = matrix_multiply(A, B)\n    C = A * B;\nend"
+        ]
     },
     {
         "name-zh": "均值",
@@ -485,15 +996,30 @@
         "description-zh": "计算数组的平均值",
         "description-en": "Compute mean of an array",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["a"],
-        "input_type": ["double[]"],
-        "return": ["m"],
-        "return_type": ["double"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "m"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function m = mean_array(a)\n    m = mean(a);\nend"]
+        "code": [
+            "function m = mean_array(a)\n    m = mean(a);\nend"
+        ]
     },
     {
         "name-zh": "中位数",
@@ -501,15 +1027,30 @@
         "description-zh": "计算数组的中位数",
         "description-en": "Compute median of an array",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["intermediate", "math"],
-        "input": ["a"],
-        "input_type": ["double[]"],
-        "return": ["med"],
-        "return_type": ["double"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "math"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "med"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function med = median_array(a)\n    med = median(a);\nend"]
+        "code": [
+            "function med = median_array(a)\n    med = median(a);\nend"
+        ]
     },
     {
         "name-zh": "标准差",
@@ -517,15 +1058,30 @@
         "description-zh": "计算样本标准差",
         "description-en": "Compute sample standard deviation",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["intermediate", "math"],
-        "input": ["a"],
-        "input_type": ["double[]"],
-        "return": ["sd"],
-        "return_type": ["double"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "math"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "sd"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function sd = stdev_array(a)\n    sd = std(a, 1); % N-1 标准差: 第二个参数为 0；这里使用总体/样本按需换\nend"]
+        "code": [
+            "function sd = stdev_array(a)\n    sd = std(a, 1); % N-1 标准差: 第二个参数为 0；这里使用总体/样本按需换\nend"
+        ]
     },
     {
         "name-zh": "GCD",
@@ -533,15 +1089,33 @@
         "description-zh": "最大公约数",
         "description-en": "Greatest common divisor",
         "dependencies": [],
-        "use_to": ["math", "number theory"],
-        "tags": ["basic", "math"],
-        "input": ["a", "b"],
-        "input_type": ["double", "double"],
-        "return": ["g"],
-        "return_type": ["double"],
+        "use_to": [
+            "math",
+            "number theory"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "double",
+            "double"
+        ],
+        "return": [
+            "g"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function g = gcd_int(a, b)\n    a = abs(floor(a)); b = abs(floor(b));\n    while b ~= 0\n        t = b; b = mod(a, b); a = t;\n    end\n    g = a;\nend"]
+        "code": [
+            "function g = gcd_int(a, b)\n    a = abs(floor(a)); b = abs(floor(b));\n    while b ~= 0\n        t = b; b = mod(a, b); a = t;\n    end\n    g = a;\nend"
+        ]
     },
     {
         "name-zh": "LCM",
@@ -549,15 +1123,33 @@
         "description-zh": "最小公倍数",
         "description-en": "Least common multiple",
         "dependencies": [],
-        "use_to": ["math", "number theory"],
-        "tags": ["basic", "math"],
-        "input": ["a", "b"],
-        "input_type": ["double", "double"],
-        "return": ["l"],
-        "return_type": ["double"],
+        "use_to": [
+            "math",
+            "number theory"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "double",
+            "double"
+        ],
+        "return": [
+            "l"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function l = lcm_int(a, b)\n    a = abs(floor(a)); b = abs(floor(b));\n    if a == 0 || b == 0, l = 0; return; end\n    l = (a / gcd_int(a,b)) * b;\nend"]
+        "code": [
+            "function l = lcm_int(a, b)\n    a = abs(floor(a)); b = abs(floor(b));\n    if a == 0 || b == 0, l = 0; return; end\n    l = (a / gcd_int(a,b)) * b;\nend"
+        ]
     },
     {
         "name-zh": "Clamp",
@@ -565,15 +1157,34 @@
         "description-zh": "将数值限制在区间内",
         "description-en": "Clamp value into [lo, hi]",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["x", "lo", "hi"],
-        "input_type": ["double", "double", "double"],
-        "return": ["y"],
-        "return_type": ["double"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "x",
+            "lo",
+            "hi"
+        ],
+        "input_type": [
+            "double",
+            "double",
+            "double"
+        ],
+        "return": [
+            "y"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function y = clamp(x, lo, hi)\n    y = min(max(x, lo), hi);\nend"]
+        "code": [
+            "function y = clamp(x, lo, hi)\n    y = min(max(x, lo), hi);\nend"
+        ]
     },
     {
         "name-zh": "阶乘",
@@ -581,32 +1192,63 @@
         "description-zh": "计算非负整数阶乘",
         "description-en": "Compute factorial of non-negative integer",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["n"],
-        "input_type": ["double"],
-        "return": ["f"],
-        "return_type": ["double"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "double"
+        ],
+        "return": [
+            "f"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function f = factorial_int(n)\n    n = floor(n); assert(n >= 0);\n    f = prod(1:n);\nend"]
-    }
-    ,
+        "code": [
+            "function f = factorial_int(n)\n    n = floor(n); assert(n >= 0);\n    f = prod(1:n);\nend"
+        ]
+    },
     {
         "name-zh": "HTTP GET(JSON)",
         "name-en": "HTTP GET (JSON)",
         "description-zh": "使用 webread 请求 JSON 并返回结构体/表",
         "description-en": "Use webread to fetch JSON and return struct/table",
         "dependencies": [],
-        "use_to": ["http", "json"],
-        "tags": ["network", "http", "json"],
-        "input": ["url"],
-        "input_type": ["char[]"],
-        "return": ["data"],
-        "return_type": ["struct"],
+        "use_to": [
+            "http",
+            "json"
+        ],
+        "tags": [
+            "network",
+            "http",
+            "json"
+        ],
+        "input": [
+            "url"
+        ],
+        "input_type": [
+            "char[]"
+        ],
+        "return": [
+            "data"
+        ],
+        "return_type": [
+            "struct"
+        ],
         "timer_score": 70,
         "memory_score": 85,
-        "code": ["function data = http_get_json(url)\n    opts = weboptions('Timeout', 10);\n    data = webread(url, opts);\nend"]
+        "code": [
+            "function data = http_get_json(url)\n    opts = weboptions('Timeout', 10);\n    data = webread(url, opts);\nend"
+        ]
     },
     {
         "name-zh": "下载文件(websave)",
@@ -614,192 +1256,424 @@
         "description-zh": "使用 websave 下载URL到本地文件，返回保存路径",
         "description-en": "Download file via websave and return saved path",
         "dependencies": [],
-        "use_to": ["http", "download"],
-        "tags": ["network", "http", "download"],
-        "input": ["url", "filename"],
-        "input_type": ["char[]", "char[]"],
-        "return": ["filepath"],
-        "return_type": ["char[]"],
+        "use_to": [
+            "http",
+            "download"
+        ],
+        "tags": [
+            "network",
+            "http",
+            "download"
+        ],
+        "input": [
+            "url",
+            "filename"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "filepath"
+        ],
+        "return_type": [
+            "char[]"
+        ],
         "timer_score": 75,
         "memory_score": 90,
-        "code": ["function filepath = http_download(url, filename)\n    opts = weboptions('Timeout', 20);\n    filepath = websave(filename, url, opts);\nend"]
-    }
-        ,
-        {
-            "name-zh": "Dijkstra最短路",
-            "name-en": "Dijkstra Shortest Path",
-            "description-zh": "在非负权图上用最小堆(简化)求单源最短路",
-            "description-en": "Single-source shortest path on non-negative graph (simple priority queue)",
-            "dependencies": [],
-            "use_to": ["graph", "shortest path"],
-            "tags": ["graph", "dijkstra", "algorithm"],
-            "input": ["n", "adj", "src"],
-            "input_type": ["double", "cell", "double"],
-            "return": ["dist"],
-            "return_type": ["double[]"],
-            "timer_score": 80,
-            "memory_score": 85,
-            "code": ["function dist = dijkstra(n, adj, src)\n% adj{u} = [v w; ...], 1-based index\n    INF = 1e18;\n    dist = INF * ones(n,1);\n    dist(src) = 0;\n    used = false(n,1);\n    for it = 1:n\n        u = -1;\n        best = INF;\n        for i=1:n\n            if ~used(i) && dist(i) < best\n                best = dist(i); u = i;\n            end\n        end\n        if u == -1, break; end\n        used(u) = true;\n        edges = adj{u};\n        for k = 1:size(edges,1)\n            v = edges(k,1); w = edges(k,2);\n            if dist(u) + w < dist(v)\n                dist(v) = dist(u) + w;\n            end\n        end\n    end\nend"]
-        },
-        {
-            "name-zh": "Kruskal最小生成树",
-            "name-en": "Kruskal Minimum Spanning Tree",
-            "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
-            "description-en": "Kruskal with DSU to compute MST total weight (-1 if disconnected)",
-            "dependencies": [],
-            "use_to": ["graph", "mst"],
-            "tags": ["graph", "mst", "kruskal", "algorithm"],
-            "input": ["n", "edges"],
-            "input_type": ["double", "double[][]"],
-            "return": ["mstWeight"],
-            "return_type": ["double"],
-            "timer_score": 80,
-            "memory_score": 90,
-            "code": ["function total = kruskal_mst(n, edges)\n% edges: [u v w] rows, 1-based indices\n    edges = sortrows(edges, 3);\n    p = (1:n)'; r = zeros(n,1);\n    total = 0; cnt = 0;\n    for i = 1:size(edges,1)\n        u = edges(i,1); v = edges(i,2); w = edges(i,3);\n        if dsu_unite(u, v)\n            total = total + w; cnt = cnt + 1;\n            if cnt == n-1, break; end\n        end\n    end\n    if cnt ~= n-1, total = -1; end\n    function x = dsu_find(x)\n        while p(x) ~= x, p(x) = p(p(x)); x = p(x); end\n    end\n    function ok = dsu_unite(a,b)\n        a = dsu_find(a); b = dsu_find(b);\n        if a == b, ok = false; return; end\n        if r(a) < r(b), t=a; a=b; b=t; end\n        p(b) = a; if r(a) == r(b), r(a) = r(a)+1; end\n        ok = true;\n    end\nend"]
-        },
-        {
-            "name-zh": "Bellman-Ford最短路",
-            "name-en": "Bellman-Ford Shortest Path",
-            "description-zh": "允许负边权的单源最短路；检测负环",
-            "description-en": "Single-source shortest path with negative edges; detect negative cycles",
-            "dependencies": [],
-            "use_to": ["graph", "shortest path"],
-            "tags": ["graph", "bellman-ford", "algorithm"],
-            "input": ["n", "edges", "src"],
-            "input_type": ["double", "double[][]", "double"],
-            "return": ["dist", "hasNegCycle"],
-            "return_type": ["double[]", "logical"],
-            "timer_score": 70,
-            "memory_score": 85,
-            "code": ["function [dist, hasNeg] = bellman_ford(n, edges, src)\n% edges: [u v w] 1-based\n    INF = 1e18;\n    dist = INF * ones(n,1); dist(src) = 0;\n    for it = 1:n-1\n        updated = false;\n        for i = 1:size(edges,1)\n            u = edges(i,1); v = edges(i,2); w = edges(i,3);\n            if dist(u) < INF && dist(u) + w < dist(v)\n                dist(v) = dist(u) + w; updated = true;\n            end\n        end\n        if ~updated, break; end\n    end\n    hasNeg = false;\n    for i = 1:size(edges,1)\n        u = edges(i,1); v = edges(i,2); w = edges(i,3);\n        if dist(u) < INF && dist(u) + w < dist(v)\n            hasNeg = true; break;\n        end\n    end\nend"]
-        },
-        {
-            "name-zh": "拓扑排序(Kahn)",
-            "name-en": "Topological Sort (Kahn)",
-            "description-zh": "入度法Kahn算法返回拓扑序列",
-            "description-en": "Kahn algorithm using indegrees to return topo order",
-            "dependencies": [],
-            "use_to": ["graph", "topological sort"],
-            "tags": ["graph", "topo", "algorithm"],
-            "input": ["n", "adj"],
-            "input_type": ["double", "cell"],
-            "return": ["order"],
-            "return_type": ["double[]"],
-            "timer_score": 85,
-            "memory_score": 90,
-            "code": ["function order = topo_sort_kahn(n, adj)\n% adj{u} = [v1 v2 ...] row vector\n    indeg = zeros(n,1);\n    for u = 1:n, vs = adj{u}; indeg(vs) = indeg(vs) + 1; end\n    q = find(indeg==0)';\n    order = zeros(1,n); k = 0;\n    head = 1;\n    while head <= numel(q)\n        u = q(head); head = head + 1;\n        k = k + 1; order(k) = u;\n        vs = adj{u};\n        for i = 1:numel(vs)\n            v = vs(i); indeg(v) = indeg(v) - 1;\n            if indeg(v) == 0, q(end+1) = v; end %#ok<AGROW>\n        end\n    end\n    order = order(1:k);\nend"]
-        },
-        {
-            "name-zh": "KMP字符串匹配",
-            "name-en": "KMP String Match",
-            "description-zh": "返回所有匹配起始下标(1-based)",
-            "description-en": "Return all match start indices (1-based)",
-            "dependencies": [],
-            "use_to": ["string", "search"],
-            "tags": ["string", "kmp", "algorithm"],
-            "input": ["text", "pattern"],
-            "input_type": ["char[]", "char[]"],
-            "return": ["indices"],
-            "return_type": ["double[]"],
-            "timer_score": 85,
-            "memory_score": 92,
-            "code": ["function idx = kmp_search(text, pat)\n    n = length(text); m = length(pat);\n    if m == 0, idx = []; return; end\n    lps = zeros(1,m); i = 2; len = 0;\n    while i <= m\n        if pat(i) == pat(len+1)\n            len = len + 1; lps(i) = len; i = i + 1;\n        elseif len > 0\n            len = lps(len);\n        else\n            lps(i) = 0; i = i + 1;\n        end\n    end\n    idx = []; i = 1; j = 1;\n    while i <= n\n        if text(i) == pat(j)\n            i = i + 1; j = j + 1;\n            if j > m\n                idx(end+1) = i - m; %#ok<AGROW>\n                j = lps(j-1) + 1;\n            end\n        elseif j > 1\n            j = lps(j-1) + 1;\n        else\n            i = i + 1;\n        end\n    end\nend"]
-        },
-        {
-            "name-zh": "Rabin-Karp字符串匹配",
-            "name-en": "Rabin-Karp String Match",
-            "description-zh": "滚动哈希匹配，返回所有位置(1-based)",
-            "description-en": "Rolling-hash matching, return all indices (1-based)",
-            "dependencies": [],
-            "use_to": ["string", "search"],
-            "tags": ["string", "rabin-karp", "algorithm"],
-            "input": ["text", "pattern"],
-            "input_type": ["char[]", "char[]"],
-            "return": ["indices"],
-            "return_type": ["double[]"],
-            "timer_score": 80,
-            "memory_score": 92,
-            "code": ["function idx = rabin_karp(text, pat)\n    n = length(text); m = length(pat);\n    if m == 0 || m > n, idx = []; return; end\n    B = 131; MOD = 1e9+7;\n    powb = 1; for t = 1:m-1, powb = mod(powb * B, MOD); end\n    hpat = 0; hwin = 0;\n    for i = 1:m\n        hpat = mod(hpat * B + double(pat(i)), MOD);\n        hwin = mod(hwin * B + double(text(i)), MOD);\n    end\n    idx = [];\n    for i = 0:n-m\n        if hpat == hwin && strcmp(text(i+1:i+m), pat)\n            idx(end+1) = i+1; %#ok<AGROW>\n        end\n        if i < n - m\n            hwin = mod(hwin - double(text(i+1)) * powb, MOD);\n            if hwin < 0, hwin = hwin + MOD; end\n            hwin = mod(hwin * B + double(text(i+m+1)), MOD);\n        end\n    end\nend"]
-        },
-        {
-            "name-zh": "埃拉托斯特尼筛法",
-            "name-en": "Sieve of Eratosthenes",
-            "description-zh": "在[2,n]内标记素数",
-            "description-en": "Mark primes in [2,n]",
-            "dependencies": [],
-            "use_to": ["prime", "number theory"],
-            "tags": ["math", "prime", "sieve", "algorithm"],
-            "input": ["n"],
-            "input_type": ["double"],
-            "return": ["is_prime"],
-            "return_type": ["logical[]"],
-            "timer_score": 90,
-            "memory_score": 88,
-        "code": ["function is_prime = sieve_is_prime(n)\n    % 返回大小为 n+1 的逻辑向量，is_prime(k) 表示整数 k 是否为素数\n    is_prime = true(n+1,1);\n    if n >= 1, is_prime(1) = false; end  % 1 不是素数\n    p = 2;\n    while p*p <= n\n        if is_prime(p)\n            x = p*p;\n            while x <= n\n                is_prime(x) = false;\n                x = x + p;\n            end\n        end\n        p = p + 1;\n    end\nend"]
-        },
-        {
-            "name-zh": "编辑距离(Levenshtein)",
-            "name-en": "Levenshtein Edit Distance",
-            "description-zh": "动态规划计算编辑距离(滚动数组)",
-            "description-en": "DP edit distance with rolling array",
-            "dependencies": [],
-            "use_to": ["string", "dynamic programming"],
-            "tags": ["dp", "string", "edit distance"],
-            "input": ["a", "b"],
-            "input_type": ["char[]", "char[]"],
-            "return": ["distance"],
-            "return_type": ["double"],
-            "timer_score": 85,
-            "memory_score": 88,
-            "code": ["function d = edit_distance(a, b)\n    m = length(a); n = length(b);\n    prev = 0:n; cur = zeros(1,n+1);\n    for i = 1:m\n        cur(1) = i; ai = a(i);\n        for j = 1:n\n            cost = (ai == b(j)); cost = 1 - cost;\n            del = prev(j+1) + 1; ins = cur(j) + 1; rep = prev(j) + cost;\n            cur(j+1) = min([del, ins, rep]);\n        end\n        tmp = prev; prev = cur; cur = tmp;\n    end\n    d = prev(n+1);\nend"]
-        },
-        {
-            "name-zh": "最长上升子序列O(n log n)",
-            "name-en": "LIS O(n log n)",
-            "description-zh": "耐心排序+二分求LIS长度",
-            "description-en": "Patience sorting + binary search for LIS length",
-            "dependencies": [],
-            "use_to": ["sequence", "dynamic programming"],
-            "tags": ["dp", "lis", "algorithm"],
-            "input": ["arr"],
-            "input_type": ["double[]"],
-            "return": ["length"],
-            "return_type": ["double"],
-            "timer_score": 90,
-            "memory_score": 92,
-            "code": ["function L = lis_length(a)\n    tails = [];\n    for x = a(:)'\n        l = 1; r = length(tails) + 1;\n        while l < r\n            m = floor((l + r)/2);\n            if m <= length(tails) && tails(m) >= x\n                r = m;\n            else\n                l = m + 1;\n            end\n        end\n        if l > length(tails)\n            tails(end+1) = x; %#ok<AGROW>\n        else\n            tails(l) = x;\n        end\n    end\n    L = length(tails);\nend"]
-        },
-        {
-            "name-zh": "快速选择第k小",
-            "name-en": "Quickselect k-th",
-            "description-zh": "平均线性时间找到第k小(1<=k<=n)",
-            "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
-            "dependencies": [],
-            "use_to": ["selection", "order statistics"],
-            "tags": ["algorithm", "divide-conquer"],
-            "input": ["arr", "k"],
-            "input_type": ["double[]", "double"],
-            "return": ["kth"],
-            "return_type": ["double"],
-            "timer_score": 85,
-            "memory_score": 90,
-            "code": ["function val = quickselect(a, k) % k 1-based\n    l = 1; r = numel(a); k = k - 1;\n    while l <= r\n        pivot = a(r); i = l;\n        for j = l:r-1\n            if a(j) <= pivot\n                tmp = a(i); a(i) = a(j); a(j) = tmp; i = i + 1;\n            end\n        end\n        tmp = a(i); a(i) = a(r); a(r) = tmp;\n        if i-1 == k\n            val = a(i); return;\n        elseif i-1 > k\n            r = i - 1;\n        else\n            l = i + 1;\n        end\n    end\n    error('k out of range');\nend"]
-        },
+        "code": [
+            "function filepath = http_download(url, filename)\n    opts = weboptions('Timeout', 20);\n    filepath = websave(filename, url, opts);\nend"
+        ]
+    },
+    {
+        "name-zh": "Dijkstra最短路",
+        "name-en": "Dijkstra Shortest Path",
+        "description-zh": "在非负权图上用最小堆(简化)求单源最短路",
+        "description-en": "Single-source shortest path on non-negative graph (simple priority queue)",
+        "dependencies": [],
+        "use_to": [
+            "graph",
+            "shortest path"
+        ],
+        "tags": [
+            "graph",
+            "dijkstra",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "adj",
+            "src"
+        ],
+        "input_type": [
+            "double",
+            "cell",
+            "double"
+        ],
+        "return": [
+            "dist"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "function dist = dijkstra(n, adj, src)\n% adj{u} = [v w; ...], 1-based index\n    INF = 1e18;\n    dist = INF * ones(n,1);\n    dist(src) = 0;\n    used = false(n,1);\n    for it = 1:n\n        u = -1;\n        best = INF;\n        for i=1:n\n            if ~used(i) && dist(i) < best\n                best = dist(i); u = i;\n            end\n        end\n        if u == -1, break; end\n        used(u) = true;\n        edges = adj{u};\n        for k = 1:size(edges,1)\n            v = edges(k,1); w = edges(k,2);\n            if dist(u) + w < dist(v)\n                dist(v) = dist(u) + w;\n            end\n        end\n    end\nend"
+        ]
+    },
+    {
+        "name-zh": "Kruskal最小生成树",
+        "name-en": "Kruskal Minimum Spanning Tree",
+        "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
+        "description-en": "Kruskal with DSU to compute MST total weight (-1 if disconnected)",
+        "dependencies": [],
+        "use_to": [
+            "graph",
+            "mst"
+        ],
+        "tags": [
+            "graph",
+            "mst",
+            "kruskal",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "edges"
+        ],
+        "input_type": [
+            "double",
+            "double[][]"
+        ],
+        "return": [
+            "mstWeight"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 80,
+        "memory_score": 90,
+        "code": [
+            "function total = kruskal_mst(n, edges)\n% edges: [u v w] rows, 1-based indices\n    edges = sortrows(edges, 3);\n    p = (1:n)'; r = zeros(n,1);\n    total = 0; cnt = 0;\n    for i = 1:size(edges,1)\n        u = edges(i,1); v = edges(i,2); w = edges(i,3);\n        if dsu_unite(u, v)\n            total = total + w; cnt = cnt + 1;\n            if cnt == n-1, break; end\n        end\n    end\n    if cnt ~= n-1, total = -1; end\n    function x = dsu_find(x)\n        while p(x) ~= x, p(x) = p(p(x)); x = p(x); end\n    end\n    function ok = dsu_unite(a,b)\n        a = dsu_find(a); b = dsu_find(b);\n        if a == b, ok = false; return; end\n        if r(a) < r(b), t=a; a=b; b=t; end\n        p(b) = a; if r(a) == r(b), r(a) = r(a)+1; end\n        ok = true;\n    end\nend"
+        ]
+    },
+    {
+        "name-zh": "Bellman-Ford最短路",
+        "name-en": "Bellman-Ford Shortest Path",
+        "description-zh": "允许负边权的单源最短路；检测负环",
+        "description-en": "Single-source shortest path with negative edges; detect negative cycles",
+        "dependencies": [],
+        "use_to": [
+            "graph",
+            "shortest path"
+        ],
+        "tags": [
+            "graph",
+            "bellman-ford",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "edges",
+            "src"
+        ],
+        "input_type": [
+            "double",
+            "double[][]",
+            "double"
+        ],
+        "return": [
+            "dist",
+            "hasNegCycle"
+        ],
+        "return_type": [
+            "double[]",
+            "logical"
+        ],
+        "timer_score": 70,
+        "memory_score": 85,
+        "code": [
+            "function [dist, hasNeg] = bellman_ford(n, edges, src)\n% edges: [u v w] 1-based\n    INF = 1e18;\n    dist = INF * ones(n,1); dist(src) = 0;\n    for it = 1:n-1\n        updated = false;\n        for i = 1:size(edges,1)\n            u = edges(i,1); v = edges(i,2); w = edges(i,3);\n            if dist(u) < INF && dist(u) + w < dist(v)\n                dist(v) = dist(u) + w; updated = true;\n            end\n        end\n        if ~updated, break; end\n    end\n    hasNeg = false;\n    for i = 1:size(edges,1)\n        u = edges(i,1); v = edges(i,2); w = edges(i,3);\n        if dist(u) < INF && dist(u) + w < dist(v)\n            hasNeg = true; break;\n        end\n    end\nend"
+        ]
+    },
+    {
+        "name-zh": "拓扑排序(Kahn)",
+        "name-en": "Topological Sort (Kahn)",
+        "description-zh": "入度法Kahn算法返回拓扑序列",
+        "description-en": "Kahn algorithm using indegrees to return topo order",
+        "dependencies": [],
+        "use_to": [
+            "graph",
+            "topological sort"
+        ],
+        "tags": [
+            "graph",
+            "topo",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "adj"
+        ],
+        "input_type": [
+            "double",
+            "cell"
+        ],
+        "return": [
+            "order"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "function order = topo_sort_kahn(n, adj)\n% adj{u} = [v1 v2 ...] row vector\n    indeg = zeros(n,1);\n    for u = 1:n, vs = adj{u}; indeg(vs) = indeg(vs) + 1; end\n    q = find(indeg==0)';\n    order = zeros(1,n); k = 0;\n    head = 1;\n    while head <= numel(q)\n        u = q(head); head = head + 1;\n        k = k + 1; order(k) = u;\n        vs = adj{u};\n        for i = 1:numel(vs)\n            v = vs(i); indeg(v) = indeg(v) - 1;\n            if indeg(v) == 0, q(end+1) = v; end %#ok<AGROW>\n        end\n    end\n    order = order(1:k);\nend"
+        ]
+    },
+    {
+        "name-zh": "KMP字符串匹配",
+        "name-en": "KMP String Match",
+        "description-zh": "返回所有匹配起始下标(1-based)",
+        "description-en": "Return all match start indices (1-based)",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "kmp",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "indices"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 85,
+        "memory_score": 92,
+        "code": [
+            "function idx = kmp_search(text, pat)\n    n = length(text); m = length(pat);\n    if m == 0, idx = []; return; end\n    lps = zeros(1,m); i = 2; len = 0;\n    while i <= m\n        if pat(i) == pat(len+1)\n            len = len + 1; lps(i) = len; i = i + 1;\n        elseif len > 0\n            len = lps(len);\n        else\n            lps(i) = 0; i = i + 1;\n        end\n    end\n    idx = []; i = 1; j = 1;\n    while i <= n\n        if text(i) == pat(j)\n            i = i + 1; j = j + 1;\n            if j > m\n                idx(end+1) = i - m; %#ok<AGROW>\n                j = lps(j-1) + 1;\n            end\n        elseif j > 1\n            j = lps(j-1) + 1;\n        else\n            i = i + 1;\n        end\n    end\nend"
+        ]
+    },
+    {
+        "name-zh": "Rabin-Karp字符串匹配",
+        "name-en": "Rabin-Karp String Match",
+        "description-zh": "滚动哈希匹配，返回所有位置(1-based)",
+        "description-en": "Rolling-hash matching, return all indices (1-based)",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "rabin-karp",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "indices"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 92,
+        "code": [
+            "function idx = rabin_karp(text, pat)\n    n = length(text); m = length(pat);\n    if m == 0 || m > n, idx = []; return; end\n    B = 131; MOD = 1e9+7;\n    powb = 1; for t = 1:m-1, powb = mod(powb * B, MOD); end\n    hpat = 0; hwin = 0;\n    for i = 1:m\n        hpat = mod(hpat * B + double(pat(i)), MOD);\n        hwin = mod(hwin * B + double(text(i)), MOD);\n    end\n    idx = [];\n    for i = 0:n-m\n        if hpat == hwin && strcmp(text(i+1:i+m), pat)\n            idx(end+1) = i+1; %#ok<AGROW>\n        end\n        if i < n - m\n            hwin = mod(hwin - double(text(i+1)) * powb, MOD);\n            if hwin < 0, hwin = hwin + MOD; end\n            hwin = mod(hwin * B + double(text(i+m+1)), MOD);\n        end\n    end\nend"
+        ]
+    },
+    {
+        "name-zh": "埃拉托斯特尼筛法",
+        "name-en": "Sieve of Eratosthenes",
+        "description-zh": "在[2,n]内标记素数",
+        "description-en": "Mark primes in [2,n]",
+        "dependencies": [],
+        "use_to": [
+            "prime",
+            "number theory"
+        ],
+        "tags": [
+            "math",
+            "prime",
+            "sieve",
+            "algorithm"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "double"
+        ],
+        "return": [
+            "is_prime"
+        ],
+        "return_type": [
+            "logical[]"
+        ],
+        "timer_score": 90,
+        "memory_score": 88,
+        "code": [
+            "function is_prime = sieve_is_prime(n)\n    % 返回大小为 n+1 的逻辑向量，is_prime(k) 表示整数 k 是否为素数\n    is_prime = true(n+1,1);\n    if n >= 1, is_prime(1) = false; end  % 1 不是素数\n    p = 2;\n    while p*p <= n\n        if is_prime(p)\n            x = p*p;\n            while x <= n\n                is_prime(x) = false;\n                x = x + p;\n            end\n        end\n        p = p + 1;\n    end\nend"
+        ]
+    },
+    {
+        "name-zh": "编辑距离(Levenshtein)",
+        "name-en": "Levenshtein Edit Distance",
+        "description-zh": "动态规划计算编辑距离(滚动数组)",
+        "description-en": "DP edit distance with rolling array",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "dynamic programming"
+        ],
+        "tags": [
+            "dp",
+            "string",
+            "edit distance"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "distance"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 85,
+        "memory_score": 88,
+        "code": [
+            "function d = edit_distance(a, b)\n    m = length(a); n = length(b);\n    prev = 0:n; cur = zeros(1,n+1);\n    for i = 1:m\n        cur(1) = i; ai = a(i);\n        for j = 1:n\n            cost = (ai == b(j)); cost = 1 - cost;\n            del = prev(j+1) + 1; ins = cur(j) + 1; rep = prev(j) + cost;\n            cur(j+1) = min([del, ins, rep]);\n        end\n        tmp = prev; prev = cur; cur = tmp;\n    end\n    d = prev(n+1);\nend"
+        ]
+    },
+    {
+        "name-zh": "最长上升子序列O(n log n)",
+        "name-en": "LIS O(n log n)",
+        "description-zh": "耐心排序+二分求LIS长度",
+        "description-en": "Patience sorting + binary search for LIS length",
+        "dependencies": [],
+        "use_to": [
+            "sequence",
+            "dynamic programming"
+        ],
+        "tags": [
+            "dp",
+            "lis",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "length"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 90,
+        "memory_score": 92,
+        "code": [
+            "function L = lis_length(a)\n    tails = [];\n    for x = a(:)'\n        l = 1; r = length(tails) + 1;\n        while l < r\n            m = floor((l + r)/2);\n            if m <= length(tails) && tails(m) >= x\n                r = m;\n            else\n                l = m + 1;\n            end\n        end\n        if l > length(tails)\n            tails(end+1) = x; %#ok<AGROW>\n        else\n            tails(l) = x;\n        end\n    end\n    L = length(tails);\nend"
+        ]
+    },
+    {
+        "name-zh": "快速选择第k小",
+        "name-en": "Quickselect k-th",
+        "description-zh": "平均线性时间找到第k小(1<=k<=n)",
+        "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
+        "dependencies": [],
+        "use_to": [
+            "selection",
+            "order statistics"
+        ],
+        "tags": [
+            "algorithm",
+            "divide-conquer"
+        ],
+        "input": [
+            "arr",
+            "k"
+        ],
+        "input_type": [
+            "double[]",
+            "double"
+        ],
+        "return": [
+            "kth"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "function val = quickselect(a, k) % k 1-based\n    l = 1; r = numel(a); k = k - 1;\n    while l <= r\n        pivot = a(r); i = l;\n        for j = l:r-1\n            if a(j) <= pivot\n                tmp = a(i); a(i) = a(j); a(j) = tmp; i = i + 1;\n            end\n        end\n        tmp = a(i); a(i) = a(r); a(r) = tmp;\n        if i-1 == k\n            val = a(i); return;\n        elseif i-1 > k\n            r = i - 1;\n        else\n            l = i + 1;\n        end\n    end\n    error('k out of range');\nend"
+        ]
+    },
     {
         "name-zh": "FFT频谱分析",
         "name-en": "FFT Spectrum Analysis",
         "description-zh": "对信号进行FFT并返回频率和幅度谱",
         "description-en": "Perform FFT on signal and return frequency and magnitude spectrum",
         "dependencies": [],
-        "use_to": ["signal processing", "fft"],
-        "tags": ["intermediate", "signal", "fft"],
-        "input": ["signal", "fs"],
-        "input_type": ["double[]", "double"],
-        "return": ["freq", "magnitude"],
-        "return_type": ["double[]", "double[]"],
+        "use_to": [
+            "signal processing",
+            "fft"
+        ],
+        "tags": [
+            "intermediate",
+            "signal",
+            "fft"
+        ],
+        "input": [
+            "signal",
+            "fs"
+        ],
+        "input_type": [
+            "double[]",
+            "double"
+        ],
+        "return": [
+            "freq",
+            "magnitude"
+        ],
+        "return_type": [
+            "double[]",
+            "double[]"
+        ],
         "timer_score": 90,
         "memory_score": 85,
-        "code": ["function [freq, magnitude] = fft_spectrum(signal, fs)\n    N = length(signal);\n    Y = fft(signal);\n    magnitude = abs(Y(1:N/2+1));\n    magnitude(2:end-1) = 2*magnitude(2:end-1);\n    freq = (0:(N/2)) * fs / N;\nend"]
+        "code": [
+            "function [freq, magnitude] = fft_spectrum(signal, fs)\n    N = length(signal);\n    Y = fft(signal);\n    magnitude = abs(Y(1:N/2+1));\n    magnitude(2:end-1) = 2*magnitude(2:end-1);\n    freq = (0:(N/2)) * fs / N;\nend"
+        ]
     },
     {
         "name-zh": "数值积分",
@@ -807,15 +1681,34 @@
         "description-zh": "使用梅形法对离散数据进行数值积分",
         "description-en": "Numerical integration using trapezoidal rule for discrete data",
         "dependencies": [],
-        "use_to": ["numerical", "integration"],
-        "tags": ["intermediate", "numerical", "math"],
-        "input": ["x", "y"],
-        "input_type": ["double[]", "double[]"],
-        "return": ["integral"],
-        "return_type": ["double"],
+        "use_to": [
+            "numerical",
+            "integration"
+        ],
+        "tags": [
+            "intermediate",
+            "numerical",
+            "math"
+        ],
+        "input": [
+            "x",
+            "y"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
+        "return": [
+            "integral"
+        ],
+        "return_type": [
+            "double"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function integral = numerical_integrate(x, y)\n    if length(x) ~= length(y)\n        error('x and y must have same length');\n    end\n    integral = trapz(x, y);\nend"]
+        "code": [
+            "function integral = numerical_integrate(x, y)\n    if length(x) ~= length(y)\n        error('x and y must have same length');\n    end\n    integral = trapz(x, y);\nend"
+        ]
     },
     {
         "name-zh": "线性回归",
@@ -823,15 +1716,36 @@
         "description-zh": "最小二乘法线性回归，返回系数和统计信息",
         "description-en": "Linear regression using least squares, return coefficients and statistics",
         "dependencies": [],
-        "use_to": ["regression", "statistics"],
-        "tags": ["intermediate", "statistics", "regression"],
-        "input": ["x", "y"],
-        "input_type": ["double[]", "double[]"],
-        "return": ["coeffs", "r_squared"],
-        "return_type": ["double[]", "double"],
+        "use_to": [
+            "regression",
+            "statistics"
+        ],
+        "tags": [
+            "intermediate",
+            "statistics",
+            "regression"
+        ],
+        "input": [
+            "x",
+            "y"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
+        "return": [
+            "coeffs",
+            "r_squared"
+        ],
+        "return_type": [
+            "double[]",
+            "double"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function [coeffs, r_squared] = linear_regression(x, y)\n    x = x(:); y = y(:);\n    X = [ones(length(x), 1), x];\n    coeffs = X \\ y;\n    y_pred = X * coeffs;\n    ss_res = sum((y - y_pred).^2);\n    ss_tot = sum((y - mean(y)).^2);\n    r_squared = 1 - (ss_res / ss_tot);\nend"]
+        "code": [
+            "function [coeffs, r_squared] = linear_regression(x, y)\n    x = x(:); y = y(:);\n    X = [ones(length(x), 1), x];\n    coeffs = X \\ y;\n    y_pred = X * coeffs;\n    ss_res = sum((y - y_pred).^2);\n    ss_tot = sum((y - mean(y)).^2);\n    r_squared = 1 - (ss_res / ss_tot);\nend"
+        ]
     },
     {
         "name-zh": "3D曲面绘图",
@@ -839,15 +1753,33 @@
         "description-zh": "绘制三维曲面图并设置标签",
         "description-en": "Plot 3D surface with labels and formatting",
         "dependencies": [],
-        "use_to": ["plot", "3d", "visualization"],
-        "tags": ["intermediate", "plot", "3d"],
-        "input": ["X", "Y", "Z"],
-        "input_type": ["double[][]", "double[][]", "double[][]"],
+        "use_to": [
+            "plot",
+            "3d",
+            "visualization"
+        ],
+        "tags": [
+            "intermediate",
+            "plot",
+            "3d"
+        ],
+        "input": [
+            "X",
+            "Y",
+            "Z"
+        ],
+        "input_type": [
+            "double[][]",
+            "double[][]",
+            "double[][]"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function plot_3d_surface(X, Y, Z)\n    figure;\n    surf(X, Y, Z);\n    shading interp;\n    colorbar;\n    xlabel('X');\n    ylabel('Y');\n    zlabel('Z');\n    title('3D Surface Plot');\n    grid on;\nend"]
+        "code": [
+            "function plot_3d_surface(X, Y, Z)\n    figure;\n    surf(X, Y, Z);\n    shading interp;\n    colorbar;\n    xlabel('X');\n    ylabel('Y');\n    zlabel('Z');\n    title('3D Surface Plot');\n    grid on;\nend"
+        ]
     },
     {
         "name-zh": "LU分解",
@@ -855,15 +1787,36 @@
         "description-zh": "对矩阵进行LU分解，返回L、U矩阵和置换矩阵",
         "description-en": "LU decomposition of matrix, return L, U matrices and permutation",
         "dependencies": [],
-        "use_to": ["linear algebra", "decomposition"],
-        "tags": ["intermediate", "matrix", "linear algebra"],
-        "input": ["A"],
-        "input_type": ["double[][]"],
-        "return": ["L", "U", "P"],
-        "return_type": ["double[][]", "double[][]", "double[][]"],
+        "use_to": [
+            "linear algebra",
+            "decomposition"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix",
+            "linear algebra"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "L",
+            "U",
+            "P"
+        ],
+        "return_type": [
+            "double[][]",
+            "double[][]",
+            "double[][]"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function [L, U, P] = lu_decompose(A)\n    [L, U, P] = lu(A);\nend"]
+        "code": [
+            "function [L, U, P] = lu_decompose(A)\n    [L, U, P] = lu(A);\nend"
+        ]
     },
     {
         "name-zh": "Excel文件读取",
@@ -871,15 +1824,37 @@
         "description-zh": "读取Excel文件的数据和表头",
         "description-en": "Read data and headers from Excel file",
         "dependencies": [],
-        "use_to": ["excel", "io", "data"],
-        "tags": ["intermediate", "excel", "io"],
-        "input": ["filename", "sheet"],
-        "input_type": ["char[]", "char[]"],
-        "return": ["data", "headers"],
-        "return_type": ["cell", "cell"],
+        "use_to": [
+            "excel",
+            "io",
+            "data"
+        ],
+        "tags": [
+            "intermediate",
+            "excel",
+            "io"
+        ],
+        "input": [
+            "filename",
+            "sheet"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "data",
+            "headers"
+        ],
+        "return_type": [
+            "cell",
+            "cell"
+        ],
         "timer_score": 80,
         "memory_score": 85,
-        "code": ["function [data, headers] = read_excel_file(filename, sheet)\n    if nargin < 2\n        sheet = 1;\n    end\n    [~, ~, raw] = xlsread(filename, sheet);\n    if ~isempty(raw)\n        headers = raw(1, :);\n        data = raw(2:end, :);\n    else\n        headers = {};\n        data = {};\n    end\nend"]
+        "code": [
+            "function [data, headers] = read_excel_file(filename, sheet)\n    if nargin < 2\n        sheet = 1;\n    end\n    [~, ~, raw] = xlsread(filename, sheet);\n    if ~isempty(raw)\n        headers = raw(1, :);\n        data = raw(2:end, :);\n    else\n        headers = {};\n        data = {};\n    end\nend"
+        ]
     },
     {
         "name-zh": "Excel文件写入",
@@ -887,15 +1862,39 @@
         "description-zh": "将数据写入Excel文件，可指定表头",
         "description-en": "Write data to Excel file with optional headers",
         "dependencies": [],
-        "use_to": ["excel", "io", "data"],
-        "tags": ["intermediate", "excel", "io"],
-        "input": ["filename", "data", "headers", "sheet"],
-        "input_type": ["char[]", "cell", "cell", "char[]"],
-        "return": ["success"],
-        "return_type": ["logical"],
+        "use_to": [
+            "excel",
+            "io",
+            "data"
+        ],
+        "tags": [
+            "intermediate",
+            "excel",
+            "io"
+        ],
+        "input": [
+            "filename",
+            "data",
+            "headers",
+            "sheet"
+        ],
+        "input_type": [
+            "char[]",
+            "cell",
+            "cell",
+            "char[]"
+        ],
+        "return": [
+            "success"
+        ],
+        "return_type": [
+            "logical"
+        ],
         "timer_score": 80,
         "memory_score": 85,
-        "code": ["function success = write_excel_file(filename, data, headers, sheet)\n    if nargin < 4\n        sheet = 'Sheet1';\n    end\n    try\n        if nargin >= 3 && ~isempty(headers)\n            output = [headers; data];\n        else\n            output = data;\n        end\n        xlswrite(filename, output, sheet);\n        success = true;\n    catch\n        success = false;\n    end\nend"]
+        "code": [
+            "function success = write_excel_file(filename, data, headers, sheet)\n    if nargin < 4\n        sheet = 'Sheet1';\n    end\n    try\n        if nargin >= 3 && ~isempty(headers)\n            output = [headers; data];\n        else\n            output = data;\n        end\n        xlswrite(filename, output, sheet);\n        success = true;\n    catch\n        success = false;\n    end\nend"
+        ]
     },
     {
         "name-zh": "数值微分",
@@ -903,15 +1902,34 @@
         "description-zh": "使用中心差分法计算数值微分",
         "description-en": "Calculate numerical derivative using central difference",
         "dependencies": [],
-        "use_to": ["numerical", "differentiation"],
-        "tags": ["intermediate", "numerical", "math"],
-        "input": ["x", "y"],
-        "input_type": ["double[]", "double[]"],
-        "return": ["dy_dx"],
-        "return_type": ["double[]"],
+        "use_to": [
+            "numerical",
+            "differentiation"
+        ],
+        "tags": [
+            "intermediate",
+            "numerical",
+            "math"
+        ],
+        "input": [
+            "x",
+            "y"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
+        "return": [
+            "dy_dx"
+        ],
+        "return_type": [
+            "double[]"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function dy_dx = numerical_diff(x, y)\n    n = length(x);\n    dy_dx = zeros(size(y));\n    \n    % Forward difference for first point\n    dy_dx(1) = (y(2) - y(1)) / (x(2) - x(1));\n    \n    % Central difference for middle points\n    for i = 2:n-1\n        dy_dx(i) = (y(i+1) - y(i-1)) / (x(i+1) - x(i-1));\n    end\n    \n    % Backward difference for last point\n    dy_dx(n) = (y(n) - y(n-1)) / (x(n) - x(n-1));\nend"]
+        "code": [
+            "function dy_dx = numerical_diff(x, y)\n    n = length(x);\n    dy_dx = zeros(size(y));\n    \n    % Forward difference for first point\n    dy_dx(1) = (y(2) - y(1)) / (x(2) - x(1));\n    \n    % Central difference for middle points\n    for i = 2:n-1\n        dy_dx(i) = (y(i+1) - y(i-1)) / (x(i+1) - x(i-1));\n    end\n    \n    % Backward difference for last point\n    dy_dx(n) = (y(n) - y(n-1)) / (x(n) - x(n-1));\nend"
+        ]
     },
     {
         "name-zh": "低通滤波器",
@@ -919,14 +1937,678 @@
         "description-zh": "设计并应用巴特沃斯低通滤波器",
         "description-en": "Design and apply Butterworth low-pass filter",
         "dependencies": [],
-        "use_to": ["signal processing", "filter"],
-        "tags": ["intermediate", "signal", "filter"],
-        "input": ["signal", "fc", "fs", "order"],
-        "input_type": ["double[]", "double", "double", "double"],
-        "return": ["filtered"],
-        "return_type": ["double[]"],
+        "use_to": [
+            "signal processing",
+            "filter"
+        ],
+        "tags": [
+            "intermediate",
+            "signal",
+            "filter"
+        ],
+        "input": [
+            "signal",
+            "fc",
+            "fs",
+            "order"
+        ],
+        "input_type": [
+            "double[]",
+            "double",
+            "double",
+            "double"
+        ],
+        "return": [
+            "filtered"
+        ],
+        "return_type": [
+            "double[]"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function filtered = lowpass_filter(signal, fc, fs, order)\n    if nargin < 4\n        order = 4;\n    end\n    \n    % Normalize frequency\n    wc = fc / (fs/2);\n    \n    % Design Butterworth filter\n    [b, a] = butter(order, wc, 'low');\n    \n    % Apply filter\n    filtered = filtfilt(b, a, signal);\nend"]
+        "code": [
+            "function filtered = lowpass_filter(signal, fc, fs, order)\n    if nargin < 4\n        order = 4;\n    end\n    \n    % Normalize frequency\n    wc = fc / (fs/2);\n    \n    % Design Butterworth filter\n    [b, a] = butter(order, wc, 'low');\n    \n    % Apply filter\n    filtered = filtfilt(b, a, signal);\nend"
+        ]
+    },
+    {
+        "name-zh": "向量反转",
+        "name-en": "Vector Reverse",
+        "description-zh": "反转向量的元素顺序",
+        "description-en": "Reverse the order of elements in a vector",
+        "dependencies": [],
+        "use_to": [
+            "vector",
+            "basic"
+        ],
+        "tags": [
+            "basic",
+            "vector"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "reversed"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "function r = reverse_vector(v)\n    r = v(end:-1:1);\nend"
+        ]
+    },
+    {
+        "name-zh": "向量拼接",
+        "name-en": "Vector Concatenate",
+        "description-zh": "沿指定维度拼接多个向量",
+        "description-en": "Concatenate multiple vectors along specified dimension",
+        "dependencies": [],
+        "use_to": [
+            "vector",
+            "basic"
+        ],
+        "tags": [
+            "basic",
+            "vector"
+        ],
+        "input": [
+            "varargin"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "cat"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "function c = concat_vectors(varargin)\n    c = cat(varargin{:});\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵转置",
+        "name-en": "Matrix Transpose",
+        "description-zh": "返回矩阵的转置",
+        "description-en": "Return transpose of matrix",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "basic"
+        ],
+        "tags": [
+            "basic",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "AT"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function AT = transpose_matrix(A)\n    AT = A.';\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵乘法",
+        "name-en": "Matrix Multiply",
+        "description-zh": "计算两个矩阵的乘积",
+        "description-en": "Compute product of two matrices",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "matrix",
+            "math"
+        ],
+        "input": [
+            "A",
+            "B"
+        ],
+        "input_type": [
+            "double[][]",
+            "double[][]"
+        ],
+        "return": [
+            "C"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "function C = matrix_multiply(A, B)\n    C = A * B;\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵求逆",
+        "name-en": "Matrix Inverse",
+        "description-zh": "计算矩阵的逆矩阵",
+        "description-en": "Compute inverse of matrix",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "Ainv"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "function Ainv = matrix_inverse(A)\n    Ainv = inv(A);\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵行列式",
+        "name-en": "Matrix Determinant",
+        "description-zh": "计算矩阵的行列式",
+        "description-en": "Compute determinant of matrix",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "det"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "function det = matrix_det(A)\n    det = det(A);\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵秩",
+        "name-en": "Matrix Rank",
+        "description-zh": "计算矩阵的秩",
+        "description-en": "Compute rank of matrix",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "rank"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "function r = matrix_rank(A)\n    r = rank(A);\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵特征值",
+        "name-en": "Matrix Eigenvalues",
+        "description-zh": "计算矩阵的特征值",
+        "description-en": "Compute eigenvalues of matrix",
+        "dependencies": [],
+        "use_to": [
+            "matrix",
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix"
+        ],
+        "input": [
+            "A"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "eigvals"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "function eigvals = matrix_eigenvalues(A)\n    eigvals = eig(A);\nend"
+        ]
+    },
+    {
+        "name-zh": "均值",
+        "name-en": "Mean",
+        "description-zh": "计算向量的均值",
+        "description-en": "Compute mean of vector",
+        "dependencies": [],
+        "use_to": [
+            "statistics",
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "statistics"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "mean"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function m = mean_vector(x)\n    m = mean(x(:));\nend"
+        ]
+    },
+    {
+        "name-zh": "中位数",
+        "name-en": "Median",
+        "description-zh": "计算向量的中位数",
+        "description-en": "Compute median of vector",
+        "dependencies": [],
+        "use_to": [
+            "statistics",
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "statistics"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "median"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function med = median_vector(x)\n    med = median(x(:));\nend"
+        ]
+    },
+    {
+        "name-zh": "标准差",
+        "name-en": "Standard Deviation",
+        "description-zh": "计算向量的标准差",
+        "description-en": "Compute standard deviation of vector",
+        "dependencies": [],
+        "use_to": [
+            "statistics",
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "statistics"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "std"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function s = std_vector(x)\n    s = std(x(:));\nend"
+        ]
+    },
+    {
+        "name-zh": "相关系数矩阵",
+        "name-en": "Correlation Matrix",
+        "description-zh": "计算数据矩阵的相关系数矩阵",
+        "description-en": "Compute correlation matrix of data matrix",
+        "dependencies": [],
+        "use_to": [
+            "statistics"
+        ],
+        "tags": [
+            "intermediate",
+            "statistics"
+        ],
+        "input": [
+            "X"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "R"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "function R = corr_matrix(X)\n    R = corrcoef(X);\nend"
+        ]
+    },
+    {
+        "name-zh": "协方差矩阵",
+        "name-en": "Covariance Matrix",
+        "description-zh": "计算数据矩阵的协方差矩阵",
+        "description-en": "Compute covariance matrix of data matrix",
+        "dependencies": [],
+        "use_to": [
+            "statistics"
+        ],
+        "tags": [
+            "intermediate",
+            "statistics"
+        ],
+        "input": [
+            "X"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "C"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "function C = cov_matrix(X)\n    C = cov(X);\nend"
+        ]
+    },
+    {
+        "name-zh": "FFT变换",
+        "name-en": "FFT Transform",
+        "description-zh": "对一维信号进行FFT变换",
+        "description-en": "Apply FFT to 1D signal",
+        "dependencies": [],
+        "use_to": [
+            "signal",
+            "fft"
+        ],
+        "tags": [
+            "intermediate",
+            "signal"
+        ],
+        "input": [
+            "x"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "X"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "function X = fft_transform(x)\n    X = fft(x);\nend"
+        ]
+    },
+    {
+        "name-zh": "逆FFT",
+        "name-en": "Inverse FFT",
+        "description-zh": "对频域数据进行逆FFT变换",
+        "description-en": "Apply inverse FFT to frequency domain data",
+        "dependencies": [],
+        "use_to": [
+            "signal",
+            "fft"
+        ],
+        "tags": [
+            "intermediate",
+            "signal"
+        ],
+        "input": [
+            "X"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "x"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "function x = ifft_transform(X)\n    x = ifft(X);\nend"
+        ]
+    },
+    {
+        "name-zh": "数值微分",
+        "name-en": "Numerical Differentiation",
+        "description-zh": "使用中心差分对离散数据求导",
+        "description-en": "Compute numerical derivative using central difference",
+        "dependencies": [],
+        "use_to": [
+            "numerical",
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "numerical"
+        ],
+        "input": [
+            "x",
+            "y"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
+        "return": [
+            "dydx"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "function dydx = num_diff(x, y)\n    dydx = gradient(y, x);\nend"
+        ]
+    },
+    {
+        "name-zh": "解线性方程组",
+        "name-en": "Solve Linear System",
+        "description-zh": "求解 Ax = b 的解",
+        "description-en": "Solve linear system Ax = b",
+        "dependencies": [],
+        "use_to": [
+            "linear algebra"
+        ],
+        "tags": [
+            "intermediate",
+            "matrix"
+        ],
+        "input": [
+            "A",
+            "b"
+        ],
+        "input_type": [
+            "double[][]",
+            "double[]"
+        ],
+        "return": [
+            "x"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "function x = solve_linear(A, b)\n    x = A \\ b;\nend"
+        ]
+    },
+    {
+        "name-zh": "读取文本文件",
+        "name-en": "Read Text File",
+        "description-zh": "读取文本文件内容为字符串",
+        "description-en": "Read text file content as string",
+        "dependencies": [],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "basic",
+            "file"
+        ],
+        "input": [
+            "filename"
+        ],
+        "input_type": [
+            "char[]"
+        ],
+        "return": [
+            "content"
+        ],
+        "return_type": [
+            "char[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "function content = read_text_file(filename)\n    fid = fopen(filename, 'r');\n    content = '';\n    tline = fgetl(fid);\n    while ischar(tline)\n        content = [content tline newline];\n        tline = fgetl(fid);\n    end\n    fclose(fid);\nend"
+        ]
+    },
+    {
+        "name-zh": "写入文本文件",
+        "name-en": "Write Text File",
+        "description-zh": "将字符串写入文本文件",
+        "description-en": "Write string to text file",
+        "dependencies": [],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "basic",
+            "file"
+        ],
+        "input": [
+            "filename",
+            "content"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "success"
+        ],
+        "return_type": [
+            "logical"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "function success = write_text_file(filename, content)\n    fid = fopen(filename, 'w');\n    if fid == -1, success = false; return; end\n    fprintf(fid, '%s', content);\n    fclose(fid);\n    success = true;\nend"
+        ]
+    },
+    {
+        "name-zh": "当前时间戳",
+        "name-en": "Now Timestamp",
+        "description-zh": "获取当前 Unix 时间戳（秒）",
+        "description-en": "Get current Unix timestamp in seconds",
+        "dependencies": [],
+        "use_to": [
+            "time"
+        ],
+        "tags": [
+            "basic",
+            "time"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "timestamp"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "function t = now_timestamp()\n    t = posixtime(datetime('now'));\nend"
+        ]
     }
 ]

@@ -1,454 +1,1569 @@
 [
-  {
-    "name-zh": "主函数示例",
-    "name-en": "Main Function Example",
-    "description-zh": "Ruby程序的入口函数示例，包含命令行参数处理和异常处理",
-    "description-en": "Entry point function example for Ruby programs, including command line arguments and exception handling",
-    "dependencies": ["optparse"],
-    "use_to": ["program entry", "command line"],
-    "tags": ["basic", "entry point", "command line"],
-    "input": ["args"],
-    "input_type": ["Array"],
-    "return": ["status"],
-    "return_type": ["Integer"],
-    "timer_score": 100,
-    "memory_score": 100,
-    "code": ["#!/usr/bin/env ruby\n\nrequire 'optparse'\n\n# 主程序类\nclass Main\n  def initialize\n    @options = {}\n  end\n\n  def parse_options(args)\n    OptionParser.new do |opts|\n      opts.banner = \"Usage: #{$PROGRAM_NAME} [options]\"\n\n      opts.on(\"-n\", \"--name NAME\", \"Name to greet\") do |name|\n        @options[:name] = name\n      end\n\n      opts.on(\"-h\", \"--help\", \"Show this help message\") do\n        puts opts\n        exit\n      end\n    end.parse!(args)\n  end\n\n  def run(args = ARGV)\n    # 解析命令行参数\n    parse_options(args)\n    \n    # 打印程序信息\n    puts \"Program: #{$PROGRAM_NAME}\"\n    \n    # 打印命令行参数\n    puts \"Arguments count: #{args.length}\"\n    puts \"Arguments: #{args.inspect}\"\n    \n    # 程序主要逻辑\n    name = @options[:name] || 'World'\n    puts \"Hello, #{name}!\"\n    \n    return 0\n  rescue StandardError => e\n    warn \"Error: #{e.message}\"\n    warn e.backtrace if $DEBUG\n    return 1\n  end\nend\n\n# 如果是直接运行此文件\nif __FILE__ == $PROGRAM_NAME\n  exit Main.new.run\nend"]},
-  {
-    "name-zh": "安全 JSON 解析",
-    "name-en": "JSON Decode Safe",
-    "description-zh": "将 JSON 字符串解析为 Hash/Array，失败返回 nil",
-    "description-en": "Decode JSON string into Hash/Array; return nil on error",
-    "dependencies": ["json"],
-    "use_to": ["json"],
-    "tags": ["intermediate", "json"],
-    "input": ["str"],
-    "input_type": ["String"],
-    "return": ["data"],
-    "return_type": ["Object"],
-    "timer_score": 90,
-    "memory_score": 90,
-    "code": ["require 'json'\n\ndef json_decode_safe(str)\n  JSON.parse(str)\nrescue JSON::ParserError\n  nil\nend"]
-  },
-  {
-    "name-zh": "SHA256 十六进制",
-    "name-en": "SHA256 Hex",
-    "description-zh": "计算字符串的 SHA-256 十六进制摘要",
-    "description-en": "Compute SHA-256 hex digest of a string",
-    "dependencies": ["digest"],
-    "use_to": ["hash"],
-    "tags": ["intermediate", "hash"],
-    "input": ["s"],
-    "input_type": ["String"],
-    "return": ["hex"],
-    "return_type": ["String"],
-    "timer_score": 90,
-    "memory_score": 95,
-    "code": ["require 'digest'\n\ndef sha256_hex(s)\n  Digest::SHA256.hexdigest(s)\nend"]
-  },
-  {
-    "name-zh": "读文件字符串",
-    "name-en": "Read File String",
-    "description-zh": "读取文件内容为字符串，失败返回 nil",
-    "description-en": "Read file content as string or return nil",
-    "dependencies": [],
-    "use_to": ["file", "io"],
-    "tags": ["basic", "file"],
-    "input": ["path"],
-    "input_type": ["String"],
-    "return": ["content"],
-    "return_type": ["String?"],
-    "timer_score": 80,
-    "memory_score": 85,
-    "code": ["def read_file_str(path)\n  File.read(path)\nrescue StandardError\n  nil\nend"]
-  },
-  {
-    "name-zh": "当前时间 ISO8601",
-    "name-en": "Now ISO8601",
-    "description-zh": "返回当前时间 ISO8601 字符串",
-    "description-en": "Return current time in ISO8601 format",
-    "dependencies": ["time"],
-    "use_to": ["time"],
-    "tags": ["basic", "time"],
-    "input": [],
-    "input_type": [],
-    "return": ["iso"],
-    "return_type": ["String"],
-    "timer_score": 100,
-    "memory_score": 100,
-    "code": ["def now_iso\n  Time.now.iso8601\nend"]
-  }
-  ,
-  {
-    "name-zh": "HTTP GET",
-    "name-en": "HTTP GET",
-    "description-zh": "使用 Net::HTTP 发送简单 GET 请求（失败返回 nil）",
-    "description-en": "Send simple HTTP GET using Net::HTTP; nil on failure",
-    "dependencies": ["net/http", "uri"],
-    "use_to": ["http"],
-    "tags": ["network", "basic"],
-    "input": ["url", "timeout"],
-    "input_type": ["String", "Integer"],
-    "return": ["body"],
-    "return_type": ["String?"],
-    "timer_score": 70,
-    "memory_score": 75,
-    "code": ["require 'net/http'\nrequire 'uri'\n\ndef http_get(url, timeout = 5)\n  uri = URI.parse(url)\n  http = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https', open_timeout: timeout, read_timeout: timeout)\n  req = Net::HTTP::Get.new(uri)\n  res = http.request(req)\n  res.is_a?(Net::HTTPSuccess) ? res.body : nil\nrescue StandardError\n  nil\nend"]
-  },
-  {
-    "name-zh": "正则匹配",
-    "name-en": "Regex Match",
-    "description-zh": "检查文本是否匹配给定正则模式（无效正则返回 false）",
-    "description-en": "Check if text matches regex pattern; false on invalid pattern",
-    "dependencies": [],
-    "use_to": ["regex"],
-    "tags": ["intermediate", "regex"],
-    "input": ["pattern", "text"],
-    "input_type": ["String", "String"],
-    "return": ["matched"],
-    "return_type": ["Boolean"],
-    "timer_score": 95,
-    "memory_score": 95,
-    "code": ["def regex_is_match(pattern, text)\n  !!(text =~ Regexp.new(pattern))\nrescue RegexpError\n  false\nend"]
-  },
-  {
-    "name-zh": "文件逐行枚举",
-    "name-en": "File Line Enumerator",
-    "description-zh": "返回按行读取文件的枚举器（内存友好）",
-    "description-en": "Return enumerator to iterate file lines (memory friendly)",
-    "dependencies": [],
-    "use_to": ["file", "io"],
-    "tags": ["intermediate", "file"],
-    "input": ["path"],
-    "input_type": ["String"],
-    "return": ["enum"],
-    "return_type": ["Enumerator"],
-    "timer_score": 90,
-    "memory_score": 95,
-    "code": ["def file_line_enum(path)\n  File.foreach(path)\nrescue StandardError\n  [].each\nend"]
-  },
-  {
-    "name-zh": "安全字符串截断",
-    "name-en": "Safe Truncate",
-    "description-zh": "按字符长度安全截断字符串并可添加后缀",
-    "description-en": "Safely truncate string by characters with suffix",
-    "dependencies": [],
-    "use_to": ["string"],
-    "tags": ["intermediate", "string"],
-    "input": ["s", "limit", "suffix"],
-    "input_type": ["String", "Integer", "String"],
-    "return": ["truncated"],
-    "return_type": ["String"],
-    "timer_score": 85,
-    "memory_score": 90,
-    "code": ["def utf8_truncate(s, limit, suffix = '...')\n  return s if s.nil? || s.length <= limit\n  s[0, limit] + suffix\nend"]
-  },
-  {
-    "name-zh": "Base64 编解码",
-    "name-en": "Base64 Encode/Decode",
-    "description-zh": "对字符串进行 Base64 编解码（严格模式）",
-    "description-en": "Base64 encode/decode string (strict)",
-    "dependencies": ["base64"],
-    "use_to": ["encoding"],
-    "tags": ["basic", "encoding"],
-    "input": ["s"],
-    "input_type": ["String"],
-    "return": ["enc", "dec"],
-    "return_type": ["String", "String"],
-    "timer_score": 95,
-    "memory_score": 95,
-    "code": ["require 'base64'\n\ndef b64_encode_str(s)\n  Base64.strict_encode64(s)\nend\n\ndef b64_decode_str(s)\n  Base64.strict_decode64(s)\nrescue ArgumentError\n  ''\nend"]
-  },
-  {
-    "name-zh": "符号化键(递归)",
-    "name-en": "Symbolize Keys (Deep)",
-    "description-zh": "递归地将 Hash 的字符串键转为符号键",
-    "description-en": "Recursively symbolize string keys in Hash",
-    "dependencies": [],
-    "use_to": ["hash"],
-    "tags": ["intermediate", "hash"],
-    "input": ["obj"],
-    "input_type": ["Object"],
-    "return": ["obj"],
-    "return_type": ["Object"],
-    "timer_score": 85,
-    "memory_score": 90,
-    "code": ["def symbolize_keys(obj)\n  case obj\n  when Array\n    obj.map { |v| symbolize_keys(v) }\n  when Hash\n    obj.each_with_object({}) do |(k,v), h|\n      key = k.is_a?(String) ? k.to_sym : k\n      h[key] = symbolize_keys(v)\n    end\n  else\n    obj\n  end\nend"]
-  },
-  {
-    "name-zh": "深度合并 Hash",
-    "name-en": "Deep Merge Hash",
-    "description-zh": "递归合并两个 Hash，后者覆盖前者",
-    "description-en": "Recursively merge two Hashes; right overrides left",
-    "dependencies": [],
-    "use_to": ["hash"],
-    "tags": ["intermediate", "hash"],
-    "input": ["a", "b"],
-    "input_type": ["Hash", "Hash"],
-    "return": ["merged"],
-    "return_type": ["Hash"],
-    "timer_score": 85,
-    "memory_score": 90,
-    "code": ["def deep_merge(a, b)\n  a.merge(b) do |_k, v1, v2|\n    v1.is_a?(Hash) && v2.is_a?(Hash) ? deep_merge(v1, v2) : v2\n  end\nend"]
-  },
-  {
-    "name-zh": "Slug 生成",
-    "name-en": "Slugify",
-    "description-zh": "将字符串转为 URL 友好 slug",
-    "description-en": "Convert string to URL-friendly slug",
-    "dependencies": [],
-    "use_to": ["string", "url"],
-    "tags": ["basic", "string"],
-    "input": ["s"],
-    "input_type": ["String"],
-    "return": ["slug"],
-    "return_type": ["String"],
-    "timer_score": 95,
-    "memory_score": 95,
-  "code": ["def slugify(s)\n  s.to_s.downcase\n    .gsub(/[^a-z0-9\\s-]/i, '')\n    .strip\n    .gsub(/\\s+/, '-')\n    .gsub(/-+/, '-')\nend"]
-  },
-  {
-    "name-zh": "UUID v4",
-    "name-en": "UUID v4",
-    "description-zh": "生成随机 UUID v4",
-    "description-en": "Generate random UUID v4",
-    "dependencies": ["securerandom"],
-    "use_to": ["id", "uuid"],
-    "tags": ["basic", "id"],
-    "input": [],
-    "input_type": [],
-    "return": ["uuid"],
-    "return_type": ["String"],
-    "timer_score": 100,
-    "memory_score": 100,
-    "code": ["require 'securerandom'\n\ndef uuid_v4\n  SecureRandom.uuid\nend"]
-  },
-  {
-    "name-zh": "JSON 序列化",
-    "name-en": "JSON Encode Safe",
-    "description-zh": "对象编码为 JSON 字符串，失败返回 nil",
-    "description-en": "Encode object to JSON string; return nil on failure",
-    "dependencies": ["json"],
-    "use_to": ["json"],
-    "tags": ["intermediate", "json"],
-    "input": ["obj"],
-    "input_type": ["Object"],
-    "return": ["json_str"],
-    "return_type": ["String?"],
-    "timer_score": 90,
-    "memory_score": 90,
-    "code": ["require 'json'\n\ndef json_encode_safe(obj)\n  JSON.generate(obj)\nrescue StandardError\n  nil\nend"]
-  }
-  ,
-  {
-    "name-zh": "HTTP POST(JSON)",
-    "name-en": "HTTP POST (JSON)",
-    "description-zh": "使用 Net::HTTP 发送 JSON Body 的 POST 请求(支持超时)，返回响应文本或 nil",
-    "description-en": "Net::HTTP POST with JSON body (timeouts); return body or nil",
-    "dependencies": ["net/http", "uri", "json"],
-    "use_to": ["http", "json"],
-    "tags": ["network", "http", "json"],
-    "input": ["url", "obj", "timeout"],
-    "input_type": ["String", "Object", "Integer"],
-    "return": ["text"],
-    "return_type": ["String?"],
-    "timer_score": 65,
-    "memory_score": 80,
-    "code": ["require 'net/http'\nrequire 'uri'\nrequire 'json'\n\ndef http_post_json(url, obj, timeout = 5)\n  uri = URI.parse(url)\n  req = Net::HTTP::Post.new(uri)\n  req['Content-Type'] = 'application/json'\n  req.body = JSON.dump(obj)\n  http = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https', open_timeout: timeout, read_timeout: timeout)\n  res = http.request(req)\n  res.is_a?(Net::HTTPSuccess) ? res.body : nil\nrescue StandardError\n  nil\nend"]
-  }
-  ,
-  {
-    "name-zh": "Dijkstra最短路",
-    "name-en": "Dijkstra Shortest Path",
-    "description-zh": "在非负权图上使用优先队列(简化实现)求单源最短路",
-    "description-en": "Single-source shortest path on non-negative graph using a simple priority queue",
-    "dependencies": [],
-    "use_to": ["graph", "shortest path"],
-    "tags": ["graph", "dijkstra", "algorithm"],
-    "input": ["n", "adj", "src"],
-    "input_type": ["Integer", "Array<Array<[Integer,Integer]>>", "Integer"],
-    "return": ["dist"],
-    "return_type": ["Array<Integer>"],
-    "timer_score": 85,
-    "memory_score": 90,
-    "code": ["# adj[u] = [[v, w], ...]; 0 <= u < n\n# 简易小根堆: 用数组排序替代\ndef dijkstra(n, adj, src)\n  inf = 1 << 60\n  dist = Array.new(n, inf)\n  dist[src] = 0\n  heap = [[0, src]] # [d, u]\n  until heap.empty?\n    heap.sort_by! { |x| x[0] }\n    d, u = heap.shift\n    next if d != dist[u]\n    adj[u].each do |v, w|\n      nd = d + w\n      if nd < dist[v]\n        dist[v] = nd\n        heap << [nd, v]\n      end\n    end\n  end\n  dist\nend"]
-  },
-  {
-    "name-zh": "Kruskal最小生成树",
-    "name-en": "Kruskal Minimum Spanning Tree",
-    "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
-    "description-en": "Kruskal with DSU to compute MST total weight (-1 if disconnected)",
-    "dependencies": [],
-    "use_to": ["graph", "mst"],
-    "tags": ["graph", "mst", "kruskal", "algorithm"],
-    "input": ["n", "edges"],
-    "input_type": ["Integer", "Array<[Integer,Integer,Integer]>"],
-    "return": ["mstWeight"],
-    "return_type": ["Integer"],
-    "timer_score": 85,
-    "memory_score": 92,
-    "code": ["class DSU\n  def initialize(n)\n    @p = (0...n).to_a\n    @r = Array.new(n, 0)\n  end\n  def find(x)\n    @p[x] = find(@p[x]) if @p[x] != x\n    @p[x]\n  end\n  def unite(a,b)\n    a = find(a); b = find(b)\n    return false if a == b\n    if @r[a] < @r[b]\n      a, b = b, a\n    end\n    @p[b] = a\n    @r[a] += 1 if @r[a] == @r[b]\n    true\n  end\nend\n\n# edges: [[u,v,w], ...]\ndef kruskal_mst(n, edges)\n  edges = edges.sort_by { |e| e[2] }\n  dsu = DSU.new(n)\n  total = 0\n  cnt = 0\n  edges.each do |u,v,w|\n    if dsu.unite(u,v)\n      total += w\n      cnt += 1\n      break if cnt == n-1\n    end\n  end\n  cnt == n-1 ? total : -1\nend"]
-  },
-  {
-    "name-zh": "Bellman-Ford最短路",
-    "name-en": "Bellman-Ford Shortest Path",
-    "description-zh": "允许负边权的单源最短路；检测负环",
-    "description-en": "Single-source shortest path with negative edges; detect negative cycles",
-    "dependencies": [],
-    "use_to": ["graph", "shortest path"],
-    "tags": ["graph", "bellman-ford", "algorithm"],
-    "input": ["n", "edges", "src"],
-    "input_type": ["Integer", "Array<[Integer,Integer,Integer]>", "Integer"],
-    "return": ["dist", "hasNegCycle"],
-    "return_type": ["Array<Integer>", "Boolean"],
-    "timer_score": 70,
-    "memory_score": 85,
-    "code": ["# edges: [[u,v,w], ...]\ndef bellman_ford(n, edges, src)\n  inf = (1<<60)\n  dist = Array.new(n, inf)\n  dist[src] = 0\n  (n-1).times do\n    updated = false\n    edges.each do |u,v,w|\n      next if dist[u] >= inf\n      if dist[u] + w < dist[v]\n        dist[v] = dist[u] + w\n        updated = true\n      end\n    end\n    break unless updated\n  end\n  edges.each do |u,v,w|\n    next if dist[u] >= inf\n    return [dist, true] if dist[u] + w < dist[v]\n  end\n  [dist, false]\nend"]
-  },
-  {
-    "name-zh": "拓扑排序(Kahn)",
-    "name-en": "Topological Sort (Kahn)",
-    "description-zh": "入度法Kahn算法返回拓扑序列",
-    "description-en": "Kahn algorithm using indegrees to return topo order",
-    "dependencies": [],
-    "use_to": ["graph", "topological sort"],
-    "tags": ["graph", "topo", "algorithm"],
-    "input": ["n", "adj"],
-    "input_type": ["Integer", "Array<Array<Integer>>"],
-    "return": ["order"],
-    "return_type": ["Array<Integer>"],
-    "timer_score": 88,
-    "memory_score": 92,
-    "code": ["def topo_sort_kahn(n, adj)\n  indeg = Array.new(n, 0)\n  0.upto(n-1) { |u| adj[u].each { |v| indeg[v]+=1 } }\n  q = []\n  0.upto(n-1) { |i| q << i if indeg[i] == 0 }\n  order = []\n  head = 0\n  while head < q.length\n    u = q[head]; head += 1\n    order << u\n    adj[u].each do |v|\n      indeg[v] -= 1\n      q << v if indeg[v] == 0\n    end\n  end\n  order\nend"]
-  },
-  {
-    "name-zh": "KMP字符串匹配",
-    "name-en": "KMP String Match",
-    "description-zh": "返回所有匹配起始下标",
-    "description-en": "Return all match start indices",
-    "dependencies": [],
-    "use_to": ["string", "search"],
-    "tags": ["string", "kmp", "algorithm"],
-    "input": ["text", "pattern"],
-    "input_type": ["String", "String"],
-    "return": ["indices"],
-    "return_type": ["Array<Integer>"],
-    "timer_score": 90,
-    "memory_score": 95,
-    "code": ["def kmp_search(text, pat)\n  n = text.length; m = pat.length\n  return [] if m == 0\n  lps = Array.new(m, 0)\n  i = 1; len = 0\n  while i < m\n    if pat[i] == pat[len]\n      len += 1; lps[i] = len; i += 1\n    elsif len > 0\n      len = lps[len-1]\n    else\n      lps[i] = 0; i += 1\n    end\n  end\n  res = []\n  i = 0; j = 0\n  while i < n\n    if text[i] == pat[j]\n      i += 1; j += 1\n      if j == m\n        res << (i - m)\n        j = lps[j-1]\n      end\n    elsif j > 0\n      j = lps[j-1]\n    else\n      i += 1\n    end\n  end\n  res\nend"]
-  },
-  {
-    "name-zh": "Rabin-Karp字符串匹配",
-    "name-en": "Rabin-Karp String Match",
-    "description-zh": "滚动哈希匹配，返回所有位置",
-    "description-en": "Rolling-hash matching, return all indices",
-    "dependencies": [],
-    "use_to": ["string", "search"],
-    "tags": ["string", "rabin-karp", "algorithm"],
-    "input": ["text", "pattern"],
-    "input_type": ["String", "String"],
-    "return": ["indices"],
-    "return_type": ["Array<Integer>"],
-    "timer_score": 85,
-    "memory_score": 95,
-    "code": ["def rabin_karp(text, pat)\n  n = text.length; m = pat.length\n  return [] if m == 0 || m > n\n  base = 131\n  mod = 1_000_000_007\n  powb = 1\n  (m-1).times { powb = (powb * base) % mod }\n  hpat = 0; hwin = 0\n  0.upto(m-1) do |i|\n    hpat = (hpat * base + pat.getbyte(i)) % mod\n    hwin = (hwin * base + text.getbyte(i)) % mod\n  end\n  out = []\n  0.upto(n - m) do |i|\n    if hpat == hwin && text[i, m] == pat\n      out << i\n    end\n    if i < n - m\n      hwin = (hwin - text.getbyte(i) * powb) % mod\n      hwin += mod if hwin < 0\n      hwin = (hwin * base + text.getbyte(i + m)) % mod\n    end\n  end\n  out\nend"]
-  },
-  {
-    "name-zh": "埃拉托斯特尼筛法",
-    "name-en": "Sieve of Eratosthenes",
-    "description-zh": "在[2,n]内标记素数",
-    "description-en": "Mark primes in [2,n]",
-    "dependencies": [],
-    "use_to": ["prime", "number theory"],
-    "tags": ["math", "prime", "sieve", "algorithm"],
-    "input": ["n"],
-    "input_type": ["Integer"],
-    "return": ["is_prime"],
-    "return_type": ["Array<Boolean>"],
-    "timer_score": 95,
-    "memory_score": 90,
-    "code": ["def sieve_is_prime(n)\n  is_prime = Array.new(n+1, true)\n  is_prime[0] = false if n >= 0\n  is_prime[1] = false if n >= 1\n  p = 2\n  while p * p <= n\n    if is_prime[p]\n      x = p * p\n      while x <= n\n        is_prime[x] = false\n        x += p\n      end\n    end\n    p += 1\n  end\n  is_prime\nend"]
-  },
-  {
-    "name-zh": "编辑距离(Levenshtein)",
-    "name-en": "Levenshtein Edit Distance",
-    "description-zh": "动态规划计算编辑距离(滚动数组)",
-    "description-en": "DP edit distance with rolling array",
-    "dependencies": [],
-    "use_to": ["string", "dynamic programming"],
-    "tags": ["dp", "string", "edit distance"],
-    "input": ["a", "b"],
-    "input_type": ["String", "String"],
-    "return": ["distance"],
-    "return_type": ["Integer"],
-    "timer_score": 85,
-    "memory_score": 88,
-    "code": ["def edit_distance(a, b)\n  m = a.length; n = b.length\n  prev = (0..n).to_a\n  cur = Array.new(n+1, 0)\n  (1..m).each do |i|\n    cur[0] = i\n    ai = a.getbyte(i-1)\n    (1..n).each do |j|\n      cost = (ai == b.getbyte(j-1)) ? 0 : 1\n      del = prev[j] + 1\n      ins = cur[j-1] + 1\n      rep = prev[j-1] + cost\n      cur[j] = [del, ins, rep].min\n    end\n    prev, cur = cur, prev\n  end\n  prev[n]\nend"]
-  },
-  {
-    "name-zh": "最长上升子序列O(n log n)",
-    "name-en": "LIS O(n log n)",
-    "description-zh": "耐心排序+二分求LIS长度",
-    "description-en": "Patience sorting + binary search for LIS length",
-    "dependencies": [],
-    "use_to": ["sequence", "dynamic programming"],
-    "tags": ["dp", "lis", "algorithm"],
-    "input": ["arr"],
-    "input_type": ["Array<Integer>"],
-    "return": ["length"],
-    "return_type": ["Integer"],
-    "timer_score": 90,
-    "memory_score": 92,
-    "code": ["def lis_length(a)\n  tails = []\n  a.each do |x|\n    # 下界二分找到第一个 >= x 的位置\n    l = 0; r = tails.length\n    while l < r\n      m = (l + r) / 2\n      if tails[m] >= x\n        r = m\n      else\n        l = m + 1\n      end\n    end\n    if l == tails.length\n      tails << x\n    else\n      tails[l] = x\n    end\n  end\n  tails.length\nend"]
-  },
-  {
-    "name-zh": "快速选择第k小",
-    "name-en": "Quickselect k-th",
-    "description-zh": "平均线性时间找到第k小(1<=k<=n)",
-    "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
-    "dependencies": [],
-    "use_to": ["selection", "order statistics"],
-    "tags": ["algorithm", "divide-conquer"],
-    "input": ["arr", "k"],
-    "input_type": ["Array<Integer>", "Integer"],
-    "return": ["kth"],
-    "return_type": ["Integer"],
-    "timer_score": 88,
-    "memory_score": 95,
-    "code": ["def quickselect(a, k) # k: 1-based\n  l = 0; r = a.length - 1; k -= 1\n  while l <= r\n    pivot = a[r]\n    i = l\n    (l...r).each do |j|\n      if a[j] <= pivot\n        a[i], a[j] = a[j], a[i]\n        i += 1\n      end\n    end\n    a[i], a[r] = a[r], a[i]\n    if i == k\n      return a[i]\n    elsif i > k\n      r = i - 1\n    else\n      l = i + 1\n    end\n  end\n  raise ArgumentError, 'k out of range'\nend"]
-  }
-  ,
-  {
-    "name-zh": "并查集(独立类)",
-    "name-en": "Disjoint Set Union (Standalone)",
-    "description-zh": "路径压缩+按秩合并的并查集，提供 find/union/same 接口",
-    "description-en": "DSU with path compression and union by rank; find/union/same APIs",
-    "dependencies": [],
-    "use_to": ["data structure", "union-find"],
-    "tags": ["dsu", "union-find", "data structure"],
-    "input": ["n"],
-    "input_type": ["Integer"],
-    "return": ["class"],
-    "return_type": ["DSU"],
-    "timer_score": 96,
-    "memory_score": 96,
-    "code": ["class DSU\n  def initialize(n)\n    @p = (0...n).to_a\n    @r = Array.new(n, 0)\n  end\n  def find(x)\n    @p[x] = find(@p[x]) if @p[x] != x\n    @p[x]\n  end\n  def union(a,b)\n    a = find(a); b = find(b)\n    return false if a == b\n    if @r[a] < @r[b]\n      a, b = b, a\n    end\n    @p[b] = a\n    @r[a] += 1 if @r[a] == @r[b]\n    true\n  end\n  def same(a,b)\n    find(a) == find(b)\n  end\nend\n\n# 用法: d = DSU.new(5); d.union(0,1); d.union(3,4); d.same(0,1) #=> true"]
-  }
-  ,
-  {
-    "name-zh": "LRU 缓存(哈希+双向链表)",
-    "name-en": "LRU Cache (Hash + LinkedList)",
-    "description-zh": "O(1) 时间 get/put 的最近最少使用缓存，使用双向链表维护顺序+哈希定位",
-    "description-en": "O(1) get/put LRU cache using doubly-linked list and hash map",
-    "dependencies": [],
-    "use_to": ["cache", "data structure"],
-    "tags": ["lru", "cache", "data structure"],
-    "input": ["capacity"],
-    "input_type": ["Integer"],
-    "return": ["class"],
-    "return_type": ["LRUCache"],
-    "timer_score": 85,
-    "memory_score": 85,
-    "code": ["class LRUNode\n  attr_accessor :key, :val, :prev, :next\n  def initialize(key, val)\n    @key, @val = key, val\n    @prev = @next = nil\n  end\nend\n\nclass LRUCache\n  def initialize(capacity)\n    raise ArgumentError, 'capacity must be > 0' if capacity <= 0\n    @cap = capacity\n    @map = {}\n    @head = LRUNode.new(nil, nil)\n    @tail = LRUNode.new(nil, nil)\n    @head.next = @tail\n    @tail.prev = @head\n  end\n\n  def add_front(node)\n    node.prev = @head\n    node.next = @head.next\n    @head.next.prev = node\n    @head.next = node\n  end\n\n  def remove(node)\n    node.prev.next = node.next\n    node.next.prev = node.prev\n    node.prev = node.next = nil\n  end\n\n  def move_front(node)\n    remove(node)\n    add_front(node)\n  end\n\n  def pop_tail\n    node = @tail.prev\n    return nil if node.equal?(@head)\n    remove(node)\n    node\n  end\n\n  def get(key)\n    node = @map[key]\n    return nil unless node\n    move_front(node)\n    node.val\n  end\n\n  def put(key, value)\n    if (node = @map[key])\n      node.val = value\n      move_front(node)\n      return\n    end\n    node = LRUNode.new(key, value)\n    @map[key] = node\n    add_front(node)\n    if @map.length > @cap\n      old = pop_tail\n      @map.delete(old.key) if old && !old.key.nil?\n    end\n  end\nend\n\n# 用法: lru = LRUCache.new(2); lru.put(:a,1); lru.put(:b,2); lru.get(:a); lru.put(:c,3); lru.get(:b) #=> nil"]
-  }
+    {
+        "name-zh": "主函数示例",
+        "name-en": "Main Function Example",
+        "description-zh": "Ruby程序的入口函数示例，包含命令行参数处理和异常处理",
+        "description-en": "Entry point function example for Ruby programs, including command line arguments and exception handling",
+        "dependencies": [
+            "optparse"
+        ],
+        "use_to": [
+            "program entry",
+            "command line"
+        ],
+        "tags": [
+            "basic",
+            "entry point",
+            "command line"
+        ],
+        "input": [
+            "args"
+        ],
+        "input_type": [
+            "Array"
+        ],
+        "return": [
+            "status"
+        ],
+        "return_type": [
+            "Integer"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "#!/usr/bin/env ruby\n\nrequire 'optparse'\n\n# 主程序类\nclass Main\n  def initialize\n    @options = {}\n  end\n\n  def parse_options(args)\n    OptionParser.new do |opts|\n      opts.banner = \"Usage: #{$PROGRAM_NAME} [options]\"\n\n      opts.on(\"-n\", \"--name NAME\", \"Name to greet\") do |name|\n        @options[:name] = name\n      end\n\n      opts.on(\"-h\", \"--help\", \"Show this help message\") do\n        puts opts\n        exit\n      end\n    end.parse!(args)\n  end\n\n  def run(args = ARGV)\n    # 解析命令行参数\n    parse_options(args)\n    \n    # 打印程序信息\n    puts \"Program: #{$PROGRAM_NAME}\"\n    \n    # 打印命令行参数\n    puts \"Arguments count: #{args.length}\"\n    puts \"Arguments: #{args.inspect}\"\n    \n    # 程序主要逻辑\n    name = @options[:name] || 'World'\n    puts \"Hello, #{name}!\"\n    \n    return 0\n  rescue StandardError => e\n    warn \"Error: #{e.message}\"\n    warn e.backtrace if $DEBUG\n    return 1\n  end\nend\n\n# 如果是直接运行此文件\nif __FILE__ == $PROGRAM_NAME\n  exit Main.new.run\nend"
+        ]
+    },
+    {
+        "name-zh": "安全 JSON 解析",
+        "name-en": "JSON Decode Safe",
+        "description-zh": "将 JSON 字符串解析为 Hash/Array，失败返回 nil",
+        "description-en": "Decode JSON string into Hash/Array; return nil on error",
+        "dependencies": [
+            "json"
+        ],
+        "use_to": [
+            "json"
+        ],
+        "tags": [
+            "intermediate",
+            "json"
+        ],
+        "input": [
+            "str"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "data"
+        ],
+        "return_type": [
+            "Object"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "require 'json'\n\ndef json_decode_safe(str)\n  JSON.parse(str)\nrescue JSON::ParserError\n  nil\nend"
+        ]
+    },
+    {
+        "name-zh": "SHA256 十六进制",
+        "name-en": "SHA256 Hex",
+        "description-zh": "计算字符串的 SHA-256 十六进制摘要",
+        "description-en": "Compute SHA-256 hex digest of a string",
+        "dependencies": [
+            "digest"
+        ],
+        "use_to": [
+            "hash"
+        ],
+        "tags": [
+            "intermediate",
+            "hash"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "hex"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "require 'digest'\n\ndef sha256_hex(s)\n  Digest::SHA256.hexdigest(s)\nend"
+        ]
+    },
+    {
+        "name-zh": "读文件字符串",
+        "name-en": "Read File String",
+        "description-zh": "读取文件内容为字符串，失败返回 nil",
+        "description-en": "Read file content as string or return nil",
+        "dependencies": [],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "basic",
+            "file"
+        ],
+        "input": [
+            "path"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "content"
+        ],
+        "return_type": [
+            "String?"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "def read_file_str(path)\n  File.read(path)\nrescue StandardError\n  nil\nend"
+        ]
+    },
+    {
+        "name-zh": "当前时间 ISO8601",
+        "name-en": "Now ISO8601",
+        "description-zh": "返回当前时间 ISO8601 字符串",
+        "description-en": "Return current time in ISO8601 format",
+        "dependencies": [
+            "time"
+        ],
+        "use_to": [
+            "time"
+        ],
+        "tags": [
+            "basic",
+            "time"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "iso"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "def now_iso\n  Time.now.iso8601\nend"
+        ]
+    },
+    {
+        "name-zh": "HTTP GET",
+        "name-en": "HTTP GET",
+        "description-zh": "使用 Net::HTTP 发送简单 GET 请求（失败返回 nil）",
+        "description-en": "Send simple HTTP GET using Net::HTTP; nil on failure",
+        "dependencies": [
+            "net/http",
+            "uri"
+        ],
+        "use_to": [
+            "http"
+        ],
+        "tags": [
+            "network",
+            "basic"
+        ],
+        "input": [
+            "url",
+            "timeout"
+        ],
+        "input_type": [
+            "String",
+            "Integer"
+        ],
+        "return": [
+            "body"
+        ],
+        "return_type": [
+            "String?"
+        ],
+        "timer_score": 70,
+        "memory_score": 75,
+        "code": [
+            "require 'net/http'\nrequire 'uri'\n\ndef http_get(url, timeout = 5)\n  uri = URI.parse(url)\n  http = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https', open_timeout: timeout, read_timeout: timeout)\n  req = Net::HTTP::Get.new(uri)\n  res = http.request(req)\n  res.is_a?(Net::HTTPSuccess) ? res.body : nil\nrescue StandardError\n  nil\nend"
+        ]
+    },
+    {
+        "name-zh": "正则匹配",
+        "name-en": "Regex Match",
+        "description-zh": "检查文本是否匹配给定正则模式（无效正则返回 false）",
+        "description-en": "Check if text matches regex pattern; false on invalid pattern",
+        "dependencies": [],
+        "use_to": [
+            "regex"
+        ],
+        "tags": [
+            "intermediate",
+            "regex"
+        ],
+        "input": [
+            "pattern",
+            "text"
+        ],
+        "input_type": [
+            "String",
+            "String"
+        ],
+        "return": [
+            "matched"
+        ],
+        "return_type": [
+            "Boolean"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "def regex_is_match(pattern, text)\n  !!(text =~ Regexp.new(pattern))\nrescue RegexpError\n  false\nend"
+        ]
+    },
+    {
+        "name-zh": "文件逐行枚举",
+        "name-en": "File Line Enumerator",
+        "description-zh": "返回按行读取文件的枚举器（内存友好）",
+        "description-en": "Return enumerator to iterate file lines (memory friendly)",
+        "dependencies": [],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "intermediate",
+            "file"
+        ],
+        "input": [
+            "path"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "enum"
+        ],
+        "return_type": [
+            "Enumerator"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "def file_line_enum(path)\n  File.foreach(path)\nrescue StandardError\n  [].each\nend"
+        ]
+    },
+    {
+        "name-zh": "安全字符串截断",
+        "name-en": "Safe Truncate",
+        "description-zh": "按字符长度安全截断字符串并可添加后缀",
+        "description-en": "Safely truncate string by characters with suffix",
+        "dependencies": [],
+        "use_to": [
+            "string"
+        ],
+        "tags": [
+            "intermediate",
+            "string"
+        ],
+        "input": [
+            "s",
+            "limit",
+            "suffix"
+        ],
+        "input_type": [
+            "String",
+            "Integer",
+            "String"
+        ],
+        "return": [
+            "truncated"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "def utf8_truncate(s, limit, suffix = '...')\n  return s if s.nil? || s.length <= limit\n  s[0, limit] + suffix\nend"
+        ]
+    },
+    {
+        "name-zh": "Base64 编解码",
+        "name-en": "Base64 Encode/Decode",
+        "description-zh": "对字符串进行 Base64 编解码（严格模式）",
+        "description-en": "Base64 encode/decode string (strict)",
+        "dependencies": [
+            "base64"
+        ],
+        "use_to": [
+            "encoding"
+        ],
+        "tags": [
+            "basic",
+            "encoding"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "enc",
+            "dec"
+        ],
+        "return_type": [
+            "String",
+            "String"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "require 'base64'\n\ndef b64_encode_str(s)\n  Base64.strict_encode64(s)\nend\n\ndef b64_decode_str(s)\n  Base64.strict_decode64(s)\nrescue ArgumentError\n  ''\nend"
+        ]
+    },
+    {
+        "name-zh": "符号化键(递归)",
+        "name-en": "Symbolize Keys (Deep)",
+        "description-zh": "递归地将 Hash 的字符串键转为符号键",
+        "description-en": "Recursively symbolize string keys in Hash",
+        "dependencies": [],
+        "use_to": [
+            "hash"
+        ],
+        "tags": [
+            "intermediate",
+            "hash"
+        ],
+        "input": [
+            "obj"
+        ],
+        "input_type": [
+            "Object"
+        ],
+        "return": [
+            "obj"
+        ],
+        "return_type": [
+            "Object"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "def symbolize_keys(obj)\n  case obj\n  when Array\n    obj.map { |v| symbolize_keys(v) }\n  when Hash\n    obj.each_with_object({}) do |(k,v), h|\n      key = k.is_a?(String) ? k.to_sym : k\n      h[key] = symbolize_keys(v)\n    end\n  else\n    obj\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "深度合并 Hash",
+        "name-en": "Deep Merge Hash",
+        "description-zh": "递归合并两个 Hash，后者覆盖前者",
+        "description-en": "Recursively merge two Hashes; right overrides left",
+        "dependencies": [],
+        "use_to": [
+            "hash"
+        ],
+        "tags": [
+            "intermediate",
+            "hash"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "Hash",
+            "Hash"
+        ],
+        "return": [
+            "merged"
+        ],
+        "return_type": [
+            "Hash"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "def deep_merge(a, b)\n  a.merge(b) do |_k, v1, v2|\n    v1.is_a?(Hash) && v2.is_a?(Hash) ? deep_merge(v1, v2) : v2\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "Slug 生成",
+        "name-en": "Slugify",
+        "description-zh": "将字符串转为 URL 友好 slug",
+        "description-en": "Convert string to URL-friendly slug",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "url"
+        ],
+        "tags": [
+            "basic",
+            "string"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "slug"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "def slugify(s)\n  s.to_s.downcase\n    .gsub(/[^a-z0-9\\s-]/i, '')\n    .strip\n    .gsub(/\\s+/, '-')\n    .gsub(/-+/, '-')\nend"
+        ]
+    },
+    {
+        "name-zh": "UUID v4",
+        "name-en": "UUID v4",
+        "description-zh": "生成随机 UUID v4",
+        "description-en": "Generate random UUID v4",
+        "dependencies": [
+            "securerandom"
+        ],
+        "use_to": [
+            "id",
+            "uuid"
+        ],
+        "tags": [
+            "basic",
+            "id"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "uuid"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "require 'securerandom'\n\ndef uuid_v4\n  SecureRandom.uuid\nend"
+        ]
+    },
+    {
+        "name-zh": "JSON 序列化",
+        "name-en": "JSON Encode Safe",
+        "description-zh": "对象编码为 JSON 字符串，失败返回 nil",
+        "description-en": "Encode object to JSON string; return nil on failure",
+        "dependencies": [
+            "json"
+        ],
+        "use_to": [
+            "json"
+        ],
+        "tags": [
+            "intermediate",
+            "json"
+        ],
+        "input": [
+            "obj"
+        ],
+        "input_type": [
+            "Object"
+        ],
+        "return": [
+            "json_str"
+        ],
+        "return_type": [
+            "String?"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "require 'json'\n\ndef json_encode_safe(obj)\n  JSON.generate(obj)\nrescue StandardError\n  nil\nend"
+        ]
+    },
+    {
+        "name-zh": "HTTP POST(JSON)",
+        "name-en": "HTTP POST (JSON)",
+        "description-zh": "使用 Net::HTTP 发送 JSON Body 的 POST 请求(支持超时)，返回响应文本或 nil",
+        "description-en": "Net::HTTP POST with JSON body (timeouts); return body or nil",
+        "dependencies": [
+            "net/http",
+            "uri",
+            "json"
+        ],
+        "use_to": [
+            "http",
+            "json"
+        ],
+        "tags": [
+            "network",
+            "http",
+            "json"
+        ],
+        "input": [
+            "url",
+            "obj",
+            "timeout"
+        ],
+        "input_type": [
+            "String",
+            "Object",
+            "Integer"
+        ],
+        "return": [
+            "text"
+        ],
+        "return_type": [
+            "String?"
+        ],
+        "timer_score": 65,
+        "memory_score": 80,
+        "code": [
+            "require 'net/http'\nrequire 'uri'\nrequire 'json'\n\ndef http_post_json(url, obj, timeout = 5)\n  uri = URI.parse(url)\n  req = Net::HTTP::Post.new(uri)\n  req['Content-Type'] = 'application/json'\n  req.body = JSON.dump(obj)\n  http = Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https', open_timeout: timeout, read_timeout: timeout)\n  res = http.request(req)\n  res.is_a?(Net::HTTPSuccess) ? res.body : nil\nrescue StandardError\n  nil\nend"
+        ]
+    },
+    {
+        "name-zh": "Dijkstra最短路",
+        "name-en": "Dijkstra Shortest Path",
+        "description-zh": "在非负权图上使用优先队列(简化实现)求单源最短路",
+        "description-en": "Single-source shortest path on non-negative graph using a simple priority queue",
+        "dependencies": [],
+        "use_to": [
+            "graph",
+            "shortest path"
+        ],
+        "tags": [
+            "graph",
+            "dijkstra",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "adj",
+            "src"
+        ],
+        "input_type": [
+            "Integer",
+            "Array<Array<[Integer,Integer]>>",
+            "Integer"
+        ],
+        "return": [
+            "dist"
+        ],
+        "return_type": [
+            "Array<Integer>"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "# adj[u] = [[v, w], ...]; 0 <= u < n\n# 简易小根堆: 用数组排序替代\ndef dijkstra(n, adj, src)\n  inf = 1 << 60\n  dist = Array.new(n, inf)\n  dist[src] = 0\n  heap = [[0, src]] # [d, u]\n  until heap.empty?\n    heap.sort_by! { |x| x[0] }\n    d, u = heap.shift\n    next if d != dist[u]\n    adj[u].each do |v, w|\n      nd = d + w\n      if nd < dist[v]\n        dist[v] = nd\n        heap << [nd, v]\n      end\n    end\n  end\n  dist\nend"
+        ]
+    },
+    {
+        "name-zh": "Kruskal最小生成树",
+        "name-en": "Kruskal Minimum Spanning Tree",
+        "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
+        "description-en": "Kruskal with DSU to compute MST total weight (-1 if disconnected)",
+        "dependencies": [],
+        "use_to": [
+            "graph",
+            "mst"
+        ],
+        "tags": [
+            "graph",
+            "mst",
+            "kruskal",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "edges"
+        ],
+        "input_type": [
+            "Integer",
+            "Array<[Integer,Integer,Integer]>"
+        ],
+        "return": [
+            "mstWeight"
+        ],
+        "return_type": [
+            "Integer"
+        ],
+        "timer_score": 85,
+        "memory_score": 92,
+        "code": [
+            "class DSU\n  def initialize(n)\n    @p = (0...n).to_a\n    @r = Array.new(n, 0)\n  end\n  def find(x)\n    @p[x] = find(@p[x]) if @p[x] != x\n    @p[x]\n  end\n  def unite(a,b)\n    a = find(a); b = find(b)\n    return false if a == b\n    if @r[a] < @r[b]\n      a, b = b, a\n    end\n    @p[b] = a\n    @r[a] += 1 if @r[a] == @r[b]\n    true\n  end\nend\n\n# edges: [[u,v,w], ...]\ndef kruskal_mst(n, edges)\n  edges = edges.sort_by { |e| e[2] }\n  dsu = DSU.new(n)\n  total = 0\n  cnt = 0\n  edges.each do |u,v,w|\n    if dsu.unite(u,v)\n      total += w\n      cnt += 1\n      break if cnt == n-1\n    end\n  end\n  cnt == n-1 ? total : -1\nend"
+        ]
+    },
+    {
+        "name-zh": "Bellman-Ford最短路",
+        "name-en": "Bellman-Ford Shortest Path",
+        "description-zh": "允许负边权的单源最短路；检测负环",
+        "description-en": "Single-source shortest path with negative edges; detect negative cycles",
+        "dependencies": [],
+        "use_to": [
+            "graph",
+            "shortest path"
+        ],
+        "tags": [
+            "graph",
+            "bellman-ford",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "edges",
+            "src"
+        ],
+        "input_type": [
+            "Integer",
+            "Array<[Integer,Integer,Integer]>",
+            "Integer"
+        ],
+        "return": [
+            "dist",
+            "hasNegCycle"
+        ],
+        "return_type": [
+            "Array<Integer>",
+            "Boolean"
+        ],
+        "timer_score": 70,
+        "memory_score": 85,
+        "code": [
+            "# edges: [[u,v,w], ...]\ndef bellman_ford(n, edges, src)\n  inf = (1<<60)\n  dist = Array.new(n, inf)\n  dist[src] = 0\n  (n-1).times do\n    updated = false\n    edges.each do |u,v,w|\n      next if dist[u] >= inf\n      if dist[u] + w < dist[v]\n        dist[v] = dist[u] + w\n        updated = true\n      end\n    end\n    break unless updated\n  end\n  edges.each do |u,v,w|\n    next if dist[u] >= inf\n    return [dist, true] if dist[u] + w < dist[v]\n  end\n  [dist, false]\nend"
+        ]
+    },
+    {
+        "name-zh": "拓扑排序(Kahn)",
+        "name-en": "Topological Sort (Kahn)",
+        "description-zh": "入度法Kahn算法返回拓扑序列",
+        "description-en": "Kahn algorithm using indegrees to return topo order",
+        "dependencies": [],
+        "use_to": [
+            "graph",
+            "topological sort"
+        ],
+        "tags": [
+            "graph",
+            "topo",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "adj"
+        ],
+        "input_type": [
+            "Integer",
+            "Array<Array<Integer>>"
+        ],
+        "return": [
+            "order"
+        ],
+        "return_type": [
+            "Array<Integer>"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "def topo_sort_kahn(n, adj)\n  indeg = Array.new(n, 0)\n  0.upto(n-1) { |u| adj[u].each { |v| indeg[v]+=1 } }\n  q = []\n  0.upto(n-1) { |i| q << i if indeg[i] == 0 }\n  order = []\n  head = 0\n  while head < q.length\n    u = q[head]; head += 1\n    order << u\n    adj[u].each do |v|\n      indeg[v] -= 1\n      q << v if indeg[v] == 0\n    end\n  end\n  order\nend"
+        ]
+    },
+    {
+        "name-zh": "KMP字符串匹配",
+        "name-en": "KMP String Match",
+        "description-zh": "返回所有匹配起始下标",
+        "description-en": "Return all match start indices",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "kmp",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "String",
+            "String"
+        ],
+        "return": [
+            "indices"
+        ],
+        "return_type": [
+            "Array<Integer>"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "def kmp_search(text, pat)\n  n = text.length; m = pat.length\n  return [] if m == 0\n  lps = Array.new(m, 0)\n  i = 1; len = 0\n  while i < m\n    if pat[i] == pat[len]\n      len += 1; lps[i] = len; i += 1\n    elsif len > 0\n      len = lps[len-1]\n    else\n      lps[i] = 0; i += 1\n    end\n  end\n  res = []\n  i = 0; j = 0\n  while i < n\n    if text[i] == pat[j]\n      i += 1; j += 1\n      if j == m\n        res << (i - m)\n        j = lps[j-1]\n      end\n    elsif j > 0\n      j = lps[j-1]\n    else\n      i += 1\n    end\n  end\n  res\nend"
+        ]
+    },
+    {
+        "name-zh": "Rabin-Karp字符串匹配",
+        "name-en": "Rabin-Karp String Match",
+        "description-zh": "滚动哈希匹配，返回所有位置",
+        "description-en": "Rolling-hash matching, return all indices",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "rabin-karp",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "String",
+            "String"
+        ],
+        "return": [
+            "indices"
+        ],
+        "return_type": [
+            "Array<Integer>"
+        ],
+        "timer_score": 85,
+        "memory_score": 95,
+        "code": [
+            "def rabin_karp(text, pat)\n  n = text.length; m = pat.length\n  return [] if m == 0 || m > n\n  base = 131\n  mod = 1_000_000_007\n  powb = 1\n  (m-1).times { powb = (powb * base) % mod }\n  hpat = 0; hwin = 0\n  0.upto(m-1) do |i|\n    hpat = (hpat * base + pat.getbyte(i)) % mod\n    hwin = (hwin * base + text.getbyte(i)) % mod\n  end\n  out = []\n  0.upto(n - m) do |i|\n    if hpat == hwin && text[i, m] == pat\n      out << i\n    end\n    if i < n - m\n      hwin = (hwin - text.getbyte(i) * powb) % mod\n      hwin += mod if hwin < 0\n      hwin = (hwin * base + text.getbyte(i + m)) % mod\n    end\n  end\n  out\nend"
+        ]
+    },
+    {
+        "name-zh": "埃拉托斯特尼筛法",
+        "name-en": "Sieve of Eratosthenes",
+        "description-zh": "在[2,n]内标记素数",
+        "description-en": "Mark primes in [2,n]",
+        "dependencies": [],
+        "use_to": [
+            "prime",
+            "number theory"
+        ],
+        "tags": [
+            "math",
+            "prime",
+            "sieve",
+            "algorithm"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "Integer"
+        ],
+        "return": [
+            "is_prime"
+        ],
+        "return_type": [
+            "Array<Boolean>"
+        ],
+        "timer_score": 95,
+        "memory_score": 90,
+        "code": [
+            "def sieve_is_prime(n)\n  is_prime = Array.new(n+1, true)\n  is_prime[0] = false if n >= 0\n  is_prime[1] = false if n >= 1\n  p = 2\n  while p * p <= n\n    if is_prime[p]\n      x = p * p\n      while x <= n\n        is_prime[x] = false\n        x += p\n      end\n    end\n    p += 1\n  end\n  is_prime\nend"
+        ]
+    },
+    {
+        "name-zh": "编辑距离(Levenshtein)",
+        "name-en": "Levenshtein Edit Distance",
+        "description-zh": "动态规划计算编辑距离(滚动数组)",
+        "description-en": "DP edit distance with rolling array",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "dynamic programming"
+        ],
+        "tags": [
+            "dp",
+            "string",
+            "edit distance"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "String",
+            "String"
+        ],
+        "return": [
+            "distance"
+        ],
+        "return_type": [
+            "Integer"
+        ],
+        "timer_score": 85,
+        "memory_score": 88,
+        "code": [
+            "def edit_distance(a, b)\n  m = a.length; n = b.length\n  prev = (0..n).to_a\n  cur = Array.new(n+1, 0)\n  (1..m).each do |i|\n    cur[0] = i\n    ai = a.getbyte(i-1)\n    (1..n).each do |j|\n      cost = (ai == b.getbyte(j-1)) ? 0 : 1\n      del = prev[j] + 1\n      ins = cur[j-1] + 1\n      rep = prev[j-1] + cost\n      cur[j] = [del, ins, rep].min\n    end\n    prev, cur = cur, prev\n  end\n  prev[n]\nend"
+        ]
+    },
+    {
+        "name-zh": "最长上升子序列O(n log n)",
+        "name-en": "LIS O(n log n)",
+        "description-zh": "耐心排序+二分求LIS长度",
+        "description-en": "Patience sorting + binary search for LIS length",
+        "dependencies": [],
+        "use_to": [
+            "sequence",
+            "dynamic programming"
+        ],
+        "tags": [
+            "dp",
+            "lis",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "Array<Integer>"
+        ],
+        "return": [
+            "length"
+        ],
+        "return_type": [
+            "Integer"
+        ],
+        "timer_score": 90,
+        "memory_score": 92,
+        "code": [
+            "def lis_length(a)\n  tails = []\n  a.each do |x|\n    # 下界二分找到第一个 >= x 的位置\n    l = 0; r = tails.length\n    while l < r\n      m = (l + r) / 2\n      if tails[m] >= x\n        r = m\n      else\n        l = m + 1\n      end\n    end\n    if l == tails.length\n      tails << x\n    else\n      tails[l] = x\n    end\n  end\n  tails.length\nend"
+        ]
+    },
+    {
+        "name-zh": "快速选择第k小",
+        "name-en": "Quickselect k-th",
+        "description-zh": "平均线性时间找到第k小(1<=k<=n)",
+        "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
+        "dependencies": [],
+        "use_to": [
+            "selection",
+            "order statistics"
+        ],
+        "tags": [
+            "algorithm",
+            "divide-conquer"
+        ],
+        "input": [
+            "arr",
+            "k"
+        ],
+        "input_type": [
+            "Array<Integer>",
+            "Integer"
+        ],
+        "return": [
+            "kth"
+        ],
+        "return_type": [
+            "Integer"
+        ],
+        "timer_score": 88,
+        "memory_score": 95,
+        "code": [
+            "def quickselect(a, k) # k: 1-based\n  l = 0; r = a.length - 1; k -= 1\n  while l <= r\n    pivot = a[r]\n    i = l\n    (l...r).each do |j|\n      if a[j] <= pivot\n        a[i], a[j] = a[j], a[i]\n        i += 1\n      end\n    end\n    a[i], a[r] = a[r], a[i]\n    if i == k\n      return a[i]\n    elsif i > k\n      r = i - 1\n    else\n      l = i + 1\n    end\n  end\n  raise ArgumentError, 'k out of range'\nend"
+        ]
+    },
+    {
+        "name-zh": "并查集(独立类)",
+        "name-en": "Disjoint Set Union (Standalone)",
+        "description-zh": "路径压缩+按秩合并的并查集，提供 find/union/same 接口",
+        "description-en": "DSU with path compression and union by rank; find/union/same APIs",
+        "dependencies": [],
+        "use_to": [
+            "data structure",
+            "union-find"
+        ],
+        "tags": [
+            "dsu",
+            "union-find",
+            "data structure"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "Integer"
+        ],
+        "return": [
+            "class"
+        ],
+        "return_type": [
+            "DSU"
+        ],
+        "timer_score": 96,
+        "memory_score": 96,
+        "code": [
+            "class DSU\n  def initialize(n)\n    @p = (0...n).to_a\n    @r = Array.new(n, 0)\n  end\n  def find(x)\n    @p[x] = find(@p[x]) if @p[x] != x\n    @p[x]\n  end\n  def union(a,b)\n    a = find(a); b = find(b)\n    return false if a == b\n    if @r[a] < @r[b]\n      a, b = b, a\n    end\n    @p[b] = a\n    @r[a] += 1 if @r[a] == @r[b]\n    true\n  end\n  def same(a,b)\n    find(a) == find(b)\n  end\nend\n\n# 用法: d = DSU.new(5); d.union(0,1); d.union(3,4); d.same(0,1) #=> true"
+        ]
+    },
+    {
+        "name-zh": "LRU 缓存(哈希+双向链表)",
+        "name-en": "LRU Cache (Hash + LinkedList)",
+        "description-zh": "O(1) 时间 get/put 的最近最少使用缓存，使用双向链表维护顺序+哈希定位",
+        "description-en": "O(1) get/put LRU cache using doubly-linked list and hash map",
+        "dependencies": [],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "Integer"
+        ],
+        "return": [
+            "class"
+        ],
+        "return_type": [
+            "LRUCache"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "class LRUNode\n  attr_accessor :key, :val, :prev, :next\n  def initialize(key, val)\n    @key, @val = key, val\n    @prev = @next = nil\n  end\nend\n\nclass LRUCache\n  def initialize(capacity)\n    raise ArgumentError, 'capacity must be > 0' if capacity <= 0\n    @cap = capacity\n    @map = {}\n    @head = LRUNode.new(nil, nil)\n    @tail = LRUNode.new(nil, nil)\n    @head.next = @tail\n    @tail.prev = @head\n  end\n\n  def add_front(node)\n    node.prev = @head\n    node.next = @head.next\n    @head.next.prev = node\n    @head.next = node\n  end\n\n  def remove(node)\n    node.prev.next = node.next\n    node.next.prev = node.prev\n    node.prev = node.next = nil\n  end\n\n  def move_front(node)\n    remove(node)\n    add_front(node)\n  end\n\n  def pop_tail\n    node = @tail.prev\n    return nil if node.equal?(@head)\n    remove(node)\n    node\n  end\n\n  def get(key)\n    node = @map[key]\n    return nil unless node\n    move_front(node)\n    node.val\n  end\n\n  def put(key, value)\n    if (node = @map[key])\n      node.val = value\n      move_front(node)\n      return\n    end\n    node = LRUNode.new(key, value)\n    @map[key] = node\n    add_front(node)\n    if @map.length > @cap\n      old = pop_tail\n      @map.delete(old.key) if old && !old.key.nil?\n    end\n  end\nend\n\n# 用法: lru = LRUCache.new(2); lru.put(:a,1); lru.put(:b,2); lru.get(:a); lru.put(:c,3); lru.get(:b) #=> nil"
+        ]
+    },
+    {
+        "name-zh": "文件写入",
+        "name-en": "File Write",
+        "description-zh": "将字符串写入文件",
+        "description-en": "Write string to file",
+        "dependencies": [],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "basic",
+            "file"
+        ],
+        "input": [
+            "path",
+            "content"
+        ],
+        "input_type": [
+            "String",
+            "String"
+        ],
+        "return": [
+            "bytes"
+        ],
+        "return_type": [
+            "Integer"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "def file_write(path,content)\n  File.write(path,content)\nend"
+        ]
+    },
+    {
+        "name-zh": "文件追加",
+        "name-en": "File Append",
+        "description-zh": "将字符串追加到文件末尾",
+        "description-en": "Append string to end of file",
+        "dependencies": [],
+        "use_to": [
+            "file",
+            "io"
+        ],
+        "tags": [
+            "basic",
+            "file"
+        ],
+        "input": [
+            "path",
+            "content"
+        ],
+        "input_type": [
+            "String",
+            "String"
+        ],
+        "return": [
+            "bytes"
+        ],
+        "return_type": [
+            "Integer"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "def file_append(path,content)\n  File.open(path,'a'){|f| f.write(content)}\nend"
+        ]
+    },
+    {
+        "name-zh": "文件存在检查",
+        "name-en": "File Exists",
+        "description-zh": "检查文件是否存在",
+        "description-en": "Check if file exists",
+        "dependencies": [],
+        "use_to": [
+            "file"
+        ],
+        "tags": [
+            "basic",
+            "file"
+        ],
+        "input": [
+            "path"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "exists"
+        ],
+        "return_type": [
+            "bool"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "def file_exists?(path)\n  File.exist?(path)\nend"
+        ]
+    },
+    {
+        "name-zh": "目录创建",
+        "name-en": "Create Directory",
+        "description-zh": "递归创建目录",
+        "description-en": "Create directory recursively",
+        "dependencies": [],
+        "use_to": [
+            "file",
+            "dir"
+        ],
+        "tags": [
+            "basic",
+            "file"
+        ],
+        "input": [
+            "path"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "dir"
+        ],
+        "return_type": [
+            "Dir"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "def create_dir(path)\n  FileUtils.mkdir_p(path)\nend"
+        ]
+    },
+    {
+        "name-zh": "遍历目录",
+        "name-en": "Directory Each",
+        "description-zh": "遍历目录下所有文件路径",
+        "description-en": "Iterate all file paths in directory",
+        "dependencies": [],
+        "use_to": [
+            "file",
+            "dir"
+        ],
+        "tags": [
+            "basic",
+            "file"
+        ],
+        "input": [
+            "dir_path"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "files"
+        ],
+        "return_type": [
+            "Array"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "def dir_each(dir_path)\n  Dir.glob(File.join(dir_path,'*'))\nend"
+        ]
+    },
+    {
+        "name-zh": "数组过滤",
+        "name-en": "Array Select",
+        "description-zh": "根据条件过滤数组元素",
+        "description-en": "Filter array elements by condition",
+        "dependencies": [],
+        "use_to": [
+            "array"
+        ],
+        "tags": [
+            "basic",
+            "array"
+        ],
+        "input": [
+            "arr",
+            "block"
+        ],
+        "input_type": [
+            "Array"
+        ],
+        "return": [
+            "filtered"
+        ],
+        "return_type": [
+            "Array"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "def array_select(arr,&block)\n  arr.select(&block)\nend"
+        ]
+    },
+    {
+        "name-zh": "数组映射",
+        "name-en": "Array Map",
+        "description-zh": "对数组元素执行转换",
+        "description-en": "Map array elements through block",
+        "dependencies": [],
+        "use_to": [
+            "array"
+        ],
+        "tags": [
+            "basic",
+            "array"
+        ],
+        "input": [
+            "arr",
+            "block"
+        ],
+        "input_type": [
+            "Array"
+        ],
+        "return": [
+            "mapped"
+        ],
+        "return_type": [
+            "Array"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "def array_map(arr,&block)\n  arr.map(&block)\nend"
+        ]
+    },
+    {
+        "name-zh": "哈希合并",
+        "name-en": "Hash Merge",
+        "description-zh": "深度合并两个哈希",
+        "description-en": "Deep merge two hashes",
+        "dependencies": [],
+        "use_to": [
+            "hash"
+        ],
+        "tags": [
+            "basic",
+            "hash"
+        ],
+        "input": [
+            "h1",
+            "h2"
+        ],
+        "input_type": [
+            "Hash",
+            "Hash"
+        ],
+        "return": [
+            "merged"
+        ],
+        "return_type": [
+            "Hash"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "def hash_deep_merge(h1,h2)\n  h1.merge(h2){|k,v1,v2| v1.is_a?(Hash)&&v2.is_a?(Hash)?hash_deep_merge(v1,v2):v2 }\nend"
+        ]
+    },
+    {
+        "name-zh": "符号化键",
+        "name-en": "Symbolize Keys",
+        "description-zh": "将哈希键转换为符号",
+        "description-en": "Convert hash keys to symbols",
+        "dependencies": [],
+        "use_to": [
+            "hash"
+        ],
+        "tags": [
+            "basic",
+            "hash"
+        ],
+        "input": [
+            "hash"
+        ],
+        "input_type": [
+            "Hash"
+        ],
+        "return": [
+            "symbolized"
+        ],
+        "return_type": [
+            "Hash"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "def symbolize_keys(h)\n  h.transform_keys(&:to_sym)\nend"
+        ]
+    },
+    {
+        "name-zh": "URL编码",
+        "name-en": "URL Encode",
+        "description-zh": "对字符串进行 URL 编码",
+        "description-en": "URL encode a string",
+        "dependencies": [
+            "cgi"
+        ],
+        "use_to": [
+            "url",
+            "encoding"
+        ],
+        "tags": [
+            "basic",
+            "url"
+        ],
+        "input": [
+            "str"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "encoded"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "require 'cgi'\ndef url_encode(str)\n  CGI.escape(str)\nend"
+        ]
+    },
+    {
+        "name-zh": "URL解码",
+        "name-en": "URL Decode",
+        "description-zh": "对 URL 编码字符串解码",
+        "description-en": "URL decode a string",
+        "dependencies": [
+            "cgi"
+        ],
+        "use_to": [
+            "url",
+            "encoding"
+        ],
+        "tags": [
+            "basic",
+            "url"
+        ],
+        "input": [
+            "str"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "decoded"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "require 'cgi'\ndef url_decode(str)\n  CGI.unescape(str)\nend"
+        ]
+    },
+    {
+        "name-zh": "MD5哈希",
+        "name-en": "MD5 Hash",
+        "description-zh": "计算字符串的 MD5 哈希",
+        "description-en": "Compute MD5 hash of string",
+        "dependencies": [
+            "digest"
+        ],
+        "use_to": [
+            "hash"
+        ],
+        "tags": [
+            "basic",
+            "hash"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "hex"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "require 'digest'\ndef md5_hash(s)\n  Digest::MD5.hexdigest(s)\nend"
+        ]
+    },
+    {
+        "name-zh": "时间戳转时间",
+        "name-en": "Timestamp to Time",
+        "description-zh": "将 Unix 时间戳转换为时间对象",
+        "description-en": "Convert Unix timestamp to Time object",
+        "dependencies": [],
+        "use_to": [
+            "time"
+        ],
+        "tags": [
+            "basic",
+            "time"
+        ],
+        "input": [
+            "timestamp"
+        ],
+        "input_type": [
+            "Integer"
+        ],
+        "return": [
+            "time"
+        ],
+        "return_type": [
+            "Time"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "def timestamp_to_time(timestamp)\n  Time.at(timestamp)\nend"
+        ]
+    },
+    {
+        "name-zh": "进程休眠",
+        "name-en": "Sleep",
+        "description-zh": "暂停执行指定的秒数",
+        "description-en": "Pause execution for specified seconds",
+        "dependencies": [],
+        "use_to": [
+            "time"
+        ],
+        "tags": [
+            "basic",
+            "time"
+        ],
+        "input": [
+            "seconds"
+        ],
+        "input_type": [
+            "Numeric"
+        ],
+        "return": [],
+        "return_type": [],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "def sleep(seconds)\n  Kernel.sleep(seconds)\nend"
+        ]
+    },
+    {
+        "name-zh": "命令执行",
+        "name-en": "System Command",
+        "description-zh": "执行系统命令并返回输出",
+        "description-en": "Execute system command and return output",
+        "dependencies": [],
+        "use_to": [
+            "system",
+            "shell"
+        ],
+        "tags": [
+            "intermediate",
+            "system"
+        ],
+        "input": [
+            "cmd"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "output"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 70,
+        "memory_score": 85,
+        "code": [
+            "def system_cmd(cmd)\n  `#{cmd}`\nend"
+        ]
+    },
+    {
+        "name-zh": "类嗣性判断",
+        "name-en": "Kind Of",
+        "description-zh": "判断对象是否是指定类或子类的实例",
+        "description-en": "Check if object is instance of class or subclass",
+        "dependencies": [],
+        "use_to": [
+            "type",
+            "object"
+        ],
+        "tags": [
+            "basic",
+            "type"
+        ],
+        "input": [
+            "obj",
+            "klass"
+        ],
+        "input_type": [
+            "Object",
+            "Class"
+        ],
+        "return": [
+            "isKind"
+        ],
+        "return_type": [
+            "bool"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "def kind_of?(obj,klass)\n  obj.is_a?(klass)\nend"
+        ]
+    },
+    {
+        "name-zh": "字符串截断",
+        "name-en": "String Truncate",
+        "description-zh": "按字符数截断字符串并添加后缀",
+        "description-en": "Truncate string by character count with suffix",
+        "dependencies": [],
+        "use_to": [
+            "string"
+        ],
+        "tags": [
+            "basic",
+            "string"
+        ],
+        "input": [
+            "s",
+            "limit",
+            "suffix"
+        ],
+        "input_type": [
+            "String",
+            "Integer",
+            "String"
+        ],
+        "return": [
+            "truncated"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "def truncate(s,limit,suffix='...')\n  s.length<=limit ? s : s[0,limit]+suffix\nend"
+        ]
+    },
+    {
+        "name-zh": "数组去重",
+        "name-en": "Array Uniq",
+        "description-zh": "去除数组中重复元素",
+        "description-en": "Remove duplicate elements from array",
+        "dependencies": [],
+        "use_to": [
+            "array"
+        ],
+        "tags": [
+            "basic",
+            "array"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "Array"
+        ],
+        "return": [
+            "uniq"
+        ],
+        "return_type": [
+            "Array"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "def array_uniq(arr)\n  arr.uniq\nend"
+        ]
+    },
+    {
+        "name-zh": "哈希键存在",
+        "name-en": "Hash Key Exists",
+        "description-zh": "检查哈希是否包含指定键",
+        "description-en": "Check if hash contains key",
+        "dependencies": [],
+        "use_to": [
+            "hash"
+        ],
+        "tags": [
+            "basic",
+            "hash"
+        ],
+        "input": [
+            "hash",
+            "key"
+        ],
+        "input_type": [
+            "Hash",
+            "Object"
+        ],
+        "return": [
+            "exists"
+        ],
+        "return_type": [
+            "bool"
+        ],
+        "timer_score": 100,
+        "memory_score": 100,
+        "code": [
+            "def hash_key_exists?(hash,key)\n  hash.key?(key)\nend"
+        ]
+    }
 ]

@@ -5,30 +5,69 @@
         "description-zh": "JavaScript程序的入口函数示例，包含模块化和异步处理",
         "description-en": "Entry point function example for JavaScript programs, including modular and async handling",
         "dependencies": [],
-        "use_to": ["program entry", "async"],
-        "tags": ["basic", "entry point", "async"],
-        "input": ["args"],
-        "input_type": ["Array<string>"],
-        "return": ["Promise<void>"],
-        "return_type": ["Promise"],
+        "use_to": [
+            "program entry",
+            "async"
+        ],
+        "tags": [
+            "basic",
+            "entry point",
+            "async"
+        ],
+        "input": [
+            "args"
+        ],
+        "input_type": [
+            "Array<string>"
+        ],
+        "return": [
+            "Promise<void>"
+        ],
+        "return_type": [
+            "Promise"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["// 异步主函数\nasync function main(args = process.argv.slice(2)) {\n    try {\n        // 打印程序信息\n        console.log('Program started');\n        \n        // 打印命令行参数\n        console.log('Arguments:', args);\n        \n        // 异步操作示例\n        await new Promise(resolve => setTimeout(resolve, 100));\n        \n        // 程序主要逻辑\n        const name = args[0] || 'World';\n        console.log(`Hello, ${name}!`);\n        \n    } catch (error) {\n        console.error('Error:', error);\n        process.exit(1);\n    }\n}\n\n// 如果直接运行（不是被导入）\nif (require.main === module) {\n    main().catch(console.error);\n}\n\n// 导出主函数供其他模块使用\nmodule.exports = main;"]},
+        "code": [
+            "// 异步主函数\nasync function main(args = process.argv.slice(2)) {\n    try {\n        // 打印程序信息\n        console.log('Program started');\n        \n        // 打印命令行参数\n        console.log('Arguments:', args);\n        \n        // 异步操作示例\n        await new Promise(resolve => setTimeout(resolve, 100));\n        \n        // 程序主要逻辑\n        const name = args[0] || 'World';\n        console.log(`Hello, ${name}!`);\n        \n    } catch (error) {\n        console.error('Error:', error);\n        process.exit(1);\n    }\n}\n\n// 如果直接运行（不是被导入）\nif (require.main === module) {\n    main().catch(console.error);\n}\n\n// 导出主函数供其他模块使用\nmodule.exports = main;"
+        ]
+    },
     {
         "name-zh": "本地存储增强",
         "name-en": "Enhanced Local Storage",
         "description-zh": "增强的本地存储，支持过期时间、类型转换和命名空间",
         "description-en": "Enhanced local storage with expiration, type conversion and namespace support",
         "dependencies": [],
-        "use_to": ["storage", "frontend"],
-        "tags": ["basic", "storage", "frontend"],
-        "input": ["key", "value", "options"],
-        "input_type": ["string", "any", "Record<string, any>"],
-        "return": ["value"],
-        "return_type": ["any"],
+        "use_to": [
+            "storage",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "storage",
+            "frontend"
+        ],
+        "input": [
+            "key",
+            "value",
+            "options"
+        ],
+        "input_type": [
+            "string",
+            "any",
+            "Record<string, any>"
+        ],
+        "return": [
+            "value"
+        ],
+        "return_type": [
+            "any"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["const localStorage2 = {\n    namespace: '',\n    setNamespace(ns) {\n        this.namespace = ns ? ns + ':' : '';\n    },\n    set(key, value, options = {}) {\n        const { expires, raw } = options;\n        const data = {\n            value: raw ? value : JSON.stringify(value),\n            expires: expires ? Date.now() + expires : null,\n            raw: !!raw\n        };\n        localStorage.setItem(this.namespace + key, JSON.stringify(data));\n    },\n    get(key, defaultValue = null) {\n        const data = localStorage.getItem(this.namespace + key);\n        if (!data) return defaultValue;\n        try {\n            const { value, expires, raw } = JSON.parse(data);\n            if (expires && Date.now() > expires) {\n                this.remove(key);\n                return defaultValue;\n            }\n            return raw ? value : JSON.parse(value);\n        } catch {\n            return defaultValue;\n        }\n    },\n    remove(key) {\n        localStorage.removeItem(this.namespace + key);\n    },\n    clear(namespacesOnly = false) {\n        if (!namespacesOnly) {\n            localStorage.clear();\n            return;\n        }\n        if (this.namespace) {\n            for (let i = localStorage.length - 1; i >= 0; i--) {\n                const key = localStorage.key(i);\n                if (key.startsWith(this.namespace)) {\n                    localStorage.removeItem(key);\n                }\n            }\n        }\n    }\n}"]
+        "code": [
+            "const localStorage2 = {\n    namespace: '',\n    setNamespace(ns) {\n        this.namespace = ns ? ns + ':' : '';\n    },\n    set(key, value, options = {}) {\n        const { expires, raw } = options;\n        const data = {\n            value: raw ? value : JSON.stringify(value),\n            expires: expires ? Date.now() + expires : null,\n            raw: !!raw\n        };\n        localStorage.setItem(this.namespace + key, JSON.stringify(data));\n    },\n    get(key, defaultValue = null) {\n        const data = localStorage.getItem(this.namespace + key);\n        if (!data) return defaultValue;\n        try {\n            const { value, expires, raw } = JSON.parse(data);\n            if (expires && Date.now() > expires) {\n                this.remove(key);\n                return defaultValue;\n            }\n            return raw ? value : JSON.parse(value);\n        } catch {\n            return defaultValue;\n        }\n    },\n    remove(key) {\n        localStorage.removeItem(this.namespace + key);\n    },\n    clear(namespacesOnly = false) {\n        if (!namespacesOnly) {\n            localStorage.clear();\n            return;\n        }\n        if (this.namespace) {\n            for (let i = localStorage.length - 1; i >= 0; i--) {\n                const key = localStorage.key(i);\n                if (key.startsWith(this.namespace)) {\n                    localStorage.removeItem(key);\n                }\n            }\n        }\n    }\n}"
+        ]
     },
     {
         "name-zh": "会话存储增强",
@@ -36,15 +75,36 @@
         "description-zh": "增强的会话存储，支持类型转换和命名空间",
         "description-en": "Enhanced session storage with type conversion and namespace support",
         "dependencies": [],
-        "use_to": ["storage", "frontend"],
-        "tags": ["basic", "storage", "frontend"],
-        "input": ["key", "value", "options"],
-        "input_type": ["string", "any", "Record<string, any>"],
-        "return": ["value"],
-        "return_type": ["any"],
+        "use_to": [
+            "storage",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "storage",
+            "frontend"
+        ],
+        "input": [
+            "key",
+            "value",
+            "options"
+        ],
+        "input_type": [
+            "string",
+            "any",
+            "Record<string, any>"
+        ],
+        "return": [
+            "value"
+        ],
+        "return_type": [
+            "any"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["const sessionStorage2 = {\n    namespace: '',\n    setNamespace(ns) {\n        this.namespace = ns ? ns + ':' : '';\n    },\n    set(key, value, options = {}) {\n        const { raw } = options;\n        const data = {\n            value: raw ? value : JSON.stringify(value),\n            raw: !!raw\n        };\n        sessionStorage.setItem(this.namespace + key, JSON.stringify(data));\n    },\n    get(key, defaultValue = null) {\n        const data = sessionStorage.getItem(this.namespace + key);\n        if (!data) return defaultValue;\n        try {\n            const { value, raw } = JSON.parse(data);\n            return raw ? value : JSON.parse(value);\n        } catch {\n            return defaultValue;\n        }\n    },\n    remove(key) {\n        sessionStorage.removeItem(this.namespace + key);\n    },\n    clear(namespacesOnly = false) {\n        if (!namespacesOnly) {\n            sessionStorage.clear();\n            return;\n        }\n        if (this.namespace) {\n            for (let i = sessionStorage.length - 1; i >= 0; i--) {\n                const key = sessionStorage.key(i);\n                if (key.startsWith(this.namespace)) {\n                    sessionStorage.removeItem(key);\n                }\n            }\n        }\n    }\n}"]
+        "code": [
+            "const sessionStorage2 = {\n    namespace: '',\n    setNamespace(ns) {\n        this.namespace = ns ? ns + ':' : '';\n    },\n    set(key, value, options = {}) {\n        const { raw } = options;\n        const data = {\n            value: raw ? value : JSON.stringify(value),\n            raw: !!raw\n        };\n        sessionStorage.setItem(this.namespace + key, JSON.stringify(data));\n    },\n    get(key, defaultValue = null) {\n        const data = sessionStorage.getItem(this.namespace + key);\n        if (!data) return defaultValue;\n        try {\n            const { value, raw } = JSON.parse(data);\n            return raw ? value : JSON.parse(value);\n        } catch {\n            return defaultValue;\n        }\n    },\n    remove(key) {\n        sessionStorage.removeItem(this.namespace + key);\n    },\n    clear(namespacesOnly = false) {\n        if (!namespacesOnly) {\n            sessionStorage.clear();\n            return;\n        }\n        if (this.namespace) {\n            for (let i = sessionStorage.length - 1; i >= 0; i--) {\n                const key = sessionStorage.key(i);\n                if (key.startsWith(this.namespace)) {\n                    sessionStorage.removeItem(key);\n                }\n            }\n        }\n    }\n}"
+        ]
     },
     {
         "name-zh": "表单验证",
@@ -52,15 +112,35 @@
         "description-zh": "常用表单验证函数集合",
         "description-en": "Common form validation functions collection",
         "dependencies": [],
-        "use_to": ["form", "validation", "frontend"],
-        "tags": ["basic", "form", "frontend"],
-        "input": ["value", "type"],
-        "input_type": ["string", "string"],
-        "return": ["isValid"],
-        "return_type": ["boolean"],
+        "use_to": [
+            "form",
+            "validation",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "form",
+            "frontend"
+        ],
+        "input": [
+            "value",
+            "type"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "isValid"
+        ],
+        "return_type": [
+            "boolean"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["const validator = {\n    email(value) {\n        return /^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$/.test(value);\n    },\n    phone(value) {\n        return /^1[3-9]\\d{9}$/.test(value);\n    },\n    url(value) {\n        try {\n            new URL(value);\n            return true;\n        } catch {\n            return false;\n        }\n    },\n    password(value) {\n        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$/.test(value);\n    },\n    idCard(value) {\n        return /^[1-9]\\d{5}(19|20)\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])\\d{3}[\\dX]$/.test(value);\n    }\n}"]
+        "code": [
+            "const validator = {\n    email(value) {\n        return /^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)+$/.test(value);\n    },\n    phone(value) {\n        return /^1[3-9]\\d{9}$/.test(value);\n    },\n    url(value) {\n        try {\n            new URL(value);\n            return true;\n        } catch {\n            return false;\n        }\n    },\n    password(value) {\n        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$/.test(value);\n    },\n    idCard(value) {\n        return /^[1-9]\\d{5}(19|20)\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])\\d{3}[\\dX]$/.test(value);\n    }\n}"
+        ]
     },
     {
         "name-zh": "URL参数处理",
@@ -68,15 +148,35 @@
         "description-zh": "URL参数的获取、设置和删除",
         "description-en": "Get, set and delete URL parameters",
         "dependencies": [],
-        "use_to": ["url", "params", "frontend"],
-        "tags": ["basic", "url", "frontend"],
-        "input": ["url", "params"],
-        "input_type": ["string", "Record<string, string>"],
-        "return": ["url"],
-        "return_type": ["string"],
+        "use_to": [
+            "url",
+            "params",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "url",
+            "frontend"
+        ],
+        "input": [
+            "url",
+            "params"
+        ],
+        "input_type": [
+            "string",
+            "Record<string, string>"
+        ],
+        "return": [
+            "url"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["const urlParams = {\n    get(name) {\n        const url = new URL(window.location.href);\n        return url.searchParams.get(name);\n    },\n    getAll() {\n        const url = new URL(window.location.href);\n        return Object.fromEntries(url.searchParams.entries());\n    },\n    set(params) {\n        const url = new URL(window.location.href);\n        Object.entries(params).forEach(([key, value]) => {\n            url.searchParams.set(key, value);\n        });\n        return url.toString();\n    },\n    remove(names) {\n        const url = new URL(window.location.href);\n        (Array.isArray(names) ? names : [names]).forEach(name => {\n            url.searchParams.delete(name);\n        });\n        return url.toString();\n    }\n}"]
+        "code": [
+            "const urlParams = {\n    get(name) {\n        const url = new URL(window.location.href);\n        return url.searchParams.get(name);\n    },\n    getAll() {\n        const url = new URL(window.location.href);\n        return Object.fromEntries(url.searchParams.entries());\n    },\n    set(params) {\n        const url = new URL(window.location.href);\n        Object.entries(params).forEach(([key, value]) => {\n            url.searchParams.set(key, value);\n        });\n        return url.toString();\n    },\n    remove(names) {\n        const url = new URL(window.location.href);\n        (Array.isArray(names) ? names : [names]).forEach(name => {\n            url.searchParams.delete(name);\n        });\n        return url.toString();\n    }\n}"
+        ]
     },
     {
         "name-zh": "事件总线",
@@ -84,15 +184,35 @@
         "description-zh": "简单的事件发布订阅系统",
         "description-en": "Simple event publish-subscribe system",
         "dependencies": [],
-        "use_to": ["event", "pubsub", "frontend"],
-        "tags": ["basic", "event", "frontend"],
-        "input": ["event", "callback"],
-        "input_type": ["string", "Function"],
-        "return": ["off"],
-        "return_type": ["Function"],
+        "use_to": [
+            "event",
+            "pubsub",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "event",
+            "frontend"
+        ],
+        "input": [
+            "event",
+            "callback"
+        ],
+        "input_type": [
+            "string",
+            "Function"
+        ],
+        "return": [
+            "off"
+        ],
+        "return_type": [
+            "Function"
+        ],
         "timer_score": 95,
         "memory_score": 90,
-        "code": ["const eventBus = {\n    events: {},\n    on(event, callback) {\n        if (!this.events[event]) {\n            this.events[event] = [];\n        }\n        this.events[event].push(callback);\n        return () => this.off(event, callback);\n    },\n    off(event, callback) {\n        if (!this.events[event]) return;\n        this.events[event] = this.events[event].filter(cb => cb !== callback);\n    },\n    emit(event, data) {\n        if (!this.events[event]) return;\n        this.events[event].forEach(callback => callback(data));\n    },\n    once(event, callback) {\n        const off = this.on(event, (...args) => {\n            off();\n            callback(...args);\n        });\n        return off;\n    }\n}"]
+        "code": [
+            "const eventBus = {\n    events: {},\n    on(event, callback) {\n        if (!this.events[event]) {\n            this.events[event] = [];\n        }\n        this.events[event].push(callback);\n        return () => this.off(event, callback);\n    },\n    off(event, callback) {\n        if (!this.events[event]) return;\n        this.events[event] = this.events[event].filter(cb => cb !== callback);\n    },\n    emit(event, data) {\n        if (!this.events[event]) return;\n        this.events[event].forEach(callback => callback(data));\n    },\n    once(event, callback) {\n        const off = this.on(event, (...args) => {\n            off();\n            callback(...args);\n        });\n        return off;\n    }\n}"
+        ]
     },
     {
         "name-zh": "深度比较",
@@ -100,15 +220,34 @@
         "description-zh": "深度比较两个值是否相等",
         "description-en": "Deep compare two values for equality",
         "dependencies": [],
-        "use_to": ["compare", "frontend"],
-        "tags": ["basic", "compare", "frontend"],
-        "input": ["a", "b"],
-        "input_type": ["any", "any"],
-        "return": ["isEqual"],
-        "return_type": ["boolean"],
+        "use_to": [
+            "compare",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "compare",
+            "frontend"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "any",
+            "any"
+        ],
+        "return": [
+            "isEqual"
+        ],
+        "return_type": [
+            "boolean"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function deepEqual(a, b) {\n    if (a === b) return true;\n    if (a == null || b == null) return false;\n    if (typeof a !== 'object' || typeof b !== 'object') return false;\n    const keysA = Object.keys(a);\n    const keysB = Object.keys(b);\n    if (keysA.length !== keysB.length) return false;\n    return keysA.every(key => {\n        if (!Object.prototype.hasOwnProperty.call(b, key)) return false;\n        return deepEqual(a[key], b[key]);\n    });\n}"]
+        "code": [
+            "function deepEqual(a, b) {\n    if (a === b) return true;\n    if (a == null || b == null) return false;\n    if (typeof a !== 'object' || typeof b !== 'object') return false;\n    const keysA = Object.keys(a);\n    const keysB = Object.keys(b);\n    if (keysA.length !== keysB.length) return false;\n    return keysA.every(key => {\n        if (!Object.prototype.hasOwnProperty.call(b, key)) return false;\n        return deepEqual(a[key], b[key]);\n    });\n}"
+        ]
     },
     {
         "name-zh": "虚拟列表",
@@ -116,15 +255,37 @@
         "description-zh": "实现虚拟列表，优化长列表性能",
         "description-en": "Implement virtual list to optimize long list performance",
         "dependencies": [],
-        "use_to": ["list", "performance", "frontend"],
-        "tags": ["basic", "list", "frontend"],
-        "input": ["container", "items", "itemHeight"],
-        "input_type": ["Element", "Array<any>", "number"],
-        "return": ["destroy"],
-        "return_type": ["Function"],
+        "use_to": [
+            "list",
+            "performance",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "list",
+            "frontend"
+        ],
+        "input": [
+            "container",
+            "items",
+            "itemHeight"
+        ],
+        "input_type": [
+            "Element",
+            "Array<any>",
+            "number"
+        ],
+        "return": [
+            "destroy"
+        ],
+        "return_type": [
+            "Function"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function createVirtualList(container, items, itemHeight) {\n    let startIndex = 0;\n    let endIndex = 0;\n    let scrollTop = 0;\n    const visibleCount = Math.ceil(container.clientHeight / itemHeight);\n    const totalHeight = items.length * itemHeight;\n    const content = document.createElement('div');\n    content.style.position = 'relative';\n    content.style.height = `${totalHeight}px`;\n    container.appendChild(content);\n    function updateVisibleItems() {\n        startIndex = Math.floor(scrollTop / itemHeight);\n        endIndex = Math.min(startIndex + visibleCount * 2, items.length);\n        const fragment = document.createDocumentFragment();\n        for (let i = startIndex; i < endIndex; i++) {\n            const item = document.createElement('div');\n            item.style.position = 'absolute';\n            item.style.top = `${i * itemHeight}px`;\n            item.style.height = `${itemHeight}px`;\n            item.textContent = items[i];\n            fragment.appendChild(item);\n        }\n        content.innerHTML = '';\n        content.appendChild(fragment);\n    }\n    const onScroll = () => {\n        scrollTop = container.scrollTop;\n        updateVisibleItems();\n    };\n    container.addEventListener('scroll', onScroll);\n    updateVisibleItems();\n    return () => {\n        container.removeEventListener('scroll', onScroll);\n        container.innerHTML = '';\n    };\n}"]
+        "code": [
+            "function createVirtualList(container, items, itemHeight) {\n    let startIndex = 0;\n    let endIndex = 0;\n    let scrollTop = 0;\n    const visibleCount = Math.ceil(container.clientHeight / itemHeight);\n    const totalHeight = items.length * itemHeight;\n    const content = document.createElement('div');\n    content.style.position = 'relative';\n    content.style.height = `${totalHeight}px`;\n    container.appendChild(content);\n    function updateVisibleItems() {\n        startIndex = Math.floor(scrollTop / itemHeight);\n        endIndex = Math.min(startIndex + visibleCount * 2, items.length);\n        const fragment = document.createDocumentFragment();\n        for (let i = startIndex; i < endIndex; i++) {\n            const item = document.createElement('div');\n            item.style.position = 'absolute';\n            item.style.top = `${i * itemHeight}px`;\n            item.style.height = `${itemHeight}px`;\n            item.textContent = items[i];\n            fragment.appendChild(item);\n        }\n        content.innerHTML = '';\n        content.appendChild(fragment);\n    }\n    const onScroll = () => {\n        scrollTop = container.scrollTop;\n        updateVisibleItems();\n    };\n    container.addEventListener('scroll', onScroll);\n    updateVisibleItems();\n    return () => {\n        container.removeEventListener('scroll', onScroll);\n        container.innerHTML = '';\n    };\n}"
+        ]
     },
     {
         "name-zh": "图片懒加载",
@@ -132,15 +293,31 @@
         "description-zh": "实现图片懒加载，提升页面性能",
         "description-en": "Implement image lazy loading to improve page performance",
         "dependencies": [],
-        "use_to": ["image", "lazyload", "frontend"],
-        "tags": ["basic", "image", "frontend"],
-        "input": ["selector", "options"],
-        "input_type": ["string", "Record<string, any>"],
+        "use_to": [
+            "image",
+            "lazyload",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "image",
+            "frontend"
+        ],
+        "input": [
+            "selector",
+            "options"
+        ],
+        "input_type": [
+            "string",
+            "Record<string, any>"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function lazyLoadImages(selector = 'img[data-src]', options = {}) {\n    const defaultOptions = {\n        root: null,\n        rootMargin: '0px',\n        threshold: 0.1\n    };\n    const opts = { ...defaultOptions, ...options };\n    const loadImage = (entry) => {\n        const img = entry.target;\n        const src = img.getAttribute('data-src');\n        if (src) {\n            img.src = src;\n            img.removeAttribute('data-src');\n        }\n    };\n    const observer = new IntersectionObserver((entries) => {\n        entries.forEach(entry => {\n            if (entry.isIntersecting) {\n                loadImage(entry);\n                observer.unobserve(entry.target);\n            }\n        });\n    }, opts);\n    document.querySelectorAll(selector).forEach(img => observer.observe(img));\n}"]
+        "code": [
+            "function lazyLoadImages(selector = 'img[data-src]', options = {}) {\n    const defaultOptions = {\n        root: null,\n        rootMargin: '0px',\n        threshold: 0.1\n    };\n    const opts = { ...defaultOptions, ...options };\n    const loadImage = (entry) => {\n        const img = entry.target;\n        const src = img.getAttribute('data-src');\n        if (src) {\n            img.src = src;\n            img.removeAttribute('data-src');\n        }\n    };\n    const observer = new IntersectionObserver((entries) => {\n        entries.forEach(entry => {\n            if (entry.isIntersecting) {\n                loadImage(entry);\n                observer.unobserve(entry.target);\n            }\n        });\n    }, opts);\n    document.querySelectorAll(selector).forEach(img => observer.observe(img));\n}"
+        ]
     },
     {
         "name-zh": "本地存储封装",
@@ -148,15 +325,36 @@
         "description-zh": "封装本地存储操作，支持过期时间",
         "description-en": "Wrap localStorage operations with expiration support",
         "dependencies": [],
-        "use_to": ["storage", "frontend"],
-        "tags": ["basic", "storage", "frontend"],
-        "input": ["key", "value", "expires"],
-        "input_type": ["string", "any", "number"],
-        "return": ["value"],
-        "return_type": ["any"],
+        "use_to": [
+            "storage",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "storage",
+            "frontend"
+        ],
+        "input": [
+            "key",
+            "value",
+            "expires"
+        ],
+        "input_type": [
+            "string",
+            "any",
+            "number"
+        ],
+        "return": [
+            "value"
+        ],
+        "return_type": [
+            "any"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["const storage = {\n    set(key, value, expires) {\n        const data = {\n            value,\n            expires: expires ? Date.now() + expires : null\n        };\n        localStorage.setItem(key, JSON.stringify(data));\n    },\n    get(key) {\n        const data = localStorage.getItem(key);\n        if (!data) return null;\n        const { value, expires } = JSON.parse(data);\n        if (expires && Date.now() > expires) {\n            localStorage.removeItem(key);\n            return null;\n        }\n        return value;\n    },\n    remove(key) {\n        localStorage.removeItem(key);\n    },\n    clear() {\n        localStorage.clear();\n    }\n}"]
+        "code": [
+            "const storage = {\n    set(key, value, expires) {\n        const data = {\n            value,\n            expires: expires ? Date.now() + expires : null\n        };\n        localStorage.setItem(key, JSON.stringify(data));\n    },\n    get(key) {\n        const data = localStorage.getItem(key);\n        if (!data) return null;\n        const { value, expires } = JSON.parse(data);\n        if (expires && Date.now() > expires) {\n            localStorage.removeItem(key);\n            return null;\n        }\n        return value;\n    },\n    remove(key) {\n        localStorage.removeItem(key);\n    },\n    clear() {\n        localStorage.clear();\n    }\n}"
+        ]
     },
     {
         "name-zh": "防抖动画",
@@ -164,15 +362,33 @@
         "description-zh": "使用requestAnimationFrame实现防抖动画",
         "description-en": "Implement debounced animation using requestAnimationFrame",
         "dependencies": [],
-        "use_to": ["animation", "debounce", "frontend"],
-        "tags": ["basic", "animation", "frontend"],
-        "input": ["callback"],
-        "input_type": ["Function"],
-        "return": ["cancel"],
-        "return_type": ["Function"],
+        "use_to": [
+            "animation",
+            "debounce",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "animation",
+            "frontend"
+        ],
+        "input": [
+            "callback"
+        ],
+        "input_type": [
+            "Function"
+        ],
+        "return": [
+            "cancel"
+        ],
+        "return_type": [
+            "Function"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function debounceAnimation(callback) {\n    let frameId = null;\n    return (...args) => {\n        if (frameId) {\n            cancelAnimationFrame(frameId);\n        }\n        frameId = requestAnimationFrame(() => {\n            callback(...args);\n            frameId = null;\n        });\n        return () => {\n            if (frameId) {\n                cancelAnimationFrame(frameId);\n                frameId = null;\n            }\n        };\n    };\n}"]
+        "code": [
+            "function debounceAnimation(callback) {\n    let frameId = null;\n    return (...args) => {\n        if (frameId) {\n            cancelAnimationFrame(frameId);\n        }\n        frameId = requestAnimationFrame(() => {\n            callback(...args);\n            frameId = null;\n        });\n        return () => {\n            if (frameId) {\n                cancelAnimationFrame(frameId);\n                frameId = null;\n            }\n        };\n    };\n}"
+        ]
     },
     {
         "name-zh": "DOM变化监听",
@@ -180,15 +396,37 @@
         "description-zh": "监听DOM变化并执行回调",
         "description-en": "Observe DOM mutations and execute callback",
         "dependencies": [],
-        "use_to": ["dom", "observer", "frontend"],
-        "tags": ["basic", "dom", "frontend"],
-        "input": ["target", "callback", "options"],
-        "input_type": ["Element", "Function", "Record<string, boolean>"],
-        "return": ["disconnect"],
-        "return_type": ["Function"],
+        "use_to": [
+            "dom",
+            "observer",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "dom",
+            "frontend"
+        ],
+        "input": [
+            "target",
+            "callback",
+            "options"
+        ],
+        "input_type": [
+            "Element",
+            "Function",
+            "Record<string, boolean>"
+        ],
+        "return": [
+            "disconnect"
+        ],
+        "return_type": [
+            "Function"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function observeDOMChanges(target, callback, options = {}) {\n    const defaultOptions = {\n        attributes: true,\n        childList: true,\n        subtree: true\n    };\n    const opts = { ...defaultOptions, ...options };\n    const observer = new MutationObserver(callback);\n    observer.observe(target, opts);\n    return () => observer.disconnect();\n}"]
+        "code": [
+            "function observeDOMChanges(target, callback, options = {}) {\n    const defaultOptions = {\n        attributes: true,\n        childList: true,\n        subtree: true\n    };\n    const opts = { ...defaultOptions, ...options };\n    const observer = new MutationObserver(callback);\n    observer.observe(target, opts);\n    return () => observer.disconnect();\n}"
+        ]
     },
     {
         "name-zh": "主题切换",
@@ -196,15 +434,32 @@
         "description-zh": "实现网站主题切换功能",
         "description-en": "Implement website theme switching",
         "dependencies": [],
-        "use_to": ["theme", "frontend"],
-        "tags": ["basic", "theme", "frontend"],
-        "input": ["theme"],
-        "input_type": ["string"],
-        "return": ["currentTheme"],
-        "return_type": ["string"],
+        "use_to": [
+            "theme",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "theme",
+            "frontend"
+        ],
+        "input": [
+            "theme"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "currentTheme"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["const themeSwitcher = {\n    init() {\n        const theme = localStorage.getItem('theme') || 'light';\n        this.setTheme(theme);\n        return theme;\n    },\n    setTheme(theme) {\n        document.documentElement.setAttribute('data-theme', theme);\n        localStorage.setItem('theme', theme);\n        return theme;\n    },\n    toggle() {\n        const current = localStorage.getItem('theme') || 'light';\n        const next = current === 'light' ? 'dark' : 'light';\n        return this.setTheme(next);\n    }\n}"]
+        "code": [
+            "const themeSwitcher = {\n    init() {\n        const theme = localStorage.getItem('theme') || 'light';\n        this.setTheme(theme);\n        return theme;\n    },\n    setTheme(theme) {\n        document.documentElement.setAttribute('data-theme', theme);\n        localStorage.setItem('theme', theme);\n        return theme;\n    },\n    toggle() {\n        const current = localStorage.getItem('theme') || 'light';\n        const next = current === 'light' ? 'dark' : 'light';\n        return this.setTheme(next);\n    }\n}"
+        ]
     },
     {
         "name-zh": "浏览器检测",
@@ -212,15 +467,29 @@
         "description-zh": "检测当前浏览器类型和版本",
         "description-en": "Detect current browser type and version",
         "dependencies": [],
-        "use_to": ["browser", "detection", "frontend"],
-        "tags": ["basic", "browser", "frontend"],
+        "use_to": [
+            "browser",
+            "detection",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "browser",
+            "frontend"
+        ],
         "input": [],
         "input_type": [],
-        "return": ["info"],
-        "return_type": ["Record<string, string|boolean>"],
+        "return": [
+            "info"
+        ],
+        "return_type": [
+            "Record<string, string|boolean>"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function detectBrowser() {\n    const ua = navigator.userAgent;\n    const browser = {\n        chrome: /chrome/i.test(ua),\n        safari: /safari/i.test(ua),\n        firefox: /firefox/i.test(ua),\n        edge: /edg/i.test(ua),\n        ie: /msie|trident/i.test(ua),\n        mobile: /mobile/i.test(ua),\n        version: ua.match(/(chrome|safari|firefox|edge|msie|rv)\/?\\s*([\\d.]+)/i)?.[2] || ''\n    };\n    return browser;\n}"]
+        "code": [
+            "function detectBrowser() {\n    const ua = navigator.userAgent;\n    const browser = {\n        chrome: /chrome/i.test(ua),\n        safari: /safari/i.test(ua),\n        firefox: /firefox/i.test(ua),\n        edge: /edg/i.test(ua),\n        ie: /msie|trident/i.test(ua),\n        mobile: /mobile/i.test(ua),\n        version: ua.match(/(chrome|safari|firefox|edge|msie|rv)/?\\s*([\\d.]+)/i)?.[2] || ''\n    };\n    return browser;\n}"
+        ]
     },
     {
         "name-zh": "设备检测",
@@ -228,15 +497,29 @@
         "description-zh": "检测当前设备类型和操作系统",
         "description-en": "Detect current device type and operating system",
         "dependencies": [],
-        "use_to": ["device", "detection", "frontend"],
-        "tags": ["basic", "device", "frontend"],
+        "use_to": [
+            "device",
+            "detection",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "device",
+            "frontend"
+        ],
         "input": [],
         "input_type": [],
-        "return": ["info"],
-        "return_type": ["Record<string, boolean>"],
+        "return": [
+            "info"
+        ],
+        "return_type": [
+            "Record<string, boolean>"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function detectDevice() {\n    const ua = navigator.userAgent;\n    return {\n        ios: /iphone|ipad|ipod/i.test(ua),\n        android: /android/i.test(ua),\n        windows: /windows/i.test(ua),\n        mac: /macintosh/i.test(ua),\n        mobile: /mobile|tablet/i.test(ua),\n        desktop: !/mobile|tablet/i.test(ua)\n    };\n}"]
+        "code": [
+            "function detectDevice() {\n    const ua = navigator.userAgent;\n    return {\n        ios: /iphone|ipad|ipod/i.test(ua),\n        android: /android/i.test(ua),\n        windows: /windows/i.test(ua),\n        mac: /macintosh/i.test(ua),\n        mobile: /mobile|tablet/i.test(ua),\n        desktop: !/mobile|tablet/i.test(ua)\n    };\n}"
+        ]
     },
     {
         "name-zh": "复制到剪贴板",
@@ -244,15 +527,32 @@
         "description-zh": "将文本复制到系统剪贴板",
         "description-en": "Copy text to system clipboard",
         "dependencies": [],
-        "use_to": ["clipboard", "frontend"],
-        "tags": ["basic", "clipboard", "frontend"],
-        "input": ["text"],
-        "input_type": ["string"],
-        "return": ["success"],
-        "return_type": ["Promise<boolean>"],
+        "use_to": [
+            "clipboard",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "clipboard",
+            "frontend"
+        ],
+        "input": [
+            "text"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "success"
+        ],
+        "return_type": [
+            "Promise<boolean>"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["async function copyToClipboard(text) {\n    try {\n        await navigator.clipboard.writeText(text);\n        return true;\n    } catch {\n        const textarea = document.createElement('textarea');\n        textarea.value = text;\n        textarea.style.position = 'fixed';\n        document.body.appendChild(textarea);\n        textarea.select();\n        try {\n            document.execCommand('copy');\n            return true;\n        } catch {\n            return false;\n        } finally {\n            document.body.removeChild(textarea);\n        }\n    }\n}"]
+        "code": [
+            "async function copyToClipboard(text) {\n    try {\n        await navigator.clipboard.writeText(text);\n        return true;\n    } catch {\n        const textarea = document.createElement('textarea');\n        textarea.value = text;\n        textarea.style.position = 'fixed';\n        document.body.appendChild(textarea);\n        textarea.select();\n        try {\n            document.execCommand('copy');\n            return true;\n        } catch {\n            return false;\n        } finally {\n            document.body.removeChild(textarea);\n        }\n    }\n}"
+        ]
     },
     {
         "name-zh": "滚动到顶部",
@@ -260,15 +560,29 @@
         "description-zh": "平滑滚动到页面顶部",
         "description-en": "Smooth scroll to page top",
         "dependencies": [],
-        "use_to": ["scroll", "animation", "frontend"],
-        "tags": ["basic", "scroll", "frontend"],
-        "input": ["duration"],
-        "input_type": ["number"],
+        "use_to": [
+            "scroll",
+            "animation",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "scroll",
+            "frontend"
+        ],
+        "input": [
+            "duration"
+        ],
+        "input_type": [
+            "number"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function scrollToTop(duration = 500) {\n    const start = window.pageYOffset;\n    const startTime = performance.now();\n    function scroll() {\n        const now = performance.now();\n        const time = Math.min(1, (now - startTime) / duration);\n        const eased = time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time;\n        window.scrollTo(0, Math.ceil(eased * start));\n        if (time < 1) requestAnimationFrame(scroll);\n    }\n    requestAnimationFrame(scroll);\n}"]
+        "code": [
+            "function scrollToTop(duration = 500) {\n    const start = window.pageYOffset;\n    const startTime = performance.now();\n    function scroll() {\n        const now = performance.now();\n        const time = Math.min(1, (now - startTime) / duration);\n        const eased = time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time;\n        window.scrollTo(0, Math.ceil(eased * start));\n        if (time < 1) requestAnimationFrame(scroll);\n    }\n    requestAnimationFrame(scroll);\n}"
+        ]
     },
     {
         "name-zh": "元素是否在视口",
@@ -276,15 +590,35 @@
         "description-zh": "检测元素是否在视口中可见",
         "description-en": "Check if element is visible in viewport",
         "dependencies": [],
-        "use_to": ["viewport", "detection", "frontend"],
-        "tags": ["basic", "viewport", "frontend"],
-        "input": ["element", "offset"],
-        "input_type": ["Element", "number"],
-        "return": ["isVisible"],
-        "return_type": ["boolean"],
+        "use_to": [
+            "viewport",
+            "detection",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "viewport",
+            "frontend"
+        ],
+        "input": [
+            "element",
+            "offset"
+        ],
+        "input_type": [
+            "Element",
+            "number"
+        ],
+        "return": [
+            "isVisible"
+        ],
+        "return_type": [
+            "boolean"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function isInViewport(element, offset = 0) {\n    const rect = element.getBoundingClientRect();\n    return (\n        rect.top >= -offset &&\n        rect.left >= -offset &&\n        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + offset &&\n        rect.right <= (window.innerWidth || document.documentElement.clientWidth) + offset\n    );\n}"]
+        "code": [
+            "function isInViewport(element, offset = 0) {\n    const rect = element.getBoundingClientRect();\n    return (\n        rect.top >= -offset &&\n        rect.left >= -offset &&\n        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) + offset &&\n        rect.right <= (window.innerWidth || document.documentElement.clientWidth) + offset\n    );\n}"
+        ]
     },
     {
         "name-zh": "日期格式化",
@@ -292,15 +626,35 @@
         "description-zh": "将日期格式化为指定格式的字符串",
         "description-en": "Format date to specified pattern string",
         "dependencies": [],
-        "use_to": ["date", "format", "frontend"],
-        "tags": ["basic", "date", "frontend"],
-        "input": ["date", "pattern"],
-        "input_type": ["Date", "string"],
-        "return": ["formatted"],
-        "return_type": ["string"],
+        "use_to": [
+            "date",
+            "format",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "date",
+            "frontend"
+        ],
+        "input": [
+            "date",
+            "pattern"
+        ],
+        "input_type": [
+            "Date",
+            "string"
+        ],
+        "return": [
+            "formatted"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function formatDate(date, pattern = 'YYYY-MM-DD HH:mm:ss') {\n    const d = new Date(date);\n    const pad = n => String(n).padStart(2, '0');\n    return pattern\n        .replace('YYYY', d.getFullYear())\n        .replace('MM', pad(d.getMonth() + 1))\n        .replace('DD', pad(d.getDate()))\n        .replace('HH', pad(d.getHours()))\n        .replace('mm', pad(d.getMinutes()))\n        .replace('ss', pad(d.getSeconds()));\n}"]
+        "code": [
+            "function formatDate(date, pattern = 'YYYY-MM-DD HH:mm:ss') {\n    const d = new Date(date);\n    const pad = n => String(n).padStart(2, '0');\n    return pattern\n        .replace('YYYY', d.getFullYear())\n        .replace('MM', pad(d.getMonth() + 1))\n        .replace('DD', pad(d.getDate()))\n        .replace('HH', pad(d.getHours()))\n        .replace('mm', pad(d.getMinutes()))\n        .replace('ss', pad(d.getSeconds()));\n}"
+        ]
     },
     {
         "name-zh": "相对时间",
@@ -308,15 +662,33 @@
         "description-zh": "将日期转换为相对时间描述",
         "description-en": "Convert date to relative time description",
         "dependencies": [],
-        "use_to": ["date", "format", "frontend"],
-        "tags": ["basic", "date", "frontend"],
-        "input": ["date"],
-        "input_type": ["Date|number|string"],
-        "return": ["relative"],
-        "return_type": ["string"],
+        "use_to": [
+            "date",
+            "format",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "date",
+            "frontend"
+        ],
+        "input": [
+            "date"
+        ],
+        "input_type": [
+            "Date|number|string"
+        ],
+        "return": [
+            "relative"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function timeAgo(date) {\n    const now = Date.now();\n    const diff = now - new Date(date).getTime();\n    const minutes = Math.floor(diff / 60000);\n    if (minutes < 1) return '刚刚';\n    if (minutes < 60) return `${minutes}分钟前`;\n    const hours = Math.floor(minutes / 60);\n    if (hours < 24) return `${hours}小时前`;\n    const days = Math.floor(hours / 24);\n    if (days < 30) return `${days}天前`;\n    const months = Math.floor(days / 30);\n    if (months < 12) return `${months}个月前`;\n    return `${Math.floor(months / 12)}年前`;\n}"]
+        "code": [
+            "function timeAgo(date) {\n    const now = Date.now();\n    const diff = now - new Date(date).getTime();\n    const minutes = Math.floor(diff / 60000);\n    if (minutes < 1) return '刚刚';\n    if (minutes < 60) return `${minutes}分钟前`;\n    const hours = Math.floor(minutes / 60);\n    if (hours < 24) return `${hours}小时前`;\n    const days = Math.floor(hours / 24);\n    if (days < 30) return `${days}天前`;\n    const months = Math.floor(days / 30);\n    if (months < 12) return `${months}个月前`;\n    return `${Math.floor(months / 12)}年前`;\n}"
+        ]
     },
     {
         "name-zh": "邮箱验证",
@@ -324,15 +696,32 @@
         "description-zh": "验证邮箱地址格式是否正确",
         "description-en": "Validate email address format",
         "dependencies": [],
-        "use_to": ["validation", "frontend"],
-        "tags": ["basic", "validation", "frontend"],
-        "input": ["email"],
-        "input_type": ["string"],
-        "return": ["isValid"],
-        "return_type": ["boolean"],
+        "use_to": [
+            "validation",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "validation",
+            "frontend"
+        ],
+        "input": [
+            "email"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "isValid"
+        ],
+        "return_type": [
+            "boolean"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function isValidEmail(email) {\n    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/.test(email);\n}"]
+        "code": [
+            "function isValidEmail(email) {\n    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/.test(email);\n}"
+        ]
     },
     {
         "name-zh": "手机号验证",
@@ -340,15 +729,32 @@
         "description-zh": "验证中国大陆手机号格式是否正确",
         "description-en": "Validate Chinese mainland phone number format",
         "dependencies": [],
-        "use_to": ["validation", "frontend"],
-        "tags": ["basic", "validation", "frontend"],
-        "input": ["phone"],
-        "input_type": ["string"],
-        "return": ["isValid"],
-        "return_type": ["boolean"],
+        "use_to": [
+            "validation",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "validation",
+            "frontend"
+        ],
+        "input": [
+            "phone"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "isValid"
+        ],
+        "return_type": [
+            "boolean"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function isValidPhone(phone) {\n    return /^1[3-9]\\d{9}$/.test(phone);\n}"]
+        "code": [
+            "function isValidPhone(phone) {\n    return /^1[3-9]\\d{9}$/.test(phone);\n}"
+        ]
     },
     {
         "name-zh": "身份证验证",
@@ -356,15 +762,32 @@
         "description-zh": "验证中国大陆身份证号格式是否正确",
         "description-en": "Validate Chinese mainland ID card number format",
         "dependencies": [],
-        "use_to": ["validation", "frontend"],
-        "tags": ["intermediate", "validation", "frontend"],
-        "input": ["idCard"],
-        "input_type": ["string"],
-        "return": ["isValid"],
-        "return_type": ["boolean"],
+        "use_to": [
+            "validation",
+            "frontend"
+        ],
+        "tags": [
+            "intermediate",
+            "validation",
+            "frontend"
+        ],
+        "input": [
+            "idCard"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "isValid"
+        ],
+        "return_type": [
+            "boolean"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function isValidIdCard(idCard) {\n    if (!/^[1-9]\\d{5}(19|20)\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])\\d{3}[0-9X]$/.test(idCard)) return false;\n    const weights = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];\n    const codes = '10X98765432';\n    const sum = idCard.slice(0, 17).split('').reduce((s, n, i) => s + Number(n) * weights[i], 0);\n    return idCard[17] === codes[sum % 11];\n}"]
+        "code": [
+            "function isValidIdCard(idCard) {\n    if (!/^[1-9]\\d{5}(19|20)\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])\\d{3}[0-9X]$/.test(idCard)) return false;\n    const weights = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];\n    const codes = '10X98765432';\n    const sum = idCard.slice(0, 17).split('').reduce((s, n, i) => s + Number(n) * weights[i], 0);\n    return idCard[17] === codes[sum % 11];\n}"
+        ]
     },
     {
         "name-zh": "金额格式化",
@@ -372,15 +795,36 @@
         "description-zh": "将数字格式化为金额字符串",
         "description-en": "Format number to currency string",
         "dependencies": [],
-        "use_to": ["format", "frontend"],
-        "tags": ["basic", "format", "frontend"],
-        "input": ["amount", "currency", "locale"],
-        "input_type": ["number", "string", "string"],
-        "return": ["formatted"],
-        "return_type": ["string"],
+        "use_to": [
+            "format",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "format",
+            "frontend"
+        ],
+        "input": [
+            "amount",
+            "currency",
+            "locale"
+        ],
+        "input_type": [
+            "number",
+            "string",
+            "string"
+        ],
+        "return": [
+            "formatted"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function formatCurrency(amount, currency = 'CNY', locale = 'zh-CN') {\n    return new Intl.NumberFormat(locale, {\n        style: 'currency',\n        currency: currency\n    }).format(amount);\n}"]
+        "code": [
+            "function formatCurrency(amount, currency = 'CNY', locale = 'zh-CN') {\n    return new Intl.NumberFormat(locale, {\n        style: 'currency',\n        currency: currency\n    }).format(amount);\n}"
+        ]
     },
     {
         "name-zh": "表单序列化",
@@ -388,15 +832,32 @@
         "description-zh": "将表单数据序列化为对象",
         "description-en": "Serialize form data to object",
         "dependencies": [],
-        "use_to": ["form", "frontend"],
-        "tags": ["basic", "form", "frontend"],
-        "input": ["form"],
-        "input_type": ["HTMLFormElement"],
-        "return": ["data"],
-        "return_type": ["Record<string, string|string[]>"],
+        "use_to": [
+            "form",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "form",
+            "frontend"
+        ],
+        "input": [
+            "form"
+        ],
+        "input_type": [
+            "HTMLFormElement"
+        ],
+        "return": [
+            "data"
+        ],
+        "return_type": [
+            "Record<string, string|string[]>"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function serializeForm(form) {\n    const data = {};\n    new FormData(form).forEach((value, key) => {\n        if (key in data) {\n            data[key] = Array.isArray(data[key]) ? [...data[key], value] : [data[key], value];\n        } else {\n            data[key] = value;\n        }\n    });\n    return data;\n}"]
+        "code": [
+            "function serializeForm(form) {\n    const data = {};\n    new FormData(form).forEach((value, key) => {\n        if (key in data) {\n            data[key] = Array.isArray(data[key]) ? [...data[key], value] : [data[key], value];\n        } else {\n            data[key] = value;\n        }\n    });\n    return data;\n}"
+        ]
     },
     {
         "name-zh": "表单验证",
@@ -404,15 +865,35 @@
         "description-zh": "验证表单字段值是否符合规则",
         "description-en": "Validate form field values against rules",
         "dependencies": [],
-        "use_to": ["form", "validation", "frontend"],
-        "tags": ["intermediate", "form", "frontend"],
-        "input": ["value", "rules"],
-        "input_type": ["any", "Record<string, Function>"],
-        "return": ["errors"],
-        "return_type": ["string[]"],
+        "use_to": [
+            "form",
+            "validation",
+            "frontend"
+        ],
+        "tags": [
+            "intermediate",
+            "form",
+            "frontend"
+        ],
+        "input": [
+            "value",
+            "rules"
+        ],
+        "input_type": [
+            "any",
+            "Record<string, Function>"
+        ],
+        "return": [
+            "errors"
+        ],
+        "return_type": [
+            "string[]"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function validateField(value, rules) {\n    const errors = [];\n    for (const [rule, validate] of Object.entries(rules)) {\n        try {\n            if (!validate(value)) errors.push(rule);\n        } catch {\n            errors.push(rule);\n        }\n    }\n    return errors;\n}"]
+        "code": [
+            "function validateField(value, rules) {\n    const errors = [];\n    for (const [rule, validate] of Object.entries(rules)) {\n        try {\n            if (!validate(value)) errors.push(rule);\n        } catch {\n            errors.push(rule);\n        }\n    }\n    return errors;\n}"
+        ]
     },
     {
         "name-zh": "AJAX请求",
@@ -420,15 +901,35 @@
         "description-zh": "发送AJAX请求并处理响应",
         "description-en": "Send AJAX request and handle response",
         "dependencies": [],
-        "use_to": ["ajax", "http", "frontend"],
-        "tags": ["intermediate", "ajax", "frontend"],
-        "input": ["url", "options"],
-        "input_type": ["string", "RequestInit"],
-        "return": ["response"],
-        "return_type": ["Promise<any>"],
+        "use_to": [
+            "ajax",
+            "http",
+            "frontend"
+        ],
+        "tags": [
+            "intermediate",
+            "ajax",
+            "frontend"
+        ],
+        "input": [
+            "url",
+            "options"
+        ],
+        "input_type": [
+            "string",
+            "RequestInit"
+        ],
+        "return": [
+            "response"
+        ],
+        "return_type": [
+            "Promise<any>"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["async function ajax(url, options = {}) {\n    try {\n        const response = await fetch(url, options);\n        const contentType = response.headers.get('content-type');\n        if (!response.ok) throw new Error(response.statusText);\n        return contentType?.includes('application/json') ? response.json() : response.text();\n    } catch (error) {\n        throw error;\n    }\n}"]
+        "code": [
+            "async function ajax(url, options = {}) {\n    try {\n        const response = await fetch(url, options);\n        const contentType = response.headers.get('content-type');\n        if (!response.ok) throw new Error(response.statusText);\n        return contentType?.includes('application/json') ? response.json() : response.text();\n    } catch (error) {\n        throw error;\n    }\n}"
+        ]
     },
     {
         "name-zh": "URL参数解析",
@@ -436,15 +937,32 @@
         "description-zh": "解析URL中的查询参数",
         "description-en": "Parse query parameters from URL",
         "dependencies": [],
-        "use_to": ["url", "frontend"],
-        "tags": ["basic", "url", "frontend"],
-        "input": ["url"],
-        "input_type": ["string"],
-        "return": ["params"],
-        "return_type": ["Record<string, string>"],
+        "use_to": [
+            "url",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "url",
+            "frontend"
+        ],
+        "input": [
+            "url"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "params"
+        ],
+        "return_type": [
+            "Record<string, string>"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function getUrlParams(url = window.location.href) {\n    return Object.fromEntries(new URL(url).searchParams);\n}"]
+        "code": [
+            "function getUrlParams(url = window.location.href) {\n    return Object.fromEntries(new URL(url).searchParams);\n}"
+        ]
     },
     {
         "name-zh": "图片预加载",
@@ -452,15 +970,33 @@
         "description-zh": "预加载图片资源",
         "description-en": "Preload image resources",
         "dependencies": [],
-        "use_to": ["image", "loading", "frontend"],
-        "tags": ["intermediate", "image", "frontend"],
-        "input": ["urls"],
-        "input_type": ["string[]"],
-        "return": ["loaded"],
-        "return_type": ["Promise<HTMLImageElement[]>"],
+        "use_to": [
+            "image",
+            "loading",
+            "frontend"
+        ],
+        "tags": [
+            "intermediate",
+            "image",
+            "frontend"
+        ],
+        "input": [
+            "urls"
+        ],
+        "input_type": [
+            "string[]"
+        ],
+        "return": [
+            "loaded"
+        ],
+        "return_type": [
+            "Promise<HTMLImageElement[]>"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function preloadImages(urls) {\n    return Promise.all(urls.map(url => {\n        return new Promise((resolve, reject) => {\n            const img = new Image();\n            img.onload = () => resolve(img);\n            img.onerror = reject;\n            img.src = url;\n        });\n    }));\n}"]
+        "code": [
+            "function preloadImages(urls) {\n    return Promise.all(urls.map(url => {\n        return new Promise((resolve, reject) => {\n            const img = new Image();\n            img.onload = () => resolve(img);\n            img.onerror = reject;\n            img.src = url;\n        });\n    }));\n}"
+        ]
     },
     {
         "name-zh": "防抖动画",
@@ -468,15 +1004,33 @@
         "description-zh": "使用requestAnimationFrame实现的防抖函数",
         "description-en": "Debounce function using requestAnimationFrame",
         "dependencies": [],
-        "use_to": ["animation", "performance", "frontend"],
-        "tags": ["intermediate", "animation", "frontend"],
-        "input": ["fn"],
-        "input_type": ["Function"],
-        "return": ["debounced"],
-        "return_type": ["Function"],
+        "use_to": [
+            "animation",
+            "performance",
+            "frontend"
+        ],
+        "tags": [
+            "intermediate",
+            "animation",
+            "frontend"
+        ],
+        "input": [
+            "fn"
+        ],
+        "input_type": [
+            "Function"
+        ],
+        "return": [
+            "debounced"
+        ],
+        "return_type": [
+            "Function"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function debounceRaf(fn) {\n    let frameId = null;\n    return function(...args) {\n        if (frameId) cancelAnimationFrame(frameId);\n        frameId = requestAnimationFrame(() => {\n            fn.apply(this, args);\n            frameId = null;\n        });\n    };\n}"]
+        "code": [
+            "function debounceRaf(fn) {\n    let frameId = null;\n    return function(...args) {\n        if (frameId) cancelAnimationFrame(frameId);\n        frameId = requestAnimationFrame(() => {\n            fn.apply(this, args);\n            frameId = null;\n        });\n    };\n}"
+        ]
     },
     {
         "name-zh": "DOM元素选择器",
@@ -484,15 +1038,32 @@
         "description-zh": "使用CSS选择器获取DOM元素",
         "description-en": "Get DOM element using CSS selector",
         "dependencies": [],
-        "use_to": ["dom", "selector"],
-        "tags": ["basic", "dom", "frontend"],
-        "input": ["selector"],
-        "input_type": ["string"],
-        "return": ["element"],
-        "return_type": ["Element|null"],
+        "use_to": [
+            "dom",
+            "selector"
+        ],
+        "tags": [
+            "basic",
+            "dom",
+            "frontend"
+        ],
+        "input": [
+            "selector"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "element"
+        ],
+        "return_type": [
+            "Element|null"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function querySelector(selector) {\n    return document.querySelector(selector);\n}"]
+        "code": [
+            "function querySelector(selector) {\n    return document.querySelector(selector);\n}"
+        ]
     },
     {
         "name-zh": "DOM元素集合选择器",
@@ -500,15 +1071,32 @@
         "description-zh": "使用CSS选择器获取所有匹配的DOM元素",
         "description-en": "Get all matching DOM elements using CSS selector",
         "dependencies": [],
-        "use_to": ["dom", "selector"],
-        "tags": ["basic", "dom", "frontend"],
-        "input": ["selector"],
-        "input_type": ["string"],
-        "return": ["elements"],
-        "return_type": ["NodeList"],
+        "use_to": [
+            "dom",
+            "selector"
+        ],
+        "tags": [
+            "basic",
+            "dom",
+            "frontend"
+        ],
+        "input": [
+            "selector"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "elements"
+        ],
+        "return_type": [
+            "NodeList"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function querySelectorAll(selector) {\n    return document.querySelectorAll(selector);\n}"]
+        "code": [
+            "function querySelectorAll(selector) {\n    return document.querySelectorAll(selector);\n}"
+        ]
     },
     {
         "name-zh": "添加事件监听器",
@@ -516,15 +1104,39 @@
         "description-zh": "为DOM元素添加事件监听器",
         "description-en": "Add event listener to DOM element",
         "dependencies": [],
-        "use_to": ["dom", "event"],
-        "tags": ["basic", "dom", "event", "frontend"],
-        "input": ["element", "eventType", "handler", "options"],
-        "input_type": ["Element", "string", "Function", "AddEventListenerOptions"],
-        "return": ["remove"],
-        "return_type": ["Function"],
+        "use_to": [
+            "dom",
+            "event"
+        ],
+        "tags": [
+            "basic",
+            "dom",
+            "event",
+            "frontend"
+        ],
+        "input": [
+            "element",
+            "eventType",
+            "handler",
+            "options"
+        ],
+        "input_type": [
+            "Element",
+            "string",
+            "Function",
+            "AddEventListenerOptions"
+        ],
+        "return": [
+            "remove"
+        ],
+        "return_type": [
+            "Function"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function addEventListener(element, eventType, handler, options = false) {\n    element.addEventListener(eventType, handler, options);\n    return () => element.removeEventListener(eventType, handler, options);\n}"]
+        "code": [
+            "function addEventListener(element, eventType, handler, options = false) {\n    element.addEventListener(eventType, handler, options);\n    return () => element.removeEventListener(eventType, handler, options);\n}"
+        ]
     },
     {
         "name-zh": "本地存储设置",
@@ -532,15 +1144,30 @@
         "description-zh": "将数据存储到本地存储",
         "description-en": "Store data in local storage",
         "dependencies": [],
-        "use_to": ["storage", "frontend"],
-        "tags": ["basic", "storage", "frontend"],
-        "input": ["key", "value"],
-        "input_type": ["string", "any"],
+        "use_to": [
+            "storage",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "storage",
+            "frontend"
+        ],
+        "input": [
+            "key",
+            "value"
+        ],
+        "input_type": [
+            "string",
+            "any"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function setLocalStorage(key, value) {\n    localStorage.setItem(key, JSON.stringify(value));\n}"]
+        "code": [
+            "function setLocalStorage(key, value) {\n    localStorage.setItem(key, JSON.stringify(value));\n}"
+        ]
     },
     {
         "name-zh": "本地存储获取",
@@ -548,15 +1175,34 @@
         "description-zh": "从本地存储获取数据",
         "description-en": "Get data from local storage",
         "dependencies": [],
-        "use_to": ["storage", "frontend"],
-        "tags": ["basic", "storage", "frontend"],
-        "input": ["key", "defaultValue"],
-        "input_type": ["string", "any"],
-        "return": ["value"],
-        "return_type": ["any"],
+        "use_to": [
+            "storage",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "storage",
+            "frontend"
+        ],
+        "input": [
+            "key",
+            "defaultValue"
+        ],
+        "input_type": [
+            "string",
+            "any"
+        ],
+        "return": [
+            "value"
+        ],
+        "return_type": [
+            "any"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function getLocalStorage(key, defaultValue = null) {\n    try {\n        const item = localStorage.getItem(key);\n        return item ? JSON.parse(item) : defaultValue;\n    } catch {\n        return defaultValue;\n    }\n}"]
+        "code": [
+            "function getLocalStorage(key, defaultValue = null) {\n    try {\n        const item = localStorage.getItem(key);\n        return item ? JSON.parse(item) : defaultValue;\n    } catch {\n        return defaultValue;\n    }\n}"
+        ]
     },
     {
         "name-zh": "Cookie设置",
@@ -564,15 +1210,34 @@
         "description-zh": "设置Cookie值，支持过期时间和其他选项",
         "description-en": "Set cookie with expiry and options",
         "dependencies": [],
-        "use_to": ["cookie", "frontend"],
-        "tags": ["basic", "cookie", "frontend"],
-        "input": ["name", "value", "days", "path"],
-        "input_type": ["string", "string", "number", "string"],
+        "use_to": [
+            "cookie",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "cookie",
+            "frontend"
+        ],
+        "input": [
+            "name",
+            "value",
+            "days",
+            "path"
+        ],
+        "input_type": [
+            "string",
+            "string",
+            "number",
+            "string"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function setCookie(name, value, days = 7, path = '/') {\n    const expires = new Date(Date.now() + days * 864e5).toUTCString();\n    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)};expires=${expires};path=${path}`;\n}"]
+        "code": [
+            "function setCookie(name, value, days = 7, path = '/') {\n    const expires = new Date(Date.now() + days * 864e5).toUTCString();\n    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)};expires=${expires};path=${path}`;\n}"
+        ]
     },
     {
         "name-zh": "Cookie获取",
@@ -580,15 +1245,32 @@
         "description-zh": "获取指定名称的Cookie值",
         "description-en": "Get cookie value by name",
         "dependencies": [],
-        "use_to": ["cookie", "frontend"],
-        "tags": ["basic", "cookie", "frontend"],
-        "input": ["name"],
-        "input_type": ["string"],
-        "return": ["value"],
-        "return_type": ["string|null"],
+        "use_to": [
+            "cookie",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "cookie",
+            "frontend"
+        ],
+        "input": [
+            "name"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "value"
+        ],
+        "return_type": [
+            "string|null"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function getCookie(name) {\n    const value = `; ${document.cookie}`;\n    const parts = value.split(`; ${name}=`);\n    if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());\n    return null;\n}"]
+        "code": [
+            "function getCookie(name) {\n    const value = `; ${document.cookie}`;\n    const parts = value.split(`; ${name}=`);\n    if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());\n    return null;\n}"
+        ]
     },
     {
         "name-zh": "元素样式设置",
@@ -596,15 +1278,32 @@
         "description-zh": "设置DOM元素的样式",
         "description-en": "Set style of DOM element",
         "dependencies": [],
-        "use_to": ["dom", "style", "frontend"],
-        "tags": ["basic", "dom", "style", "frontend"],
-        "input": ["element", "styles"],
-        "input_type": ["Element", "Record<string, string|number>"],
+        "use_to": [
+            "dom",
+            "style",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "dom",
+            "style",
+            "frontend"
+        ],
+        "input": [
+            "element",
+            "styles"
+        ],
+        "input_type": [
+            "Element",
+            "Record<string, string|number>"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function setStyle(element, styles) {\n    Object.assign(element.style, styles);\n}"]
+        "code": [
+            "function setStyle(element, styles) {\n    Object.assign(element.style, styles);\n}"
+        ]
     },
     {
         "name-zh": "元素类名切换",
@@ -612,15 +1311,38 @@
         "description-zh": "切换DOM元素的类名",
         "description-en": "Toggle class of DOM element",
         "dependencies": [],
-        "use_to": ["dom", "class", "frontend"],
-        "tags": ["basic", "dom", "class", "frontend"],
-        "input": ["element", "className", "force"],
-        "input_type": ["Element", "string", "boolean|undefined"],
-        "return": ["hasClass"],
-        "return_type": ["boolean"],
+        "use_to": [
+            "dom",
+            "class",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "dom",
+            "class",
+            "frontend"
+        ],
+        "input": [
+            "element",
+            "className",
+            "force"
+        ],
+        "input_type": [
+            "Element",
+            "string",
+            "boolean|undefined"
+        ],
+        "return": [
+            "hasClass"
+        ],
+        "return_type": [
+            "boolean"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function toggleClass(element, className, force) {\n    return element.classList.toggle(className, force);\n}"]
+        "code": [
+            "function toggleClass(element, className, force) {\n    return element.classList.toggle(className, force);\n}"
+        ]
     },
     {
         "name-zh": "动画帧请求",
@@ -628,15 +1350,33 @@
         "description-zh": "使用requestAnimationFrame包装异步函数",
         "description-en": "Wrap async function with requestAnimationFrame",
         "dependencies": [],
-        "use_to": ["animation", "performance", "frontend"],
-        "tags": ["intermediate", "animation", "frontend"],
-        "input": ["callback"],
-        "input_type": ["Function"],
-        "return": ["cancel"],
-        "return_type": ["Function"],
+        "use_to": [
+            "animation",
+            "performance",
+            "frontend"
+        ],
+        "tags": [
+            "intermediate",
+            "animation",
+            "frontend"
+        ],
+        "input": [
+            "callback"
+        ],
+        "input_type": [
+            "Function"
+        ],
+        "return": [
+            "cancel"
+        ],
+        "return_type": [
+            "Function"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function raf(callback) {\n    let frameId = null;\n    const animate = () => {\n        callback();\n        frameId = requestAnimationFrame(animate);\n    };\n    frameId = requestAnimationFrame(animate);\n    return () => {\n        if (frameId) cancelAnimationFrame(frameId);\n    };\n}"]
+        "code": [
+            "function raf(callback) {\n    let frameId = null;\n    const animate = () => {\n        callback();\n        frameId = requestAnimationFrame(animate);\n    };\n    frameId = requestAnimationFrame(animate);\n    return () => {\n        if (frameId) cancelAnimationFrame(frameId);\n    };\n}"
+        ]
     },
     {
         "name-zh": "Base64编码",
@@ -644,15 +1384,32 @@
         "description-zh": "将字符串编码为Base64格式",
         "description-en": "Encode string to Base64 format",
         "dependencies": [],
-        "use_to": ["encoding", "crypto"],
-        "tags": ["intermediate", "encoding", "crypto"],
-        "input": ["str"],
-        "input_type": ["string"],
-        "return": ["encoded"],
-        "return_type": ["string"],
+        "use_to": [
+            "encoding",
+            "crypto"
+        ],
+        "tags": [
+            "intermediate",
+            "encoding",
+            "crypto"
+        ],
+        "input": [
+            "str"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "encoded"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function base64Encode(str) {\n    return btoa(str);\n}"]
+        "code": [
+            "function base64Encode(str) {\n    return btoa(str);\n}"
+        ]
     },
     {
         "name-zh": "Base64解码",
@@ -660,15 +1417,32 @@
         "description-zh": "将Base64字符串解码为原始字符串",
         "description-en": "Decode Base64 string to original string",
         "dependencies": [],
-        "use_to": ["decoding", "crypto"],
-        "tags": ["intermediate", "encoding", "crypto"],
-        "input": ["str"],
-        "input_type": ["string"],
-        "return": ["decoded"],
-        "return_type": ["string"],
+        "use_to": [
+            "decoding",
+            "crypto"
+        ],
+        "tags": [
+            "intermediate",
+            "encoding",
+            "crypto"
+        ],
+        "input": [
+            "str"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "decoded"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function base64Decode(str) {\n    return atob(str);\n}"]
+        "code": [
+            "function base64Decode(str) {\n    return atob(str);\n}"
+        ]
     },
     {
         "name-zh": "凯撒密码加密",
@@ -676,15 +1450,32 @@
         "description-zh": "使用凯撒密码加密字符串（仅处理英文字母）",
         "description-en": "Encrypt string using Caesar cipher (letters only)",
         "dependencies": [],
-        "use_to": ["crypto"],
-        "tags": ["basic", "crypto"],
-        "input": ["text", "shift"],
-        "input_type": ["string", "number"],
-        "return": ["encrypted"],
-        "return_type": ["string"],
+        "use_to": [
+            "crypto"
+        ],
+        "tags": [
+            "basic",
+            "crypto"
+        ],
+        "input": [
+            "text",
+            "shift"
+        ],
+        "input_type": [
+            "string",
+            "number"
+        ],
+        "return": [
+            "encrypted"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function caesarEncrypt(text, shift) {\n    return text.replace(/[a-zA-Z]/g, char => {\n        const base = char <= 'Z' ? 65 : 97;\n        return String.fromCharCode((char.charCodeAt(0) - base + shift) % 26 + base);\n    });\n}"]
+        "code": [
+            "function caesarEncrypt(text, shift) {\n    return text.replace(/[a-zA-Z]/g, char => {\n        const base = char <= 'Z' ? 65 : 97;\n        return String.fromCharCode((char.charCodeAt(0) - base + shift) % 26 + base);\n    });\n}"
+        ]
     },
     {
         "name-zh": "凯撒密码解密",
@@ -692,15 +1483,32 @@
         "description-zh": "使用凯撒密码解密字符串（仅处理英文字母）",
         "description-en": "Decrypt string using Caesar cipher (letters only)",
         "dependencies": [],
-        "use_to": ["crypto"],
-        "tags": ["basic", "crypto"],
-        "input": ["text", "shift"],
-        "input_type": ["string", "number"],
-        "return": ["decrypted"],
-        "return_type": ["string"],
+        "use_to": [
+            "crypto"
+        ],
+        "tags": [
+            "basic",
+            "crypto"
+        ],
+        "input": [
+            "text",
+            "shift"
+        ],
+        "input_type": [
+            "string",
+            "number"
+        ],
+        "return": [
+            "decrypted"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function caesarDecrypt(text, shift) {\n    return caesarEncrypt(text, -shift);\n}"]
+        "code": [
+            "function caesarDecrypt(text, shift) {\n    return caesarEncrypt(text, -shift);\n}"
+        ]
     },
     {
         "name-zh": "异或加密",
@@ -708,15 +1516,32 @@
         "description-zh": "使用异或运算加密字符串（可用于加解密）",
         "description-en": "Encrypt string using XOR operation (can be used for both encryption and decryption)",
         "dependencies": [],
-        "use_to": ["crypto"],
-        "tags": ["intermediate", "crypto"],
-        "input": ["text", "key"],
-        "input_type": ["string", "string"],
-        "return": ["encrypted"],
-        "return_type": ["string"],
+        "use_to": [
+            "crypto"
+        ],
+        "tags": [
+            "intermediate",
+            "crypto"
+        ],
+        "input": [
+            "text",
+            "key"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "encrypted"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function xorEncrypt(text, key) {\n    const keyRepeated = key.repeat(Math.ceil(text.length / key.length)).slice(0, text.length);\n    return text.split('').map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ keyRepeated.charCodeAt(i))).join('');\n}"]
+        "code": [
+            "function xorEncrypt(text, key) {\n    const keyRepeated = key.repeat(Math.ceil(text.length / key.length)).slice(0, text.length);\n    return text.split('').map((char, i) => String.fromCharCode(char.charCodeAt(0) ^ keyRepeated.charCodeAt(i))).join('');\n}"
+        ]
     },
     {
         "name-zh": "数组长度",
@@ -724,15 +1549,31 @@
         "description-zh": "获取数组的长度",
         "description-en": "Get the length of an array",
         "dependencies": [],
-        "use_to": ["array operations"],
-        "tags": ["basic", "array", "beginner"],
-        "input": ["arr"],
-        "input_type": ["Array"],
-        "return": ["length"],
-        "return_type": ["number"],
+        "use_to": [
+            "array operations"
+        ],
+        "tags": [
+            "basic",
+            "array",
+            "beginner"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "Array"
+        ],
+        "return": [
+            "length"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function getArrayLength(arr) {\n    return arr.length;\n}"]
+        "code": [
+            "function getArrayLength(arr) {\n    return arr.length;\n}"
+        ]
     },
     {
         "name-zh": "数组求和",
@@ -740,15 +1581,32 @@
         "description-zh": "对数字数组求和",
         "description-en": "Sum numbers in an array",
         "dependencies": [],
-        "use_to": ["array operations", "math"],
-        "tags": ["basic", "array", "math"],
-        "input": ["arr"],
-        "input_type": ["number[]"],
-        "return": ["sum"],
-        "return_type": ["number"],
+        "use_to": [
+            "array operations",
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "array",
+            "math"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "number[]"
+        ],
+        "return": [
+            "sum"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function sumArray(arr) {\n    return arr.reduce((a, b) => a + b, 0);\n}"]
+        "code": [
+            "function sumArray(arr) {\n    return arr.reduce((a, b) => a + b, 0);\n}"
+        ]
     },
     {
         "name-zh": "数组最大值",
@@ -756,15 +1614,32 @@
         "description-zh": "获取数组中的最大值",
         "description-en": "Get max value in an array",
         "dependencies": [],
-        "use_to": ["array operations", "math"],
-        "tags": ["basic", "array", "math"],
-        "input": ["arr"],
-        "input_type": ["number[]"],
-        "return": ["max"],
-        "return_type": ["number"],
+        "use_to": [
+            "array operations",
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "array",
+            "math"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "number[]"
+        ],
+        "return": [
+            "max"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function maxInArray(arr) {\n    return Math.max(...arr);\n}"]
+        "code": [
+            "function maxInArray(arr) {\n    return Math.max(...arr);\n}"
+        ]
     },
     {
         "name-zh": "数组最小值",
@@ -772,15 +1647,32 @@
         "description-zh": "获取数组中的最小值",
         "description-en": "Get min value in an array",
         "dependencies": [],
-        "use_to": ["array operations", "math"],
-        "tags": ["basic", "array", "math"],
-        "input": ["arr"],
-        "input_type": ["number[]"],
-        "return": ["min"],
-        "return_type": ["number"],
+        "use_to": [
+            "array operations",
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "array",
+            "math"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "number[]"
+        ],
+        "return": [
+            "min"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function minInArray(arr) {\n    return Math.min(...arr);\n}"]
+        "code": [
+            "function minInArray(arr) {\n    return Math.min(...arr);\n}"
+        ]
     },
     {
         "name-zh": "去重数组",
@@ -788,15 +1680,31 @@
         "description-zh": "去除数组中重复的元素",
         "description-en": "Remove duplicate elements from an array",
         "dependencies": [],
-        "use_to": ["array operations"],
-        "tags": ["intermediate", "array", "set"],
-        "input": ["arr"],
-        "input_type": ["any[]"],
-        "return": ["unique"],
-        "return_type": ["any[]"],
+        "use_to": [
+            "array operations"
+        ],
+        "tags": [
+            "intermediate",
+            "array",
+            "set"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "any[]"
+        ],
+        "return": [
+            "unique"
+        ],
+        "return_type": [
+            "any[]"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function uniqueArray(arr) {\n    return [...new Set(arr)];\n}"]
+        "code": [
+            "function uniqueArray(arr) {\n    return [...new Set(arr)];\n}"
+        ]
     },
     {
         "name-zh": "数组扁平化",
@@ -804,15 +1712,32 @@
         "description-zh": "将多维数组扁平化为一维",
         "description-en": "Flatten a nested array into one level",
         "dependencies": [],
-        "use_to": ["array operations"],
-        "tags": ["intermediate", "array"],
-        "input": ["arr", "depth"],
-        "input_type": ["any[]", "number"],
-        "return": ["flat"],
-        "return_type": ["any[]"],
+        "use_to": [
+            "array operations"
+        ],
+        "tags": [
+            "intermediate",
+            "array"
+        ],
+        "input": [
+            "arr",
+            "depth"
+        ],
+        "input_type": [
+            "any[]",
+            "number"
+        ],
+        "return": [
+            "flat"
+        ],
+        "return_type": [
+            "any[]"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function flattenArray(arr, depth = 1) {\n    return arr.flat(depth);\n}"]
+        "code": [
+            "function flattenArray(arr, depth = 1) {\n    return arr.flat(depth);\n}"
+        ]
     },
     {
         "name-zh": "字符串反转",
@@ -820,15 +1745,30 @@
         "description-zh": "反转字符串",
         "description-en": "Reverse a string",
         "dependencies": [],
-        "use_to": ["string operations"],
-        "tags": ["basic", "string"],
-        "input": ["str"],
-        "input_type": ["string"],
-        "return": ["reversed"],
-        "return_type": ["string"],
+        "use_to": [
+            "string operations"
+        ],
+        "tags": [
+            "basic",
+            "string"
+        ],
+        "input": [
+            "str"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "reversed"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function reverseString(str) {\n    return str.split('').reverse().join('');\n}"]
+        "code": [
+            "function reverseString(str) {\n    return str.split('').reverse().join('');\n}"
+        ]
     },
     {
         "name-zh": "字符串是否包含",
@@ -836,15 +1776,32 @@
         "description-zh": "判断子串是否存在",
         "description-en": "Check if substring exists",
         "dependencies": [],
-        "use_to": ["string operations"],
-        "tags": ["basic", "string"],
-        "input": ["str", "substr"],
-        "input_type": ["string", "string"],
-        "return": ["exists"],
-        "return_type": ["boolean"],
+        "use_to": [
+            "string operations"
+        ],
+        "tags": [
+            "basic",
+            "string"
+        ],
+        "input": [
+            "str",
+            "substr"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "exists"
+        ],
+        "return_type": [
+            "boolean"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function includesString(str, substr) {\n    return str.includes(substr);\n}"]
+        "code": [
+            "function includesString(str, substr) {\n    return str.includes(substr);\n}"
+        ]
     },
     {
         "name-zh": "去除首尾空白",
@@ -852,15 +1809,30 @@
         "description-zh": "去除字符串首尾空白",
         "description-en": "Trim whitespace at both ends of a string",
         "dependencies": [],
-        "use_to": ["string operations"],
-        "tags": ["basic", "string"],
-        "input": ["str"],
-        "input_type": ["string"],
-        "return": ["trimmed"],
-        "return_type": ["string"],
+        "use_to": [
+            "string operations"
+        ],
+        "tags": [
+            "basic",
+            "string"
+        ],
+        "input": [
+            "str"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "trimmed"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function trimString(str) {\n    return str.trim();\n}"]
+        "code": [
+            "function trimString(str) {\n    return str.trim();\n}"
+        ]
     },
     {
         "name-zh": "对象深拷贝",
@@ -868,15 +1840,31 @@
         "description-zh": "对可序列化对象进行深拷贝",
         "description-en": "Deep clone a serializable object",
         "dependencies": [],
-        "use_to": ["object operations"],
-        "tags": ["intermediate", "object", "json"],
-        "input": ["obj"],
-        "input_type": ["object"],
-        "return": ["clone"],
-        "return_type": ["object"],
+        "use_to": [
+            "object operations"
+        ],
+        "tags": [
+            "intermediate",
+            "object",
+            "json"
+        ],
+        "input": [
+            "obj"
+        ],
+        "input_type": [
+            "object"
+        ],
+        "return": [
+            "clone"
+        ],
+        "return_type": [
+            "object"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function deepClone(obj) {\n    return JSON.parse(JSON.stringify(obj));\n}"]
+        "code": [
+            "function deepClone(obj) {\n    return JSON.parse(JSON.stringify(obj));\n}"
+        ]
     },
     {
         "name-zh": "安全对象取值",
@@ -884,15 +1872,34 @@
         "description-zh": "根据路径安全地获取对象属性",
         "description-en": "Safely get a property by path from an object",
         "dependencies": [],
-        "use_to": ["object operations"],
-        "tags": ["intermediate", "object"],
-        "input": ["obj", "path", "defaultValue"],
-        "input_type": ["any", "string", "any"],
-        "return": ["value"],
-        "return_type": ["any"],
+        "use_to": [
+            "object operations"
+        ],
+        "tags": [
+            "intermediate",
+            "object"
+        ],
+        "input": [
+            "obj",
+            "path",
+            "defaultValue"
+        ],
+        "input_type": [
+            "any",
+            "string",
+            "any"
+        ],
+        "return": [
+            "value"
+        ],
+        "return_type": [
+            "any"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function get(obj, path, defaultValue) {\n    return path.split('.').reduce((o, k) => (o && k in o ? o[k] : undefined), obj) ?? defaultValue;\n}"]
+        "code": [
+            "function get(obj, path, defaultValue) {\n    return path.split('.').reduce((o, k) => (o && k in o ? o[k] : undefined), obj) ?? defaultValue;\n}"
+        ]
     },
     {
         "name-zh": "节流",
@@ -900,15 +1907,33 @@
         "description-zh": "限制函数在一定时间内的调用频率",
         "description-en": "Throttle a function so it runs at most once per interval",
         "dependencies": [],
-        "use_to": ["performance", "event"],
-        "tags": ["intermediate", "function"],
-        "input": ["fn", "wait"],
-        "input_type": ["Function", "number"],
-        "return": ["wrapped"],
-        "return_type": ["Function"],
+        "use_to": [
+            "performance",
+            "event"
+        ],
+        "tags": [
+            "intermediate",
+            "function"
+        ],
+        "input": [
+            "fn",
+            "wait"
+        ],
+        "input_type": [
+            "Function",
+            "number"
+        ],
+        "return": [
+            "wrapped"
+        ],
+        "return_type": [
+            "Function"
+        ],
         "timer_score": 85,
         "memory_score": 85,
-        "code": ["function throttle(fn, wait) {\n    let last = 0;\n    return function(...args) {\n        const now = Date.now();\n        if (now - last >= wait) {\n            last = now;\n            return fn.apply(this, args);\n        }\n    };\n}"]
+        "code": [
+            "function throttle(fn, wait) {\n    let last = 0;\n    return function(...args) {\n        const now = Date.now();\n        if (now - last >= wait) {\n            last = now;\n            return fn.apply(this, args);\n        }\n    };\n}"
+        ]
     },
     {
         "name-zh": "防抖",
@@ -916,15 +1941,33 @@
         "description-zh": "在空闲期结束后再执行函数",
         "description-en": "Debounce a function to run after idle period",
         "dependencies": [],
-        "use_to": ["performance", "event"],
-        "tags": ["intermediate", "function"],
-        "input": ["fn", "wait"],
-        "input_type": ["Function", "number"],
-        "return": ["wrapped"],
-        "return_type": ["Function"],
+        "use_to": [
+            "performance",
+            "event"
+        ],
+        "tags": [
+            "intermediate",
+            "function"
+        ],
+        "input": [
+            "fn",
+            "wait"
+        ],
+        "input_type": [
+            "Function",
+            "number"
+        ],
+        "return": [
+            "wrapped"
+        ],
+        "return_type": [
+            "Function"
+        ],
         "timer_score": 85,
         "memory_score": 85,
-        "code": ["function debounce(fn, wait) {\n    let timer = null;\n    return function(...args) {\n        clearTimeout(timer);\n        timer = setTimeout(() => fn.apply(this, args), wait);\n    };\n}"]
+        "code": [
+            "function debounce(fn, wait) {\n    let timer = null;\n    return function(...args) {\n        clearTimeout(timer);\n        timer = setTimeout(() => fn.apply(this, args), wait);\n    };\n}"
+        ]
     },
     {
         "name-zh": "生成范围数组",
@@ -932,15 +1975,35 @@
         "description-zh": "生成指定起止和步长的整数数组",
         "description-en": "Generate integer range array",
         "dependencies": [],
-        "use_to": ["utility", "array"],
-        "tags": ["basic", "utility"],
-        "input": ["start", "end", "step"],
-        "input_type": ["number", "number", "number"],
-        "return": ["range"],
-        "return_type": ["number[]"],
+        "use_to": [
+            "utility",
+            "array"
+        ],
+        "tags": [
+            "basic",
+            "utility"
+        ],
+        "input": [
+            "start",
+            "end",
+            "step"
+        ],
+        "input_type": [
+            "number",
+            "number",
+            "number"
+        ],
+        "return": [
+            "range"
+        ],
+        "return_type": [
+            "number[]"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function range(start, end, step = 1) {\n    const out = [];\n    for (let i = start; i <= end; i += step) out.push(i);\n    return out;\n}"]
+        "code": [
+            "function range(start, end, step = 1) {\n    const out = [];\n    for (let i = start; i <= end; i += step) out.push(i);\n    return out;\n}"
+        ]
     },
     {
         "name-zh": "随机整数",
@@ -948,15 +2011,33 @@
         "description-zh": "生成闭区间随机整数",
         "description-en": "Generate random integer inclusive",
         "dependencies": [],
-        "use_to": ["math", "random"],
-        "tags": ["basic", "math"],
-        "input": ["min", "max"],
-        "input_type": ["number", "number"],
-        "return": ["value"],
-        "return_type": ["number"],
+        "use_to": [
+            "math",
+            "random"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "min",
+            "max"
+        ],
+        "input_type": [
+            "number",
+            "number"
+        ],
+        "return": [
+            "value"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function randomInt(min, max) {\n    min = Math.ceil(min);\n    max = Math.floor(max);\n    return Math.floor(Math.random() * (max - min + 1)) + min;\n}"]
+        "code": [
+            "function randomInt(min, max) {\n    min = Math.ceil(min);\n    max = Math.floor(max);\n    return Math.floor(Math.random() * (max - min + 1)) + min;\n}"
+        ]
     },
     {
         "name-zh": "日期格式化(ISO)",
@@ -964,15 +2045,31 @@
         "description-zh": "将日期对象格式化为 ISO 字符串",
         "description-en": "Format Date to ISO string",
         "dependencies": [],
-        "use_to": ["date", "format"],
-        "tags": ["basic", "date"],
-        "input": ["date"],
-        "input_type": ["Date"],
-        "return": ["iso"],
-        "return_type": ["string"],
+        "use_to": [
+            "date",
+            "format"
+        ],
+        "tags": [
+            "basic",
+            "date"
+        ],
+        "input": [
+            "date"
+        ],
+        "input_type": [
+            "Date"
+        ],
+        "return": [
+            "iso"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function toISO(date) {\n    return date.toISOString();\n}"]
+        "code": [
+            "function toISO(date) {\n    return date.toISOString();\n}"
+        ]
     },
     {
         "name-zh": "安全JSON解析",
@@ -980,15 +2077,33 @@
         "description-zh": "安全地解析 JSON 字符串",
         "description-en": "Safely parse a JSON string",
         "dependencies": [],
-        "use_to": ["json", "parsing"],
-        "tags": ["basic", "json"],
-        "input": ["str", "fallback"],
-        "input_type": ["string", "any"],
-        "return": ["value"],
-        "return_type": ["any"],
+        "use_to": [
+            "json",
+            "parsing"
+        ],
+        "tags": [
+            "basic",
+            "json"
+        ],
+        "input": [
+            "str",
+            "fallback"
+        ],
+        "input_type": [
+            "string",
+            "any"
+        ],
+        "return": [
+            "value"
+        ],
+        "return_type": [
+            "any"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function safeJsonParse(str, fallback = null) {\n    try { return JSON.parse(str); } catch { return fallback; }\n}"]
+        "code": [
+            "function safeJsonParse(str, fallback = null) {\n    try { return JSON.parse(str); } catch { return fallback; }\n}"
+        ]
     },
     {
         "name-zh": "对象转查询字符串",
@@ -996,15 +2111,31 @@
         "description-zh": "将对象转换为 URL 查询字符串",
         "description-en": "Convert object to URL query string",
         "dependencies": [],
-        "use_to": ["url", "string"],
-        "tags": ["intermediate", "utility"],
-        "input": ["obj"],
-        "input_type": ["Record<string, any>"],
-        "return": ["query"],
-        "return_type": ["string"],
+        "use_to": [
+            "url",
+            "string"
+        ],
+        "tags": [
+            "intermediate",
+            "utility"
+        ],
+        "input": [
+            "obj"
+        ],
+        "input_type": [
+            "Record<string, any>"
+        ],
+        "return": [
+            "query"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function toQueryString(obj) {\n    return Object.keys(obj)\n        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k]))\n        .join('&');\n}"]
+        "code": [
+            "function toQueryString(obj) {\n    return Object.keys(obj)\n        .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(obj[k]))\n        .join('&');\n}"
+        ]
     },
     {
         "name-zh": "均值",
@@ -1012,15 +2143,30 @@
         "description-zh": "计算数值数组的平均值",
         "description-en": "Compute mean of a numeric array",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["arr"],
-        "input_type": ["number[]"],
-        "return": ["mean"],
-        "return_type": ["number"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "number[]"
+        ],
+        "return": [
+            "mean"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function mean(arr) {\n    if (arr.length === 0) return NaN;\n    return arr.reduce((a,b)=>a+b,0) / arr.length;\n}"]
+        "code": [
+            "function mean(arr) {\n    if (arr.length === 0) return NaN;\n    return arr.reduce((a,b)=>a+b,0) / arr.length;\n}"
+        ]
     },
     {
         "name-zh": "中位数",
@@ -1028,15 +2174,30 @@
         "description-zh": "计算数值数组的中位数",
         "description-en": "Compute median of a numeric array",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["intermediate", "math"],
-        "input": ["arr"],
-        "input_type": ["number[]"],
-        "return": ["median"],
-        "return_type": ["number"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "math"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "number[]"
+        ],
+        "return": [
+            "median"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function median(arr) {\n    if (arr.length === 0) return NaN;\n    const a = [...arr].sort((x,y)=>x-y);\n    const n = a.length;\n    return n % 2 ? a[(n-1)/2] : (a[n/2-1] + a[n/2]) / 2;\n}"]
+        "code": [
+            "function median(arr) {\n    if (arr.length === 0) return NaN;\n    const a = [...arr].sort((x,y)=>x-y);\n    const n = a.length;\n    return n % 2 ? a[(n-1)/2] : (a[n/2-1] + a[n/2]) / 2;\n}"
+        ]
     },
     {
         "name-zh": "标准差",
@@ -1044,15 +2205,30 @@
         "description-zh": "计算样本标准差",
         "description-en": "Compute sample standard deviation",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["intermediate", "math"],
-        "input": ["arr"],
-        "input_type": ["number[]"],
-        "return": ["stdev"],
-        "return_type": ["number"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "intermediate",
+            "math"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "number[]"
+        ],
+        "return": [
+            "stdev"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function stdev(arr) {\n    const n = arr.length;\n    if (n < 2) return NaN;\n    const m = mean(arr);\n    const v = arr.reduce((s,x)=>s+(x-m)*(x-m),0)/(n-1);\n    return Math.sqrt(v);\n}"]
+        "code": [
+            "function stdev(arr) {\n    const n = arr.length;\n    if (n < 2) return NaN;\n    const m = mean(arr);\n    const v = arr.reduce((s,x)=>s+(x-m)*(x-m),0)/(n-1);\n    return Math.sqrt(v);\n}"
+        ]
     },
     {
         "name-zh": "夹取",
@@ -1060,15 +2236,34 @@
         "description-zh": "将数值限制在区间内",
         "description-en": "Clamp a number into [min, max]",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["x", "min", "max"],
-        "input_type": ["number", "number", "number"],
-        "return": ["y"],
-        "return_type": ["number"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "x",
+            "min",
+            "max"
+        ],
+        "input_type": [
+            "number",
+            "number",
+            "number"
+        ],
+        "return": [
+            "y"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function clamp(x, min, max) {\n    return Math.min(Math.max(x, min), max);\n}"]
+        "code": [
+            "function clamp(x, min, max) {\n    return Math.min(Math.max(x, min), max);\n}"
+        ]
     },
     {
         "name-zh": "最大公约数",
@@ -1076,15 +2271,33 @@
         "description-zh": "使用欧几里得算法计算 GCD",
         "description-en": "Compute GCD via Euclid algorithm",
         "dependencies": [],
-        "use_to": ["math", "number theory"],
-        "tags": ["basic", "math"],
-        "input": ["a", "b"],
-        "input_type": ["number", "number"],
-        "return": ["g"],
-        "return_type": ["number"],
+        "use_to": [
+            "math",
+            "number theory"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "number",
+            "number"
+        ],
+        "return": [
+            "g"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function gcd(a, b) {\n    a = Math.abs(a); b = Math.abs(b);\n    while (b) { const t = b; b = a % b; a = t; }\n    return a;\n}"]
+        "code": [
+            "function gcd(a, b) {\n    a = Math.abs(a); b = Math.abs(b);\n    while (b) { const t = b; b = a % b; a = t; }\n    return a;\n}"
+        ]
     },
     {
         "name-zh": "最小公倍数",
@@ -1092,15 +2305,33 @@
         "description-zh": "计算 LCM",
         "description-en": "Compute LCM",
         "dependencies": [],
-        "use_to": ["math", "number theory"],
-        "tags": ["basic", "math"],
-        "input": ["a", "b"],
-        "input_type": ["number", "number"],
-        "return": ["l"],
-        "return_type": ["number"],
+        "use_to": [
+            "math",
+            "number theory"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "number",
+            "number"
+        ],
+        "return": [
+            "l"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function lcm(a, b) {\n    if (a === 0 || b === 0) return 0;\n    return Math.abs(a*b) / gcd(a,b);\n}"]
+        "code": [
+            "function lcm(a, b) {\n    if (a === 0 || b === 0) return 0;\n    return Math.abs(a*b) / gcd(a,b);\n}"
+        ]
     },
     {
         "name-zh": "阶乘",
@@ -1108,15 +2339,30 @@
         "description-zh": "计算非负整数阶乘",
         "description-en": "Compute factorial of non-negative integer",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["n"],
-        "input_type": ["number"],
-        "return": ["f"],
-        "return_type": ["number"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "number"
+        ],
+        "return": [
+            "f"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function factorial(n) {\n    if (n < 0) return NaN;\n    let r = 1;\n    for (let i = 2; i <= n; i++) r *= i;\n    return r;\n}"]
+        "code": [
+            "function factorial(n) {\n    if (n < 0) return NaN;\n    let r = 1;\n    for (let i = 2; i <= n; i++) r *= i;\n    return r;\n}"
+        ]
     },
     {
         "name-zh": "URL 解析",
@@ -1124,15 +2370,30 @@
         "description-zh": "解析 URL 并返回对象",
         "description-en": "Parse URL into components",
         "dependencies": [],
-        "use_to": ["url"],
-        "tags": ["basic", "url"],
-        "input": ["urlStr"],
-        "input_type": ["string"],
-        "return": ["u"],
-        "return_type": ["URL"],
+        "use_to": [
+            "url"
+        ],
+        "tags": [
+            "basic",
+            "url"
+        ],
+        "input": [
+            "urlStr"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "u"
+        ],
+        "return_type": [
+            "URL"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function parseUrl(urlStr) {\n    return new URL(urlStr);\n}"]
+        "code": [
+            "function parseUrl(urlStr) {\n    return new URL(urlStr);\n}"
+        ]
     },
     {
         "name-zh": "查询字符串解析",
@@ -1140,15 +2401,31 @@
         "description-zh": "将查询字符串解析为对象",
         "description-en": "Parse query string to object",
         "dependencies": [],
-        "use_to": ["url", "string"],
-        "tags": ["basic", "url"],
-        "input": ["qs"],
-        "input_type": ["string"],
-        "return": ["obj"],
-        "return_type": ["Record<string, string>"],
+        "use_to": [
+            "url",
+            "string"
+        ],
+        "tags": [
+            "basic",
+            "url"
+        ],
+        "input": [
+            "qs"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "obj"
+        ],
+        "return_type": [
+            "Record<string, string>"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function parseQueryString(qs) {\n    if (qs.startsWith('?')) qs = qs.slice(1);\n    const out = {};\n    for (const pair of qs.split('&')) {\n        if (!pair) continue;\n        const [k, v = ''] = pair.split('=');\n        out[decodeURIComponent(k)] = decodeURIComponent(v);\n    }\n    return out;\n}"]
+        "code": [
+            "function parseQueryString(qs) {\n    if (qs.startsWith('?')) qs = qs.slice(1);\n    const out = {};\n    for (const pair of qs.split('&')) {\n        if (!pair) continue;\n        const [k, v = ''] = pair.split('=');\n        out[decodeURIComponent(k)] = decodeURIComponent(v);\n    }\n    return out;\n}"
+        ]
     },
     {
         "name-zh": "数字四舍五入(小数位)",
@@ -1156,15 +2433,32 @@
         "description-zh": "按给定小数位四舍五入",
         "description-en": "Round number to decimals",
         "dependencies": [],
-        "use_to": ["math"],
-        "tags": ["basic", "math"],
-        "input": ["x", "decimals"],
-        "input_type": ["number", "number"],
-        "return": ["y"],
-        "return_type": ["number"],
+        "use_to": [
+            "math"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "x",
+            "decimals"
+        ],
+        "input_type": [
+            "number",
+            "number"
+        ],
+        "return": [
+            "y"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function roundTo(x, decimals = 0) {\n    const p = 10 ** decimals;\n    return Math.round(x * p) / p;\n}"]
+        "code": [
+            "function roundTo(x, decimals = 0) {\n    const p = 10 ** decimals;\n    return Math.round(x * p) / p;\n}"
+        ]
     },
     {
         "name-zh": "字符串首字母大写",
@@ -1172,32 +2466,66 @@
         "description-zh": "将字符串首字母大写",
         "description-en": "Capitalize first letter",
         "dependencies": [],
-        "use_to": ["string"],
-        "tags": ["basic", "string"],
-        "input": ["s"],
-        "input_type": ["string"],
-        "return": ["t"],
-        "return_type": ["string"],
+        "use_to": [
+            "string"
+        ],
+        "tags": [
+            "basic",
+            "string"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "t"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function capitalize(s) {\n    if (!s) return s;\n    return s[0].toUpperCase() + s.slice(1);\n}"]
-    }
-    ,
+        "code": [
+            "function capitalize(s) {\n    if (!s) return s;\n    return s[0].toUpperCase() + s.slice(1);\n}"
+        ]
+    },
     {
         "name-zh": "HTTP GET(JSON,超时)",
         "name-en": "HTTP GET JSON (timeout)",
         "description-zh": "使用 fetch 发送 GET 请求，支持 AbortController 超时，解析 JSON 返回，失败返回 null",
         "description-en": "Fetch GET with AbortController timeout; parse and return JSON or null",
         "dependencies": [],
-        "use_to": ["http", "json", "network"],
-        "tags": ["network", "http", "json"],
-        "input": ["url", "timeoutMs"],
-        "input_type": ["string", "number"],
-        "return": ["data"],
-        "return_type": ["any"],
+        "use_to": [
+            "http",
+            "json",
+            "network"
+        ],
+        "tags": [
+            "network",
+            "http",
+            "json"
+        ],
+        "input": [
+            "url",
+            "timeoutMs"
+        ],
+        "input_type": [
+            "string",
+            "number"
+        ],
+        "return": [
+            "data"
+        ],
+        "return_type": [
+            "any"
+        ],
         "timer_score": 70,
         "memory_score": 85,
-        "code": ["async function fetchJson(url, timeoutMs = 5000) {\n  const ctrl = new AbortController();\n  const t = setTimeout(() => ctrl.abort(), timeoutMs);\n  try {\n    const res = await fetch(url, { signal: ctrl.signal });\n    if (!res.ok) return null;\n    return await res.json();\n  } catch {\n    return null;\n  } finally {\n    clearTimeout(t);\n  }\n}"]
+        "code": [
+            "async function fetchJson(url, timeoutMs = 5000) {\n  const ctrl = new AbortController();\n  const t = setTimeout(() => ctrl.abort(), timeoutMs);\n  try {\n    const res = await fetch(url, { signal: ctrl.signal });\n    if (!res.ok) return null;\n    return await res.json();\n  } catch {\n    return null;\n  } finally {\n    clearTimeout(t);\n  }\n}"
+        ]
     },
     {
         "name-zh": "HTTP POST(JSON,超时)",
@@ -1205,32 +2533,74 @@
         "description-zh": "使用 fetch 发送 JSON Body 的 POST 请求，支持超时，返回文本或 null",
         "description-en": "Fetch POST with JSON body and timeout; return text or null",
         "dependencies": [],
-        "use_to": ["http", "json", "network"],
-        "tags": ["network", "http", "json"],
-        "input": ["url", "payload", "timeoutMs"],
-        "input_type": ["string", "any", "number"],
-        "return": ["text"],
-        "return_type": ["string|null"],
+        "use_to": [
+            "http",
+            "json",
+            "network"
+        ],
+        "tags": [
+            "network",
+            "http",
+            "json"
+        ],
+        "input": [
+            "url",
+            "payload",
+            "timeoutMs"
+        ],
+        "input_type": [
+            "string",
+            "any",
+            "number"
+        ],
+        "return": [
+            "text"
+        ],
+        "return_type": [
+            "string|null"
+        ],
         "timer_score": 65,
         "memory_score": 85,
-        "code": ["async function postJson(url, payload, timeoutMs = 5000) {\n  const ctrl = new AbortController();\n  const t = setTimeout(() => ctrl.abort(), timeoutMs);\n  try {\n    const res = await fetch(url, {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify(payload),\n      signal: ctrl.signal\n    });\n    if (!res.ok) return null;\n    return await res.text();\n  } catch {\n    return null;\n  } finally {\n    clearTimeout(t);\n  }\n}"]
-    }
-    ,
+        "code": [
+            "async function postJson(url, payload, timeoutMs = 5000) {\n  const ctrl = new AbortController();\n  const t = setTimeout(() => ctrl.abort(), timeoutMs);\n  try {\n    const res = await fetch(url, {\n      method: 'POST',\n      headers: { 'Content-Type': 'application/json' },\n      body: JSON.stringify(payload),\n      signal: ctrl.signal\n    });\n    if (!res.ok) return null;\n    return await res.text();\n  } catch {\n    return null;\n  } finally {\n    clearTimeout(t);\n  }\n}"
+        ]
+    },
     {
         "name-zh": "Dijkstra最短路",
         "name-en": "Dijkstra Shortest Path",
         "description-zh": "在非负权图上用二叉堆优先队列求单源最短路",
         "description-en": "Single-source shortest path on non-negative graph using binary heap priority queue",
         "dependencies": [],
-        "use_to": ["graph", "shortest path"],
-        "tags": ["graph", "dijkstra", "algorithm"],
-        "input": ["n", "adj", "src"],
-        "input_type": ["number", "Array<Array<[number, number]>>", "number"],
-        "return": ["dist"],
-        "return_type": ["number[]"],
+        "use_to": [
+            "graph",
+            "shortest path"
+        ],
+        "tags": [
+            "graph",
+            "dijkstra",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "adj",
+            "src"
+        ],
+        "input_type": [
+            "number",
+            "Array<Array<[number, number]>>",
+            "number"
+        ],
+        "return": [
+            "dist"
+        ],
+        "return_type": [
+            "number[]"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["// adj: Array of adjacency lists, each item is [to, weight]\nfunction dijkstra(n, adj, src){\n  const INF = Number.MAX_SAFE_INTEGER;\n  const dist = Array(n).fill(INF); dist[src]=0;\n  // binary heap priority queue of [dist, node]\n  const heap = [];\n  const push = (item)=>{ heap.push(item); siftUp(heap.length-1); };\n  const pop = ()=>{ if(heap.length===0) return null; const top=heap[0]; const x=heap.pop(); if(heap.length){ heap[0]=x; siftDown(0);} return top; };\n  const siftUp = (i)=>{ while(i>0){ const p=(i-1)>>1; if(heap[p][0] <= heap[i][0]) break; [heap[p],heap[i]]=[heap[i],heap[p]]; i=p; } };\n  const siftDown = (i)=>{ const n=heap.length; while(true){ let l=i*2+1, r=l+1, s=i; if(l<n && heap[l][0]<heap[s][0]) s=l; if(r<n && heap[r][0]<heap[s][0]) s=r; if(s===i) break; [heap[i],heap[s]]=[heap[s],heap[i]]; i=s; } };\n  push([0, src]);\n  while(heap.length){\n    const [d,u]=pop();\n    if(d!==dist[u]) continue;\n    for(const [v,w] of adj[u]){ const nd=d+w; if(nd<dist[v]){ dist[v]=nd; push([nd,v]); } }\n  }\n  return dist;\n}"]
+        "code": [
+            "// adj: Array of adjacency lists, each item is [to, weight]\nfunction dijkstra(n, adj, src){\n  const INF = Number.MAX_SAFE_INTEGER;\n  const dist = Array(n).fill(INF); dist[src]=0;\n  // binary heap priority queue of [dist, node]\n  const heap = [];\n  const push = (item)=>{ heap.push(item); siftUp(heap.length-1); };\n  const pop = ()=>{ if(heap.length===0) return null; const top=heap[0]; const x=heap.pop(); if(heap.length){ heap[0]=x; siftDown(0);} return top; };\n  const siftUp = (i)=>{ while(i>0){ const p=(i-1)>>1; if(heap[p][0] <= heap[i][0]) break; [heap[p],heap[i]]=[heap[i],heap[p]]; i=p; } };\n  const siftDown = (i)=>{ const n=heap.length; while(true){ let l=i*2+1, r=l+1, s=i; if(l<n && heap[l][0]<heap[s][0]) s=l; if(r<n && heap[r][0]<heap[s][0]) s=r; if(s===i) break; [heap[i],heap[s]]=[heap[s],heap[i]]; i=s; } };\n  push([0, src]);\n  while(heap.length){\n    const [d,u]=pop();\n    if(d!==dist[u]) continue;\n    for(const [v,w] of adj[u]){ const nd=d+w; if(nd<dist[v]){ dist[v]=nd; push([nd,v]); } }\n  }\n  return dist;\n}"
+        ]
     },
     {
         "name-zh": "Kruskal最小生成树",
@@ -1238,15 +2608,35 @@
         "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
         "description-en": "Kruskal with DSU to compute MST weight (-1 if disconnected)",
         "dependencies": [],
-        "use_to": ["graph", "mst"],
-        "tags": ["graph", "mst", "kruskal", "algorithm"],
-        "input": ["n", "edges"],
-        "input_type": ["number", "Array<[number,number,number]>"],
-        "return": ["mstWeight"],
-        "return_type": ["number"],
+        "use_to": [
+            "graph",
+            "mst"
+        ],
+        "tags": [
+            "graph",
+            "mst",
+            "kruskal",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "edges"
+        ],
+        "input_type": [
+            "number",
+            "Array<[number,number,number]>"
+        ],
+        "return": [
+            "mstWeight"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 88,
         "memory_score": 92,
-        "code": ["// edges: [u,v,w]\nfunction kruskalMST(n, edges){\n  edges = edges.slice().sort((a,b)=>a[2]-b[2]);\n  const p = Array(n).fill(0).map((_,i)=>i);\n  const r = Array(n).fill(0);\n  const find = x => p[x]===x?x:(p[x]=find(p[x]));\n  const unite = (a,b)=>{ a=find(a); b=find(b); if(a===b) return false; if(r[a]<r[b]) [a,b]=[b,a]; p[b]=a; if(r[a]===r[b]) r[a]++; return true; };\n  let total=0,cnt=0;\n  for(const [u,v,w] of edges){ if(unite(u,v)){ total+=w; if(++cnt===n-1) break; } }\n  return cnt===n-1? total: -1;\n}"]
+        "code": [
+            "// edges: [u,v,w]\nfunction kruskalMST(n, edges){\n  edges = edges.slice().sort((a,b)=>a[2]-b[2]);\n  const p = Array(n).fill(0).map((_,i)=>i);\n  const r = Array(n).fill(0);\n  const find = x => p[x]===x?x:(p[x]=find(p[x]));\n  const unite = (a,b)=>{ a=find(a); b=find(b); if(a===b) return false; if(r[a]<r[b]) [a,b]=[b,a]; p[b]=a; if(r[a]===r[b]) r[a]++; return true; };\n  let total=0,cnt=0;\n  for(const [u,v,w] of edges){ if(unite(u,v)){ total+=w; if(++cnt===n-1) break; } }\n  return cnt===n-1? total: -1;\n}"
+        ]
     },
     {
         "name-zh": "Bellman-Ford最短路",
@@ -1254,15 +2644,38 @@
         "description-zh": "允许负边权的单源最短路；可检测负环",
         "description-en": "Single-source shortest path with negative edges; detect negative cycle",
         "dependencies": [],
-        "use_to": ["graph", "shortest path"],
-        "tags": ["graph", "bellman-ford", "algorithm"],
-        "input": ["n", "edges", "src"],
-        "input_type": ["number", "Array<[number,number,number]>", "number"],
-        "return": ["dist", "hasNegCycle"],
-        "return_type": ["number[]", "boolean"],
+        "use_to": [
+            "graph",
+            "shortest path"
+        ],
+        "tags": [
+            "graph",
+            "bellman-ford",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "edges",
+            "src"
+        ],
+        "input_type": [
+            "number",
+            "Array<[number,number,number]>",
+            "number"
+        ],
+        "return": [
+            "dist",
+            "hasNegCycle"
+        ],
+        "return_type": [
+            "number[]",
+            "boolean"
+        ],
         "timer_score": 70,
         "memory_score": 85,
-        "code": ["// edges: [u,v,w]\nfunction bellmanFord(n, edges, src){\n  const INF = Number.MAX_SAFE_INTEGER;\n  const dist = Array(n).fill(INF); dist[src]=0;\n  for(let i=1;i<=n-1;i++){\n    let updated=false;\n    for(const [u,v,w] of edges){ if(dist[u]!==INF && dist[u]+w<dist[v]){ dist[v]=dist[u]+w; updated=true; } }\n    if(!updated) break;\n  }\n  for(const [u,v,w] of edges){ if(dist[u]!==INF && dist[u]+w<dist[v]) return [dist, true]; }\n  return [dist, false];\n}"]
+        "code": [
+            "// edges: [u,v,w]\nfunction bellmanFord(n, edges, src){\n  const INF = Number.MAX_SAFE_INTEGER;\n  const dist = Array(n).fill(INF); dist[src]=0;\n  for(let i=1;i<=n-1;i++){\n    let updated=false;\n    for(const [u,v,w] of edges){ if(dist[u]!==INF && dist[u]+w<dist[v]){ dist[v]=dist[u]+w; updated=true; } }\n    if(!updated) break;\n  }\n  for(const [u,v,w] of edges){ if(dist[u]!==INF && dist[u]+w<dist[v]) return [dist, true]; }\n  return [dist, false];\n}"
+        ]
     },
     {
         "name-zh": "拓扑排序(Kahn)",
@@ -1270,15 +2683,34 @@
         "description-zh": "入度法Kahn算法，返回拓扑序列",
         "description-en": "Kahn algorithm using indegrees to return topo order",
         "dependencies": [],
-        "use_to": ["graph", "topological sort"],
-        "tags": ["graph", "topo", "algorithm"],
-        "input": ["n", "adj"],
-        "input_type": ["number", "number[][]"],
-        "return": ["order"],
-        "return_type": ["number[]"],
+        "use_to": [
+            "graph",
+            "topological sort"
+        ],
+        "tags": [
+            "graph",
+            "topo",
+            "algorithm"
+        ],
+        "input": [
+            "n",
+            "adj"
+        ],
+        "input_type": [
+            "number",
+            "number[][]"
+        ],
+        "return": [
+            "order"
+        ],
+        "return_type": [
+            "number[]"
+        ],
         "timer_score": 88,
         "memory_score": 92,
-        "code": ["function topoSortKahn(n, adj){\n  const indeg = Array(n).fill(0);\n  for(let u=0;u<n;u++) for(const v of adj[u]) indeg[v]++;\n  const q=[]; for(let i=0;i<n;i++) if(indeg[i]===0) q.push(i);\n  const order=[];\n  for(let h=0; h<q.length; h++){ const u=q[h]; order.push(u); for(const v of adj[u]) if(--indeg[v]===0) q.push(v); }\n  return order;\n}"]
+        "code": [
+            "function topoSortKahn(n, adj){\n  const indeg = Array(n).fill(0);\n  for(let u=0;u<n;u++) for(const v of adj[u]) indeg[v]++;\n  const q=[]; for(let i=0;i<n;i++) if(indeg[i]===0) q.push(i);\n  const order=[];\n  for(let h=0; h<q.length; h++){ const u=q[h]; order.push(u); for(const v of adj[u]) if(--indeg[v]===0) q.push(v); }\n  return order;\n}"
+        ]
     },
     {
         "name-zh": "KMP字符串匹配",
@@ -1286,15 +2718,34 @@
         "description-zh": "返回所有匹配起始下标",
         "description-en": "Return all match start indices",
         "dependencies": [],
-        "use_to": ["string", "search"],
-        "tags": ["string", "kmp", "algorithm"],
-        "input": ["text", "pattern"],
-        "input_type": ["string", "string"],
-        "return": ["indices"],
-        "return_type": ["number[]"],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "kmp",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "indices"
+        ],
+        "return_type": [
+            "number[]"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function kmpSearch(text, pat){\n  const n=text.length, m=pat.length; if(!m) return [];\n  const lps=Array(m).fill(0);\n  for(let i=1,len=0;i<m;){ if(pat[i]===pat[len]) lps[i++]=++len; else if(len) len=lps[len-1]; else lps[i++]=0; }\n  const res=[];\n  for(let i=0,j=0;i<n;){ if(text[i]===pat[j]){ i++; j++; if(j===m){ res.push(i-m); j=lps[j-1]; } } else if(j) j=lps[j-1]; else i++; }\n  return res;\n}"]
+        "code": [
+            "function kmpSearch(text, pat){\n  const n=text.length, m=pat.length; if(!m) return [];\n  const lps=Array(m).fill(0);\n  for(let i=1,len=0;i<m;){ if(pat[i]===pat[len]) lps[i++]=++len; else if(len) len=lps[len-1]; else lps[i++]=0; }\n  const res=[];\n  for(let i=0,j=0;i<n;){ if(text[i]===pat[j]){ i++; j++; if(j===m){ res.push(i-m); j=lps[j-1]; } } else if(j) j=lps[j-1]; else i++; }\n  return res;\n}"
+        ]
     },
     {
         "name-zh": "Rabin-Karp字符串匹配",
@@ -1302,15 +2753,34 @@
         "description-zh": "滚动哈希匹配，返回所有匹配位置",
         "description-en": "Rolling-hash based matching, return all indices",
         "dependencies": [],
-        "use_to": ["string", "search"],
-        "tags": ["string", "rabin-karp", "algorithm"],
-        "input": ["text", "pattern"],
-        "input_type": ["string", "string"],
-        "return": ["indices"],
-        "return_type": ["number[]"],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "rabin-karp",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "indices"
+        ],
+        "return_type": [
+            "number[]"
+        ],
         "timer_score": 85,
         "memory_score": 95,
-        "code": ["function rabinKarp(text, pat){\n  const n=text.length, m=pat.length; if(!m || m>n) return [];\n  const B=131n, MOD=1000000007n;\n  let powB=1n; for(let i=0;i<m-1;i++) powB = (powB*B)%MOD;\n  let hpat=0n, hwin=0n;\n  for(let i=0;i<m;i++){ hpat=(hpat*B+BigInt(pat.charCodeAt(i)))%MOD; hwin=(hwin*B+BigInt(text.charCodeAt(i)))%MOD; }\n  const out=[];\n  for(let i=0;i<=n-m;i++){\n    if(hpat===hwin && text.slice(i,i+m)===pat) out.push(i);\n    if(i<n-m){\n      hwin = ( (hwin - BigInt(text.charCodeAt(i))*powB)%MOD + MOD )%MOD;\n      hwin = (hwin*B + BigInt(text.charCodeAt(i+m)))%MOD;\n    }\n  }\n  return out;\n}"]
+        "code": [
+            "function rabinKarp(text, pat){\n  const n=text.length, m=pat.length; if(!m || m>n) return [];\n  const B=131n, MOD=1000000007n;\n  let powB=1n; for(let i=0;i<m-1;i++) powB = (powB*B)%MOD;\n  let hpat=0n, hwin=0n;\n  for(let i=0;i<m;i++){ hpat=(hpat*B+BigInt(pat.charCodeAt(i)))%MOD; hwin=(hwin*B+BigInt(text.charCodeAt(i)))%MOD; }\n  const out=[];\n  for(let i=0;i<=n-m;i++){\n    if(hpat===hwin && text.slice(i,i+m)===pat) out.push(i);\n    if(i<n-m){\n      hwin = ( (hwin - BigInt(text.charCodeAt(i))*powB)%MOD + MOD )%MOD;\n      hwin = (hwin*B + BigInt(text.charCodeAt(i+m)))%MOD;\n    }\n  }\n  return out;\n}"
+        ]
     },
     {
         "name-zh": "埃拉托斯特尼筛法",
@@ -1318,15 +2788,33 @@
         "description-zh": "在[2,n]内标记素数",
         "description-en": "Mark primes in [2,n]",
         "dependencies": [],
-        "use_to": ["prime", "number theory"],
-        "tags": ["math", "prime", "sieve", "algorithm"],
-        "input": ["n"],
-        "input_type": ["number"],
-        "return": ["isPrime"],
-        "return_type": ["number[]"],
+        "use_to": [
+            "prime",
+            "number theory"
+        ],
+        "tags": [
+            "math",
+            "prime",
+            "sieve",
+            "algorithm"
+        ],
+        "input": [
+            "n"
+        ],
+        "input_type": [
+            "number"
+        ],
+        "return": [
+            "isPrime"
+        ],
+        "return_type": [
+            "number[]"
+        ],
         "timer_score": 95,
         "memory_score": 90,
-        "code": ["function sieveIsPrime(n){\n  const is = Array(n+1).fill(1); if(n>=0) is[0]=0; if(n>=1) is[1]=0;\n  for(let p=2; p*p<=n; p++) if(is[p]) for(let x=p*p; x<=n; x+=p) is[x]=0;\n  return is;\n}"]
+        "code": [
+            "function sieveIsPrime(n){\n  const is = Array(n+1).fill(1); if(n>=0) is[0]=0; if(n>=1) is[1]=0;\n  for(let p=2; p*p<=n; p++) if(is[p]) for(let x=p*p; x<=n; x+=p) is[x]=0;\n  return is;\n}"
+        ]
     },
     {
         "name-zh": "编辑距离(Levenshtein)",
@@ -1334,15 +2822,34 @@
         "description-zh": "动态规划计算编辑距离(滚动数组)",
         "description-en": "DP edit distance with rolling array",
         "dependencies": [],
-        "use_to": ["string", "dynamic programming"],
-        "tags": ["dp", "string", "edit distance"],
-        "input": ["a", "b"],
-        "input_type": ["string", "string"],
-        "return": ["distance"],
-        "return_type": ["number"],
+        "use_to": [
+            "string",
+            "dynamic programming"
+        ],
+        "tags": [
+            "dp",
+            "string",
+            "edit distance"
+        ],
+        "input": [
+            "a",
+            "b"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "distance"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 85,
         "memory_score": 88,
-        "code": ["function editDistance(a,b){\n  const m=a.length, n=b.length;\n  let prev=Array(n+1).fill(0), cur=Array(n+1).fill(0);\n  for(let j=0;j<=n;j++) prev[j]=j;\n  for(let i=1;i<=m;i++){\n    cur[0]=i; const ai=a.charCodeAt(i-1);\n    for(let j=1;j<=n;j++){\n      const cost = (ai===b.charCodeAt(j-1))?0:1;\n      const del=prev[j]+1, ins=cur[j-1]+1, rep=prev[j-1]+cost;\n      cur[j]=Math.min(del,ins,rep);\n    }\n    [prev,cur]=[cur,prev];\n  }\n  return prev[n];\n}"]
+        "code": [
+            "function editDistance(a,b){\n  const m=a.length, n=b.length;\n  let prev=Array(n+1).fill(0), cur=Array(n+1).fill(0);\n  for(let j=0;j<=n;j++) prev[j]=j;\n  for(let i=1;i<=m;i++){\n    cur[0]=i; const ai=a.charCodeAt(i-1);\n    for(let j=1;j<=n;j++){\n      const cost = (ai===b.charCodeAt(j-1))?0:1;\n      const del=prev[j]+1, ins=cur[j-1]+1, rep=prev[j-1]+cost;\n      cur[j]=Math.min(del,ins,rep);\n    }\n    [prev,cur]=[cur,prev];\n  }\n  return prev[n];\n}"
+        ]
     },
     {
         "name-zh": "最长上升子序列O(n log n)",
@@ -1350,15 +2857,32 @@
         "description-zh": "耐心排序+二分求LIS长度",
         "description-en": "Patience sorting + binary search for LIS length",
         "dependencies": [],
-        "use_to": ["sequence", "dynamic programming"],
-        "tags": ["dp", "lis", "algorithm"],
-        "input": ["arr"],
-        "input_type": ["number[]"],
-        "return": ["length"],
-        "return_type": ["number"],
+        "use_to": [
+            "sequence",
+            "dynamic programming"
+        ],
+        "tags": [
+            "dp",
+            "lis",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "number[]"
+        ],
+        "return": [
+            "length"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 92,
         "memory_score": 92,
-        "code": ["function lisLength(a){\n  const tails=[];\n  for(const x of a){\n    let i=lowerBound(tails,x);\n    tails[i]=x;\n  }\n  return tails.length;\n}\nfunction lowerBound(arr,x){\n  let l=0,r=arr.length;\n  while(l<r){ const m=(l+r)>>1; if(arr[m]>=x) r=m; else l=m+1; }\n  return l;\n}"]
+        "code": [
+            "function lisLength(a){\n  const tails=[];\n  for(const x of a){\n    let i=lowerBound(tails,x);\n    tails[i]=x;\n  }\n  return tails.length;\n}\nfunction lowerBound(arr,x){\n  let l=0,r=arr.length;\n  while(l<r){ const m=(l+r)>>1; if(arr[m]>=x) r=m; else l=m+1; }\n  return l;\n}"
+        ]
     },
     {
         "name-zh": "快速选择第k小",
@@ -1366,15 +2890,33 @@
         "description-zh": "平均线性时间找到第k小(1<=k<=n)",
         "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
         "dependencies": [],
-        "use_to": ["selection", "order statistics"],
-        "tags": ["algorithm", "divide-conquer"],
-        "input": ["arr", "k"],
-        "input_type": ["number[]", "number"],
-        "return": ["kth"],
-        "return_type": ["number"],
+        "use_to": [
+            "selection",
+            "order statistics"
+        ],
+        "tags": [
+            "algorithm",
+            "divide-conquer"
+        ],
+        "input": [
+            "arr",
+            "k"
+        ],
+        "input_type": [
+            "number[]",
+            "number"
+        ],
+        "return": [
+            "kth"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function quickselect(a, k){ // k: 1-based\n  let l=0, r=a.length-1; k--;\n  while(l<=r){\n    const pivot=a[r]; let i=l;\n    for(let j=l;j<r;j++) if(a[j]<=pivot){ [a[i],a[j]]=[a[j],a[i]]; i++; }\n    [a[i],a[r]]=[a[r],a[i]];\n    if(i===k) return a[i]; else if(i>k) r=i-1; else l=i+1;\n  }\n  throw new Error('k out of range');\n}"]
+        "code": [
+            "function quickselect(a, k){ // k: 1-based\n  let l=0, r=a.length-1; k--;\n  while(l<=r){\n    const pivot=a[r]; let i=l;\n    for(let j=l;j<r;j++) if(a[j]<=pivot){ [a[i],a[j]]=[a[j],a[i]]; i++; }\n    [a[i],a[r]]=[a[r],a[i]];\n    if(i===k) return a[i]; else if(i>k) r=i-1; else l=i+1;\n  }\n  throw new Error('k out of range');\n}"
+        ]
     },
     {
         "name-zh": "最小堆/优先队列",
@@ -1382,15 +2924,24 @@
         "description-zh": "支持 push/pop/peek 的最小堆实现，时间复杂度 O(log n)",
         "description-en": "A minimal heap (priority queue) with push/pop/peek in O(log n)",
         "dependencies": [],
-        "use_to": ["data structure", "heap"],
-        "tags": ["data-structure", "heap", "algorithm"],
+        "use_to": [
+            "data structure",
+            "heap"
+        ],
+        "tags": [
+            "data-structure",
+            "heap",
+            "algorithm"
+        ],
         "input": [],
         "input_type": [],
         "return": [],
         "return_type": [],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["class MinHeap {\n  constructor(){ this.h = []; }\n  size(){ return this.h.length; }\n  peek(){ return this.h.length ? this.h[0] : null; }\n  push(x){ const h=this.h; h.push(x); let i=h.length-1; while(i>0){ const p=(i-1)>>1; if(h[p] <= h[i]) break; [h[p],h[i]]=[h[i],h[p]]; i=p; } }\n  pop(){ const h=this.h; if(!h.length) return null; const top=h[0]; const x=h.pop(); if(h.length){ h[0]=x; let i=0; for(;;){ const l=i*2+1, r=l+1; let s=i; if(l<h.length && h[l]<h[s]) s=l; if(r<h.length && h[r]<h[s]) s=r; if(s===i) break; [h[i],h[s]]=[h[s],h[i]]; i=s; } } return top; }\n}"]
+        "code": [
+            "class MinHeap {\n  constructor(){ this.h = []; }\n  size(){ return this.h.length; }\n  peek(){ return this.h.length ? this.h[0] : null; }\n  push(x){ const h=this.h; h.push(x); let i=h.length-1; while(i>0){ const p=(i-1)>>1; if(h[p] <= h[i]) break; [h[p],h[i]]=[h[i],h[p]]; i=p; } }\n  pop(){ const h=this.h; if(!h.length) return null; const top=h[0]; const x=h.pop(); if(h.length){ h[0]=x; let i=0; for(;;){ const l=i*2+1, r=l+1; let s=i; if(l<h.length && h[l]<h[s]) s=l; if(r<h.length && h[r]<h[s]) s=r; if(s===i) break; [h[i],h[s]]=[h[s],h[i]]; i=s; } } return top; }\n}"
+        ]
     },
     {
         "name-zh": "并查集(不相交集合)",
@@ -1398,15 +2949,23 @@
         "description-zh": "路径压缩+按秩合并的不相交集合数据结构",
         "description-en": "Disjoint set union with path compression and union by rank",
         "dependencies": [],
-        "use_to": ["graph", "set"],
-        "tags": ["data-structure", "dsu"],
+        "use_to": [
+            "graph",
+            "set"
+        ],
+        "tags": [
+            "data-structure",
+            "dsu"
+        ],
         "input": [],
         "input_type": [],
         "return": [],
         "return_type": [],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["class DSU {\n  constructor(n){ this.p=Array.from({length:n},(_,i)=>i); this.r=Array(n).fill(0); }\n  find(x){ return this.p[x]===x ? x : (this.p[x]=this.find(this.p[x])); }\n  unite(a,b){ a=this.find(a); b=this.find(b); if(a===b) return false; if(this.r[a]<this.r[b]) [a,b]=[b,a]; this.p[b]=a; if(this.r[a]===this.r[b]) this.r[a]++; return true; }\n}"]
+        "code": [
+            "class DSU {\n  constructor(n){ this.p=Array.from({length:n},(_,i)=>i); this.r=Array(n).fill(0); }\n  find(x){ return this.p[x]===x ? x : (this.p[x]=this.find(this.p[x])); }\n  unite(a,b){ a=this.find(a); b=this.find(b); if(a===b) return false; if(this.r[a]<this.r[b]) [a,b]=[b,a]; this.p[b]=a; if(this.r[a]===this.r[b]) this.r[a]++; return true; }\n}"
+        ]
     },
     {
         "name-zh": "三数之和为零",
@@ -1414,15 +2973,32 @@
         "description-zh": "双指针求不重复三元组，使 a+b+c=0",
         "description-en": "Two-pointer to find unique triplets with sum zero",
         "dependencies": [],
-        "use_to": ["array", "two-pointers"],
-        "tags": ["array", "two-pointers", "algorithm"],
-        "input": ["nums"],
-        "input_type": ["number[]"],
-        "return": ["triplets"],
-        "return_type": ["number[][]"],
+        "use_to": [
+            "array",
+            "two-pointers"
+        ],
+        "tags": [
+            "array",
+            "two-pointers",
+            "algorithm"
+        ],
+        "input": [
+            "nums"
+        ],
+        "input_type": [
+            "number[]"
+        ],
+        "return": [
+            "triplets"
+        ],
+        "return_type": [
+            "number[][]"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function threeSum(nums){\n  nums = nums.slice().sort((a,b)=>a-b);\n  const res=[]; const n=nums.length;\n  for(let i=0;i<n;i++){\n    if(i>0 && nums[i]===nums[i-1]) continue;\n    let l=i+1, r=n-1; const target=-nums[i];\n    while(l<r){\n      const s = nums[l]+nums[r];\n      if(s===target){\n        res.push([nums[i], nums[l], nums[r]]);\n        l++; r--;\n        while(l<r && nums[l]===nums[l-1]) l++;\n        while(l<r && nums[r]===nums[r+1]) r--;\n      }else if(s<target) l++; else r--;\n    }\n  }\n  return res;\n}"]
+        "code": [
+            "function threeSum(nums){\n  nums = nums.slice().sort((a,b)=>a-b);\n  const res=[]; const n=nums.length;\n  for(let i=0;i<n;i++){\n    if(i>0 && nums[i]===nums[i-1]) continue;\n    let l=i+1, r=n-1; const target=-nums[i];\n    while(l<r){\n      const s = nums[l]+nums[r];\n      if(s===target){\n        res.push([nums[i], nums[l], nums[r]]);\n        l++; r--;\n        while(l<r && nums[l]===nums[l-1]) l++;\n        while(l<r && nums[r]===nums[r+1]) r--;\n      }else if(s<target) l++; else r--;\n    }\n  }\n  return res;\n}"
+        ]
     },
     {
         "name-zh": "下一个更大元素(循环)",
@@ -1430,15 +3006,32 @@
         "description-zh": "单调栈求循环数组的下一个更大元素",
         "description-en": "Monotonic stack for next greater element on circular array",
         "dependencies": [],
-        "use_to": ["stack", "array"],
-        "tags": ["stack", "monotonic", "algorithm"],
-        "input": ["nums"],
-        "input_type": ["number[]"],
-        "return": ["ans"],
-        "return_type": ["number[]"],
+        "use_to": [
+            "stack",
+            "array"
+        ],
+        "tags": [
+            "stack",
+            "monotonic",
+            "algorithm"
+        ],
+        "input": [
+            "nums"
+        ],
+        "input_type": [
+            "number[]"
+        ],
+        "return": [
+            "ans"
+        ],
+        "return_type": [
+            "number[]"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function nextGreaterElementsCircular(nums){\n  const n=nums.length, res=Array(n).fill(-1), st=[];\n  for(let i=0;i<2*n;i++){\n    const idx=i%n;\n    while(st.length && nums[st[st.length-1]] < nums[idx]){ res[st.pop()] = nums[idx]; }\n    if(i<n) st.push(idx);\n  }\n  return res;\n}"]
+        "code": [
+            "function nextGreaterElementsCircular(nums){\n  const n=nums.length, res=Array(n).fill(-1), st=[];\n  for(let i=0;i<2*n;i++){\n    const idx=i%n;\n    while(st.length && nums[st[st.length-1]] < nums[idx]){ res[st.pop()] = nums[idx]; }\n    if(i<n) st.push(idx);\n  }\n  return res;\n}"
+        ]
     },
     {
         "name-zh": "前缀树(Trie)",
@@ -1446,15 +3039,23 @@
         "description-zh": "实现 insert/search/startsWith 的前缀树",
         "description-en": "Prefix tree with insert/search/startsWith",
         "dependencies": [],
-        "use_to": ["string", "data structure"],
-        "tags": ["trie", "data-structure"],
+        "use_to": [
+            "string",
+            "data structure"
+        ],
+        "tags": [
+            "trie",
+            "data-structure"
+        ],
         "input": [],
         "input_type": [],
         "return": [],
         "return_type": [],
         "timer_score": 90,
         "memory_score": 92,
-        "code": ["class TrieNode {\n  constructor(){ this.children=Object.create(null); this.end=false; }\n}\nclass Trie {\n  constructor(){ this.root=new TrieNode(); }\n  insert(word){ let cur=this.root; for(const ch of word){ if(!cur.children[ch]) cur.children[ch]=new TrieNode(); cur=cur.children[ch]; } cur.end=true; }\n  search(word){ let cur=this.root; for(const ch of word){ if(!cur.children[ch]) return false; cur=cur.children[ch]; } return cur.end===true; }\n  startsWith(prefix){ let cur=this.root; for(const ch of prefix){ if(!cur.children[ch]) return false; cur=cur.children[ch]; } return true; }\n}"]
+        "code": [
+            "class TrieNode {\n  constructor(){ this.children=Object.create(null); this.end=false; }\n}\nclass Trie {\n  constructor(){ this.root=new TrieNode(); }\n  insert(word){ let cur=this.root; for(const ch of word){ if(!cur.children[ch]) cur.children[ch]=new TrieNode(); cur=cur.children[ch]; } cur.end=true; }\n  search(word){ let cur=this.root; for(const ch of word){ if(!cur.children[ch]) return false; cur=cur.children[ch]; } return cur.end===true; }\n  startsWith(prefix){ let cur=this.root; for(const ch of prefix){ if(!cur.children[ch]) return false; cur=cur.children[ch]; } return true; }\n}"
+        ]
     },
     {
         "name-zh": "最小覆盖子串",
@@ -1462,15 +3063,34 @@
         "description-zh": "滑动窗口求包含 t 所有字符的最短子串",
         "description-en": "Sliding window to find shortest substring that covers t",
         "dependencies": [],
-        "use_to": ["string", "sliding-window"],
-        "tags": ["string", "sliding-window", "algorithm"],
-        "input": ["s", "t"],
-        "input_type": ["string", "string"],
-        "return": ["substr"],
-        "return_type": ["string"],
+        "use_to": [
+            "string",
+            "sliding-window"
+        ],
+        "tags": [
+            "string",
+            "sliding-window",
+            "algorithm"
+        ],
+        "input": [
+            "s",
+            "t"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "substr"
+        ],
+        "return_type": [
+            "string"
+        ],
         "timer_score": 80,
         "memory_score": 85,
-        "code": ["function minWindow(s, t){\n  if(!t) return '';\n  const need=new Map();\n  for(const c of t) need.set(c, (need.get(c)||0)+1);\n  let needCnt=t.length, l=0, res='';\n  for(let r=0;r<s.length;r++){\n    const c=s[r];\n    if(need.has(c)){ if(need.get(c)>0) needCnt--; need.set(c, need.get(c)-1); }\n    while(needCnt===0){\n      const cand=s.slice(l, r+1);\n      if(!res || cand.length<res.length) res=cand;\n      const c2=s[l++];\n      if(need.has(c2)){ need.set(c2, need.get(c2)+1); if(need.get(c2)>0) needCnt++; }\n    }\n  }\n  return res;\n}"]
+        "code": [
+            "function minWindow(s, t){\n  if(!t) return '';\n  const need=new Map();\n  for(const c of t) need.set(c, (need.get(c)||0)+1);\n  let needCnt=t.length, l=0, res='';\n  for(let r=0;r<s.length;r++){\n    const c=s[r];\n    if(need.has(c)){ if(need.get(c)>0) needCnt--; need.set(c, need.get(c)-1); }\n    while(needCnt===0){\n      const cand=s.slice(l, r+1);\n      if(!res || cand.length<res.length) res=cand;\n      const c2=s[l++];\n      if(need.has(c2)){ need.set(c2, need.get(c2)+1); if(need.get(c2)>0) needCnt++; }\n    }\n  }\n  return res;\n}"
+        ]
     },
     {
         "name-zh": "区间合并",
@@ -1478,15 +3098,32 @@
         "description-zh": "合并重叠区间，返回不相交区间集",
         "description-en": "Merge overlapping intervals and return disjoint set",
         "dependencies": [],
-        "use_to": ["interval", "array"],
-        "tags": ["interval", "sorting", "algorithm"],
-        "input": ["intervals"],
-        "input_type": ["number[][]"],
-        "return": ["merged"],
-        "return_type": ["number[][]"],
+        "use_to": [
+            "interval",
+            "array"
+        ],
+        "tags": [
+            "interval",
+            "sorting",
+            "algorithm"
+        ],
+        "input": [
+            "intervals"
+        ],
+        "input_type": [
+            "number[][]"
+        ],
+        "return": [
+            "merged"
+        ],
+        "return_type": [
+            "number[][]"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function mergeIntervals(intervals){\n  if(intervals.length===0) return [];\n  intervals = intervals.slice().sort((a,b)=>a[0]-b[0]);\n  const res=[intervals[0].slice()];\n  for(let i=1;i<intervals.length;i++){\n    const last=res[res.length-1];\n    if(intervals[i][0] <= last[1]) last[1] = Math.max(last[1], intervals[i][1]);\n    else res.push(intervals[i].slice());\n  }\n  return res;\n}"]
+        "code": [
+            "function mergeIntervals(intervals){\n  if(intervals.length===0) return [];\n  intervals = intervals.slice().sort((a,b)=>a[0]-b[0]);\n  const res=[intervals[0].slice()];\n  for(let i=1;i<intervals.length;i++){\n    const last=res[res.length-1];\n    if(intervals[i][0] <= last[1]) last[1] = Math.max(last[1], intervals[i][1]);\n    else res.push(intervals[i].slice());\n  }\n  return res;\n}"
+        ]
     },
     {
         "name-zh": "线段树(区间和, 单点更新)",
@@ -1494,15 +3131,23 @@
         "description-zh": "支持区间和查询与单点更新的线段树",
         "description-en": "Segment tree supporting range-sum query and point update",
         "dependencies": [],
-        "use_to": ["data structure", "range query"],
-        "tags": ["data-structure", "segment-tree"],
+        "use_to": [
+            "data structure",
+            "range query"
+        ],
+        "tags": [
+            "data-structure",
+            "segment-tree"
+        ],
         "input": [],
         "input_type": [],
         "return": [],
         "return_type": [],
         "timer_score": 85,
         "memory_score": 85,
-        "code": ["class SegTree {\n  constructor(arr){\n    const n0 = arr.length; this.n=1; while(this.n<n0) this.n<<=1;\n    this.t = new Array(this.n*2).fill(0);\n    for(let i=0;i<n0;i++) this.t[this.n+i]=arr[i];\n    for(let i=this.n-1;i>0;i--) this.t[i]=this.t[i<<1]+this.t[i<<1|1];\n  }\n  pointUpdate(i, val){ let p=this.n+i; this.t[p]=val; for(p>>=1;p>0;p>>=1) this.t[p]=this.t[p<<1]+this.t[p<<1|1]; }\n  rangeSum(l, r){ l+=this.n; r+=this.n; let res=0; while(l<=r){ if((l&1)===1) res+=this.t[l++]; if((r&1)===0) res+=this.t[r--]; l>>=1; r>>=1; } return res; }\n}"]
+        "code": [
+            "class SegTree {\n  constructor(arr){\n    const n0 = arr.length; this.n=1; while(this.n<n0) this.n<<=1;\n    this.t = new Array(this.n*2).fill(0);\n    for(let i=0;i<n0;i++) this.t[this.n+i]=arr[i];\n    for(let i=this.n-1;i>0;i--) this.t[i]=this.t[i<<1]+this.t[i<<1|1];\n  }\n  pointUpdate(i, val){ let p=this.n+i; this.t[p]=val; for(p>>=1;p>0;p>>=1) this.t[p]=this.t[p<<1]+this.t[p<<1|1]; }\n  rangeSum(l, r){ l+=this.n; r+=this.n; let res=0; while(l<=r){ if((l&1)===1) res+=this.t[l++]; if((r&1)===0) res+=this.t[r--]; l>>=1; r>>=1; } return res; }\n}"
+        ]
     },
     {
         "name-zh": "数组洗牌",
@@ -1510,15 +3155,32 @@
         "description-zh": "使用Fisher-Yates算法随机打乱数组元素",
         "description-en": "Randomly shuffle array elements using Fisher-Yates algorithm",
         "dependencies": [],
-        "use_to": ["array", "random"],
-        "tags": ["intermediate", "array", "random"],
-        "input": ["arr"],
-        "input_type": ["any[]"],
-        "return": ["shuffled"],
-        "return_type": ["any[]"],
+        "use_to": [
+            "array",
+            "random"
+        ],
+        "tags": [
+            "intermediate",
+            "array",
+            "random"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "any[]"
+        ],
+        "return": [
+            "shuffled"
+        ],
+        "return_type": [
+            "any[]"
+        ],
         "timer_score": 95,
         "memory_score": 95,
-        "code": ["function shuffleArray(arr) {\n    const result = arr.slice();\n    for (let i = result.length - 1; i > 0; i--) {\n        const j = Math.floor(Math.random() * (i + 1));\n        [result[i], result[j]] = [result[j], result[i]];\n    }\n    return result;\n}"]
+        "code": [
+            "function shuffleArray(arr) {\n    const result = arr.slice();\n    for (let i = result.length - 1; i > 0; i--) {\n        const j = Math.floor(Math.random() * (i + 1));\n        [result[i], result[j]] = [result[j], result[i]];\n    }\n    return result;\n}"
+        ]
     },
     {
         "name-zh": "对象浅拷贝",
@@ -1526,15 +3188,31 @@
         "description-zh": "对象的浅拷贝，仅复制第一层属性",
         "description-en": "Shallow copy of object, only copies first level properties",
         "dependencies": [],
-        "use_to": ["object", "copy"],
-        "tags": ["basic", "object"],
-        "input": ["obj"],
-        "input_type": ["object"],
-        "return": ["copy"],
-        "return_type": ["object"],
+        "use_to": [
+            "object",
+            "copy"
+        ],
+        "tags": [
+            "basic",
+            "object"
+        ],
+        "input": [
+            "obj"
+        ],
+        "input_type": [
+            "object"
+        ],
+        "return": [
+            "copy"
+        ],
+        "return_type": [
+            "object"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function shallowCopy(obj) {\n    return Object.assign({}, obj);\n}"]
+        "code": [
+            "function shallowCopy(obj) {\n    return Object.assign({}, obj);\n}"
+        ]
     },
     {
         "name-zh": "数组分组",
@@ -1542,15 +3220,33 @@
         "description-zh": "根据指定的键或函数对数组元素进行分组",
         "description-en": "Group array elements by specified key or function",
         "dependencies": [],
-        "use_to": ["array", "group"],
-        "tags": ["intermediate", "array"],
-        "input": ["arr", "keyOrFn"],
-        "input_type": ["any[]", "string|Function"],
-        "return": ["grouped"],
-        "return_type": ["Record<string, any[]>"],
+        "use_to": [
+            "array",
+            "group"
+        ],
+        "tags": [
+            "intermediate",
+            "array"
+        ],
+        "input": [
+            "arr",
+            "keyOrFn"
+        ],
+        "input_type": [
+            "any[]",
+            "string|Function"
+        ],
+        "return": [
+            "grouped"
+        ],
+        "return_type": [
+            "Record<string, any[]>"
+        ],
         "timer_score": 90,
         "memory_score": 90,
-        "code": ["function groupBy(arr, keyOrFn) {\n    return arr.reduce((groups, item) => {\n        const key = typeof keyOrFn === 'function' ? keyOrFn(item) : item[keyOrFn];\n        groups[key] = groups[key] || [];\n        groups[key].push(item);\n        return groups;\n    }, {});\n}"]
+        "code": [
+            "function groupBy(arr, keyOrFn) {\n    return arr.reduce((groups, item) => {\n        const key = typeof keyOrFn === 'function' ? keyOrFn(item) : item[keyOrFn];\n        groups[key] = groups[key] || [];\n        groups[key].push(item);\n        return groups;\n    }, {});\n}"
+        ]
     },
     {
         "name-zh": "Promise超时",
@@ -1558,15 +3254,34 @@
         "description-zh": "为Promise添加超时限制，超时后reject",
         "description-en": "Add timeout to Promise, reject after timeout",
         "dependencies": [],
-        "use_to": ["promise", "timeout"],
-        "tags": ["intermediate", "promise", "async"],
-        "input": ["promise", "ms"],
-        "input_type": ["Promise", "number"],
-        "return": ["withTimeout"],
-        "return_type": ["Promise"],
+        "use_to": [
+            "promise",
+            "timeout"
+        ],
+        "tags": [
+            "intermediate",
+            "promise",
+            "async"
+        ],
+        "input": [
+            "promise",
+            "ms"
+        ],
+        "input_type": [
+            "Promise",
+            "number"
+        ],
+        "return": [
+            "withTimeout"
+        ],
+        "return_type": [
+            "Promise"
+        ],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function withTimeout(promise, ms) {\n    return Promise.race([\n        promise,\n        new Promise((_, reject) => \n            setTimeout(() => reject(new Error('Timeout')), ms)\n        )\n    ]);\n}"]
+        "code": [
+            "function withTimeout(promise, ms) {\n    return Promise.race([\n        promise,\n        new Promise((_, reject) => \n            setTimeout(() => reject(new Error('Timeout')), ms)\n        )\n    ]);\n}"
+        ]
     },
     {
         "name-zh": "函数柯里化",
@@ -1574,15 +3289,32 @@
         "description-zh": "将多参数函数转换为可以逐个传参的柯里化函数",
         "description-en": "Transform multi-argument function into curried function",
         "dependencies": [],
-        "use_to": ["function", "curry"],
-        "tags": ["intermediate", "function", "functional"],
-        "input": ["fn"],
-        "input_type": ["Function"],
-        "return": ["curried"],
-        "return_type": ["Function"],
+        "use_to": [
+            "function",
+            "curry"
+        ],
+        "tags": [
+            "intermediate",
+            "function",
+            "functional"
+        ],
+        "input": [
+            "fn"
+        ],
+        "input_type": [
+            "Function"
+        ],
+        "return": [
+            "curried"
+        ],
+        "return_type": [
+            "Function"
+        ],
         "timer_score": 90,
         "memory_score": 95,
-        "code": ["function curry(fn) {\n    return function curried(...args) {\n        if (args.length >= fn.length) {\n            return fn.apply(this, args);\n        } else {\n            return (...args2) => curried(...args, ...args2);\n        }\n    };\n}"]
+        "code": [
+            "function curry(fn) {\n    return function curried(...args) {\n        if (args.length >= fn.length) {\n            return fn.apply(this, args);\n        } else {\n            return (...args2) => curried(...args, ...args2);\n        }\n    };\n}"
+        ]
     },
     {
         "name-zh": "数值范围映射",
@@ -1590,15 +3322,39 @@
         "description-zh": "将数值从一个范围映射到另一个范围",
         "description-en": "Map number from one range to another range",
         "dependencies": [],
-        "use_to": ["math", "mapping"],
-        "tags": ["basic", "math"],
-        "input": ["value", "inMin", "inMax", "outMin", "outMax"],
-        "input_type": ["number", "number", "number", "number", "number"],
-        "return": ["mapped"],
-        "return_type": ["number"],
+        "use_to": [
+            "math",
+            "mapping"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "value",
+            "inMin",
+            "inMax",
+            "outMin",
+            "outMax"
+        ],
+        "input_type": [
+            "number",
+            "number",
+            "number",
+            "number",
+            "number"
+        ],
+        "return": [
+            "mapped"
+        ],
+        "return_type": [
+            "number"
+        ],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function mapRange(value, inMin, inMax, outMin, outMax) {\n    return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;\n}"]
+        "code": [
+            "function mapRange(value, inMin, inMax, outMin, outMax) {\n    return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;\n}"
+        ]
     },
     {
         "name-zh": "删除Cookie",
@@ -1606,15 +3362,30 @@
         "description-zh": "删除指定名称的Cookie",
         "description-en": "Delete cookie by name",
         "dependencies": [],
-        "use_to": ["cookie", "frontend"],
-        "tags": ["basic", "cookie", "frontend"],
-        "input": ["name", "path"],
-        "input_type": ["string", "string"],
+        "use_to": [
+            "cookie",
+            "frontend"
+        ],
+        "tags": [
+            "basic",
+            "cookie",
+            "frontend"
+        ],
+        "input": [
+            "name",
+            "path"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 100,
         "memory_score": 100,
-        "code": ["function deleteCookie(name, path = '/') {\n    document.cookie = `${encodeURIComponent(name)}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=${path}`;\n}"]
+        "code": [
+            "function deleteCookie(name, path = '/') {\n    document.cookie = `${encodeURIComponent(name)}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=${path}`;\n}"
+        ]
     },
     {
         "name-zh": "下载文件",
@@ -1622,14 +3393,827 @@
         "description-zh": "触发浏览器下载指定内容为文件",
         "description-en": "Trigger browser to download content as file",
         "dependencies": [],
-        "use_to": ["download", "file", "frontend"],
-        "tags": ["intermediate", "file", "frontend"],
-        "input": ["content", "filename", "type"],
-        "input_type": ["string|Blob", "string", "string"],
+        "use_to": [
+            "download",
+            "file",
+            "frontend"
+        ],
+        "tags": [
+            "intermediate",
+            "file",
+            "frontend"
+        ],
+        "input": [
+            "content",
+            "filename",
+            "type"
+        ],
+        "input_type": [
+            "string|Blob",
+            "string",
+            "string"
+        ],
         "return": [],
         "return_type": [],
         "timer_score": 85,
         "memory_score": 90,
-        "code": ["function downloadFile(content, filename, type = 'text/plain') {\n    const blob = content instanceof Blob ? content : new Blob([content], { type });\n    const url = URL.createObjectURL(blob);\n    const a = document.createElement('a');\n    a.href = url;\n    a.download = filename;\n    document.body.appendChild(a);\n    a.click();\n    document.body.removeChild(a);\n    URL.revokeObjectURL(url);\n}"]
+        "code": [
+            "function downloadFile(content, filename, type = 'text/plain') {\n    const blob = content instanceof Blob ? content : new Blob([content], { type });\n    const url = URL.createObjectURL(blob);\n    const a = document.createElement('a');\n    a.href = url;\n    a.download = filename;\n    document.body.appendChild(a);\n    a.click();\n    document.body.removeChild(a);\n    URL.revokeObjectURL(url);\n}"
+        ]
+    },
+    {
+        "name-zh": "深拷贝",
+        "name-en": "Deep Clone",
+        "description-zh": "对普通对象/数组进行深拷贝",
+        "description-en": "Deep clone plain objects and arrays",
+        "dependencies": [],
+        "use_to": [
+            "object",
+            "clone"
+        ],
+        "tags": [
+            "basic",
+            "object"
+        ],
+        "input": [
+            "obj"
+        ],
+        "input_type": [
+            "any"
+        ],
+        "return": [
+            "cloned"
+        ],
+        "return_type": [
+            "any"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "function deepClone(obj){ if(obj===null||typeof obj!=='object') return obj; if(Array.isArray(obj)) return obj.map(deepClone); const cloned={}; for(const k in obj){ if(Object.prototype.hasOwnProperty.call(obj,k)) cloned[k]=deepClone(obj[k]); } return cloned; }"
+        ]
+    },
+    {
+        "name-zh": "安全对象取值",
+        "name-en": "Safe Get",
+        "description-zh": "安全地从嵌套对象取值，支持默认值",
+        "description-en": "Safely get nested object value with default",
+        "dependencies": [],
+        "use_to": [
+            "object",
+            "utility"
+        ],
+        "tags": [
+            "basic",
+            "object"
+        ],
+        "input": [
+            "obj",
+            "path",
+            "defaultVal"
+        ],
+        "input_type": [
+            "object",
+            "string",
+            "any"
+        ],
+        "return": [
+            "value"
+        ],
+        "return_type": [
+            "any"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function safeGet(obj,path,defaultVal=undefined){ const keys=path.split('.'); let cur=obj; for(const k of keys){ if(cur==null||typeof cur!=='object') return defaultVal; cur=cur[k]; } return cur===undefined?defaultVal:cur; }"
+        ]
+    },
+    {
+        "name-zh": "节流函数",
+        "name-en": "Throttle",
+        "description-zh": "函数节流，每 delay ms 最多执行一次",
+        "description-en": "Throttle function execution to once per delay ms",
+        "dependencies": [],
+        "use_to": [
+            "performance",
+            "utility"
+        ],
+        "tags": [
+            "basic",
+            "performance"
+        ],
+        "input": [
+            "fn",
+            "delay"
+        ],
+        "input_type": [
+            "Function",
+            "number"
+        ],
+        "return": [
+            "throttled"
+        ],
+        "return_type": [
+            "Function"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "function throttle(fn,delay){ let last=0; return function(...args){ const now=Date.now(); if(now-last>=delay){ last=now; fn.apply(this,args); } }; }"
+        ]
+    },
+    {
+        "name-zh": "防抖函数",
+        "name-en": "Debounce",
+        "description-zh": "函数防抖，delay ms 无新调用才执行",
+        "description-en": "Debounce: execute only after delay ms of no calls",
+        "dependencies": [],
+        "use_to": [
+            "performance",
+            "utility"
+        ],
+        "tags": [
+            "basic",
+            "performance"
+        ],
+        "input": [
+            "fn",
+            "delay"
+        ],
+        "input_type": [
+            "Function",
+            "number"
+        ],
+        "return": [
+            "debounced"
+        ],
+        "return_type": [
+            "Function"
+        ],
+        "timer_score": 95,
+        "memory_score": 95,
+        "code": [
+            "function debounce(fn,delay){ let timer=null; return function(...args){ clearTimeout(timer); timer=setTimeout(()=>{ fn.apply(this,args); timer=null; },delay); }; }"
+        ]
+    },
+    {
+        "name-zh": "生成范围数组",
+        "name-en": "Range",
+        "description-zh": "生成从 start 到 end（不包含）的整数数组",
+        "description-en": "Generate integer array from start to end (exclusive)",
+        "dependencies": [],
+        "use_to": [
+            "array",
+            "utility"
+        ],
+        "tags": [
+            "basic",
+            "array"
+        ],
+        "input": [
+            "start",
+            "end",
+            "step"
+        ],
+        "input_type": [
+            "number",
+            "number",
+            "number"
+        ],
+        "return": [
+            "arr"
+        ],
+        "return_type": [
+            "number[]"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function range(start,end,step=1){ const arr=[]; if(step===0) return arr; if(step>0) for(let i=start;i<end;i+=step) arr.push(i); else for(let i=start;i>end;i+=step) arr.push(i); return arr; }"
+        ]
+    },
+    {
+        "name-zh": "随机整数",
+        "name-en": "Random Int",
+        "description-zh": "生成指定范围内的随机整数",
+        "description-en": "Generate random integer in range",
+        "dependencies": [],
+        "use_to": [
+            "random"
+        ],
+        "tags": [
+            "basic",
+            "random"
+        ],
+        "input": [
+            "min",
+            "max"
+        ],
+        "input_type": [
+            "number",
+            "number"
+        ],
+        "return": [
+            "randInt"
+        ],
+        "return_type": [
+            "number"
+        ],
+        "timer_score": 90,
+        "memory_score": 100,
+        "code": [
+            "function randInt(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }"
+        ]
+    },
+    {
+        "name-zh": "数组扁平化",
+        "name-en": "Array Flatten",
+        "description-zh": "将多维数组展平为一维",
+        "description-en": "Flatten multi-dimensional array to one dimension",
+        "dependencies": [],
+        "use_to": [
+            "array"
+        ],
+        "tags": [
+            "basic",
+            "array"
+        ],
+        "input": [
+            "arr",
+            "depth"
+        ],
+        "input_type": [
+            "any[]",
+            "number"
+        ],
+        "return": [
+            "flat"
+        ],
+        "return_type": [
+            "any[]"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "function flatten(arr,depth=Infinity){ let res=[]; for(const x of arr){ if(Array.isArray(x)&&depth>0) res.push(...flatten(x,depth-1)); else res.push(x); } return res; }"
+        ]
+    },
+    {
+        "name-zh": "数组分组",
+        "name-en": "Array Group By",
+        "description-zh": "按键函数对数组元素分组",
+        "description-en": "Group array elements by key function",
+        "dependencies": [],
+        "use_to": [
+            "array"
+        ],
+        "tags": [
+            "basic",
+            "array"
+        ],
+        "input": [
+            "arr",
+            "keyFn"
+        ],
+        "input_type": [
+            "any[]",
+            "Function"
+        ],
+        "return": [
+            "grouped"
+        ],
+        "return_type": [
+            "object"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "function groupBy(arr,keyFn){ return arr.reduce((acc,item)=>{ const key=keyFn(item); if(!acc[key]) acc[key]=[]; acc[key].push(item); return acc; },{}); }"
+        ]
+    },
+    {
+        "name-zh": "数组洗牌",
+        "name-en": "Array Shuffle",
+        "description-zh": "随机打乱数组顺序（原地）",
+        "description-en": "Randomly shuffle array in place",
+        "dependencies": [],
+        "use_to": [
+            "array",
+            "random"
+        ],
+        "tags": [
+            "basic",
+            "array",
+            "random"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "any[]"
+        ],
+        "return": [
+            "shuffled"
+        ],
+        "return_type": [
+            "any[]"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } return arr; }"
+        ]
+    },
+    {
+        "name-zh": "函数柯里化",
+        "name-en": "Function Curry",
+        "description-zh": "将多元函数转换为嵌套二元函数",
+        "description-en": "Curry a function of multiple arguments",
+        "dependencies": [],
+        "use_to": [
+            "functional"
+        ],
+        "tags": [
+            "basic",
+            "functional"
+        ],
+        "input": [
+            "fn"
+        ],
+        "input_type": [
+            "Function"
+        ],
+        "return": [
+            "curried"
+        ],
+        "return_type": [
+            "Function"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "function curry(fn){ return function curried(...args){ return args.length>=fn.length? fn.apply(this,args): function(...rest){ return curried(...args,...rest); }; }; }"
+        ]
+    },
+    {
+        "name-zh": "Promise超时",
+        "name-en": "Promise Timeout",
+        "description-zh": "为 Promise 设置超时，超时则 reject",
+        "description-en": "Add timeout to Promise, reject on timeout",
+        "dependencies": [],
+        "use_to": [
+            "async",
+            "promise"
+        ],
+        "tags": [
+            "intermediate",
+            "async"
+        ],
+        "input": [
+            "promise",
+            "ms"
+        ],
+        "input_type": [
+            "Promise",
+            "number"
+        ],
+        "return": [
+            "wrapped"
+        ],
+        "return_type": [
+            "Promise"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "function promiseTimeout(p,ms){ return new Promise((res,rej)=>{ const t=setTimeout(()=>rej(new Error('timeout')),ms); p.then(v=>{clearTimeout(t);res(v);}).catch(e=>{clearTimeout(t);rej(e);}); }); }"
+        ]
+    },
+    {
+        "name-zh": "顺序执行Promise",
+        "name-en": "Promise Chain",
+        "description-zh": "顺序执行 Promise 数组并收集结果",
+        "description-en": "Execute array of promises sequentially and collect results",
+        "dependencies": [],
+        "use_to": [
+            "async",
+            "promise"
+        ],
+        "tags": [
+            "intermediate",
+            "async"
+        ],
+        "input": [
+            "fns"
+        ],
+        "input_type": [
+            "Function[]"
+        ],
+        "return": [
+            "results"
+        ],
+        "return_type": [
+            "Promise"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "async function promiseChain(fns){ const results=[]; for(const fn of fns){ results.push(await fn()); } return results; }"
+        ]
+    },
+    {
+        "name-zh": "并发限制",
+        "name-en": "Concurrency Limit",
+        "description-zh": "限制并发数量的异步任务池",
+        "description-en": "Run async tasks with concurrency limit",
+        "dependencies": [],
+        "use_to": [
+            "async",
+            "concurrency"
+        ],
+        "tags": [
+            "intermediate",
+            "async"
+        ],
+        "input": [
+            "tasks",
+            "limit"
+        ],
+        "input_type": [
+            "Function[]",
+            "number"
+        ],
+        "return": [
+            "results"
+        ],
+        "return_type": [
+            "Promise"
+        ],
+        "timer_score": 75,
+        "memory_score": 80,
+        "code": [
+            "async function concurrencyLimit(tasks,limit){ const results=[]; const executing=new Set(); for(const task of tasks){ const p=Promise.resolve().then(()=>task()); executing.add(p); const clean=()=>executing.delete(p); p.then(clean).catch(clean); if(executing.size>=limit) await Promise.race(executing); } return Promise.all(executing); }"
+        ]
+    },
+    {
+        "name-zh": "对象浅拷贝",
+        "name-en": "Object Shallow Copy",
+        "description-zh": "创建对象的浅拷贝",
+        "description-en": "Create shallow copy of object",
+        "dependencies": [],
+        "use_to": [
+            "object"
+        ],
+        "tags": [
+            "basic",
+            "object"
+        ],
+        "input": [
+            "obj"
+        ],
+        "input_type": [
+            "object"
+        ],
+        "return": [
+            "copy"
+        ],
+        "return_type": [
+            "object"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function shallowCopy(obj){ return {...obj}; }"
+        ]
+    },
+    {
+        "name-zh": "金额格式化",
+        "name-en": "Currency Format",
+        "description-zh": "将数字格式化为金额字符串（如 ¥1,234.56）",
+        "description-en": "Format number as currency string",
+        "dependencies": [],
+        "use_to": [
+            "format",
+            "string"
+        ],
+        "tags": [
+            "basic",
+            "format"
+        ],
+        "input": [
+            "num",
+            "locale",
+            "currency"
+        ],
+        "input_type": [
+            "number",
+            "string",
+            "string"
+        ],
+        "return": [
+            "formatted"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 90,
+        "memory_score": 95,
+        "code": [
+            "function currencyFormat(num,locale='zh-CN',currency='CNY'){ return new Intl.NumberFormat(locale,{style:'currency',currency}).format(num); }"
+        ]
+    },
+    {
+        "name-zh": "日期差计算",
+        "name-en": "Date Diff",
+        "description-zh": "计算两个日期之间的天数差",
+        "description-en": "Calculate days between two dates",
+        "dependencies": [],
+        "use_to": [
+            "date",
+            "time"
+        ],
+        "tags": [
+            "basic",
+            "date"
+        ],
+        "input": [
+            "date1",
+            "date2"
+        ],
+        "input_type": [
+            "Date",
+            "Date"
+        ],
+        "return": [
+            "days"
+        ],
+        "return_type": [
+            "number"
+        ],
+        "timer_score": 90,
+        "memory_score": 100,
+        "code": [
+            "function dateDiff(d1,d2){ const diff=Math.abs(d1.getTime()-d2.getTime()); return Math.ceil(diff/(1000*60*60*24)); }"
+        ]
+    },
+    {
+        "name-zh": "URL解析",
+        "name-en": "URL Parse",
+        "description-zh": "解析 URL 为对象",
+        "description-en": "Parse URL to object",
+        "dependencies": [],
+        "use_to": [
+            "url"
+        ],
+        "tags": [
+            "basic",
+            "url"
+        ],
+        "input": [
+            "url"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "parsed"
+        ],
+        "return_type": [
+            "URL"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function parseURL(url){ return new URL(url); }"
+        ]
+    },
+    {
+        "name-zh": "对象转查询字符串",
+        "name-en": "Object to QueryString",
+        "description-zh": "将对象转换为 URL 查询字符串",
+        "description-en": "Convert object to URL query string",
+        "dependencies": [],
+        "use_to": [
+            "url",
+            "string"
+        ],
+        "tags": [
+            "basic",
+            "url"
+        ],
+        "input": [
+            "params"
+        ],
+        "input_type": [
+            "object"
+        ],
+        "return": [
+            "qs"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function toQueryString(params){ return new URLSearchParams(params).toString(); }"
+        ]
+    },
+    {
+        "name-zh": "查询字符串解析",
+        "name-en": "QueryString Parse",
+        "description-zh": "将 URL 查询字符串解析为对象",
+        "description-en": "Parse URL query string to object",
+        "dependencies": [],
+        "use_to": [
+            "url"
+        ],
+        "tags": [
+            "basic",
+            "url"
+        ],
+        "input": [
+            "qs"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "params"
+        ],
+        "return_type": [
+            "object"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function parseQueryString(qs){ return Object.fromEntries(new URLSearchParams(qs)); }"
+        ]
+    },
+    {
+        "name-zh": "数字四舍五入",
+        "name-en": "Round To",
+        "description-zh": "将数字四舍五入到指定小数位",
+        "description-en": "Round number to specified decimal places",
+        "dependencies": [],
+        "use_to": [
+            "math",
+            "number"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "num",
+            "decimals"
+        ],
+        "input_type": [
+            "number",
+            "number"
+        ],
+        "return": [
+            "rounded"
+        ],
+        "return_type": [
+            "number"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function roundTo(num,decimals){ return Math.round(num*10**decimals)/10**decimals; }"
+        ]
+    },
+    {
+        "name-zh": "字符串首字母大写",
+        "name-en": "Capitalize",
+        "description-zh": "将字符串首字母转换为大写",
+        "description-en": "Capitalize first letter of string",
+        "dependencies": [],
+        "use_to": [
+            "string"
+        ],
+        "tags": [
+            "basic",
+            "string"
+        ],
+        "input": [
+            "s"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "cap"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }"
+        ]
+    },
+    {
+        "name-zh": "数值范围映射",
+        "name-en": "Number Range Map",
+        "description-zh": "将一个范围的数值映射到另一个范围",
+        "description-en": "Map value from one range to another",
+        "dependencies": [],
+        "use_to": [
+            "math",
+            "number"
+        ],
+        "tags": [
+            "basic",
+            "math"
+        ],
+        "input": [
+            "value",
+            "inMin",
+            "inMax",
+            "outMin",
+            "outMax"
+        ],
+        "input_type": [
+            "number",
+            "number",
+            "number",
+            "number",
+            "number"
+        ],
+        "return": [
+            "mapped"
+        ],
+        "return_type": [
+            "number"
+        ],
+        "timer_score": 95,
+        "memory_score": 100,
+        "code": [
+            "function rangeMap(value,inMin,inMax,outMin,outMax){ return ((value-inMin)/(inMax-inMin))*(outMax-outMin)+outMin; }"
+        ]
+    },
+    {
+        "name-zh": "删除Cookie",
+        "name-en": "Delete Cookie",
+        "description-zh": "删除指定名称的 Cookie",
+        "description-en": "Delete cookie by name",
+        "dependencies": [],
+        "use_to": [
+            "cookie",
+            "web"
+        ],
+        "tags": [
+            "basic",
+            "cookie"
+        ],
+        "input": [
+            "name"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [],
+        "return_type": [],
+        "timer_score": 90,
+        "memory_score": 100,
+        "code": [
+            "function deleteCookie(name){ document.cookie=`${name}=;expires=Thu,01Jan197000:00:00:00GMT;path=/`; }"
+        ]
+    },
+    {
+        "name-zh": "下载文件",
+        "name-en": "Download File",
+        "description-zh": "通过 Blob 下载文件",
+        "description-en": "Download file via Blob",
+        "dependencies": [],
+        "use_to": [
+            "download",
+            "web"
+        ],
+        "tags": [
+            "basic",
+            "download"
+        ],
+        "input": [
+            "content",
+            "filename",
+            "type"
+        ],
+        "input_type": [
+            "string",
+            "string",
+            "string"
+        ],
+        "return": [],
+        "return_type": [],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "function downloadFile(content,filename,type='text/plain'){ const blob=new Blob([content],{type}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }"
+        ]
     }
 ]
