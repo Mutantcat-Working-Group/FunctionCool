@@ -3459,5 +3459,527 @@
         "code": [
             "function elapsed = timer_function()\n    tic;\n    % code to measure\n    elapsed = toc;\nend"
         ]
+    },
+    {
+        "name-zh": "希尔排序",
+        "name-en": "Shell Sort",
+        "description-zh": "希尔排序（递减增量排序）",
+        "description-en": "Shell sort with diminishing gap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": [
+            "function s = shell_sort(v)\n    n = length(v);\n    gap = floor(n/2);\n    while gap > 0\n        for i = gap+1:n\n            tmp = v(i);\n            j = i - gap;\n            while j >= 1 && v(j) > tmp\n                v(j+gap) = v(j);\n                j = j - gap;\n            end\n            v(j+gap) = tmp;\n        end\n        gap = floor(gap/2);\n    end\n    s = v;\nend"
+        ]
+    },
+    {
+        "name-zh": "堆排序",
+        "name-en": "Heap Sort",
+        "description-zh": "二叉堆实现的堆排序",
+        "description-en": "Heap sort using binary heap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "double[]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "function s = heap_sort(v)\n    n = length(v);\n    for i = floor(n/2):-1:1\n        v = heapify(v, n, i);\n    end\n    for i = n:-1:2\n        [v(1), v(i)] = deal(v(i), v(1));\n        v = heapify(v, i-1, 1);\n    end\n    s = v;\nend\nfunction v = heapify(v, n, i)\n    largest = i;\n    l = 2*i; r = 2*i+1;\n    if l <= n && v(l) > v(largest), largest = l; end\n    if r <= n && v(r) > v(largest), largest = r; end\n    if largest ~= i\n        [v(i), v(largest)] = deal(v(largest), v(i));\n        v = heapify(v, n, largest);\n    end\nend"
+        ]
+    },
+    {
+        "name-zh": "计数排序",
+        "name-en": "Counting Sort",
+        "description-zh": "计数排序（适用于小范围整数）",
+        "description-en": "Counting sort for small integer range",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v",
+            "maxVal"
+        ],
+        "input_type": [
+            "double[]",
+            "double"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "function s = counting_sort(v, maxVal)\n    cnt = zeros(1, maxVal+1);\n    for i = 1:length(v), cnt(v(i)+1) = cnt(v(i)+1) + 1; end\n    s = [];\n    for i = 1:maxVal+1, s = [s, repmat(i-1, 1, cnt(i))]; end\n    s = s(:)';\nend"
+        ]
+    },
+    {
+        "name-zh": "Boyer-Moore字符串匹配",
+        "name-en": "Boyer-Moore String Match",
+        "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
+        "description-en": "Boyer-Moore string matching",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "boyer-moore",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "function idx = boyer_moore(text, pattern)\n    n = length(text); m = length(pattern);\n    if m == 0, idx = 1; return; end\n    bc = zeros(1, 256) + m;\n    for i = 1:m, bc(double(pattern(i))+1) = m - i; end\n    shift = 1;\n    while shift <= n - m + 1\n        j = m;\n        while j >= 1 && pattern(j) == text(shift+j-1), j = j - 1; end\n        if j < 1, idx = shift; return; end\n        c = double(text(shift+j-1));\n        shift = shift + max(1, j - bc(c+1));\n    end\n    idx = [];\nend"
+        ]
+    },
+    {
+        "name-zh": "Sunday字符串匹配",
+        "name-en": "Sunday String Match",
+        "description-zh": "Sunday 字符串匹配算法",
+        "description-en": "Sunday string matching",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "sunday",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "char[]",
+            "char[]"
+        ],
+        "return": [
+            "idx"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "function idx = sunday(text, pattern)\n    n = length(text); m = length(pattern);\n    if m == 0, idx = 1; return; end\n    shift = zeros(1, 256) + m + 1;\n    for i = 1:m, shift(double(pattern(i))+1) = m - i + 1; end\n    pos = 1;\n    while pos <= n - m + 1\n        j = 1;\n        while j <= m && text(pos+j-1) == pattern(j), j = j + 1; end\n        if j > m, idx = pos; return; end\n        next_pos = pos + m;\n        if next_pos <= n\n            pos = pos + shift(double(text(next_pos))+1;\n        else\n            idx = []; return;\n        end\n    end\n    idx = [];\nend"
+        ]
+    },
+    {
+        "name-zh": "图像卷积",
+        "name-en": "Image Convolution",
+        "description-zh": "对图像进行卷积操作",
+        "description-en": "Convolution operation on image",
+        "dependencies": [],
+        "use_to": [
+            "image",
+            "convolution"
+        ],
+        "tags": [
+            "image",
+            "convolution"
+        ],
+        "input": [
+            "img",
+            "kernel"
+        ],
+        "input_type": [
+            "double[][]",
+            "double[][]"
+        ],
+        "return": [
+            "convolved"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "function out = convolve2d(img, kernel)\n    [kh, kw] = size(kernel);\n    [ih, iw] = size(img);\n    padh = floor(kh/2); padw = floor(kw/2);\n    padded = padarray(img, [padh padw], 0, 'both');\n    out = zeros(ih, iw);\n    for i = 1:ih\n        for j = 1:iw\n            region = padded(i:i+kh-1, j:j+kw-1);\n            out(i,j) = sum(region(:) .* kernel(:));\n        end\n    end\nend"
+        ]
+    },
+    {
+        "name-zh": "图像边缘检测（Sobel）",
+        "name-en": "Sobel Edge Detection",
+        "description-zh": "使用 Sobel 算子进行边缘检测",
+        "description-en": "Edge detection using Sobel operator",
+        "dependencies": [],
+        "use_to": [
+            "image",
+            "edge detection"
+        ],
+        "tags": [
+            "image",
+            "edge"
+        ],
+        "input": [
+            "img"
+        ],
+        "input_type": [
+            "double[][]"
+        ],
+        "return": [
+            "edges"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "function edges = sobel_edge(img)\n    Gx = [-1 0 1; -2 0 2; -1 0 1];\n    Gy = [-1 -2 -1; 0 0 0; 1 2 1];\n    convolve2d = @(im, k) conv2(im, k, 'same');\n    Gx_img = convolve2d(double(img), Gx);\n    Gy_img = convolve2d(double(img), Gy);\n    edges = sqrt(Gx_img.^2 + Gy_img.^2);\n    edges = uint8(edges / max(edges(:)) * 255);\nend"
+        ]
+    },
+    {
+        "name-zh": "图像直方图均衡化",
+        "name-en": "Histogram Equalization",
+        "description-zh": "对图像进行直方图均衡化以增强对比度",
+        "description-en": "Enhance contrast by histogram equalization",
+        "dependencies": [],
+        "use_to": [
+            "image",
+            "enhancement"
+        ],
+        "tags": [
+            "image",
+            "histogram"
+        ],
+        "input": [
+            "img"
+        ],
+        "input_type": [
+            "uint8[][]"
+        ],
+        "return": [
+            "equalized"
+        ],
+        "return_type": [
+            "uint8[][]"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "function eq = histeq_img(img)\n    [h, w] = size(img);\n    hist = imhist(img);\n    cdf = cumsum(hist) / (h * w);\n    map = uint8(255 * cdf);\n    eq = map(double(img) + 1);\nend"
+        ]
+    },
+    {
+        "name-zh": "数值微分（中心差分）",
+        "name-en": "Numerical Differentiation",
+        "description-zh": "使用中心差分法计算数值导数",
+        "description-en": "Numerical derivative using central difference",
+        "dependencies": [],
+        "use_to": [
+            "numerical",
+            "math"
+        ],
+        "tags": [
+            "numerical",
+            "math"
+        ],
+        "input": [
+            "x",
+            "y"
+        ],
+        "input_type": [
+            "double[]",
+            "double[]"
+        ],
+        "return": [
+            "dydx"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "function dydx = central_diff(x, y)\n    n = length(x);\n    dydx = zeros(size(x));\n    for i = 2:n-1\n        dydx(i) = (y(i+1) - y(i-1)) / (x(i+1) - x(i-1));\n    end\n    dydx(1) = (y(2) - y(1)) / (x(2) - x(1));\n    dydx(n) = (y(n) - y(n-1)) / (x(n) - x(n-1));\nend"
+        ]
+    },
+    {
+        "name-zh": "辛普森积分",
+        "name-en": "Simpson Integration",
+        "description-zh": "使用辛普森1/3法则进行数值积分",
+        "description-en": "Numerical integration using Simpson's 1/3 rule",
+        "dependencies": [],
+        "use_to": [
+            "numerical",
+            "integration"
+        ],
+        "tags": [
+            "numerical",
+            "integration"
+        ],
+        "input": [
+            "f",
+            "a",
+            "b",
+            "n"
+        ],
+        "input_type": [
+            "function_handle",
+            "double",
+            "double",
+            "double"
+        ],
+        "return": [
+            "integral"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "function I = simpson(f, a, b, n)\n    if n < 2 || mod(n,2) ~= 0, error('n must be even'); end\n    h = (b - a) / n;\n    S = f(a) + f(b);\n    for i = 1:n-1\n        x = a + i * h;\n        if mod(i,2) == 1, S = S + 4 * f(x); else, S = S + 2 * f(x); end\n    end\n    I = h / 3 * S;\nend"
+        ]
+    },
+    {
+        "name-zh": "多项式求根（牛顿法）",
+        "name-en": "Polynomial Root Finding (Newton)",
+        "description-zh": "使用牛顿-拉夫森法求多项式根",
+        "description-en": "Find polynomial root using Newton-Raphson",
+        "dependencies": [],
+        "use_to": [
+            "numerical",
+            "root finding"
+        ],
+        "tags": [
+            "numerical",
+            "root finding"
+        ],
+        "input": [
+            "f",
+            "df",
+            "x0",
+            "tol"
+        ],
+        "input_type": [
+            "function_handle",
+            "function_handle",
+            "double",
+            "double"
+        ],
+        "return": [
+            "root"
+        ],
+        "return_type": [
+            "double"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "function root = newton_raphson(f, df, x0, tol)\n    x = x0;\n    for iter = 1:1000\n        fx = f(x);\n        if abs(fx) < tol, root = x; return; end\n        dfx = df(x);\n        if abs(dfx) < eps, break; end\n        x = x - fx / dfx;\n    end\n    root = x;\nend"
+        ]
+    },
+    {
+        "name-zh": "矩阵LU分解求解线性方程组",
+        "name-en": "Solve Linear System with LU",
+        "description-zh": "LU分解后向前向后替换求解 Ax=b",
+        "description-en": "Solve Ax=b via LU factorization with forward-back substitution",
+        "dependencies": [],
+        "use_to": [
+            "linear algebra",
+            "equations"
+        ],
+        "tags": [
+            "linear algebra",
+            "matrix"
+        ],
+        "input": [
+            "A",
+            "b"
+        ],
+        "input_type": [
+            "double[][]",
+            "double[]"
+        ],
+        "return": [
+            "x"
+        ],
+        "return_type": [
+            "double[]"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "function x = lu_solve(A, b)\n    [L, U, P] = lu(A);\n    y = forward_sub(L, P*b);\n    x = back_sub(U, y);\nend\nfunction y = forward_sub(L, b)\n    n = length(b); y = zeros(n,1);\n    y(1) = b(1) / L(1,1);\n    for i = 2:n\n        y(i) = (b(i) - L(i,1:i-1)*y(1:i-1)) / L(i,i);\n    end\nend\nfunction x = back_sub(U, y)\n    n = length(y); x = zeros(n,1);\n    x(n) = y(n) / U(n,n);\n    for i = n-1:-1:1\n        x(i) = (y(i) - U(i,i+1:n)*x(i+1:n)) / U(i,i);\n    end\nend"
+        ]
+    },
+    {
+        "name-zh": "奇异值分解应用（图像压缩）",
+        "name-en": "SVD Image Compression",
+        "description-zh": "使用截断SVD进行图像压缩",
+        "description-en": "Image compression using truncated SVD",
+        "dependencies": [],
+        "use_to": [
+            "svd",
+            "compression"
+        ],
+        "tags": [
+            "svd",
+            "compression"
+        ],
+        "input": [
+            "img",
+            "k"
+        ],
+        "input_type": [
+            "double[][]",
+            "double"
+        ],
+        "return": [
+            "compressed"
+        ],
+        "return_type": [
+            "double[][]"
+        ],
+        "timer_score": 75,
+        "memory_score": 80,
+        "code": [
+            "function [comp, s] = svd_compress(img, k)\n    [U, S, V] = svd(double(img));\n    U_k = U(:, 1:k);\n    S_k = S(1:k, 1:k);\n    V_k = V(:, 1:k)';\n    comp = uint8(U_k * S_k * V_k);\n    s = sum(diag(S_k)) / sum(diag(S));\nend"
+        ]
+    },
+    {
+        "name-zh": "K-means聚类",
+        "name-en": "K-Means Clustering",
+        "description-zh": "K-means 聚类算法实现",
+        "description-en": "K-means clustering implementation",
+        "dependencies": [],
+        "use_to": [
+            "clustering",
+            "machine learning"
+        ],
+        "tags": [
+            "clustering",
+            "ml"
+        ],
+        "input": [
+            "X",
+            "k",
+            "maxIter"
+        ],
+        "input_type": [
+            "double[][]",
+            "double",
+            "double"
+        ],
+        "return": [
+            "centroids",
+            "labels"
+        ],
+        "return_type": [
+            "double[][]",
+            "double[]"
+        ],
+        "timer_score": 75,
+        "memory_score": 75,
+        "code": [
+            "function [centroids, labels] = kmeans(X, k, maxIter)\n    [n, d] = size(X);\n    idx = randperm(n, k);\n    centroids = X(idx, :);\n    labels = zeros(n, 1);\n    for iter = 1:maxIter\n        dist = pdist2(X, centroids);\n        [~, labels] = min(dist, [], 2);\n        new_centroids = zeros(k, d);\n        for j = 1:k\n            new_centroids(j, :) = mean(X(labels == j, :), 1);\n        end\n        if norm(new_centroids - centroids) < 1e-6, break; end\n        centroids = new_centroids;\n    end\nend"
+        ]
+    },
+    {
+        "name-zh": "线性SVM（感知机算法）",
+        "name-en": "Perceptron SVM",
+        "description-zh": "使用感知机算法训练线性分类器",
+        "description-en": "Train linear classifier using perceptron",
+        "dependencies": [],
+        "use_to": [
+            "classification",
+            "svm"
+        ],
+        "tags": [
+            "svm",
+            "classification"
+        ],
+        "input": [
+            "X",
+            "y",
+            "lr",
+            "epochs"
+        ],
+        "input_type": [
+            "double[][]",
+            "double[]",
+            "double",
+            "double"
+        ],
+        "return": [
+            "w",
+            "b"
+        ],
+        "return_type": [
+            "double[]",
+            "double"
+        ],
+        "timer_score": 75,
+        "memory_score": 80,
+        "code": [
+            "function [w, b] = perceptron(X, y, lr, epochs)\n    n = size(X, 2);\n    w = zeros(n, 1); b = 0;\n    for epoch = 1:epochs\n        for i = 1:size(X,1)\n            if y(i) * (X(i,:)*w + b) <= 0\n                w = w + lr * y(i) * X(i,:)';\n                b = b + lr * y(i);\n            end\n        end\n    end\nend"
+        ]
     }
 ]

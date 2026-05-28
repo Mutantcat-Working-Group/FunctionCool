@@ -2184,5 +2184,497 @@
         "code": [
             "def monkey_patch(cls, name, &block)\n  cls.define_method(name, &block)\n  cls\nend"
         ]
+    },
+    {
+        "name-zh": "希尔排序",
+        "name-en": "Shell Sort",
+        "description-zh": "希尔排序（递减增量排序）",
+        "description-en": "Shell sort with diminishing gap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "Array"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "Array"
+        ],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": [
+            "def shell_sort(arr)\n  n = arr.length\n  gap = n / 2\n  while gap > 0\n    (gap...n).each do |i|\n      tmp = arr[i]\n      j = i\n      while j >= gap && arr[j - gap] > tmp\n        arr[j] = arr[j - gap]\n        j -= gap\n      end\n      arr[j] = tmp\n    end\n    gap = gap / 2\n  end\n  arr\nend"
+        ]
+    },
+    {
+        "name-zh": "堆排序",
+        "name-en": "Heap Sort",
+        "description-zh": "二叉堆实现的堆排序",
+        "description-en": "Heap sort using binary heap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "Array"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "Array"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "def heap_sort(arr)\n  n = arr.length\n  (n / 2 - 1).downto(0) { |i| heapify(arr, n, i) }\n  (n - 1).downto(1) { |i| arr[0], arr[i] = arr[i], arr[0]; heapify(arr, i, 0) }\n  arr\nend\ndef heapify(arr, n, i\n  largest = i\n  l = 2 * i + 1\n  r = 2 * i + 2\n  largest = l if l < n && arr[l] > arr[largest]\n  largest = r if r < n && arr[r] > arr[largest]\n  if largest != i\n    arr[i], arr[largest] = arr[largest], arr[i]\n    heapify(arr, n, largest)\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "Boyer-Moore字符串匹配",
+        "name-en": "Boyer-Moore String Match",
+        "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
+        "description-en": "Boyer-Moore string matching",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "boyer-moore",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "String",
+            "String"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "Integer?"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "def boyer_moore(text, pattern)\n  n, m = text.length, pattern.length\n  return 0 if m == 0\n  bc = {}\n  m.times { |i| bc[pattern[i]] = m - i - 1 }\n  shift = 0\n  while shift <= n - m\n    j = m - 1\n    j -= 1 while j >= 0 && pattern[j] == text[shift + j]\n    return shift if j < 0\n    c = text[shift + j]\n    shift += [1, j - (bc[c] || m)].max\n  end\n  nil\nend"
+        ]
+    },
+    {
+        "name-zh": "Sunday字符串匹配",
+        "name-en": "Sunday String Match",
+        "description-zh": "Sunday 字符串匹配算法",
+        "description-en": "Sunday string matching",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "sunday",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "String",
+            "String"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "Integer?"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "def sunday(text, pattern)\n  n, m = text.length, pattern.length\n  return 0 if m == 0\n  shift = {}\n  m.times { |i| shift[pattern[i]] = m - i - 1 }\n  pos = 0\n  while pos <= n - m\n    j = 0\n    j += 1 while j < m && text[pos + j] == pattern[j]\n    return pos if j == m\n    next_pos = pos + m\n    if next_pos < n\n      pos += shift[text[next_pos]] || m + 1\n    else\n      return nil\n    end\n  end\n  nil\nend"
+        ]
+    },
+    {
+        "name-zh": "并发安全队列",
+        "name-en": "Thread-safe Queue",
+        "description-zh": "使用 Mutex 实现并发安全队列",
+        "description-en": "Thread-safe queue using Mutex",
+        "dependencies": [
+            "thread",
+            "mutex"
+        ],
+        "use_to": [
+            "queue",
+            "concurrency"
+        ],
+        "tags": [
+            "queue",
+            "concurrent"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "queue"
+        ],
+        "return_type": [
+            "ThreadSafeQueue"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "require 'thread'\nclass ThreadSafeQueue\n  def initialize\n    @q = []\n    @mutex = Mutex.new\n    @cond = ConditionVariable.new\n  end\n  def push(v)\n    @mutex.synchronize { @q.push(v); @cond.broadcast }\n  end\n  def pop(timeout = nil)\n    @mutex.synchronize do\n      while @q.empty?\n        return nil if timeout && Time.now - start > timeout\n        @cond.wait(@mutex, timeout)\n      end\n      @q.shift\n    end\n  end\n  def size\n    @mutex.synchronize { @q.size }\n  end\n  def empty?\n    @mutex.synchronize { @q.empty? }\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "限流器（滑动窗口）",
+        "name-en": "Sliding Window Rate Limiter",
+        "description-zh": "滑动窗口限流器",
+        "description-en": "Sliding window rate limiter",
+        "dependencies": [],
+        "use_to": [
+            "rate limit",
+            "concurrency"
+        ],
+        "tags": [
+            "rate limit",
+            "concurrent"
+        ],
+        "input": [
+            "max_requests",
+            "window_seconds"
+        ],
+        "input_type": [
+            "Integer",
+            "Integer"
+        ],
+        "return": [
+            "limiter"
+        ],
+        "return_type": [
+            "SlidingWindowLimiter"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "class SlidingWindowLimiter\n  def initialize(max, window)\n    @max = max\n    @window = window\n    @requests = []\n    @mutex = Mutex.new\n  end\n  def allow?\n    @mutex.synchronize do\n      now = Time.now.to_f\n      @requests.reject! { |t| now - t > @window }\n      if @requests.size < @max\n        @requests << now\n        true\n      else\n        false\n      end\n    end\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "布隆过滤器",
+        "name-en": "Bloom Filter",
+        "description-zh": "简单布隆过滤器实现",
+        "description-en": "Simple bloom filter",
+        "dependencies": [],
+        "use_to": [
+            "bloom filter",
+            "data structure"
+        ],
+        "tags": [
+            "bloom filter",
+            "data structure"
+        ],
+        "input": [
+            "size"
+        ],
+        "input_type": [
+            "Integer"
+        ],
+        "return": [
+            "filter"
+        ],
+        "return_type": [
+            "BloomFilter"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "class BloomFilter\n  def initialize(size)\n    @size = size\n    @bits = Array.new(size, false)\n  end\n  def h1(s)\n    s.sum % @size\n  end\n  def h2(s)\n    (s.sum * 31) % @size\n  end\n  def add(item)\n    @bits[h1(item.to_s)] = true\n    @bits[h2(item.to_s)] = true\n  end\n  def include?(item)\n    @bits[h1(item.to_s)] && @bits[h2(item.to_s)]\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "环形缓冲区",
+        "name-en": "Ring Buffer",
+        "description-zh": "FIFO 环形缓冲区",
+        "description-en": "FIFO ring buffer",
+        "dependencies": [],
+        "use_to": [
+            "data structure",
+            "buffer"
+        ],
+        "tags": [
+            "ring buffer",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "Integer"
+        ],
+        "return": [
+            "ring"
+        ],
+        "return_type": [
+            "RingBuffer"
+        ],
+        "timer_score": 88,
+        "memory_score": 88,
+        "code": [
+            "class RingBuffer\n  def initialize(capacity)\n    @capacity = capacity\n    @buffer = Array.new(capacity)\n    @read = 0\n    @write = 0\n    @mutex = Mutex.new\n  end\n  def push(item)\n    @mutex.synchronize do\n      return false if @write - @read >= @capacity\n      @buffer[@write % @capacity] = item\n      @write += 1\n      true\n    end\n  end\n  def pop\n    @mutex.synchronize do\n      return nil if @write <= @read\n      item = @buffer[@read % @capacity]\n      @read += 1\n      item\n    end\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "Actor模型基础",
+        "name-en": "Actor Model Basics",
+        "description-zh": "简化的 Actor 消息传递模型",
+        "description-en": "Simplified actor message passing",
+        "dependencies": [
+            "thread",
+            "queue"
+        ],
+        "use_to": [
+            "actor",
+            "concurrency"
+        ],
+        "tags": [
+            "actor",
+            "concurrent"
+        ],
+        "input": [
+            "handler"
+        ],
+        "input_type": [
+            "Proc"
+        ],
+        "return": [
+            "actor"
+        ],
+        "return_type": [
+            "Actor"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "require 'thread'\nclass Actor\n  def initialize(&handler)\n    @mailbox = Queue.new\n    @thread = Thread.new { loop { handler.call(@mailbox.pop) rescue nil } }\n  end\n  def tell(msg)\n    @mailbox << msg\n  end\n  def join\n    @thread.join\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "观察者模式",
+        "name-en": "Observer Pattern",
+        "description-zh": "简化的观察者模式实现",
+        "description-en": "Simplified observer pattern",
+        "dependencies": [],
+        "use_to": [
+            "design pattern",
+            "observer"
+        ],
+        "tags": [
+            "observer",
+            "pattern"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "subject"
+        ],
+        "return_type": [
+            "Subject"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "module Observable\n  def initialize\n    @observers = []\n  end\n  def add_observer(obs)\n    @observers << obs\n  end\n  def notify_observers(*args)\n    @observers.each { |obs| obs.update(*args) }\n  end\nend\nclass Subject\n  include Observable\n  attr_accessor :state\n  def state=(value)\n    @state = value\n    notify_observers(value)\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "策略模式",
+        "name-en": "Strategy Pattern",
+        "description-zh": "简化的策略模式实现",
+        "description-en": "Simplified strategy pattern",
+        "dependencies": [],
+        "use_to": [
+            "design pattern",
+            "strategy"
+        ],
+        "tags": [
+            "strategy",
+            "pattern"
+        ],
+        "input": [
+            "strategy"
+        ],
+        "input_type": [
+            "Proc"
+        ],
+        "return": [
+            "result"
+        ],
+        "return_type": [
+            "Object"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "class Context\n  def initialize(strategy)\n    @strategy = strategy\n  end\n  def execute(data)\n    @strategy.call(data)\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "装饰器模式",
+        "name-en": "Decorator Pattern",
+        "description-zh": "简化的装饰器模式（方法包装）",
+        "description-en": "Simplified decorator (method wrapper)",
+        "dependencies": [],
+        "use_to": [
+            "design pattern",
+            "decorator"
+        ],
+        "tags": [
+            "decorator",
+            "pattern"
+        ],
+        "input": [
+            "original"
+        ],
+        "input_type": [
+            "Proc"
+        ],
+        "return": [
+            "decorated"
+        ],
+        "return_type": [
+            "Proc"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "def timing_decorator(fn)\n  ->(*args) do\n    start = Time.now\n    result = fn.call(*args)\n    puts \"Took #{Time.now - start}s\"\n    result\n  end\nend"
+        ]
+    },
+    {
+        "name-zh": "YAML解析",
+        "name-en": "Parse YAML",
+        "description-zh": "解析 YAML 字符串为 Hash",
+        "description-en": "Parse YAML string to Hash",
+        "dependencies": [
+            "yaml"
+        ],
+        "use_to": [
+            "yaml",
+            "config"
+        ],
+        "tags": [
+            "yaml",
+            "config"
+        ],
+        "input": [
+            "yaml_str"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "data"
+        ],
+        "return_type": [
+            "Hash"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "require 'yaml'\ndef parse_yaml(yaml_str)\n  YAML.safe_load(yaml_str)\nend"
+        ]
+    },
+    {
+        "name-zh": "TOML解析",
+        "name-en": "Parse TOML",
+        "description-zh": "解析 TOML 字符串为 Hash",
+        "description-en": "Parse TOML string to Hash",
+        "dependencies": [
+            "toml-rb"
+        ],
+        "use_to": [
+            "toml",
+            "config"
+        ],
+        "tags": [
+            "toml",
+            "config"
+        ],
+        "input": [
+            "toml_str"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "data"
+        ],
+        "return_type": [
+            "Hash"
+        ],
+        "timer_score": 80,
+        "memory_memory": 85,
+        "code": [
+            "require 'toml-rb'\ndef parse_toml(toml_str)\n  TomlRB.parse(toml_str)\nrescue => e\n  {}\nend"
+        ]
+    },
+    {
+        "name-zh": "XML解析",
+        "name-en": "Parse XML",
+        "description-zh": "解析 XML 字符串为 Hash",
+        "description-en": "Parse XML string to Hash",
+        "dependencies": [
+            "rexml/document"
+        ],
+        "use_to": [
+            "xml",
+            "parsing"
+        ],
+        "tags": [
+            "xml",
+            "basic"
+        ],
+        "input": [
+            "xml_str"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "doc"
+        ],
+        "return_type": [
+            "REXML::Document"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "require 'rexml/document'\ndef parse_xml(xml_str)\n  REXML::Document.new(xml_str)\nrescue => e\n  nil\nend"
+        ]
     }
 ]
