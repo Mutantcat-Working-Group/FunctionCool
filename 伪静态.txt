@@ -1,0 +1,22 @@
+location / {
+      index index.php;
+      try_files $uri @rewriteapp;
+  }
+
+  location @rewriteapp {
+      if ($host = 'functioncool.xyz') {
+          return 301 https://www.functioncool.xyz$request_uri;
+      }
+
+      rewrite ^/sitemap\.xml$ /sitemap.php last;
+      rewrite ^/404/?$ /404.php last;
+      rewrite ^(.*)$ /index.php/$1 last;
+  }
+
+  location ~ \.php$ {
+      fastcgi_pass unix:/var/run/php/php-fpm.sock;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      include fastcgi_params;
+  }
+
+  error_page 404 /404.php;

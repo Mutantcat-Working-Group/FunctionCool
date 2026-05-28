@@ -1,3 +1,21 @@
+<?php
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+if (preg_match('#^/search/?$#', $path)) {
+    require __DIR__ . '/search.php';
+    exit;
+}
+
+if (preg_match('#^/mcpapi/?$#', $path)) {
+    require __DIR__ . '/mcpapi.php';
+    exit;
+}
+
+if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
+    require __DIR__ . '/notes/note' . $m[1] . '.php';
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
