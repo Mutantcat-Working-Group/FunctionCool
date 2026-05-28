@@ -2529,5 +2529,575 @@
         "code": [
             "fn option_chain<T: Copy>(opt: Option<T>, pred: fn(T) -> bool) -> Option<T> {\n    opt.filter(pred)\n}"
         ]
+    },
+    {
+        "name-zh": "希尔排序",
+        "name-en": "Shell Sort",
+        "description-zh": "希尔排序（递减增量排序）",
+        "description-en": "Shell sort with diminishing gap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "v"
+        ],
+        "input_type": [
+            "&mut [i32]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "&mut [i32]"
+        ],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": [
+            "fn shell_sort(a: &mut [i32]) { let n = a.len(); let mut gap = n / 2; while gap > 0 { for i in gap..n { let mut j = i; let tmp = a[i]; while j >= gap && a[j - gap] > tmp { a[j] = a[j - gap]; j -= gap; } a[j] = tmp; } gap /= 2; } }"
+        ]
+    },
+    {
+        "name-zh": "堆排序",
+        "name-en": "Heap Sort",
+        "description-zh": "二叉堆实现的堆排序",
+        "description-en": "Heap sort using binary heap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "&mut [i32]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "&mut [i32]"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "fn heap_sort(a: &mut [i32]) { let n = a.len(); for i in (0..n/2).rev() { heapify(a, n, i); } for i in (1..n).rev() { a.swap(0, i); heapify(a, i, 0); } } fn heapify(a: &mut [i32], n: usize, i: usize) { let mut largest = i; let l = 2*i+1; let r = 2*i+2; if l < n && a[l] > a[largest] { largest = l; } if r < n && a[r] > a[largest] { largest = r; } if largest != i { a.swap(i, largest); heapify(a, n, largest); } }"
+        ]
+    },
+    {
+        "name-zh": "计数排序",
+        "name-en": "Counting Sort",
+        "description-zh": "计数排序（适用于小范围整数）",
+        "description-en": "Counting sort for small integer range",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "a",
+            "max"
+        ],
+        "input_type": [
+            "&[i32]",
+            "i32"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "Vec<i32>"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "fn counting_sort(a: &[i32], max: i32) -> Vec<i32> { let mut cnt = vec![0i32; (max+1) as usize]; for &v in a { cnt[v as usize] += 1; } let mut res = Vec::new(); for (i, &c) in cnt.iter().enumerate() { res.extend(std::iter::repeat(i as i32).take(c as usize)); } res }"
+        ]
+    },
+    {
+        "name-zh": "Boyer-Moore字符串匹配",
+        "name-en": "Boyer-Moore String Match",
+        "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
+        "description-en": "Boyer-Moore string matching with bad character rule",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "boyer-moore",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "&str",
+            "&str"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "Option<usize>"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "fn boyer_moore(text: &str, pattern: &str) -> Option<usize> { let n = text.len(); let m = pattern.len(); if m == 0 { return Some(0); } let mut bc = [m; 256]; for (i, c) in pattern.char_indices() { bc[c as usize] = m - i - 1; } let mut shift = 0; while shift <= n.saturating_sub(m) { let mut j = m; while j > 0 && pattern.chars().nth(j-1) == text.chars().nth(shift+j-1) { j -= 1; } if j == 0 { return Some(shift); } let c = text.chars().nth(shift+j-1).unwrap_or('\\0') as usize; shift += (j - bc[c]).max(1); } None }"
+        ]
+    },
+    {
+        "name-zh": "Sunday字符串匹配",
+        "name-en": "Sunday String Match",
+        "description-zh": "Sunday 字符串匹配算法",
+        "description-en": "Sunday string matching algorithm",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "sunday",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "&str",
+            "&str"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "Option<usize>"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "fn sunday(text: &str, pattern: &str) -> Option<usize> { let n = text.len(); let m = pattern.len(); if m == 0 { return Some(0); } let mut shift = [m+1; 256]; for (i, c) in pattern.char_indices() { shift[c as usize] = m - i; } let mut pos = 0; while pos <= n.saturating_sub(m) { let mut j = 0; while j < m && text.chars().nth(pos+j) == pattern.chars().nth(j) { j += 1; } if j == m { return Some(pos); } let next_pos = pos + m; if next_pos < n { let c = text.chars().nth(next_pos).unwrap() as usize; pos += shift[c]; } else { return None; } } None }"
+        ]
+    },
+    {
+        "name-zh": "LRU缓存（标准库实现）",
+        "name-en": "LRU Cache (std impl)",
+        "description-zh": "使用标准库实现 LRU 缓存",
+        "description-en": "LRU cache using std",
+        "dependencies": [
+            "std"
+        ],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "usize"
+        ],
+        "return": [
+            "cache"
+        ],
+        "return_type": [
+            "LRUCache<i32,i32>"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "use std::collections::HashMap;\nstruct LRUCache<K, V> { capacity: usize, map: HashMap<K, (V, usize)>, order: Vec<K>, counter: usize }"
+        ]
+    },
+    {
+        "name-zh": "限流器（令牌桶）",
+        "name-en": "Token Bucket Rate Limiter",
+        "description-zh": "令牌桶限流器实现",
+        "description-en": "Token bucket rate limiter",
+        "dependencies": [
+            "std",
+            "tokio"
+        ],
+        "use_to": [
+            "rate limit",
+            "concurrency"
+        ],
+        "tags": [
+            "rate limit",
+            "concurrent"
+        ],
+        "input": [
+            "rate",
+            "burst"
+        ],
+        "input_type": [
+            "f64",
+            "usize"
+        ],
+        "return": [
+            "limiter"
+        ],
+        "return_type": [
+            "TokenBucket"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "use std::time::{Duration, Instant};\npub struct TokenBucket { rate: f64, tokens: f64, last_update: Instant } impl TokenBucket { pub fn new(rate: f64, burst: usize) -> Self { Self { rate, tokens: burst as f64, last_update: Instant::now() } } pub fn allow(&mut self) -> bool { let now = Instant::now(); let elapsed = now.duration_since(self.last_update).as_secs_f64(); self.last_update = now; self.tokens = (self.tokens + elapsed * self.rate).min(self.tokens.max(self.tokens as f64) as f64); if self.tokens >= 1.0 { self.tokens -= 1.0; true } else { false } } } }"
+        ]
+    },
+    {
+        "name-zh": "布隆过滤器",
+        "name-en": "Bloom Filter",
+        "description-zh": "简单布隆过滤器实现",
+        "description-en": "Simple bloom filter",
+        "dependencies": [
+            "std"
+        ],
+        "use_to": [
+            "bloom filter",
+            "data structure"
+        ],
+        "tags": [
+            "bloom filter",
+            "data structure"
+        ],
+        "input": [
+            "size"
+        ],
+        "input_type": [
+            "usize"
+        ],
+        "return": [
+            "filter"
+        ],
+        "return_type": [
+            "BloomFilter"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "use std::collections::hash_map::DefaultHasher;\nuse std::hash::{Hash, Hasher};\nstruct BloomFilter { size: usize, bits: Vec<bool> } impl BloomFilter { pub fn new(size: usize) -> Self { Self { size, bits: vec![false; size] } fn hash1<T: Hash>(&self, v: &T) -> usize { let mut h = DefaultHasher::new(); v.hash(&mut h); h.finish() as usize % self.size } fn hash2<T: Hash>(&self, v: &T) -> usize { let mut h = DefaultHasher::new(); v.hash(&mut h); (h.finish() * 0x9e3779b97f4a7c15) as usize % self.size } pub fn insert<T: Hash>(&mut self, v: &T) { self.bits[self.hash1(v)] = true; self.bits[self.hash2(v)] = true; } pub fn contains<T: Hash>(&self, v: &T) -> bool { self.bits[self.hash1(v)] && self.bits[self.hash2(v)] } }"
+        ]
+    },
+    {
+        "name-zh": "环形缓冲区",
+        "name-en": "Ring Buffer",
+        "description-zh": "无锁 FIFO 环形缓冲区",
+        "description-en": "Lock-free FIFO ring buffer",
+        "dependencies": [
+            "std::sync::atomic"
+        ],
+        "use_to": [
+            "data structure",
+            "buffer"
+        ],
+        "tags": [
+            "ring buffer",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "usize"
+        ],
+        "return": [
+            "ring"
+        ],
+        "return_type": [
+            "RingBuffer<i32>"
+        ],
+        "timer_score": 88,
+        "memory_score": 88,
+        "code": [
+            "use std::sync::atomic::{AtomicUsize, Ordering};\npub struct RingBuffer<T> { buf: Vec<T>, cap: usize, head: AtomicUsize, tail: AtomicUsize } impl<T: Clone + Default> RingBuffer<T> { pub fn new(capacity: usize) -> Self { Self { buf: vec![T::default(); capacity], cap: capacity, head: AtomicUsize::new(0), tail: AtomicUsize::new(0) } } pub fn push(&self, v: T) -> bool { let tail = self.tail.load(Ordering::Relaxed); let head = self.head.load(Ordering::Relaxed); if tail.wrapping_sub(head) >= self.cap { return false; } self.buf[tail % self.cap] = v; self.tail.fetch_add(1, Ordering::Relaxed); true } pub fn pop(&self) -> Option<T> { let tail = self.tail.load(Ordering::Relaxed); let head = self.head.load(Ordering::Relaxed); if tail == head { return None; } let v = self.buf[head % self.cap].clone(); self.head.fetch_add(1, Ordering::Relaxed); Some(v) } }"
+        ]
+    },
+    {
+        "name-zh": "跳表",
+        "name-en": "Skip List",
+        "description-zh": "简化的跳表实现",
+        "description-en": "Simplified skip list",
+        "dependencies": [
+            "rand"
+        ],
+        "use_to": [
+            "data structure",
+            "skiplist"
+        ],
+        "tags": [
+            "skiplist",
+            "data structure"
+        ],
+        "input": [
+            "max_level"
+        ],
+        "input_type": [
+            "i32"
+        ],
+        "return": [
+            "skiplist"
+        ],
+        "return_type": [
+            "SkipList<i32>"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "use rand::Rng;\n#[derive(Clone)]\nstruct SkipListNode<T: Clone> { key: T, forward: Vec<Option<Box<SkipListNode<T>>>, value: Option<T> }\npub struct SkipList<T: Clone + PartialOrd> { head: Option<Box<SkipListNode<T>>>, max_level: i32 }"
+        ]
+    },
+    {
+        "name-zh": "Actor 模型基础",
+        "name-en": "Actor Model Basics",
+        "description-zh": "简化的 Actor 消息传递模型",
+        "description-en": "Simplified actor message passing model",
+        "dependencies": [
+            "std",
+            "std::sync::mpsc"
+        ],
+        "use_to": [
+            "concurrency",
+            "actor"
+        ],
+        "tags": [
+            "actor",
+            "concurrent"
+        ],
+        "input": [
+            "actorFn"
+        ],
+        "input_type": [
+            "fn(Box<dyn FnOnce(String) + Send>)"
+        ],
+        "return": [
+            "sender"
+        ],
+        "return_type": [
+            "std::sync::mpsc::Sender<String>"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "use std::sync::mpsc::{channel, Sender, Receiver};\npub struct Actor { rx: Receiver<String> }\nimpl Actor { pub fn new() -> (Self, Sender<String>) { let (tx, rx) = channel(); (Self { rx }, tx) } pub fn run<F: FnOnce(String) + Send + 'static>(self, handler: F) { std::thread::spawn(move || { while let Ok(msg) = self.rx.recv() { handler(msg); } }); } }"
+        ]
+    },
+    {
+        "name-zh": "观察者模式",
+        "name-en": "Observer Pattern",
+        "description-zh": "简单的观察者模式实现",
+        "description-en": "Simple observer pattern",
+        "dependencies": [
+            "std",
+            "std::cell::RefCell"
+        ],
+        "use_to": [
+            "design pattern",
+            "observer"
+        ],
+        "tags": [
+            "observer",
+            "pattern"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "subject"
+        ],
+        "return_type": [
+            "Subject"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "use std::cell::RefCell;\nuse std::rc::Rc;\ntrait Observer<T> { fn update(&self, event: &T); }\nstruct Subject<T> { observers: Vec<Rc<dyn Observer<T>> }"
+        ]
+    },
+    {
+        "name-zh": "策略模式",
+        "name-en": "Strategy Pattern",
+        "description-zh": "简化的策略模式实现",
+        "description-en": "Simplified strategy pattern",
+        "dependencies": [
+            "std"
+        ],
+        "use_to": [
+            "design pattern",
+            "strategy"
+        ],
+        "tags": [
+            "strategy",
+            "pattern"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "ctx"
+        ],
+        "return_type": [
+            "Context"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "trait Strategy<T> { fn execute(&self, data: &T) -> T; }\nstruct Context<S: Strategy<T>, T> { strategy: S, _data: std::marker::PhantomData<T> }"
+        ]
+    },
+    {
+        "name-zh": "装饰器模式",
+        "name-en": "Decorator Pattern",
+        "description-zh": "简化的装饰器模式实现",
+        "description-en": "Simplified decorator pattern",
+        "dependencies": [
+            "std"
+        ],
+        "use_to": [
+            "design pattern",
+            "decorator"
+        ],
+        "tags": [
+            "decorator",
+            "pattern"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "wrapped"
+        ],
+        "return_type": [
+            "Box<dyn Fn(i32) -> i32>"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "trait FnDecorator { fn call(&self, x: i32) -> i32; }\nstruct TimingDecorator<F: Fn(i32)->i32> { inner: F }\nimpl<F: Fn(i32)->i32> FnDecorator for TimingDecorator<F> { fn call(&self, x: i32) -> i32 { let start = std::time::Instant::now(); let r = (self.inner)(x); println!(\"took {:?}\", start.elapsed()); r } }"
+        ]
+    },
+    {
+        "name-zh": "配置文件解析（TOML）",
+        "name-en": "Parse TOML Config",
+        "description-zh": "解析 TOML 配置文件",
+        "description-en": "Parse TOML config file",
+        "dependencies": [
+            "toml"
+        ],
+        "use_to": [
+            "config",
+            "toml"
+        ],
+        "tags": [
+            "config",
+            "toml"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "&str"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "toml::Value"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "use toml::Value;\nfn parse_toml(content: &str) -> Result<Value, toml::de::Error> { content.parse() }"
+        ]
+    },
+    {
+        "name-zh": "配置文件解析（YAML）",
+        "name-en": "Parse YAML Config",
+        "description-zh": "解析 YAML 配置文件",
+        "description-en": "Parse YAML config file",
+        "dependencies": [
+            "serde_yaml"
+        ],
+        "use_to": [
+            "config",
+            "yaml"
+        ],
+        "tags": [
+            "config",
+            "yaml"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "&str"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "serde_yaml::Value"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "use serde_yaml::Value;\nfn parse_yaml(content: &str) -> Result<Value, serde_yaml::Error> { serde_yaml::from_str(content) }"
+        ]
+    },
+    {
+        "name-zh": "配置文件解析（JSON）",
+        "name-en": "Parse JSON Config",
+        "description-zh": "解析 JSON 配置文件",
+        "description-en": "Parse JSON config file",
+        "dependencies": [
+            "serde_json"
+        ],
+        "use_to": [
+            "config",
+            "json"
+        ],
+        "tags": [
+            "config",
+            "json"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "&str"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "serde_json::Value"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "use serde_json::Value;\nfn parse_json(content: &str) -> Result<Value, serde_json::Error> { serde_json::from_str(content) }"
+        ]
     }
 ]

@@ -3461,5 +3461,479 @@
         "code": [
             "public double computeMAP(java.util.Map<String, java.util.List<Integer>> queryToResults) {\n    double sum = 0;\n    for(var entry : queryToResults.entrySet()) {\n        var results = entry.getValue();\n        double avgPrec = 0, hits = 0;\n        for(int i = 0; i < results.size(); i++) {\n            if(results.get(i) == 1) { hits++; avgPrec += hits / (i + 1); }\n        }\n        sum += avgPrec / (hits > 0 ? hits : 1);\n    }\n    return sum / queryToResults.size();\n}"
         ]
+    },
+    {
+        "name-zh": "希尔排序",
+        "name-en": "Shell Sort",
+        "description-zh": "希尔排序（递减增量排序）",
+        "description-en": "Shell sort with diminishing gap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "int[]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "int[]"
+        ],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": [
+            "public void shellSort(int[] a){ int n=a.length; for(int gap=n/2;gap>0;gap/=2){ for(int i=gap;i<n;i++){ int tmp=a[i],j=i; while(j>=gap&&a[j-gap]>tmp){ a[j]=a[j-gap]; j-=gap; } a[j]=tmp; } } }"
+        ]
+    },
+    {
+        "name-zh": "堆排序",
+        "name-en": "Heap Sort",
+        "description-zh": "二叉堆实现的堆排序",
+        "description-en": "Heap sort using binary heap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "int[]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "void"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "public void heapSort(int[] a){ int n=a.length; for(int i=n/2-1;i>=0;i--) heapify(a,n,i); for(int i=n-1;i>0;i--){int t=a[0];a[0]=a[i];a[i]=t;heapify(a,i,0);} }\nprivate void heapify(int[] a,int n,int i){int largest=i,l=2*i+1,r=2*i+2; if(l<n&&a[l]>a[largest])largest=l; if(r<n&&a[r]>a[largest])largest=r; if(largest!=i){int t=a[i];a[i]=a[largest];a[largest]=t;heapify(a,n,largest);} }"
+        ]
+    },
+    {
+        "name-zh": "Boyer-Moore字符串匹配",
+        "name-en": "Boyer-Moore String Match",
+        "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
+        "description-en": "Boyer-Moore string matching with bad character rule",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "boyer-moore",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "String",
+            "String"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "public int boyerMoore(String text,String pattern){ int n=text.length(),m=pattern.length(); if(m==0)return 0; int[] bc=new int[256]; java.util.Arrays.fill(bc,-1); for(int i=0;i<m;i++) bc[pattern.charAt(i)]=i; int shift=0; while(shift<=n-m){ int j=m-1; while(j>=0&&pattern.charAt(j)==text.charAt(shift+j)) j--; if(j<0)return shift; char c=text.charAt(shift+j); shift+=Math.max(1,j-bc[c]); } return -1; }"
+        ]
+    },
+    {
+        "name-zh": "LRU缓存（LinkedHashMap）",
+        "name-en": "LRU Cache (LinkedHashMap)",
+        "description-zh": "基于 LinkedHashMap 的 LRU 缓存（访问顺序）",
+        "description-en": "LRU cache based on LinkedHashMap access order",
+        "dependencies": [
+            "java.util"
+        ],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "cache"
+        ],
+        "return_type": [
+            "Map"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import java.util.*;\nMap<Integer,Integer> lruCache = new LinkedHashMap<>(capacity,0.75f,true){ protected boolean removeEldestEntry(Map.Entry eldest){ return size()>capacity; } };"
+        ]
+    },
+    {
+        "name-zh": "ConcurrentLinkedQueue",
+        "name-en": "Concurrent Linked Queue",
+        "description-zh": "无界并发安全队列",
+        "description-en": "Unbounded concurrent safe queue",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "queue",
+            "concurrency"
+        ],
+        "tags": [
+            "queue",
+            "concurrent"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "queue"
+        ],
+        "return_type": [
+            "ConcurrentLinkedQueue"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import java.util.concurrent.ConcurrentLinkedQueue;\nConcurrentLinkedQueue<Object> queue = new ConcurrentLinkedQueue<>();"
+        ]
+    },
+    {
+        "name-zh": "跳表",
+        "name-en": "Skip List",
+        "description-zh": "Java 并发跳表实现（ConcurrentSkipListMap）",
+        "description-en": "Concurrent skip list in Java (ConcurrentSkipListMap)",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "data structure",
+            "skiplist"
+        ],
+        "tags": [
+            "skiplist",
+            "data structure"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "skiplist"
+        ],
+        "return_type": [
+            "ConcurrentSkipListMap"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import java.util.concurrent.ConcurrentSkipListMap;\nConcurrentSkipListMap<Integer,Integer> skipList = new ConcurrentSkipListMap<>();"
+        ]
+    },
+    {
+        "name-zh": "ConcurrentHashMap计数",
+        "name-en": "Concurrent HashMap Counter",
+        "description-zh": "使用 ConcurrentHashMap 进行并发计数",
+        "description-en": "Concurrent counting with ConcurrentHashMap",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "concurrency",
+            "counter"
+        ],
+        "tags": [
+            "concurrent",
+            "counter"
+        ],
+        "input": [
+            "key",
+            "delta"
+        ],
+        "input_type": [
+            "String",
+            "int"
+        ],
+        "return": [
+            "count"
+        ],
+        "return_type": [
+            "long"
+        ],
+        "timer_score": 90,
+        "memory_score": 85,
+        "code": [
+            "import java.util.concurrent.ConcurrentHashMap;\nConcurrentHashMap<String,AtomicLong> counter = new ConcurrentHashMap<>();\nlong increment(String key, int delta){ return counter.computeIfAbsent(key,k->new AtomicLong()).addAndGet(delta); }"
+        ]
+    },
+    {
+        "name-zh": "CompletableFuture链式",
+        "name-en": "CompletableFuture Chain",
+        "description-zh": "CompletableFuture 链式调用示例",
+        "description-en": "CompletableFuture chain example",
+        "dependencies": [
+            "java.util.concurrent"
+        ],
+        "use_to": [
+            "async",
+            "concurrency"
+        ],
+        "tags": [
+            "async",
+            "concurrent"
+        ],
+        "input": [
+            "input"
+        ],
+        "input_type": [
+            "String"
+        ],
+        "return": [
+            "result"
+        ],
+        "return_type": [
+            "CompletableFuture<String>"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import java.util.concurrent.CompletableFuture;\nCompletableFuture<String> chain(String input){ return CompletableFuture.supplyAsync(()->input.toUpperCase()).thenApply(s->s+\"!\").thenApply(s->\"Result: \"+s); }"
+        ]
+    },
+    {
+        "name-zh": "Parallel Stream排序",
+        "name-en": "Parallel Stream Sort",
+        "description-zh": "使用 Parallel Stream 并行排序大数据集",
+        "description-en": "Sort large dataset using parallel stream",
+        "dependencies": [
+            "java.util.stream"
+        ],
+        "use_to": [
+            "sort",
+            "parallel"
+        ],
+        "tags": [
+            "sort",
+            "parallel"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "List<Integer>"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "List<Integer>"
+        ],
+        "timer_score": 70,
+        "memory_score": 75,
+        "code": [
+            "import java.util.*; List<Integer> parallelSort(List<Integer> arr){ return arr.parallelStream().sorted().collect(java.util.stream.Collectors.toList()); }"
+        ]
+    },
+    {
+        "name-zh": "HTTP服务器（内置）",
+        "name-en": "Simple HTTP Server",
+        "description-zh": "使用内置 com.sun.net.httpserver 创建简单 HTTP 服务器",
+        "description-en": "Simple HTTP server using com.sun.net.httpserver",
+        "dependencies": [
+            "com.sun.net.httpserver"
+        ],
+        "use_to": [
+            "http",
+            "server"
+        ],
+        "tags": [
+            "http",
+            "server"
+        ],
+        "input": [
+            "port"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "server"
+        ],
+        "return_type": [
+            "HttpServer"
+        ],
+        "timer_score": 75,
+        "memory_score": 80,
+        "code": [
+            "import com.sun.net.httpserver.*; HttpServer server = HttpServer.create(new InetSocketAddress(port), 0); server.createContext(\"/\", (exchange -> { String resp = \"Hello\"; exchange.sendResponseHeaders(200, resp.length()); exchange.getResponseBody().write(resp.getBytes()); exchange.close()); }); server.setExecutor(null); server.start();"
+        ]
+    },
+    {
+        "name-zh": "模板渲染（StringTemplate）",
+        "name-en": "String Template Render",
+        "description-zh": "使用 StringTemplate 渲染模板",
+        "description-en": "Render template using StringTemplate",
+        "dependencies": [
+            "org.antlr"
+        ],
+        "use_to": [
+            "template",
+            "render"
+        ],
+        "tags": [
+            "template",
+            "render"
+        ],
+        "input": [
+            "template",
+            "data"
+        ],
+        "input_type": [
+            "String",
+            "Map<String,Object>"
+        ],
+        "return": [
+            "rendered"
+        ],
+        "return_type": [
+            "String"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import org.stringtemplate.v4.*; String render(String tmpl, Map<String,Object> data){ ST st = new ST(tmpl); data.forEach(st::add); return st.render(); }"
+        ]
+    },
+    {
+        "name-zh": "布隆过滤器",
+        "name-en": "Bloom Filter",
+        "description-zh": "Guava BloomFilter 实现",
+        "description-en": "Guava BloomFilter implementation",
+        "dependencies": [
+            "com.google.guava"
+        ],
+        "use_to": [
+            "bloom filter",
+            "data structure"
+        ],
+        "tags": [
+            "bloom filter",
+            "data structure"
+        ],
+        "input": [
+            "expectedInsertions",
+            "fpp"
+        ],
+        "input_type": [
+            "long",
+            "double"
+        ],
+        "return": [
+            "filter"
+        ],
+        "return_type": [
+            "BloomFilter"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "import com.google.common.hash.BloomFilter; BloomFilter<Object> bf = BloomFilter.create(HashFunnel.STRING_FUNNEL, expectedInsertions, fpp); bf.put(\"item\"); boolean mightContain = bf.mightContain(\"item\");"
+        ]
+    },
+    {
+        "name-zh": "限流器（RateLimiter）",
+        "name-en": "Rate Limiter (Guava)",
+        "description-zh": "使用 Guava RateLimiter 进行限流",
+        "description-en": "Rate limiting using Guava RateLimiter",
+        "dependencies": [
+            "com.google.common.util.concurrent"
+        ],
+        "use_to": [
+            "rate limit",
+            "concurrency"
+        ],
+        "tags": [
+            "rate limit",
+            "concurrent"
+        ],
+        "input": [
+            "QPS"
+        ],
+        "input_type": [
+            "double"
+        ],
+        "return": [
+            "limiter"
+        ],
+        "return_type": [
+            "RateLimiter"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "import com.google.common.util.concurrent.RateLimiter; RateLimiter limiter = RateLimiter.create(QPS); limiter.acquire(); // blocking wait for permit"
+        ]
+    },
+    {
+        "name-zh": "缓存（LoadingCache）",
+        "name-en": "LoadingCache",
+        "description-zh": "使用 Guava LoadingCache 实现自动加载缓存",
+        "description-en": "Auto-loading cache with Guava LoadingCache",
+        "dependencies": [
+            "com.google.common.cache"
+        ],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "cache",
+            "concurrent"
+        ],
+        "input": [
+            "maxSize",
+            "loader"
+        ],
+        "input_type": [
+            "long",
+            "CacheLoader"
+        ],
+        "return": [
+            "cache"
+        ],
+        "return_type": [
+            "LoadingCache"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "import com.google.common.cache.*; LoadingCache<String,String> cache = CacheBuilder.newBuilder().maximumSize(maxSize).build(new CacheLoader<String,String>(){ public String load(String k){ return compute(k); } }); String v = cache.get(key);"
+        ]
     }
 ]

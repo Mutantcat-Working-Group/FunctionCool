@@ -2141,5 +2141,725 @@
         "code": [
             "<?php\nfunction array_sort_by_key(array $arr, string $key, string $order='asc'): array {\n    usort($arr, fn($a,$b) => $order==='asc' ? $a[$key]<=>$b[$key] : $b[$key]<=>$a[$key]);\n    return $arr;\n}"
         ]
+    },
+    {
+        "name-zh": "堆排序",
+        "name-en": "Heap Sort",
+        "description-zh": "使用二叉堆实现堆排序",
+        "description-en": "Heap sort using binary heap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "array"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "array"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "<?php\nfunction heap_sort(array &$arr): void {\n    $n = count($arr);\n    for ($i = (int)($n/2) - 1; $i >= 0; $i--) heapify($arr, $n, $i);\n    for ($i = $n - 1; $i > 0; $i--) {\n        [$arr[0], $arr[$i]] = [$arr[$i], $arr[0]];\n        heapify($arr, $i, 0);\n    }\n}\nfunction heapify(array &$arr, $n, $i): void {\n    $largest = $i; $l = 2*$i+1; $r = 2*$i+2;\n    if ($l < $n && $arr[$l] > $arr[$largest]) $largest = $l;\n    if ($r < $n && $arr[$r] > $arr[$largest]) $largest = $r;\n    if ($largest != $i) { [$arr[$i], $arr[$largest]] = [$arr[$largest], $arr[$i]]; heapify($arr, $n, $largest); }\n}"
+        ]
+    },
+    {
+        "name-zh": "希尔排序",
+        "name-en": "Shell Sort",
+        "description-zh": "希尔排序（递减增量排序）",
+        "description-en": "Shell sort with diminishing gap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "array"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "array"
+        ],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": [
+            "<?php\nfunction shell_sort(array &$arr): void {\n    $n = count($arr);\n    for ($gap = (int)($n/2); $gap > 0; $gap = (int)($gap/2)) {\n        for ($i = $gap; $i < $n; $i++) {\n            $tmp = $arr[$i]; $j = $i;\n            while ($j >= $gap && $arr[$j - $gap] > $tmp) { $arr[$j] = $arr[$j - $gap]; $j -= $gap; }\n            $arr[$j] = $tmp;\n        }\n    }\n}"
+        ]
+    },
+    {
+        "name-zh": "计数排序",
+        "name-en": "Counting Sort",
+        "description-zh": "计数排序（适用于小范围整数）",
+        "description-en": "Counting sort for small integer range",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr",
+            "max"
+        ],
+        "input_type": [
+            "array",
+            "int"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "array"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "<?php\nfunction counting_sort(array $arr, int $max): array {\n    $count = array_fill(0, $max + 1, 0);\n    foreach ($arr as $v) $count[$v]++;\n    for ($i = 1; $i <= $max; $i++) $count[$i] += $count[$i - 1];\n    $out = array_fill(0, count($arr), 0);\n    for ($i = count($arr) - 1; $i >= 0; $i--) { $out[--$count[$arr[$i]] = $arr[$i]; }\n    return $out;\n}"
+        ]
+    },
+    {
+        "name-zh": "Redis连接池",
+        "name-en": "Redis Connection Pool",
+        "description-zh": "使用 PHPRedis 扩展的连接池封装",
+        "description-en": "Connection pool wrapper for PHPRedis extension",
+        "dependencies": [
+            "redis"
+        ],
+        "use_to": [
+            "redis",
+            "cache"
+        ],
+        "tags": [
+            "redis",
+            "cache"
+        ],
+        "input": [
+            "host",
+            "port"
+        ],
+        "input_type": [
+            "string",
+            "int"
+        ],
+        "return": [
+            "pool"
+        ],
+        "return_type": [
+            "RedisPool"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "<?php\nclass RedisPool {\n    private array $pool = [];\n    private string $host;\n    private int $port;\n    private int $maxConnections;\n\n    public function __construct(string $host, int $port, int $maxConnections = 10) {\n        $this->host = $host;\n        $this->port = $port;\n        $this->maxConnections = $maxConnections;\n    }\n\n    public function get(): Redis {\n        if (!empty($this->pool)) {\n            return array_pop($this->pool);\n        }\n        $redis = new Redis();\n        $redis->connect($this->host, $this->port);\n        return $redis;\n    }\n\n    public function release(Redis $redis): void {\n        if (count($this->pool) < $this->maxConnections) {\n            $this->pool[] = $redis;\n        } else {\n            $redis->close();\n        }\n    }\n}"
+        ]
+    },
+    {
+        "name-zh": "Memcached客户端",
+        "name-en": "Memcached Client",
+        "description-zh": "Memcached 客户端封装（支持过期时间）",
+        "description-en": "Memcached client wrapper with TTL support",
+        "dependencies": [
+            "memcached"
+        ],
+        "use_to": [
+            "cache",
+            "memcached"
+        ],
+        "tags": [
+            "cache",
+            "memcached"
+        ],
+        "input": [
+            "servers"
+        ],
+        "input_type": [
+            "array"
+        ],
+        "return": [
+            "mc"
+        ],
+        "return_type": [
+            "Memcached"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "<?php\nclass MemcachedClient {\n    private Memcached $mc;\n    public function __construct(array $servers = [['127.0.0.1', 11211]]) {\n        $this->mc = new Memcached();\n        $this->mc->addServers($servers);\n    }\n    public function get(string $key, $default = null) {\n        $v = $this->mc->get($key);\n        if ($this->mc->getResultCode() === Memcached::RES_NOTFOUND) return $default;\n        return $v;\n    }\n    public function set(string $key, $value, int $ttl = 0): bool {\n        return $this->mc->set($key, $value, $ttl);\n    }\n    public function delete(string $key): bool {\n        return $this->mc->delete($key);\n    }\n    public function increment(string $key, int $delta = 1) {\n        return $this->mc->increment($key, $delta);\n    }\n}"
+        ]
+    },
+    {
+        "name-zh": "PDO数据库连接池",
+        "name-en": "PDO Connection Pool",
+        "description-zh": "PDO 数据库连接池（单例模式）",
+        "description-en": "PDO database connection pool (singleton)",
+        "dependencies": [
+            "pdo"
+        ],
+        "use_to": [
+            "database",
+            "pdo"
+        ],
+        "tags": [
+            "database",
+            "pdo"
+        ],
+        "input": [
+            "dsn",
+            "user",
+            "pass"
+        ],
+        "input_type": [
+            "string",
+            "string",
+            "string"
+        ],
+        "return": [
+            "pdo"
+        ],
+        "return_type": [
+            "PDO"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "<?php\nclass PDOPool {\n    private static ?PDO $instance = null;\n    private function __construct() {}\n    public static function getInstance(string $dsn, string $user, string $pass, array $options = []): PDO {\n        if (self::$instance === null) {\n            self::$instance = new PDO($dsn, $user, $pass, $options);\n            self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);\n        }\n        return self::$instance;\n    }\n    private function __clone() {}\n    public function __wakeup() { throw new Exception('Cannot unserialize singleton'); }\n}"
+        ]
+    },
+    {
+        "name-zh": "JWT编码解码",
+        "name-en": "JWT Encode/Decode",
+        "description-zh": "JWT 令牌编码和解码（不含外部库）",
+        "description-en": "JWT token encode and decode without external library",
+        "dependencies": [],
+        "use_to": [
+            "jwt",
+            "auth"
+        ],
+        "tags": [
+            "jwt",
+            "auth"
+        ],
+        "input": [
+            "payload",
+            "secret"
+        ],
+        "input_type": [
+            "array",
+            "string"
+        ],
+        "return": [
+            "token"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "<?php\nfunction base64url_encode(string $data): string {\n    return rtrim(strtr(base64_encode($data), '+/', '-_'));\n}\nfunction base64url_decode(string $data): string {\n    return base64_decode(strtr($data, '-_', '+/'));\n}\nfunction jwt_encode(array $payload, string $secret): string {\n    $header = base64url_encode(json_encode(['alg'=>'HS256','typ'=>'JWT']));\n    $payload['iat'] = $payload['iat'] ?? time();\n    $payload = base64url_encode(json_encode($payload));\n    $sig = base64url_encode(hash_hmac('sha256', \"$header.$payload\", $secret, true));\n    return \"$header.$payload.$sig\";\n}\nfunction jwt_decode(string $token, string $secret): ?array {\n    $parts = explode('.', $token);\n    if (count($parts) !== 3) return null;\n    [$h, $p, $s] = $parts;\n    $expected = base64url_encode(hash_hmac('sha256', \"$h.$p\", $secret, true));\n    if (!hash_equals($expected, $s)) return null;\n    return json_decode(base64url_decode($p), true);\n}"
+        ]
+    },
+    {
+        "name-zh": "SMTP发送邮件",
+        "name-en": "SMTP Send Mail",
+        "description-zh": "使用 Socket 发送 SMTP 邮件（不含外部库）",
+        "description-en": "Send SMTP mail using socket without external library",
+        "dependencies": [],
+        "use_to": [
+            "mail",
+            "smtp"
+        ],
+        "tags": [
+            "mail",
+            "smtp"
+        ],
+        "input": [
+            "to",
+            "subject",
+            "body",
+            "from"
+        ],
+        "input_type": [
+            "string",
+            "string",
+            "string",
+            "string"
+        ],
+        "return": [
+            "success"
+        ],
+        "return_type": [
+            "bool"
+        ],
+        "timer_score": 70,
+        "memory_score": 75,
+        "code": [
+            "<?php\nfunction smtp_send(string $to, string $subject, string $body, string $from = 'noreply@localhost'): bool {\n    $host = '127.0.0.1'; $port = 25;\n    $socket = @fsockopen($host, $port, $errno, $errstr, 5);\n    if (!$socket) return false;\n    $read = fgets($socket);\n    fwrite($socket, \"HELO localhost\\r\\n\"); fgets($socket);\n    fwrite($socket, \"MAIL FROM:<$from>\\r\\n\"); fgets($socket);\n    fwrite($socket, \"RCPT TO:<$to>\\r\\n\"); fgets($socket);\n    fwrite($socket, \"DATA\\r\\n\"); fgets($socket);\n    fwrite($socket, \"Subject: $subject\\r\\nTo: $to\\r\\n\\r\\n$body\\r\\n.\\r\\n\");\n    fgets($socket);\n    fwrite($socket, \"QUIT\\r\\n\");\n    fclose($socket);\n    return true;\n}"
+        ]
+    },
+    {
+        "name-zh": "图像缩略图",
+        "name-en": "Image Thumbnail",
+        "description-zh": "生成图像缩略图（保持宽高比）",
+        "description-en": "Generate image thumbnail preserving aspect ratio",
+        "dependencies": [
+            "gd"
+        ],
+        "use_to": [
+            "image",
+            "thumbnail"
+        ],
+        "tags": [
+            "image",
+            "gd"
+        ],
+        "input": [
+            "srcPath",
+            "dstPath",
+            "maxWidth",
+            "maxHeight"
+        ],
+        "input_type": [
+            "string",
+            "string",
+            "int",
+            "int"
+        ],
+        "return": [
+            "success"
+        ],
+        "return_type": [
+            "bool"
+        ],
+        "timer_score": 80,
+        "memory_score": 75,
+        "code": [
+            "<?php\nfunction make_thumbnail(string $srcPath, string $dstPath, int $maxW = 200, int $maxH = 200): bool {\n    $img = imagecreatefromstring(file_get_contents($srcPath));\n    if (!$img) return false;\n    $w = imagesx($img); $h = imagesy($img);\n    $ratio = min($maxW/$w, $maxH/$h);\n    $newW = (int)($w * $ratio); $newH = (int)($h * $ratio);\n    $thumb = imagecreatetruecolor($newW, $newH);\n    imagecopyresampled($thumb, $img, 0, 0, 0, 0, $newW, $newH, $w, $h);\n    imagejpeg($thumb, $dstPath, 85);\n    imagedestroy($img); imagedestroy($thumb);\n    return true;\n}"
+        ]
+    },
+    {
+        "name-zh": "图像水印",
+        "name-en": "Image Watermark",
+        "description-zh": "为图像添加文字水印",
+        "description-en": "Add text watermark to image",
+        "dependencies": [
+            "gd"
+        ],
+        "use_to": [
+            "image",
+            "watermark"
+        ],
+        "tags": [
+            "image",
+            "gd"
+        ],
+        "input": [
+            "srcPath",
+            "dstPath",
+            "text"
+        ],
+        "input_type": [
+            "string",
+            "string",
+            "string"
+        ],
+        "return": [
+            "success"
+        ],
+        "return_type": [
+            "bool"
+        ],
+        "timer_score": 80,
+        "memory_score": 75,
+        "code": [
+            "<?php\nfunction add_watermark(string $srcPath, string $dstPath, string $text): bool {\n    $img = imagecreatefromstring(file_get_contents($srcPath));\n    if (!$img) return false;\n    $w = imagesx($img); $h = imagesy($img);\n    $black = imagecolorallocate($img, 0, 0, 0);\n    $fontSize = max(5, min($w, $h) / 20);\n    imagestring($img, $fontSize, 10, $h - 30, $text, $black);\n    imagejpeg($img, $dstPath, 90);\n    imagedestroy($img);\n    return true;\n}"
+        ]
+    },
+    {
+        "name-zh": "图形验证码",
+        "name-en": "Captcha Generator",
+        "description-zh": "生成图形验证码图片",
+        "description-en": "Generate captcha image",
+        "dependencies": [
+            "gd"
+        ],
+        "use_to": [
+            "captcha",
+            "security"
+        ],
+        "tags": [
+            "captcha",
+            "security"
+        ],
+        "input": [
+            "length",
+            "width",
+            "height"
+        ],
+        "input_type": [
+            "int",
+            "int",
+            "int"
+        ],
+        "return": [
+            "captcha"
+        ],
+        "return_type": [
+            "array"
+        ],
+        "timer_score": 80,
+        "memory_score": 75,
+        "code": [
+            "<?php\nfunction generate_captcha(int $len=4,int $w=120,int $h=40): array {\n    $img=imagecreatetruecolor($w,$h);$bg=imagecolorallocate($img,255,255,255);imagefill($img,0,0,$bg);\n    $chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';$text='';\n    for($i=0;$i<$len;$i++){$ch=$chars[random_int(0,strlen($chars)-1)];$text.=$ch;\n        $x=10+$i*($w-20)/$len;$y=random_int($h/3,$h-15);\n        $color=imagecolorallocate($img,random_int(0,150),random_int(0,150),random_int(0,150));\n        imagestring($img,5,$x,$y,$ch,$color);}\n    for($i=0;$i<5;$i++){imageline($img,random_int(0,$w),random_int(0,$h),random_int(0,$w),random_int(0,$h),imagecolorallocate($img,200,200,200));}\n    ob_start();imagejpeg($img);$data=ob_get_clean();imagedestroy($img);\n    return ['text'=>$text,'image'=>base64_encode($data)];\n}"
+        ]
+    },
+    {
+        "name-zh": "二维码生成",
+        "name-en": "QR Code Generator",
+        "description-zh": "使用 QRCode.js 生成二维码（CDN方式）",
+        "description-en": "Generate QR code using QRCode.js via CDN",
+        "dependencies": [],
+        "use_to": [
+            "qrcode",
+            "utility"
+        ],
+        "tags": [
+            "qrcode",
+            "utility"
+        ],
+        "input": [
+            "data",
+            "size"
+        ],
+        "input_type": [
+            "string",
+            "int"
+        ],
+        "return": [
+            "html"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "<?php\nfunction qrcode_html(string $data, int $size = 200): string {\n    $id = 'qr_' . bin2hex(random_bytes(4));\n    return '<div id=\"'.$id.'\"></div><script src=\"https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js\"></script>'\n           .'<script>new QRCode(document.getElementById(\"'.$id.'\"),{\"text\":\"'.htmlspecialchars($data).'\",\"width\":'.$size.',\"height\":'.$size.'});</script>';\n}"
+        ]
+    },
+    {
+        "name-zh": "分页器",
+        "name-en": "Pagination",
+        "description-zh": "生成分页导航 HTML",
+        "description-en": "Generate pagination navigation HTML",
+        "dependencies": [],
+        "use_to": [
+            "pagination",
+            "ui"
+        ],
+        "tags": [
+            "pagination",
+            "ui"
+        ],
+        "input": [
+            "currentPage",
+            "totalPages",
+            "baseUrl"
+        ],
+        "input_type": [
+            "int",
+            "int",
+            "string"
+        ],
+        "return": [
+            "html"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "<?php\nfunction pagination(int $page, int $total, string $url): string {\n    if ($total <= 1) return '';\n    $html = '<nav class=\"pagination\"><ul>';\n    $range = 2; $start = max(1, $page - $range); $end = min($total, $page + $range);\n    if ($start > 1) $html .= '<li><a href=\"'.$url.'?p=1\">1</a></li>';\n    if ($start > 2) $html .= '<li><span>...</span></li>';\n    for ($i = $start; $i <= $end; $i++) {\n        $active = $i === $page ? ' class=\"active\"' : '';\n        $html .= '<li'.$active.'><a href=\"'.$url.'?p='.$i.'\">'.$i.'</a></li>';\n    }\n    if ($end < $total - 1) $html .= '<li><span>...</span></li>';\n    if ($end < $total) $html .= '<li><a href=\"'.$url.'?p='.$total.'\">'.$total.'</a></li>';\n    $html .= '</ul></nav>';\n    return $html;\n}"
+        ]
+    },
+    {
+        "name-zh": "CLI表格输出",
+        "name-en": "CLI Table Output",
+        "description-zh": "在命令行输出格式化表格",
+        "description-en": "Output formatted table in CLI",
+        "dependencies": [],
+        "use_to": [
+            "cli",
+            "table"
+        ],
+        "tags": [
+            "cli",
+            "table"
+        ],
+        "input": [
+            "headers",
+            "rows"
+        ],
+        "input_type": [
+            "array",
+            "array[]"
+        ],
+        "return": [
+            "table"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "<?php\nfunction cli_table(array $headers, array $rows): string {\n    $widths = array_map('strlen', $headers);\n    foreach ($rows as $row) { foreach ($row as $i => $cell) $widths[$i] = max($widths[$i] ?? 0, strlen((string)$cell)); }\n    $line = '+' . implode('+', array_map(fn($w) => str_repeat('-', $w + 2), $widths)) . '+';\n    $out = $line . \"\\n\";\n    $out .= '|' . implode('|', array_map(fn($h, $w) => ' ' . str_pad($h, $w), $headers, $widths)) . '|\\n';\n    $out .= str_replace('+', '+', $line) . \"\\n\";\n    foreach ($rows as $row) {\n        $out .= '|' . implode('|', array_map(fn($v, $w) => ' ' . str_pad((string)$v, $w), $row, $widths)) . '|\\n';\n    }\n    $out .= $line;\n    return $out;\n}"
+        ]
+    },
+    {
+        "name-zh": "布隆过滤器",
+        "name-en": "Bloom Filter",
+        "description-zh": "简单布隆过滤器实现",
+        "description-en": "Simple Bloom filter implementation",
+        "dependencies": [],
+        "use_to": [
+            "bloom filter",
+            "data structure"
+        ],
+        "tags": [
+            "bloom filter",
+            "data structure"
+        ],
+        "input": [
+            "items"
+        ],
+        "input_type": [
+            "array"
+        ],
+        "return": [
+            "filter"
+        ],
+        "return_type": [
+            "BloomFilter"
+        ],
+        "timer_score": 80,
+        "memory_score": 75,
+        "code": [
+            "<?php\nclass BloomFilter {\n    private int $size;\n    private array $bits = [];\n    public function __construct(int $size = 1000) { $this->size = $size; $this->bits = array_fill(0, $size, false); }\n    private function h1(string $s): int { return abs(crc32($s)) % $this->size; }\n    private function h2(string $s): int { return abs(md5($s, true)[0] . md5($s, true)[1]) % $this->size; }\n    private function h3(string $s): int { return abs(ord($s[0]) * 31 + ord($s[strlen($s)-1])) % $this->size; }\n    public function add(string $item): void { $this->bits[$this->h1($item)] = $this->bits[$this->h2($item)] = $this->bits[$this->h3($item)] = true; }\n    public function contains(string $item): bool { return $this->bits[$this->h1($item)] && $this->bits[$this->h2($item)] && $this->bits[$this->h3($item)]; }\n}"
+        ]
+    },
+    {
+        "name-zh": "限流器",
+        "name-en": "Rate Limiter",
+        "description-zh": "滑动窗口限流器",
+        "description-en": "Sliding window rate limiter",
+        "dependencies": [],
+        "use_to": [
+            "rate limit",
+            "security"
+        ],
+        "tags": [
+            "rate limit",
+            "security"
+        ],
+        "input": [
+            "key",
+            "maxRequests",
+            "windowSeconds"
+        ],
+        "input_type": [
+            "string",
+            "int",
+            "int"
+        ],
+        "return": [
+            "allowed"
+        ],
+        "return_type": [
+            "bool"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "<?php\nclass RateLimiter {\n    private array $requests = [];\n    public function allow(string $key, int $max, int $window): bool {\n        $now = time();\n        if (!isset($this->requests[$key])) $this->requests[$key] = [];\n        $this->requests[$key] = array_filter($this->requests[$key], fn($t) => $t > $now - $window);\n        if (count($this->requests[$key]) >= $max) return false;\n        $this->requests[$key][] = $now;\n        return true;\n    }\n}"
+        ]
+    },
+    {
+        "name-zh": "Webhook签名验证",
+        "name-en": "Webhook Signature Verify",
+        "description-zh": "验证 Webhook 请求签名（GitHub风格）",
+        "description-en": "Verify webhook request signature (GitHub style)",
+        "dependencies": [
+            "hash"
+        ],
+        "use_to": [
+            "webhook",
+            "security"
+        ],
+        "tags": [
+            "webhook",
+            "security"
+        ],
+        "input": [
+            "payload",
+            "signature",
+            "secret"
+        ],
+        "input_type": [
+            "string",
+            "string",
+            "string"
+        ],
+        "return": [
+            "valid"
+        ],
+        "return_type": [
+            "bool"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "<?php\nfunction verify_webhook_signature(string $payload, string $signature, string $secret): bool {\n    $expected = 'sha256=' . hash_hmac('sha256', $payload, $secret);\n    return hash_equals($expected, $signature);\n}"
+        ]
+    },
+    {
+        "name-zh": "Webhook签名生成",
+        "name-en": "Webhook Signature Generate",
+        "description-zh": "为 Webhook 载荷生成签名",
+        "description-en": "Generate signature for webhook payload",
+        "dependencies": [
+            "hash"
+        ],
+        "use_to": [
+            "webhook",
+            "security"
+        ],
+        "tags": [
+            "webhook",
+            "security"
+        ],
+        "input": [
+            "payload",
+            "secret"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "signature"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "<?php\nfunction generate_webhook_signature(string $payload, string $secret): string {\n    return 'sha256=' . hash_hmac('sha256', $payload, $secret);\n}"
+        ]
+    },
+    {
+        "name-zh": "OAuth2授权URL",
+        "name-en": "OAuth2 Auth URL",
+        "description-zh": "生成 OAuth2 授权 URL",
+        "description-en": "Generate OAuth2 authorization URL",
+        "dependencies": [],
+        "use_to": [
+            "oauth",
+            "auth"
+        ],
+        "tags": [
+            "oauth",
+            "auth"
+        ],
+        "input": [
+            "clientId",
+            "redirectUri",
+            "state",
+            "scope"
+        ],
+        "input_type": [
+            "string",
+            "string",
+            "string",
+            "string"
+        ],
+        "return": [
+            "url"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "<?php\nfunction oauth2_auth_url(string $clientId, string $redirectUri, string $state, string $scope = 'read'): string {\n    $params = http_build_query([\n        'client_id' => $clientId,\n        'redirect_uri' => $redirectUri,\n        'response_type' => 'code',\n        'scope' => $scope,\n        'state' => $state\n    ]);\n    return 'https://oauth.example.com/authorize?' . $params;\n}"
+        ]
+    },
+    {
+        "name-zh": "OAuth2获取Token",
+        "name-en": "OAuth2 Token Exchange",
+        "description-zh": "用授权码换取 Access Token",
+        "description-en": "Exchange authorization code for access token",
+        "dependencies": [
+            "hash"
+        ],
+        "use_to": [
+            "oauth",
+            "auth"
+        ],
+        "tags": [
+            "oauth",
+            "auth"
+        ],
+        "input": [
+            "code",
+            "clientId",
+            "clientSecret",
+            "redirectUri",
+            "tokenUrl"
+        ],
+        "input_type": [
+            "string",
+            "string",
+            "string",
+            "string",
+            "string"
+        ],
+        "return": [
+            "token"
+        ],
+        "return_type": [
+            "?array"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "<?php\nfunction oauth2_token(string $code, string $clientId, string $clientSecret, string $redirectUri, string $tokenUrl): ?array {\n    $ch = curl_init($tokenUrl);\n    curl_setopt_array($ch, [\n        CURLOPT_POST => true,\n        CURLOPT_POSTFIELDS => http_build_query([\n            'grant_type' => 'authorization_code',\n            'code' => $code,\n            'client_id' => $clientId,\n            'client_secret' => $clientSecret,\n            'redirect_uri' => $redirectUri\n        ]),\n        CURLOPT_RETURNTRANSFER => true,\n        CURLOPT_HTTPHEADER => ['Accept: application/json']\n    ]);\n    $res = curl_exec($ch);\n    if (!$res) return null;\n    return json_decode($res, true);\n}"
+        ]
     }
 ]

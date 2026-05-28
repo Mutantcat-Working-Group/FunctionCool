@@ -2992,5 +2992,640 @@
         "code": [
             "#include <list>\n#include <map>\ntemplate<typename K, typename V>\nclass LRUCache {\n    int cap_;\n    std::list<std::pair<K,V>> lst_;\n    std::map<K, std::list<std::pair<K,V>>::iterator> mp_;\npublic:\n    LRUCache(int c): cap_(c){}\n    V get(K key){ auto it=mp_.find(key); if(it==mp_.end()) throw std::runtime_error(\"not found\");\n        lst_.splice(lst_.begin(), lst_, it->second); return it->second->second; }\n    void put(K key, V val){ if(get(key), true){}catch(...){}\n        if(mp_.size()==cap_){ auto rm=lst_.back(); mp_.erase(rm.first); lst_.pop_back(); }\n        lst_.push_front({key,val}); mp_[key]=lst_.begin(); }\n};"
         ]
+    },
+    {
+        "name-zh": "希尔排序",
+        "name-en": "Shell Sort",
+        "description-zh": "希尔排序（递减增量排序）",
+        "description-en": "Shell sort with diminishing gap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "vec"
+        ],
+        "input_type": [
+            "std::vector<int>&"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "void"
+        ],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": [
+            "void shellSort(vector<int>& a){ for(int gap=a.size()/2;gap>0;gap/=2){ for(int i=gap;i<a.size();i++){ int tmp=a[i],j=i; while(j>=gap&&a[j-gap]>tmp){ a[j]=a[j-gap]; j-=gap; } a[j]=tmp; } } }"
+        ]
+    },
+    {
+        "name-zh": "堆排序",
+        "name-en": "Heap Sort",
+        "description-zh": "二叉堆实现的堆排序",
+        "description-en": "Heap sort using binary heap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "vec"
+        ],
+        "input_type": [
+            "std::vector<int>&"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "void"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "void heapSort(vector<int>& a){ int n=a.size(); for(int i=n/2-1;i>=0;i--) heapify(a,n,i); for(int i=n-1;i>0;i--){ swap(a[0],a[i]); heapify(a,i,0); } } void heapify(vector<int>& a,int n,int i){ int largest=i,l=2*i+1,r=2*i+2; if(l<n&&a[l]>a[largest])largest=l; if(r<n&&a[r]>a[largest])largest=r; if(largest!=i){swap(a[i],a[largest]);heapify(a,n,largest);} }"
+        ]
+    },
+    {
+        "name-zh": "计数排序",
+        "name-en": "Counting Sort",
+        "description-zh": "计数排序（适用于小范围整数）",
+        "description-en": "Counting sort for small integer range",
+        "dependencies": [
+            "vector"
+        ],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr",
+            "max"
+        ],
+        "input_type": [
+            "std::vector<int>",
+            "int"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "std::vector<int>"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "vector<int> countingSort(const vector<int>& arr,int maxVal){ vector<int> cnt(maxVal+1,0),res(arr.size()); for(int v:arr)cnt[v]++; for(int i=1;i<=maxVal;i++)cnt[i]+=cnt[i-1]; for(int i=arr.size()-1;i>=0;i--)res[--cnt[arr[i]]=arr[i]; return res; }"
+        ]
+    },
+    {
+        "name-zh": "Boyer-Moore字符串匹配",
+        "name-en": "Boyer-Moore String Match",
+        "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
+        "description-en": "Boyer-Moore string matching",
+        "dependencies": [
+            "string",
+            "vector"
+        ],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "boyer-moore",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "const std::string&",
+            "const std::string&"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "int boyerMoore(const string& text,const string& pattern){ int n=text.size(),m=pattern.size(); if(m==0)return 0; vector<int> bc(256,m); for(int i=0;i<m;i++) bc[pattern[i]]=m-i-1; int shift=0; while(shift<=n-m){ int j=m-1; while(j>=0&&pattern[j]==text[shift+j]) j--; if(j<0)return shift; char c=text[shift+j]; shift+=max(1,j-bc[c]); } return -1; }"
+        ]
+    },
+    {
+        "name-zh": "Sunday字符串匹配",
+        "name-en": "Sunday String Match",
+        "description-zh": "Sunday 字符串匹配算法",
+        "description-en": "Sunday string matching",
+        "dependencies": [
+            "string",
+            "vector"
+        ],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "sunday",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "const std::string&",
+            "const std::string&"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "int sunday(const string& text,const string& pattern){ int n=text.size(),m=pattern.size(); if(m==0)return 0; vector<int> shift(256,m+1); for(int i=0;i<m;i++) shift[pattern[i]]=m-i; int pos=0; while(pos<=n-m){ int j=0; while(j<m&&text[pos+j]==pattern[j]) j++; if(j==m)return pos; int nextPos=pos+m; if(nextPos<n) pos+=shift[text[nextPos]]; else return -1; } return -1; }"
+        ]
+    },
+    {
+        "name-zh": "跳表",
+        "name-en": "Skip List",
+        "description-zh": "简化的跳表实现",
+        "description-en": "Simplified skip list",
+        "dependencies": [
+            "vector",
+            "cstdlib",
+            "ctime"
+        ],
+        "use_to": [
+            "data structure",
+            "skiplist"
+        ],
+        "tags": [
+            "skiplist",
+            "data structure"
+        ],
+        "input": [
+            "maxLevel"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "skiplist"
+        ],
+        "return_type": [
+            "SkipList"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "struct SkipListNode{int key,value;vector<SkipListNode*> forward;SkipListNode(int k,int v,int level):key(k),value(v){forward.resize(level+1,nullptr);}};\nclass SkipList{int maxLevel,level;SkipListNode* head;public:SkipList(int ml=16):maxLevel(ml),level(0){head=new SkipListNode(-1,0,maxLevel);}\nint randomLevel(){int l=1;while(rand()%2&&l<maxLevel)l++;return l;}\nvoid insert(int key,int value){vector<SkipListNode*> update(maxLevel+1);SkipListNode* curr=head;for(int i=level;i>=0;i--){while(curr->forward[i]&&curr->forward[i]->key<key)curr=curr->forward[i];update[i]=curr;}curr=curr->forward[0];if(!curr||curr->key!=key){int lvl=randomLevel();if(lvl>level){for(int i=level+1;i<=lvl;i++)update[i]=head;level=lvl;}SkipListNode* n=new SkipListNode(key,value,lvl);for(int i=0;i<=lvl;i++){n->forward[i]=update[i]->forward[i];update[i]->forward[i]=n;}}}}\nint search(int key){SkipListNode* curr=head;for(int i=level;i>=0;i--){while(curr->forward[i]&&curr->forward[i]->key<key)curr=curr->forward[i];}curr=curr->forward[0];return curr&&curr->key==key?curr->value:-1;}\n};"
+        ]
+    },
+    {
+        "name-zh": "生产者消费者",
+        "name-en": "Producer Consumer",
+        "description-zh": "使用条件变量的生产者消费者实现",
+        "description-en": "Producer-consumer with condition variables",
+        "dependencies": [
+            "thread",
+            "mutex",
+            "condition_variable",
+            "queue"
+        ],
+        "use_to": [
+            "concurrency",
+            "thread"
+        ],
+        "tags": [
+            "concurrent",
+            "producer-consumer"
+        ],
+        "input": [
+            "producerCount",
+            "consumerCount"
+        ],
+        "input_type": [
+            "int",
+            "int"
+        ],
+        "return": [
+            "ok"
+        ],
+        "return_type": [
+            "int"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "#include <thread> #include <mutex> #include <condition_variable> #include <queue>\nstd::mutex mtx; std::condition_variable cv; std::queue<int> q; bool done=false;\nvoid producer(int count){ for(int i=0;i<count;i++){ std::unique_lock<std::mutex> lk(mtx); q.push(i); cv.notify_all(); } {std::lock_guard<std::mutex> lk(mtx); done=true;} cv.notify_all(); }\nvoid consumer(int id){ while(true){ std::unique_lock<std::mutex> lk(mtx); cv.wait(lk,[&](){return !q.empty()||done;}); if(q.empty()&&done)break; int v=q.front();q.pop();lk.unlock(); printf(\"Consumer %d got %d\\n\",id,v); } }"
+        ]
+    },
+    {
+        "name-zh": "限流器（令牌桶）",
+        "name-en": "Token Bucket Rate Limiter",
+        "description-zh": "令牌桶限流器实现",
+        "description-en": "Token bucket rate limiter",
+        "dependencies": [
+            "mutex",
+            "chrono"
+        ],
+        "use_to": [
+            "rate limit",
+            "concurrency"
+        ],
+        "tags": [
+            "rate limit",
+            "concurrent"
+        ],
+        "input": [
+            "rate",
+            "burst"
+        ],
+        "input_type": [
+            "double",
+            "int"
+        ],
+        "return": [
+            "limiter"
+        ],
+        "return_type": [
+            "TokenBucket"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "#include <mutex> #include <chrono>\nclass TokenBucket{ std::mutex mu; double rate; int burst; double tokens; std::chrono::steady_clock::time_point last; public: TokenBucket(double r,int b):rate(r),burst(b),tokens(b),last(std::chrono::steady_clock::now()){} bool allow(){ std::lock_guard<std::mutex> lk(mu); auto now=std::chrono::steady_clock::now(); auto elapsed=std::chrono::duration<double>(now-last).count(); last=now; tokens=std::min((double)burst,tokens+elapsed*rate); if(tokens>=1){ tokens--; return true; } return false; } };"
+        ]
+    },
+    {
+        "name-zh": "Promise链",
+        "name-en": "Promise Chain",
+        "description-zh": "简化的 Promise 链式调用（C++11 风格）",
+        "description-en": "Simple promise chain (C++11 style)",
+        "dependencies": [
+            "future",
+            "thread"
+        ],
+        "use_to": [
+            "async",
+            "concurrency"
+        ],
+        "tags": [
+            "async",
+            "future"
+        ],
+        "input": [
+            "fn"
+        ],
+        "input_type": [
+            "std::function<int()>"
+        ],
+        "return": [
+            "result"
+        ],
+        "return_type": [
+            "std::future<int>"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "#include <future> #include <functional>\nstd::future<int> chainPromise(std::function<int()> fn){ return std::async(std::launch::async,fn); }"
+        ]
+    },
+    {
+        "name-zh": "LRU缓存（std::map）",
+        "name-en": "LRU Cache (std::map)",
+        "description-zh": "O(1) LRU 缓存实现（std::map + map to iterator）",
+        "description-en": "O(1) LRU cache using map with O(1) iterator lookup",
+        "dependencies": [
+            "map",
+            "unordered_map"
+        ],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "cache"
+        ],
+        "return_type": [
+            "LRUCache"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "#include <map> #include <unordered_map>\ntemplate<typename K,typename V>\nclass LRUCache{ int cap_; std::map<K,V> order_; std::unordered_map<K,typename std::map<K,V>::iterator> mp_; public: LRUCache(int c):cap_(c){} V get(K key){ auto it=mp_.find(key); if(it==mp_.end()) return V(); order_.erase(it->second); order_.insert({key,it->second->second}); return it->second->second; } void put(K key,V val){ if(mp_.find(key)!=mp_.end()){ order_.erase(mp_[key]); mp_.erase(key); } if(order_.size()>=cap_){ auto last=order_.begin(); mp_.erase(last->first); order_.erase(last); } order_.insert({key,val}); mp_[key]=order_.find(key); } };"
+        ]
+    },
+    {
+        "name-zh": "Observer观察者模式",
+        "name-en": "Observer Pattern",
+        "description-zh": "简化的观察者模式实现（C++11）",
+        "description-en": "Simplified observer pattern in C++11",
+        "dependencies": [
+            "vector",
+            "functional"
+        ],
+        "use_to": [
+            "design pattern",
+            "observer"
+        ],
+        "tags": [
+            "observer",
+            "pattern"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "subject"
+        ],
+        "return_type": [
+            "Subject"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "#include <vector> #include <functional>\ntemplate<typename T>\nclass Subject{ std::vector<std::function<void(const T&)>> observers; public: void attach(std::function<void(const T&)> obs){ observers.push_back(obs); } void notify(const T& data){ for(auto& obs:observers) obs(data); } };"
+        ]
+    },
+    {
+        "name-zh": "Strategy策略模式",
+        "name-en": "Strategy Pattern",
+        "description-zh": "简化的策略模式实现（C++11）",
+        "description-en": "Simplified strategy pattern in C++11",
+        "dependencies": [
+            "memory",
+            "functional"
+        ],
+        "use_to": [
+            "design pattern",
+            "strategy"
+        ],
+        "tags": [
+            "strategy",
+            "pattern"
+        ],
+        "input": [],
+        "input_type": [],
+        "return": [
+            "context"
+        ],
+        "return_type": [
+            "Context"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "#include <memory> #include <functional>\ntemplate<typename T,typename R>\nclass Context{ std::function<R(T)> strategy; public: void setStrategy(std::function<R(T)> s){ strategy=s; } R execute(T input){ return strategy?strategy(input):R{}; } };"
+        ]
+    },
+    {
+        "name-zh": "Decorator装饰器模式",
+        "name-en": "Decorator Pattern",
+        "description-zh": "简化的装饰器模式（函数包装）",
+        "description-en": "Simplified decorator pattern (function wrapper)",
+        "dependencies": [
+            "functional",
+            "chrono"
+        ],
+        "use_to": [
+            "design pattern",
+            "decorator"
+        ],
+        "tags": [
+            "decorator",
+            "pattern"
+        ],
+        "input": [
+            "fn"
+        ],
+        "input_type": [
+            "std::function<int(int)>"
+        ],
+        "return": [
+            "wrapped"
+        ],
+        "return_type": [
+            "std::function<int(int)>"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "#include <functional> #include <chrono>\nauto timingDecorator(std::function<int(int)> fn){ return [fn](int x){ auto start=std::chrono::steady_clock::now(); int r=fn(x); auto end=std::chrono::steady_clock::now(); printf(\"took %ld ms\\n\",std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count()); return r; }; }"
+        ]
+    },
+    {
+        "name-zh": "布隆过滤器",
+        "name-en": "Bloom Filter",
+        "description-zh": "简单布隆过滤器实现",
+        "description-en": "Simple bloom filter",
+        "dependencies": [
+            "vector",
+            "string"
+        ],
+        "use_to": [
+            "bloom filter",
+            "data structure"
+        ],
+        "tags": [
+            "bloom filter",
+            "data structure"
+        ],
+        "input": [
+            "size"
+        ],
+        "input_type": [
+            "size_t"
+        ],
+        "return": [
+            "filter"
+        ],
+        "return_type": [
+            "BloomFilter"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "#include <vector> #include <string>\nclass BloomFilter{ size_t size_; std::vector<bool> bits_; public: BloomFilter(size_t s):size_(s),bits_(s,false){} size_t h1(const std::string& s)const{size_t h=0;for(char c:s)h=h*31+c;return h%size_;} size_t h2(const std::string& s)const{size_t h=0;for(char c:s)h=h*17+c;return h%size_;} void insert(const std::string& s){bits_[h1(s)]=true;bits_[h2(s)]=true;} bool contains(const std::string& s)const{return bits_[h1(s)]&&bits_[h2(s)];} };"
+        ]
+    },
+    {
+        "name-zh": "环形缓冲区",
+        "name-en": "Ring Buffer",
+        "description-zh": "无锁 FIFO 环形缓冲区（C++11）",
+        "description-en": "Lock-free FIFO ring buffer in C++11",
+        "dependencies": [
+            "atomic",
+            "vector"
+        ],
+        "use_to": [
+            "data structure",
+            "buffer"
+        ],
+        "tags": [
+            "ring buffer",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "size_t"
+        ],
+        "return": [
+            "ring"
+        ],
+        "return_type": [
+            "RingBuffer<int>"
+        ],
+        "timer_score": 88,
+        "memory_score": 88,
+        "code": [
+            "#include <atomic> #include <vector>\ntemplate<typename T>\nclass RingBuffer{ size_t cap_; std::vector<T> buf_; std::atomic<size_t> head_,tail_; public: RingBuffer(size_t c):cap_(c),buf_(c),head_(0),tail_(0){} bool push(const T& v){ size_t tail=tail_.load(); size_t head=head_.load(); if(tail-head>=cap_)return false; buf_[tail%cap_]=v; tail_.store(tail+1); return true; } bool pop(T& v){ size_t tail=tail_.load(); size_t head=head_.load(); if(tail==head)return false; v=buf_[head%cap_]; head_.store(head+1); return true; } };"
+        ]
+    },
+    {
+        "name-zh": "YAML解析（简单实现）",
+        "name-en": "Simple YAML Parse",
+        "description-zh": "简化的 YAML 配置解析器",
+        "description-en": "Simplified YAML config parser",
+        "dependencies": [
+            "string",
+            "sstream",
+            "unordered_map"
+        ],
+        "use_to": [
+            "config",
+            "yaml"
+        ],
+        "tags": [
+            "config",
+            "yaml"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "const std::string&"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "std::unordered_map<std::string,std::unordered_map<std::string,std::string>>"
+        ],
+        "timer_score": 75,
+        "memory_score": 80,
+        "code": [
+            "std::unordered_map<std::string,std::unordered_map<std::string,std::string>> parseYAML(const std::string& content){ std::unordered_map<std::string,std::unordered_map<std::string,std::string>> cfg; std::istringstream iss(content); std::string line,section; while(std::getline(iss,line)){ if(line.empty()||line[0]=='#')continue; if(line[0]=='['){ size_t p=line.find(']'); section=line.substr(1,p-1); } else if(line.find('=')!=std::string::npos){ size_t p=line.find('='); std::string k=line.substr(0,p),v=line.substr(p+1); cfg[section][k]=v; } } return cfg; }"
+        ]
+    },
+    {
+        "name-zh": "INI解析",
+        "name-en": "Parse INI",
+        "description-zh": "简化的 INI 配置解析器",
+        "description-en": "Simplified INI config parser",
+        "dependencies": [
+            "string",
+            "sstream",
+            "unordered_map"
+        ],
+        "use_to": [
+            "config",
+            "ini"
+        ],
+        "tags": [
+            "config",
+            "ini"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "const std::string&"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "std::unordered_map<std::string,std::unordered_map<std::string,std::string>>"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "std::unordered_map<std::string,std::unordered_map<std::string,std::string>> parseINI(const std::string& content){ std::unordered_map<std::string,std::unordered_map<std::string,std::string>> cfg; std::istringstream iss(content); std::string line,section; while(std::getline(iss,line)){ if(line.empty()||line[0]==';'||line[0]=='#')continue; if(line[0]=='['){ size_t p=line.find(']'); section=line.substr(1,p-1); } else if(line.find('=')!=std::string::npos){ size_t p=line.find('='); std::string k=line.substr(0,p),v=line.substr(p+1); cfg[section][k]=v; } } return cfg; }"
+        ]
+    },
+    {
+        "name-zh": "正则提取所有匹配",
+        "name-en": "Regex Extract All",
+        "description-zh": "提取所有正则匹配项",
+        "description-en": "Extract all regex matches",
+        "dependencies": [
+            "regex",
+            "vector"
+        ],
+        "use_to": [
+            "regex",
+            "string"
+        ],
+        "tags": [
+            "regex",
+            "basic"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "const std::string&",
+            "const std::string&"
+        ],
+        "return": [
+            "matches"
+        ],
+        "return_type": [
+            "std::vector<std::string>"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "std::vector<std::string> regexExtractAll(const std::string& text,const std::string& pattern){ std::vector<std::string> res; std::regex re(pattern); for(auto it=std::sregex_iterator(text.begin(),text.end(),re); it!=std::sregex_iterator(); ++it){ res.push_back(it->str()); } return res; }"
+        ]
     }
 ]

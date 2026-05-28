@@ -2608,5 +2608,563 @@
         "code": [
             "import \"sync\"\ntype Once struct {\n    o sync.Once\n    v any\n}\nfunc (o *Once) Do(fn func() any) any {\n    o.o.Do(func() { o.v = fn() })\n    return o.v\n}"
         ]
+    },
+    {
+        "name-zh": "快速排序（原地）",
+        "name-en": "Quick Sort Inplace",
+        "description-zh": "原地快速排序（切片）",
+        "description-en": "In-place quick sort for slices",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "[]int"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "[]int"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "func quickSort(a []int) []int {\n    if len(a) <= 1 { return a }\n    pivot := a[len(a)/2]\n    var left, right []int\n    for _, v := range a {\n        if v < pivot { left = append(left, v) } else if v > pivot { right = append(right, v) }\n    }\n    left = quickSort(left)\n    right = quickSort(right)\n    return append(append(left, pivot), right...)\n}"
+        ]
+    },
+    {
+        "name-zh": "希尔排序",
+        "name-en": "Shell Sort",
+        "description-zh": "希尔排序（递减增量）",
+        "description-en": "Shell sort with diminishing gap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "[]int"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "[]int"
+        ],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": [
+            "func shellSort(a []int) []int {\n    n := len(a)\n    for gap := n/2; gap > 0; gap /= 2 {\n        for i := gap; i < n; i++ {\n            tmp := a[i]\n            j := i\n            for j >= gap && a[j-gap] > tmp {\n                a[j] = a[j-gap]\n                j -= gap\n            }\n            a[j] = tmp\n        }\n    }\n    return a\n}"
+        ]
+    },
+    {
+        "name-zh": "堆排序",
+        "name-en": "Heap Sort",
+        "description-zh": "二叉堆实现的堆排序",
+        "description-en": "Heap sort using binary heap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "a"
+        ],
+        "input_type": [
+            "[]int"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "[]int"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "func heapSort(a []int) []int {\n    n := len(a)\n    for i := n/2 - 1; i >= 0; i-- { heapify(a, n, i) }\n    for i := n - 1; i > 0; i-- {\n        a[0], a[i] = a[i], a[0]\n        heapify(a, i, 0)\n    }\n    return a\n}\nfunc heapify(a []int, n, i int) {\n    largest := i\n    l, r := 2*i+1, 2*i+2\n    if l < n && a[l] > a[largest] { largest = l }\n    if r < n && a[r] > a[largest] { largest = r }\n    if largest != i {\n        a[i], a[largest] = a[largest], a[i]\n        heapify(a, n, largest)\n    }\n}"
+        ]
+    },
+    {
+        "name-zh": "Boyer-Moore字符串匹配",
+        "name-en": "Boyer-Moore String Match",
+        "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
+        "description-en": "Boyer-Moore string matching with bad character rule",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "boyer-moore",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "func boyerMoore(text, pattern string) int {\n    n, m := len(text), len(pattern)\n    if m == 0 { return 0 }\n    badChar := make([]int, 256)\n    for i := range badChar { badChar[i] = -1 }\n    for i := 0; i < m; i++ { badChar[int(pattern[i])] = i }\n    shift := 0\n    for shift <= n-m {\n        j := m - 1\n        for j >= 0 && pattern[j] == text[shift+j] { j-- }\n        if j < 0 { return shift }\n        shift += j - badChar[int(text[shift+j])]\n    }\n    return -1\n}"
+        ]
+    },
+    {
+        "name-zh": "Sunday字符串匹配",
+        "name-en": "Sunday String Match",
+        "description-zh": "Sunday 字符串匹配算法",
+        "description-en": "Sunday string matching algorithm",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "sunday",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "func sunday(text, pattern string) int {\n    n, m := len(text), len(pattern)\n    shift := make([]int, 256)\n    for i := range shift { shift[i] = m + 1 }\n    for i := 0; i < m; i++ { shift[int(pattern[i])] = m - i }\n    pos := 0\n    for pos <= n-m {\n        j := 0\n        for j < m && text[pos+j] == pattern[j] { j++ }\n        if j == m { return pos }\n        if pos+m < n { pos += shift[int(text[pos+m])] } else { return -1 }\n    }\n    return -1\n}"
+        ]
+    },
+    {
+        "name-zh": "LRU缓存（并发安全）",
+        "name-en": "LRU Cache (Thread-safe)",
+        "description-zh": "支持并发的 LRU 缓存实现",
+        "description-en": "Thread-safe LRU cache implementation",
+        "dependencies": [
+            "sync"
+        ],
+        "use_to": [
+            "cache",
+            "concurrency"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "concurrent"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "cache"
+        ],
+        "return_type": [
+            "LRUCache"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "import \"sync\"\n\ntype LRUCache struct {\n    mu     sync.Mutex\n    cap    int\n    cache  map[int]*list.Element\n    order  *list.List\n}\n\ntype entry struct { key, value int }\n\nfunc NewLRU(cap int) *LRUCache {\n    return &LRUCache{cap: cap, cache: make(map[int]*list.Element), order: list.New()}\n}\nfunc (c *LRUCache) Get(key int) (int, bool) {\n    c.mu.Lock()\n    defer c.mu.Unlock()\n    if e, ok := c.cache[key]; ok {\n        c.order.MoveToFront(e)\n        return e.Value.(*entry).value, true\n    }\n    return 0, false\n}\nfunc (c *LRUCache) Put(key, value int) {\n    c.mu.Lock()\n    defer c.mu.Unlock()\n    if e, ok := c.cache[key]; ok {\n        c.order.MoveToFront(e)\n        e.Value.(*entry).value = value\n        return\n    }\n    if c.order.Len() >= c.cap {\n        old := c.order.Back()\n        c.order.Remove(old)\n        delete(c.cache, old.Value.(*entry).key)\n    }\n    e := c.order.PushFront(&entry{key, value})\n    c.cache[key] = e\n}"
+        ]
+    },
+    {
+        "name-zh": "限流器（令牌桶）",
+        "name-en": "Token Bucket Rate Limiter",
+        "description-zh": "令牌桶限流器实现",
+        "description-en": "Token bucket rate limiter",
+        "dependencies": [
+            "sync",
+            "time"
+        ],
+        "use_to": [
+            "rate limit",
+            "concurrency"
+        ],
+        "tags": [
+            "rate limit",
+            "concurrent"
+        ],
+        "input": [
+            "rate",
+            "burst"
+        ],
+        "input_type": [
+            "float64",
+            "int"
+        ],
+        "return": [
+            "limiter"
+        ],
+        "return_type": [
+            "*TokenBucket"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "import (\"sync\"\n    \"time\")\n\ntype TokenBucket struct {\n    mu      sync.Mutex\n    rate    float64\n    burst   int\n    tokens  float64\n    lastUpd time.Time\n}\n\nfunc NewTokenBucket(rate float64, burst int) *TokenBucket {\n    return &TokenBucket{rate: rate, burst: burst, tokens: float64(burst), lastUpd: time.Now()}\n}\nfunc (tb *TokenBucket) Allow() bool {\n    tb.mu.Lock()\n    defer tb.mu.Unlock()\n    now := time.Now()\n    elapsed := now.Sub(tb.lastUpd).Seconds()\n    tb.lastUpd = now\n    tb.tokens += elapsed * tb.rate\n    if tb.tokens > float64(tb.burst) { tb.tokens = float64(tb.burst) }\n    if tb.tokens >= 1 {\n        tb.tokens--\n        return true\n    }\n    return false\n}"
+        ]
+    },
+    {
+        "name-zh": "生产者消费者",
+        "name-en": "Producer Consumer",
+        "description-zh": "使用通道实现生产者消费者模型",
+        "description-en": "Producer-consumer using channels",
+        "dependencies": [
+            "sync"
+        ],
+        "use_to": [
+            "concurrency",
+            "channel"
+        ],
+        "tags": [
+            "channel",
+            "concurrent"
+        ],
+        "input": [
+            "producerFn",
+            "consumerFn",
+            "bufSize",
+            "count"
+        ],
+        "input_type": [
+            "func(chan T)",
+            "func(T)",
+            "int",
+            "int"
+        ],
+        "return": [
+            "wg"
+        ],
+        "return_type": [
+            "sync.WaitGroup"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import \"sync\"\n\nfunc producerConsumer(producer func(chan<- int), consumer func(int), bufSize, count int) {\n    ch := make(chan int, bufSize)\n    var wg sync.WaitGroup\n    wg.Add(1)\n    go func() { defer wg.Done(); producer(ch)(); close(ch) }()\n    for i := 0; i < count; i++ {\n        v := <-ch\n        consumer(v)\n    }\n    wg.Wait()\n}"
+        ]
+    },
+    {
+        "name-zh": "跳表",
+        "name-en": "Skip List",
+        "description-zh": "简化的跳表实现（多层索引）",
+        "description-en": "Simplified skip list implementation",
+        "dependencies": [
+            "math/rand"
+        ],
+        "use_to": [
+            "data structure",
+            "skiplist"
+        ],
+        "tags": [
+            "skiplist",
+            "data structure"
+        ],
+        "input": [
+            "levels"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "skiplist"
+        ],
+        "return_type": [
+            "SkipList"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import (\"math/rand\" \"sync\")\n\ntype SkipList struct {\n    mu     sync.RWMutex\n    head   *Node\n    maxLvl int\n}\n\ntype Node struct {\n    key, value interface{}\n    forward []*Node\n}\n\nfunc NewSkipList(maxLvl int) *SkipList {\n    return &SkipList{head: &Node{forward: make([]*Node, maxLvl)}, maxLvl: maxLvl}\n}\nfunc (sl *SkipList) randomLevel() int {\n    lvl := 1\n    for rand.Intn(2) == 1 && lvl < sl.maxLvl { lvl++ }\n    return lvl\n}\nfunc (sl *SkipList) Insert(key, value interface{}) {\n    sl.mu.Lock()\n    defer sl.mu.Unlock()\n    update := make([]*Node, sl.maxLvl)\n    curr := sl.head\n    for i := sl.maxLvl - 1; i >= 0; i-- {\n        for curr.forward[i] != nil && curr.forward[i].key.(int) < key.(int) {\n            curr = curr.forward[i]\n        }\n        update[i] = curr\n    }\n    lvl := sl.randomLevel()\n    newNode := &Node{key: key, value: value, forward: make([]*Node, lvl)}\n    for i := 0; i < lvl; i++ {\n        newNode.forward[i] = update[i].forward[i]\n        update[i].forward[i] = newNode\n    }\n}\nfunc (sl *SkipList) Search(key interface{}) (interface{}, bool) {\n    sl.mu.RLock()\n    defer sl.mu.RUnlock()\n    curr := sl.head\n    for i := sl.maxLvl - 1; i >= 0; i-- {\n        for curr.forward[i] != nil && curr.forward[i].key.(int) < key.(int) {\n            curr = curr.forward[i]\n        }\n    }\n    curr = curr.forward[0]\n    if curr != nil && curr.key.(int) == key.(int) {\n        return curr.value, true\n    }\n    return nil, false\n}"
+        ]
+    },
+    {
+        "name-zh": "布隆过滤器",
+        "name-en": "Bloom Filter",
+        "description-zh": "简单布隆过滤器实现",
+        "description-en": "Simple Bloom filter implementation",
+        "dependencies": [
+            "hash/fnv",
+            "math/bits"
+        ],
+        "use_to": [
+            "bloom filter",
+            "data structure"
+        ],
+        "tags": [
+            "bloom filter",
+            "data structure"
+        ],
+        "input": [
+            "items"
+        ],
+        "input_type": [
+            "[]string"
+        ],
+        "return": [
+            "filter"
+        ],
+        "return_type": [
+            "BloomFilter"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "import (\"hash/fnv\" \"math/bits\")\n\ntype BloomFilter struct {\n    size int\n    bits  []bool\n}\n\nfunc NewBloomFilter(size int) *BloomFilter {\n    return &BloomFilter{size: size, bits: make([]bool, size)}\n}\nfunc (bf *BloomFilter) h1(s string) int {\n    h := fnv.New64a()\n    h.Write([]byte(s))\n    return int(h.Sum64()) % bf.size\n}\nfunc (bf *BloomFilter) h2(s string) int {\n    h := fnv.New64a()\n    h.Write([]byte(s + \"salt2\"))\n    return int(h.Sum64()) % bf.size\n}\nfunc (bf *BloomFilter) Add(s string) {\n    bf.bits[bf.h1(s)] = true\n    bf.bits[bf.h2(s)] = true\n}\nfunc (bf *BloomFilter) Contains(s string) bool {\n    return bf.bits[bf.h1(s)] && bf.bits[bf.h2(s)]\n}"
+        ]
+    },
+    {
+        "name-zh": "环形缓冲区",
+        "name-en": "Ring Buffer",
+        "description-zh": "无锁环形缓冲区（FIFO）",
+        "description-en": "Lock-free ring buffer FIFO",
+        "dependencies": [
+            "sync/atomic"
+        ],
+        "use_to": [
+            "data structure",
+            "buffer"
+        ],
+        "tags": [
+            "ring buffer",
+            "data structure"
+        ],
+        "input": [
+            "size"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "ring"
+        ],
+        "return_type": [
+            "RingBuffer"
+        ],
+        "timer_score": 88,
+        "memory_score": 88,
+        "code": [
+            "import \"sync/atomic\"\n\ntype RingBuffer struct {\n    buf      []int\n    capacity int\n    read     atomic.Int64\n    write    atomic.Int64\n}\n\nfunc NewRingBuffer(cap int) *RingBuffer {\n    return &RingBuffer{buf: make([]int, cap), capacity: cap}\n}\nfunc (rb *RingBuffer) Push(v int) bool {\n    w := rb.write.Load()\n    if w-rb.read.Load() >= int64(rb.capacity) { return false }\n    rb.buf[w%int64(rb.capacity)] = v\n    rb.write.Add(1)\n    return true\n}\nfunc (rb *RingBuffer) Pop() (int, bool) {\n    r := rb.read.Load()\n    if r >= rb.write.Load() { return 0, false }\n    v := rb.buf[r%int64(rb.capacity)]\n    rb.read.Add(1)\n    return v, true\n}"
+        ]
+    },
+    {
+        "name-zh": "限流中间件",
+        "name-en": "Rate Limit Middleware",
+        "description-zh": "HTTP 限流中间件（滑动窗口）",
+        "description-en": "HTTP rate limit middleware (sliding window)",
+        "dependencies": [
+            "net/http",
+            "time"
+        ],
+        "use_to": [
+            "middleware",
+            "rate limit"
+        ],
+        "tags": [
+            "middleware",
+            "rate limit"
+        ],
+        "input": [
+            "next",
+            "maxRequests",
+            "windowSeconds"
+        ],
+        "input_type": [
+            "http.Handler",
+            "int",
+            "int"
+        ],
+        "return": [
+            "handler"
+        ],
+        "return_type": [
+            "http.Handler"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import (\"net/http\"\n    \"sync\"\n    \"time\")\n\ntype RateLimitMiddleware struct {\n    next      http.Handler\n    max       int\n    window    time.Duration\n    requests  map[string][]time.Time\n    mu        sync.Mutex\n}\n\nfunc (rl *RateLimitMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {\n    ip := r.RemoteAddr\n    rl.mu.Lock()\n    now := time.Now()\n    times := rl.requests[ip]\n    times = filterTimes(times, now, rl.window)\n    if len(times) >= rl.max {\n        rl.requests[ip] = times\n        rl.mu.Unlock()\n        http.Error(w, \"429 Too Many Requests\", http.StatusTooManyRequests)\n        return\n    }\n    times = append(times, now)\n    rl.requests[ip] = times\n    rl.mu.Unlock()\n    rl.next.ServeHTTP(w, r)\n}\nfunc filterTimes(times []time.Time, now time.Time, window time.Duration) []time.Time {\n    cutoff := now.Add(-window)\n    filtered := times[:0]\n    for _, t := range times {\n        if t.After(cutoff) {\n            filtered = append(filtered, t)\n        }\n    }\n    return filtered\n}"
+        ]
+    },
+    {
+        "name-zh": "雪花ID（分布式）",
+        "name-en": "Snowflake ID (Distributed)",
+        "description-zh": "带 worker ID 的雪花 ID 生成器",
+        "description-en": "Snowflake ID generator with worker ID",
+        "dependencies": [
+            "sync"
+        ],
+        "use_to": [
+            "id",
+            "distributed"
+        ],
+        "tags": [
+            "id",
+            "snowflake"
+        ],
+        "input": [
+            "workerId"
+        ],
+        "input_type": [
+            "int64"
+        ],
+        "return": [
+            "id"
+        ],
+        "return_type": [
+            "int64"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "import \"sync\"\n\ntype Snowflake struct {\n    mu       sync.Mutex\n    workerId int64\n    seq      int64\n    lastTime int64\n}\n\nconst epoch int64 = 1609459200000 // 2021-01-01\n\nfunc NewSnowflake(workerId int64) *Snowflake {\n    return &Snowflake{workerId: workerId & 1023}\n}\nfunc (sf *Snowflake) Next() int64 {\n    sf.mu.Lock()\n    defer sf.mu.Unlock()\n    now := time.Now().UnixNano() / 1e6\n    if now == sf.lastTime {\n        sf.seq = (sf.seq + 1) & 4095\n        if sf.seq == 0 { for now == sf.lastTime { now = time.Now().UnixNano() / 1e6 } }\n    } else {\n        sf.seq = 0\n    }\n    sf.lastTime = now\n    return ((now - epoch) << 22) | (sf.workerId << 12) | sf.seq\n}"
+        ]
+    },
+    {
+        "name-zh": "配置解析（YAML）",
+        "name-en": "Parse YAML Config",
+        "description-zh": "解析 YAML 配置文件为 map",
+        "description-en": "Parse YAML config file to map",
+        "dependencies": [
+            "gopkg.in/yaml.v3"
+        ],
+        "use_to": [
+            "config",
+            "yaml"
+        ],
+        "tags": [
+            "config",
+            "yaml"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "[]byte"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "map[string]interface{}"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "import \"gopkg.in/yaml.v3\"\n\nfunc parseYAML(content []byte) (map[string]interface{}, error) {\n    var cfg map[string]interface{}\n    err := yaml.Unmarshal(content, &cfg)\n    return cfg, err\n}"
+        ]
+    },
+    {
+        "name-zh": "配置解析（TOML）",
+        "name-en": "Parse TOML Config",
+        "description-zh": "解析 TOML 配置文件",
+        "description-en": "Parse TOML config file",
+        "dependencies": [
+            "github.com/BurntSushi/toml"
+        ],
+        "use_to": [
+            "config",
+            "toml"
+        ],
+        "tags": [
+            "config",
+            "toml"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "[]byte"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "toml.Primitive"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "import \"github.com/BurntSushi/toml\"\n\nfunc parseTOML(content []byte) (map[string]interface{}, error) {\n    var cfg map[string]interface{}\n    _, err := toml.Decode(string(content), &cfg)\n    return cfg, err\n}"
+        ]
+    },
+    {
+        "name-zh": "JWT编码",
+        "name-en": "JWT Encode",
+        "description-zh": "生成 JWT 令牌",
+        "description-en": "Generate JWT token",
+        "dependencies": [
+            "github.com/golang-jwt/jwt/v5"
+        ],
+        "use_to": [
+            "jwt",
+            "auth"
+        ],
+        "tags": [
+            "jwt",
+            "auth"
+        ],
+        "input": [
+            "claims",
+            "secret"
+        ],
+        "input_type": [
+            "map[string]interface{}",
+            "string"
+        ],
+        "return": [
+            "token"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import (\"github.com/golang-jwt/jwt/v5\" \"time\")\n\ntype Claims struct { jwt.RegisteredClaims }\n\nfunc jwtEncode(claims map[string]interface{}, secret string) (string, error) {\n    c := &Claims{RegisteredClaims: jwt.RegisteredClaims{IssuedAt: jwt.NewNumericDate(time.Now())}}\n    for k, v := range claims { c.RegisteredClaims[k] = v }\n    token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)\n    return token.SignedString([]byte(secret))\n}\nfunc jwtDecode(tokenStr, secret string) (map[string]interface{}, error) {\n    token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(t *jwt.Token) (interface{}, error) {\n        return []byte(secret), nil\n    })\n    if err != nil { return nil, err }\n    if claims, ok := token.Claims.(*Claims); ok { return map[string]interface{}(claims.RegisteredClaims), nil }\n    return nil, nil\n}"
+        ]
     }
 ]

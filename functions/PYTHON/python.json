@@ -3312,5 +3312,664 @@
         "code": [
             "def compose(*fns):\n    def composed(x):\n        for f in reversed(fns): x = f(x)\n        return x\n    return composed"
         ]
+    },
+    {
+        "name-zh": "希尔排序",
+        "name-en": "Shell Sort",
+        "description-zh": "希尔排序（递减增量排序）",
+        "description-en": "Shell sort with diminishing gap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "list[int]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "list[int]"
+        ],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": [
+            "def shell_sort(a):\n    n = len(a)\n    gap = n // 2\n    while gap > 0:\n        for i in range(gap, n):\n            tmp = a[i]\n            j = i\n            while j >= gap and a[j-gap] > tmp:\n                a[j] = a[j-gap]\n                j -= gap\n            a[j] = tmp\n        gap //= 2\n    return a"
+        ]
+    },
+    {
+        "name-zh": "堆排序",
+        "name-en": "Heap Sort",
+        "description-zh": "二叉堆实现的堆排序",
+        "description-en": "Heap sort using binary heap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "list[int]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "list[int]"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "def heap_sort(a):\n    n = len(a)\n    def heapify(a, n, i):\n        largest = i\n        l, r = 2*i+1, 2*i+2\n        if l < n and a[l] > a[largest]: largest = l\n        if r < n and a[r] > a[largest]: largest = r\n        if largest != i:\n            a[i], a[largest] = a[largest], a[i]\n            heapify(a, n, largest)\n    for i in range(n//2-1, -1, -1): heapify(a, n, i)\n    for i in range(n-1, 0, -1):\n        a[0], a[i] = a[i], a[0]\n        heapify(a, i, 0)\n    return a"
+        ]
+    },
+    {
+        "name-zh": "计数排序",
+        "name-en": "Counting Sort",
+        "description-zh": "计数排序（适用于小范围整数）",
+        "description-en": "Counting sort for small integer range",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr",
+            "max"
+        ],
+        "input_type": [
+            "list[int]",
+            "int"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "list[int]"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "def counting_sort(a, max_val):\n    count = [0] * (max_val + 1)\n    for v in a: count[v] += 1\n    res = []\n    for v in range(max_val + 1): res.extend([v] * count[v])\n    return res"
+        ]
+    },
+    {
+        "name-zh": "基数排序",
+        "name-en": "Radix Sort",
+        "description-zh": "最低位优先基数排序（LSD）",
+        "description-en": "Least significant digit radix sort",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "list[int]"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "list[int]"
+        ],
+        "timer_score": 80,
+        "memory_score": 75,
+        "code": [
+            "def radix_sort(a):\n    def get_max(a):\n        m = a[0]\n        for v in a:\n            if v > m: m = v\n        return m\n    def count_sort(a, exp):\n        n = len(a)\n        out = [0] * n\n        count = [0] * 10\n        for v in a: count[(v//exp)%10] += 1\n        for i in range(1, 10): count[i] += count[i-1]\n        for i in range(n-1, -1, -1):\n            idx = (a[i]//exp)%10\n            out[count[idx]-1] = a[i]\n            count[idx] -= 1\n        return out\n    m = get_max(a)\n    exp = 1\n    while m // exp > 0:\n        a = count_sort(a, exp)\n        exp *= 10\n    return a"
+        ]
+    },
+    {
+        "name-zh": "Boyer-Moore字符串匹配",
+        "name-en": "Boyer-Moore String Match",
+        "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
+        "description-en": "Boyer-Moore string matching with bad character rule",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "boyer-moore",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "str",
+            "str"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "def boyer_moore(text, pattern):\n    n, m = len(text), len(pattern)\n    if m == 0: return 0\n    bad_char = {}\n    for i, c in enumerate(pattern): bad_char[c] = i\n    shift = 0\n    while shift <= n - m:\n        j = m - 1\n        while j >= 0 and pattern[j] == text[shift+j]: j -= 1\n        if j < 0: return shift\n        c = text[shift+j]\n        shift += max(1, j - bad_char.get(c, -1))\n    return -1"
+        ]
+    },
+    {
+        "name-zh": "Sunday字符串匹配",
+        "name-en": "Sunday String Match",
+        "description-zh": "Sunday 字符串匹配算法",
+        "description-en": "Sunday string matching algorithm",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "sunday",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "str",
+            "str"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "int"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "def sunday(text, pattern):\n    n, m = len(text), len(pattern)\n    shift = {c: m for c in set(pattern)}\n    for i, c in enumerate(pattern[:-1]): shift[c] = m - i - 1\n    pos = 0\n    while pos <= n - m:\n        j = 0\n        while j < m and text[pos+j] == pattern[j]: j += 1\n        if j == m: return pos\n        if pos + m < n: pos += shift.get(text[pos+m], m + 1)\n        else: return -1\n    return -1"
+        ]
+    },
+    {
+        "name-zh": "LRU缓存（并发安全）",
+        "name-en": "LRU Cache (Thread-safe)",
+        "description-zh": "支持并发的 LRU 缓存实现",
+        "description-en": "Thread-safe LRU cache",
+        "dependencies": [
+            "threading"
+        ],
+        "use_to": [
+            "cache",
+            "concurrency"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "concurrent"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "cache"
+        ],
+        "return_type": [
+            "ThreadSafeLRUCache"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "from threading import Lock\nfrom collections import OrderedDict\n\nclass ThreadSafeLRUCache:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.cache = OrderedDict()\n        self.lock = Lock()\n\n    def get(self, key):\n        with self.lock:\n            if key not in self.cache: return None\n            self.cache.move_to_end(key)\n            return self.cache[key]\n\n    def put(self, key, value):\n        with self.lock:\n            if key in self.cache: self.cache.move_to_end(key)\n            self.cache[key] = value\n            if len(self.cache) > self.capacity:\n                self.cache.popitem(last=False)"
+        ]
+    },
+    {
+        "name-zh": "限流器（令牌桶）",
+        "name-en": "Token Bucket Rate Limiter",
+        "description-zh": "令牌桶限流器实现",
+        "description-en": "Token bucket rate limiter",
+        "dependencies": [
+            "threading",
+            "time"
+        ],
+        "use_to": [
+            "rate limit",
+            "concurrency"
+        ],
+        "tags": [
+            "rate limit",
+            "concurrent"
+        ],
+        "input": [
+            "rate",
+            "burst"
+        ],
+        "input_type": [
+            "float",
+            "int"
+        ],
+        "return": [
+            "limiter"
+        ],
+        "return_type": [
+            "TokenBucket"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "import threading, time\n\nclass TokenBucket:\n    def __init__(self, rate, burst):\n        self.rate = rate\n        self.burst = burst\n        self.tokens = float(burst)\n        self.last_update = time.time()\n        self.lock = threading.Lock()\n\n    def allow(self):\n        with self.lock:\n            now = time.time()\n            elapsed = now - self.last_update\n            self.last_update = now\n            self.tokens = min(self.burst, self.tokens + elapsed * self.rate)\n            if self.tokens >= 1:\n                self.tokens -= 1\n                return True\n            return False"
+        ]
+    },
+    {
+        "name-zh": "生产者消费者",
+        "name-en": "Producer Consumer",
+        "description-zh": "使用队列的生产者消费者模式",
+        "description-en": "Producer-consumer using queue",
+        "dependencies": [
+            "queue",
+            "threading"
+        ],
+        "use_to": [
+            "concurrency",
+            "thread"
+        ],
+        "tags": [
+            "concurrent",
+            "producer-consumer"
+        ],
+        "input": [
+            "producer",
+            "consumer",
+            "count",
+            "bufSize"
+        ],
+        "input_type": [
+            "function",
+            "function",
+            "int",
+            "int"
+        ],
+        "return": [
+            "results"
+        ],
+        "return_type": [
+            "list"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import queue, threading\n\ndef producer_consumer(producer, consumer, count, buf_size=10):\n    q = queue.Queue(buf_size)\n    results = []\n    def run_producer():\n        for i in range(count): q.put(producer(i))\n        q.put(None)\n    def run_consumer():\n        nonlocal results\n        while True:\n            item = q.get()\n            if item is None:\n                q.put(None)\n                break\n            results.append(consumer(item))\n    t1 = threading.Thread(target=run_producer)\n    t2 = threading.Thread(target=run_consumer)\n    t1.start(); t2.start()\n    t1.join(); t2.join()\n    return results"
+        ]
+    },
+    {
+        "name-zh": "异步限流器",
+        "name-en": "Async Rate Limiter",
+        "description-zh": "异步令牌桶限流器",
+        "description-en": "Async token bucket rate limiter",
+        "dependencies": [
+            "asyncio"
+        ],
+        "use_to": [
+            "async",
+            "rate limit"
+        ],
+        "tags": [
+            "async",
+            "rate limit"
+        ],
+        "input": [
+            "rate",
+            "burst"
+        ],
+        "input_type": [
+            "float",
+            "int"
+        ],
+        "return": [
+            "limiter"
+        ],
+        "return_type": [
+            "AsyncTokenBucket"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "import asyncio, time\n\nclass AsyncTokenBucket:\n    def __init__(self, rate, burst):\n        self.rate = rate\n        self.burst = burst\n        self.tokens = float(burst)\n        self.last_update = time.time()\n        self.lock = asyncio.Lock()\n\n    async def allow(self):\n        async with self.lock:\n            now = time.time()\n            elapsed = now - self.last_update\n            self.last_update = now\n            self.tokens = min(self.burst, self.tokens + elapsed * self.rate)\n            if self.tokens >= 1:\n                self.tokens -= 1\n                return True\n            return False"
+        ]
+    },
+    {
+        "name-zh": "布隆过滤器",
+        "name-en": "Bloom Filter",
+        "description-zh": "简单布隆过滤器实现",
+        "description-en": "Simple Bloom filter",
+        "dependencies": [
+            "hashlib"
+        ],
+        "use_to": [
+            "bloom filter",
+            "data structure"
+        ],
+        "tags": [
+            "bloom filter",
+            "data structure"
+        ],
+        "input": [
+            "size"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "filter"
+        ],
+        "return_type": [
+            "BloomFilter"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "import hashlib\n\nclass BloomFilter:\n    def __init__(self, size):\n        self.size = size\n        self.bits = [False] * size\n\n    def _h1(self, s): return int(hashlib.md5(s.encode()).hexdigest(), 16) % self.size\n    def _h2(self, s): return int(hashlib.sha1(s.encode()).hexdigest(), 16) % self.size\n\n    def add(self, s):\n        self.bits[self._h1(s)] = True\n        self.bits[self._h2(s)] = True\n\n    def contains(self, s):\n        return self.bits[self._h1(s)] and self.bits[self._h2(s)]"
+        ]
+    },
+    {
+        "name-zh": "环形缓冲区",
+        "name-en": "Ring Buffer",
+        "description-zh": "无锁 FIFO 环形缓冲区",
+        "description-en": "Lock-free FIFO ring buffer",
+        "dependencies": [
+            "ctypes"
+        ],
+        "use_to": [
+            "data structure",
+            "buffer"
+        ],
+        "tags": [
+            "ring buffer",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "ring"
+        ],
+        "return_type": [
+            "RingBuffer"
+        ],
+        "timer_score": 88,
+        "memory_score": 88,
+        "code": [
+            "import ctypes, threading\n\nclass RingBuffer:\n    def __init__(self, capacity):\n        self.capacity = capacity\n        self.buffer = (ctypes.c_int * capacity)()\n        self.read = 0\n        self.write = 0\n        self.lock = threading.Lock()\n\n    def push(self, v):\n        with self.lock:\n            if self.write - self.read >= self.capacity: return False\n            self.buffer[self.write % self.capacity] = v\n            self.write += 1\n            return True\n\n    def pop(self):\n        with self.lock:\n            if self.write <= self.read: return None, False\n            v = self.buffer[self.read % self.capacity]\n            self.read += 1\n            return v, True"
+        ]
+    },
+    {
+        "name-zh": "跳表",
+        "name-en": "Skip List",
+        "description-zh": "简化的跳表实现",
+        "description-en": "Simplified skip list",
+        "dependencies": [
+            "random"
+        ],
+        "use_to": [
+            "data structure",
+            "skiplist"
+        ],
+        "tags": [
+            "skiplist",
+            "data structure"
+        ],
+        "input": [
+            "max_level"
+        ],
+        "input_type": [
+            "int"
+        ],
+        "return": [
+            "skiplist"
+        ],
+        "return_type": [
+            "SkipList"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import random\n\nclass SkipListNode:\n    def __init__(self, key, value, level):\n        self.key, self.value, self.forward = key, value, [None]*(level+1)\n\nclass SkipList:\n    def __init__(self, max_level=16):\n        self.max_level = max_level\n        self.head = SkipListNode(-1, None, max_level)\n        self.level = 0\n\n    def _random_level(self):\n        lvl = 1\n        while random.random() < 0.5 and lvl < self.max_level: lvl += 1\n        return lvl\n\n    def insert(self, key, value):\n        update = [self.head] * (self.max_level+1)\n        curr = self.head\n        for i in range(self.level, -1, -1):\n            while curr.forward[i] and curr.forward[i].key < key: curr = curr.forward[i]\n            update[i] = curr\n        lvl = self._random_level()\n        if lvl > self.level: self.level = lvl\n        new_node = SkipListNode(key, value, lvl)\n        for i in range(lvl+1):\n            new_node.forward[i] = update[i].forward[i]\n            update[i].forward[i] = new_node\n\n    def search(self, key):\n        curr = self.head\n        for i in range(self.level, -1, -1):\n            while curr.forward[i] and curr.forward[i].key < key: curr = curr.forward[i]\n        curr = curr.forward[0]\n        if curr and curr.key == key: return curr.value\n        return None"
+        ]
+    },
+    {
+        "name-zh": "YAML解析",
+        "name-en": "Parse YAML",
+        "description-zh": "解析 YAML 配置文件",
+        "description-en": "Parse YAML config file",
+        "dependencies": [
+            "yaml"
+        ],
+        "use_to": [
+            "config",
+            "yaml"
+        ],
+        "tags": [
+            "config",
+            "yaml"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "str"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "dict"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "import yaml\n\ndef parse_yaml(content):\n    return yaml.safe_load(content)"
+        ]
+    },
+    {
+        "name-zh": "TOML解析",
+        "name-en": "Parse TOML",
+        "description-zh": "解析 TOML 配置文件",
+        "description-en": "Parse TOML config file",
+        "dependencies": [
+            "toml"
+        ],
+        "use_to": [
+            "config",
+            "toml"
+        ],
+        "tags": [
+            "config",
+            "toml"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "str"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "dict"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "import toml\n\ndef parse_toml(content):\n    return toml.loads(content)"
+        ]
+    },
+    {
+        "name-zh": "INI解析",
+        "name-en": "Parse INI",
+        "description-zh": "解析 INI 配置文件",
+        "description-en": "Parse INI config file",
+        "dependencies": [
+            "configparser"
+        ],
+        "use_to": [
+            "config",
+            "ini"
+        ],
+        "tags": [
+            "config",
+            "ini"
+        ],
+        "input": [
+            "content"
+        ],
+        "input_type": [
+            "str"
+        ],
+        "return": [
+            "config"
+        ],
+        "return_type": [
+            "dict"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "from configparser import ConfigParser\n\ndef parse_ini(content):\n    cfg = ConfigParser()\n    cfg.read_string(content)\n    return {s: dict(cfg.items(s)) for s in cfg.sections()}"
+        ]
+    },
+    {
+        "name-zh": "JWT编码解码",
+        "name-en": "JWT Encode/Decode",
+        "description-zh": "JWT 令牌编码和验证",
+        "description-en": "JWT encode and decode",
+        "dependencies": [
+            "jwt"
+        ],
+        "use_to": [
+            "jwt",
+            "auth"
+        ],
+        "tags": [
+            "jwt",
+            "auth"
+        ],
+        "input": [
+            "payload",
+            "secret"
+        ],
+        "input_type": [
+            "dict",
+            "str"
+        ],
+        "return": [
+            "token"
+        ],
+        "return_type": [
+            "str"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "import jwt, time\n\ndef jwt_encode(payload, secret, exp=3600):\n    payload = dict(payload)\n    payload['exp'] = time.time() + exp\n    return jwt.encode(payload, secret, algorithm='HS256')\n\ndef jwt_decode(token, secret):\n    try:\n        return jwt.decode(token, secret, algorithms=['HS256'])\n    except jwt.ExpiredSignatureError:\n        return None"
+        ]
+    },
+    {
+        "name-zh": "HTTP服务器（简版）",
+        "name-en": "Simple HTTP Server",
+        "description-zh": "使用内置http.server创建简单HTTP服务器",
+        "description-en": "Simple HTTP server using http.server",
+        "dependencies": [],
+        "use_to": [
+            "http",
+            "server"
+        ],
+        "tags": [
+            "http",
+            "server"
+        ],
+        "input": [
+            "port",
+            "handler"
+        ],
+        "input_type": [
+            "int",
+            "function"
+        ],
+        "return": [
+            "server"
+        ],
+        "return_type": [
+            "HTTPServer"
+        ],
+        "timer_score": 75,
+        "memory_score": 80,
+        "code": [
+            "from http.server import HTTPServer, BaseHTTPRequestHandler\n\ndef start_server(port, handler):\n    server = HTTPServer(('', port), handler)\n    print(f'Serving on port {port}')\n    server.serve_forever()"
+        ]
+    },
+    {
+        "name-zh": "模板渲染（Jinja2）",
+        "name-en": "Render Template (Jinja2)",
+        "description-zh": "使用 Jinja2 渲染模板",
+        "description-en": "Render template using Jinja2",
+        "dependencies": [
+            "jinja2"
+        ],
+        "use_to": [
+            "template",
+            "render"
+        ],
+        "tags": [
+            "template",
+            "render"
+        ],
+        "input": [
+            "template_str",
+            "context"
+        ],
+        "input_type": [
+            "str",
+            "dict"
+        ],
+        "return": [
+            "rendered"
+        ],
+        "return_type": [
+            "str"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "from jinja2 import Template\n\ndef render_template(template_str, context):\n    return Template(template_str).render(**context)"
+        ]
     }
 ]

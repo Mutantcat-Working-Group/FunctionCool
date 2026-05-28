@@ -4215,5 +4215,610 @@
         "code": [
             "function downloadFile(content,filename,type='text/plain'){ const blob=new Blob([content],{type}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); }"
         ]
+    },
+    {
+        "name-zh": "希尔排序",
+        "name-en": "Shell Sort",
+        "description-zh": "希尔排序（递减增量排序）",
+        "description-en": "Shell sort with diminishing gap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "Array<number>"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "Array<number>"
+        ],
+        "timer_score": 75,
+        "memory_score": 90,
+        "code": [
+            "function shellSort(a){ const n=a.length; for(let gap=Math.floor(n/2); gap>0; gap=Math.floor(gap/2)){ for(let i=gap; i<n; i++){ const tmp=a[i]; let j=i; while(j>=gap && a[j-gap]>tmp){ a[j]=a[j-gap]; j-=gap; } a[j]=tmp; } } return a; }"
+        ]
+    },
+    {
+        "name-zh": "堆排序",
+        "name-en": "Heap Sort",
+        "description-zh": "二叉堆实现的堆排序",
+        "description-en": "Heap sort using binary heap",
+        "dependencies": [],
+        "use_to": [
+            "sort",
+            "algorithm"
+        ],
+        "tags": [
+            "sort",
+            "algorithm"
+        ],
+        "input": [
+            "arr"
+        ],
+        "input_type": [
+            "Array<number>"
+        ],
+        "return": [
+            "sorted"
+        ],
+        "return_type": [
+            "Array<number>"
+        ],
+        "timer_score": 80,
+        "memory_score": 85,
+        "code": [
+            "function heapSort(a){ const n=a.length; function heapify(a,n,i){ let largest=i,l=2*i+1,r=2*i+2; if(l<n&&a[l]>a[largest])largest=l; if(r<n&&a[r]>a[largest])largest=r; if(largest!==i){[a[i],a[largest]]=[a[largest],a[i]];heapify(a,n,largest);} } for(let i=Math.floor(n/2)-1;i>=0;i--)heapify(a,n,i); for(let i=n-1;i>0;i--){[a[0],a[i]]=[a[i],a[0]];heapify(a,i,0);} return a; }"
+        ]
+    },
+    {
+        "name-zh": "Boyer-Moore字符串匹配",
+        "name-en": "Boyer-Moore String Match",
+        "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
+        "description-en": "Boyer-Moore string matching",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "boyer-moore",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "number"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "function boyerMoore(text, pattern){ const n=text.length, m=pattern.length; if(m===0)return 0; const bc={}; for(let i=0;i<256;i++)bc[i]=-1; for(let i=0;i<m;i++)bc[pattern.charCodeAt(i)]=i; let shift=0; while(shift<=n-m){ let j=m-1; while(j>=0&&pattern[j]===text[shift+j])j--; if(j<0)return shift; const c=text.charCodeAt(shift+j); shift+=Math.max(1,j-bc[c]); } return -1; }"
+        ]
+    },
+    {
+        "name-zh": "Sunday字符串匹配",
+        "name-en": "Sunday String Match",
+        "description-zh": "Sunday 字符串匹配算法",
+        "description-en": "Sunday string matching",
+        "dependencies": [],
+        "use_to": [
+            "string",
+            "search"
+        ],
+        "tags": [
+            "string",
+            "sunday",
+            "algorithm"
+        ],
+        "input": [
+            "text",
+            "pattern"
+        ],
+        "input_type": [
+            "string",
+            "string"
+        ],
+        "return": [
+            "index"
+        ],
+        "return_type": [
+            "number"
+        ],
+        "timer_score": 88,
+        "memory_score": 92,
+        "code": [
+            "function sunday(text, pattern){ const n=text.length, m=pattern.length; const shift={}; for(let c of pattern) shift[c]=m; for(let i=0;i<m-1;i++) shift[pattern[i]]=m-i-1; let pos=0; while(pos<=n-m){ let j=0; while(j<m&&text[pos+j]===pattern[j])j++; if(j===m)return pos; pos+=(pos+m<n)?(shift[text[pos+m]]??m+1):1; } return -1; }"
+        ]
+    },
+    {
+        "name-zh": "LRU缓存（Map+链表）",
+        "name-en": "LRU Cache (Map+List)",
+        "description-zh": "O(1) LRU 缓存实现",
+        "description-en": "O(1) LRU cache implementation",
+        "dependencies": [],
+        "use_to": [
+            "cache",
+            "data structure"
+        ],
+        "tags": [
+            "lru",
+            "cache",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "number"
+        ],
+        "return": [
+            "cache"
+        ],
+        "return_type": [
+            "LRUCache"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "class LRUCache{ constructor(capacity){ this.capacity=capacity; this.cache=new Map(); } get(key){ if(!this.cache.has(key))return null; const v=this.cache.get(key); this.cache.delete(key); this.cache.set(key,v); return v; } put(key,value){ if(this.cache.has(key)){ this.cache.delete(key); } else if(this.cache.size>=this.capacity){ const firstKey=this.cache.keys().next().value; this.cache.delete(firstKey); } this.cache.set(key,value); } }"
+        ]
+    },
+    {
+        "name-zh": "布隆过滤器",
+        "name-en": "Bloom Filter",
+        "description-zh": "简单布隆过滤器实现",
+        "description-en": "Simple Bloom filter",
+        "dependencies": [],
+        "use_to": [
+            "bloom filter",
+            "data structure"
+        ],
+        "tags": [
+            "bloom filter",
+            "data structure"
+        ],
+        "input": [
+            "size"
+        ],
+        "input_type": [
+            "number"
+        ],
+        "return": [
+            "filter"
+        ],
+        "return_type": [
+            "BloomFilter"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "class BloomFilter{ constructor(size){ this.size=size; this.bits=Array(size).fill(false); } _h1(s){ let h=0; for(let c of s) h=(h*31+c.charCodeAt(0))%this.size; return h; } _h2(s){ let h=0; for(let c of s) h=(h*17+c.charCodeAt(0))%this.size; return h; } add(s){ this.bits[this._h1(s)]=true; this.bits[this._h2(s)]=true; } contains(s){ return this.bits[this._h1(s)]&&this.bits[this._h2(s)]; } }"
+        ]
+    },
+    {
+        "name-zh": "限流器（滑动窗口）",
+        "name-en": "Rate Limiter (Sliding Window)",
+        "description-zh": "滑动窗口限流器实现",
+        "description-en": "Sliding window rate limiter",
+        "dependencies": [],
+        "use_to": [
+            "rate limit",
+            "concurrency"
+        ],
+        "tags": [
+            "rate limit",
+            "concurrent"
+        ],
+        "input": [
+            "maxRequests",
+            "windowMs"
+        ],
+        "input_type": [
+            "number",
+            "number"
+        ],
+        "return": [
+            "limiter"
+        ],
+        "return_type": [
+            "RateLimiter"
+        ],
+        "timer_score": 85,
+        "memory_score": 80,
+        "code": [
+            "class SlidingWindowRateLimiter{ constructor(max,windowMs){ this.max=max; this.windowMs=windowMs; this.requests=[]; } allow(){ const now=Date.now(); this.requests=this.requests.filter(t=>now-t<this.windowMs); if(this.requests.length>=this.max)return false; this.requests.push(now); return true; } }"
+        ]
+    },
+    {
+        "name-zh": "生产者消费者",
+        "name-en": "Producer Consumer",
+        "description-zh": "使用 Promise 实现生产者消费者",
+        "description-en": "Producer-consumer using Promise",
+        "dependencies": [],
+        "use_to": [
+            "async",
+            "concurrency"
+        ],
+        "tags": [
+            "async",
+            "producer-consumer"
+        ],
+        "input": [
+            "producer",
+            "consumer",
+            "count"
+        ],
+        "input_type": [
+            "function",
+            "function",
+            "number"
+        ],
+        "return": [
+            "results"
+        ],
+        "return_type": [
+            "Promise"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "async function producerConsumer(producer, consumer, count){ const queue=[]; const results=[]; const produce=()=>new Promise(res=>{ for(let i=0;i<count;i++) queue.push(producer(i)); res(); }); const consume=()=>new Promise(res=>{ const interval=setInterval(()=>{ if(queue.length===0){ clearInterval(interval); res(); return; } results.push(consumer(queue.shift())); },0); }); await produce(); await consume(); return results; }"
+        ]
+    },
+    {
+        "name-zh": "异步限流器",
+        "name-en": "Async Rate Limiter",
+        "description-zh": "异步令牌桶限流器",
+        "description-en": "Async token bucket rate limiter",
+        "dependencies": [
+            "async"
+        ],
+        "use_to": [
+            "async",
+            "rate limit"
+        ],
+        "tags": [
+            "async",
+            "rate limit"
+        ],
+        "input": [
+            "rate",
+            "burst"
+        ],
+        "input_type": [
+            "number",
+            "number"
+        ],
+        "return": [
+            "limiter"
+        ],
+        "return_type": [
+            "AsyncLimiter"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "class AsyncTokenBucket{ constructor(rate,burst){ this.rate=rate; this.burst=burst; this.tokens=burst; this.lastUpdate=Date.now(); } async allow(){ const now=Date.now(); const elapsed=(now-this.lastUpdate)/1000; this.lastUpdate=now; this.tokens=Math.min(this.burst,this.tokens+elapsed*this.rate); if(this.tokens>=1){ this.tokens--; return true; } await new Promise(r=>setTimeout(r,(1-this.tokens)/this.rate*1000)); this.tokens=0; return true; } }"
+        ]
+    },
+    {
+        "name-zh": "环形缓冲区",
+        "name-en": "Ring Buffer",
+        "description-zh": "FIFO 环形缓冲区",
+        "description-en": "FIFO ring buffer",
+        "dependencies": [],
+        "use_to": [
+            "data structure",
+            "buffer"
+        ],
+        "tags": [
+            "ring buffer",
+            "data structure"
+        ],
+        "input": [
+            "capacity"
+        ],
+        "input_type": [
+            "number"
+        ],
+        "return": [
+            "ring"
+        ],
+        "return_type": [
+            "RingBuffer"
+        ],
+        "timer_score": 88,
+        "memory_score": 88,
+        "code": [
+            "class RingBuffer{ constructor(capacity){ this.capacity=capacity; this.buffer=Array(capacity); this.read=0; this.write=0; } push(v){ if(this.write-this.read>=this.capacity)return false; this.buffer[this.write%this.capacity]=v; this.write++; return true; } pop(){ if(this.write<=this.read)return undefined; const v=this.buffer[this.read%this.capacity]; this.read++; return v; } }"
+        ]
+    },
+    {
+        "name-zh": "跳表",
+        "name-en": "Skip List",
+        "description-zh": "简化跳表实现",
+        "description-en": "Simplified skip list",
+        "dependencies": [],
+        "use_to": [
+            "data structure",
+            "skiplist"
+        ],
+        "tags": [
+            "skiplist",
+            "data structure"
+        ],
+        "input": [
+            "maxLevel"
+        ],
+        "input_type": [
+            "number"
+        ],
+        "return": [
+            "skiplist"
+        ],
+        "return_type": [
+            "SkipList"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "class SkipListNode{ constructor(key,value,level){ this.key=key; this.value=value; this.forward=Array(level+1).fill(null); } } class SkipList{ constructor(maxLevel=16){ this.maxLevel=maxLevel; this.head=new SkipListNode(-Infinity,null,maxLevel); this.level=0; } randomLevel(){ let lvl=1; while(Math.random()<0.5&&lvl<this.maxLevel)lvl++; return lvl; } insert(key,value){ const update=Array(this.maxLevel+1).fill(this.head); let curr=this.head; for(let i=this.level;i>=0;i--){ while(curr.forward[i]&&curr.forward[i].key<key)curr=curr.forward[i]; update[i]=curr; } const lvl=this.randomLevel(); if(lvl>this.level)this.level=lvl; const newNode=new SkipListNode(key,value,lvl); for(let i=0;i<=lvl;i++){ newNode.forward[i]=update[i].forward[i]; update[i].forward[i]=newNode; } } search(key){ let curr=this.head; for(let i=this.level;i>=0;i--){ while(curr.forward[i]&&curr.forward[i].key<key)curr=curr.forward[i]; } curr=curr.forward[0]; return curr&&curr.key===key?curr.value:undefined; } }"
+        ]
+    },
+    {
+        "name-zh": "JWT解码",
+        "name-en": "JWT Decode",
+        "description-zh": "解码 JWT 令牌",
+        "description-en": "Decode JWT token",
+        "dependencies": [],
+        "use_to": [
+            "jwt",
+            "auth"
+        ],
+        "tags": [
+            "jwt",
+            "auth"
+        ],
+        "input": [
+            "token"
+        ],
+        "input_type": [
+            "string"
+        ],
+        "return": [
+            "payload"
+        ],
+        "return_type": [
+            "object"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "function jwtDecode(token){ try{ const base64=token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'); const json=decodeURIComponent(atob(base64).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join('')); return JSON.parse(json); }catch{ return null; } }"
+        ]
+    },
+    {
+        "name-zh": "JWT编码",
+        "name-en": "JWT Encode",
+        "description-zh": "生成 JWT 令牌",
+        "description-en": "Generate JWT token",
+        "dependencies": [],
+        "use_to": [
+            "jwt",
+            "auth"
+        ],
+        "tags": [
+            "jwt",
+            "auth"
+        ],
+        "input": [
+            "payload",
+            "secret"
+        ],
+        "input_type": [
+            "object",
+            "string"
+        ],
+        "return": [
+            "token"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "function jwtEncode(payload,secret){ const header=btoa(JSON.stringify({alg:'HS256',typ:'JWT'})).replace(/=/g,''); const encPayload=btoa(JSON.stringify(payload)).replace(/=/g,''); const sig=btoa(`${header}.${encPayload}`).replace(/=/g,''); return `${header}.${encPayload}.${sig}`; }"
+        ]
+    },
+    {
+        "name-zh": "模板渲染",
+        "name-en": "Template Render",
+        "description-zh": "简单模板引擎（替换占位符）",
+        "description-en": "Simple template renderer (replace placeholders)",
+        "dependencies": [],
+        "use_to": [
+            "template",
+            "render"
+        ],
+        "tags": [
+            "template",
+            "render"
+        ],
+        "input": [
+            "template",
+            "data"
+        ],
+        "input_type": [
+            "string",
+            "object"
+        ],
+        "return": [
+            "rendered"
+        ],
+        "return_type": [
+            "string"
+        ],
+        "timer_score": 85,
+        "memory_score": 90,
+        "code": [
+            "function render(template,data){ return template.replace(/\\{\\{(\\w+)\\}\\}/g,(_,k)=>data[k]??''); }"
+        ]
+    },
+    {
+        "name-zh": "Virtual DOM diff",
+        "name-en": "Virtual DOM Diff",
+        "description-zh": "简化 Virtual DOM diff 算法",
+        "description-en": "Simple virtual DOM diff algorithm",
+        "dependencies": [],
+        "use_to": [
+            "virtual dom",
+            "frontend"
+        ],
+        "tags": [
+            "virtual dom",
+            "frontend"
+        ],
+        "input": [
+            "oldTree",
+            "newTree"
+        ],
+        "input_type": [
+            "object",
+            "object"
+        ],
+        "return": [
+            "patches"
+        ],
+        "return_type": [
+            "Array"
+        ],
+        "timer_score": 80,
+        "memory_score": 80,
+        "code": [
+            "function diff(oldTree,newTree){ const patches=[]; function walk(oldNode,newNode,path){ if(!oldNode){ patches.push({op:'ADD',path,node:newNode}); return; } if(!newNode){ patches.push({op:'REMOVE',path}); return; } if(oldNode.tag!==newNode.tag||oldNode.text!==newNode.text){ patches.push({op:'REPLACE',path,node:newNode}); return; } if(oldNode.children&&newNode.children){ oldNode.children.forEach((child,i)=>walk(child,newNode.children[i],path.concat(i))); } } walk(oldTree,newTree,[]); return patches; }"
+        ]
+    },
+    {
+        "name-zh": "发布订阅（Typed）",
+        "name-en": "Typed Event Emitter",
+        "description-zh": "带类型提示的事件发布订阅系统",
+        "description-en": "Typed event emitter",
+        "dependencies": [],
+        "use_to": [
+            "event",
+            "pubsub"
+        ],
+        "tags": [
+            "event",
+            "typed"
+        ],
+        "input": [
+            "eventName",
+            "callback"
+        ],
+        "input_type": [
+            "string",
+            "Function"
+        ],
+        "return": [
+            "off"
+        ],
+        "return_type": [
+            "Function"
+        ],
+        "timer_score": 90,
+        "memory_score": 90,
+        "code": [
+            "class TypedEmitter{ constructor(){ this.events={}; } on(event,callback){ if(!this.events[event])this.events[event]=[]; this.events[event].push(callback); return()=>this.off(event,callback); } off(event,callback){ if(!this.events[event])return; this.events[event]=this.events[event].filter(cb=>cb!==callback); } emit(event,...args){ if(!this.events[event])return; this.events[event].forEach(cb=>cb(...args)); } }"
+        ]
+    },
+    {
+        "name-zh": "async/await并发池",
+        "name-en": "Async Pool",
+        "description-zh": "限制并发数量的异步任务池",
+        "description-en": "Async pool with concurrency limit",
+        "dependencies": [
+            "async"
+        ],
+        "use_to": [
+            "async",
+            "concurrency"
+        ],
+        "tags": [
+            "async",
+            "pool"
+        ],
+        "input": [
+            "tasks",
+            "concurrency"
+        ],
+        "input_type": [
+            "Array<Function>",
+            "number"
+        ],
+        "return": [
+            "results"
+        ],
+        "return_type": [
+            "Promise"
+        ],
+        "timer_score": 75,
+        "memory_score": 80,
+        "code": [
+            "async function asyncPool(tasks,concurrency){ const results=[]; const executing=new Set(); for(const task of tasks){ const p=Promise.resolve().then(()=>task()); executing.add(p); const clean=()=>executing.delete(p); p.then(clean).catch(clean); if(executing.size>=concurrency){ await Promise.race(executing); } } await Promise.all(executing); return results; }"
+        ]
+    },
+    {
+        "name-zh": "信号量",
+        "name-en": "Semaphore",
+        "description-zh": "简单信号量实现（Promise 风格）",
+        "description-en": "Simple semaphore in Promise style",
+        "dependencies": [],
+        "use_to": [
+            "concurrency",
+            "semaphore"
+        ],
+        "tags": [
+            "concurrent",
+            "semaphore"
+        ],
+        "input": [
+            "count"
+        ],
+        "input_type": [
+            "number"
+        ],
+        "return": [
+            "sem"
+        ],
+        "return_type": [
+            "Semaphore"
+        ],
+        "timer_score": 85,
+        "memory_score": 85,
+        "code": [
+            "class Semaphore{ constructor(count){ this.count=count; this.waiters=[]; } async acquire(){ if(this.count>0){ this.count--; return; } return new Promise(res=>this.waiters.push(res)); } release(){ if(this.waiters.length>0){ const next=this.waiters.shift(); next(); }else{ this.count++; } } }"
+        ]
     }
 ]
