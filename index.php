@@ -223,18 +223,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                     <div class="support-content">
                         <div class="ad-unit">
                             <div>
-                                <script>
-(function(nwbc){
-var d = document,
-    s = d.createElement('script'),
-    l = d.scripts[d.scripts.length - 1];
-s.settings = nwbc || {};
-s.src = "\/\/shameful-farm.com\/bnXDV-s\/d.GalW0iY\/W\/cQ\/Ceemd9wupZCUVlAkZPUTVcTw\/OHT\/QpzGNKzAc-tMNuz\/Aj5DN_DhMl4\/MYQz";
-s.async = true;
-s.referrerPolicy = 'no-referrer-when-downgrade';
-l.parentNode.insertBefore(s, l);
-})({})
-</script>
+
                             </div>
                         </div>
                     </div>
