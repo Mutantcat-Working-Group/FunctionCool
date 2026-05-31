@@ -45,6 +45,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
     <meta name="twitter:title" content="函数库 FunctionCool - 多语言函数速查">
     <meta name="twitter:description" content="收录多语言常用函数与代码示例，支持中英文切换与搜索。">
     <meta name="twitter:image" content="https://www.functioncool.xyz/assets/logo.png">
+    <meta name="referrer" content="no-referrer-when-downgrade" />
 
     <!-- Favicon Start -->
     <link rel="icon" type="image/png" href="assets/logo.png">
@@ -66,7 +67,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
       }
     }</script>
 
-    <link rel="stylesheet" href="assets/style.css?v=20250917">
+    <link rel="stylesheet" href="assets/style.css?v=20260531">
     <meta name="google-site-verification" content="gDHkEX8quz2rZV-IhC2VDjSt8Lzva5bln1N3rkkBJPA" />
     <meta name="msvalidate.01" content="09EFDE13A2FAD0169413AF8FAFCC323A" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3718441900987965" crossorigin="anonymous"></script>
@@ -218,12 +219,23 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
         <section class="info-section" aria-label="站点说明与支持">
             <div class="info-grid">
                 <div class="info-card support-card">
-                    <h3>支持我们</h3>
+                    <h3>赞助商内容</h3>
                     <div class="support-content">
-                        <p>如果您觉得本站对您有所帮助，可以扫描二维码支持我们继续运营</p>
-                        <div class="support-qr">
-                            <img src="assets/zsm.png" alt="支持二维码">
-                            <div class="qr-caption">支持二维码</div>
+                        <div class="ad-unit">
+                            <div>
+                                <script>
+(function(nwbc){
+var d = document,
+    s = d.createElement('script'),
+    l = d.scripts[d.scripts.length - 1];
+s.settings = nwbc || {};
+s.src = "\/\/shameful-farm.com\/bnXDV-s\/d.GalW0iY\/W\/cQ\/Ceemd9wupZCUVlAkZPUTVcTw\/OHT\/QpzGNKzAc-tMNuz\/Aj5DN_DhMl4\/MYQz";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})
+</script>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -253,6 +265,6 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
         </div>
     </footer>
 
-    <script src="assets/i18n.js?v=20260518"></script>
+    <script src="assets/i18n.js?v=20260531"></script>
 </body>
 </html>

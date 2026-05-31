@@ -854,10 +854,24 @@ footer p {
 }
 
 .support-content {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+    text-align: center;
+}
+
+.ad-unit {
+    width: 300px;
+    height: 250px;
+    margin: 0 auto;
+    display: block;
+}
+
+.ad-unit > div,
+.ad-unit ins,
+.ad-unit iframe {
+    width: 300px !important;
+    max-width: 300px !important;
+    height: 250px !important;
+    margin: 0 auto !important;
+    display: block !important;
 }
 
 .support-qr {
