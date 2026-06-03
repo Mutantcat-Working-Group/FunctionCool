@@ -857,6 +857,22 @@ footer p {
     text-align: center;
 }
 
+.support-content .support-text {
+    text-align: left !important;
+    color: #4b5563;
+    line-height: 1.7;
+    font-size: 0.98rem;
+    margin: 0 0 1rem 0;
+}
+
+.support-qr-image {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+
 .ad-unit {
     width: 300px;
     height: 250px;

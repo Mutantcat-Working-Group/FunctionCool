@@ -67,7 +67,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
       }
     }</script>
 
-    <link rel="stylesheet" href="assets/style.css?v=20260531">
+    <link rel="stylesheet" href="assets/style.css?v=20260603">
     <meta name="google-site-verification" content="gDHkEX8quz2rZV-IhC2VDjSt8Lzva5bln1N3rkkBJPA" />
     <meta name="msvalidate.01" content="09EFDE13A2FAD0169413AF8FAFCC323A" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3718441900987965" crossorigin="anonymous"></script>
@@ -219,13 +219,10 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
         <section class="info-section" aria-label="站点说明与支持">
             <div class="info-grid">
                 <div class="info-card support-card">
-                    <h3>赞助商内容</h3>
+                    <h3>支持我们</h3>
                     <div class="support-content">
-                        <div class="ad-unit">
-                            <div>
-
-                            </div>
-                        </div>
+                        <p class="support-text">您可以使用 微信、支付宝 扫描下方的二维码进行支持。您的每一份赞助都将用于本站服务器的续费、域名维护以及日常运营开支。</p>
+                        <img class="support-qr-image" src="assets/all_zsm.png" alt="微信、支付宝赞助二维码">
                     </div>
                 </div>
 
