@@ -36,8 +36,8 @@ http_response_code(404);
                 <div class="error-card">
                     <div class="error-icon">
                         <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10" stroke="#667eea" stroke-width="1.5"/>
-                            <path d="M12 8v4m0 4h.01" stroke="#667eea" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="12" cy="12" r="10" stroke="#3A8DD0" stroke-width="1.5"/>
+                            <path d="M12 8v4m0 4h.01" stroke="#3A8DD0" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
                     </div>
                     <h1 class="error-title" data-i18n="error-404-title">页面未找到</h1>
@@ -120,7 +120,7 @@ http_response_code(404);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #73B9E6 0%, #2E6DA4 100%);
             color: white;
             padding: 0.8rem 2rem;
             border-radius: 50px;
@@ -132,13 +132,13 @@ http_response_code(404);
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 25px rgba(46, 109, 164, 0.3);
         }
 
         .btn-secondary {
             background: transparent;
-            color: #667eea;
-            border: 2px solid #667eea;
+            color: #3A8DD0;
+            border: 2px solid #3A8DD0;
             padding: 0.8rem 2rem;
             border-radius: 50px;
             text-decoration: none;
@@ -148,7 +148,7 @@ http_response_code(404);
         }
 
         .btn-secondary:hover {
-            background: #667eea;
+            background: #3A8DD0;
             color: white;
             transform: translateY(-2px);
         }
@@ -158,7 +158,7 @@ http_response_code(404);
             background: #f8f9fa;
             border-radius: 12px;
             padding: 1.5rem;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #3A8DD0;
         }
 
         .error-suggestions h3 {
@@ -181,14 +181,14 @@ http_response_code(404);
 
         .error-suggestions li::before {
             content: "•";
-            color: #667eea;
+            color: #3A8DD0;
             font-weight: bold;
             position: absolute;
             left: 0;
         }
 
         .error-suggestions a {
-            color: #667eea;
+            color: #3A8DD0;
             text-decoration: none;
         }
 

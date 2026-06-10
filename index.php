@@ -94,7 +94,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
 
     <main>
         <div class="container">
-            <div class="search-section">
+            <div class="search-section reveal reveal-1">
                 <h2 id="main-title">搜索函数库</h2>
                 <p id="main-description">快速查找您需要的编程函数和代码示例</p>
                 
@@ -170,19 +170,19 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
 
             <div class="features-section">
                 <div class="features-grid">
-                    <div class="feature-card">
+                    <div class="feature-card reveal reveal-1">
                         <h3 id="feature-2-title">快速搜索</h3>
                         <p id="feature-2-desc">通过函数名、描述、标签快速定位所需函数</p>
                     </div>
-                    <div class="feature-card">
+                    <div class="feature-card reveal reveal-2">
                         <h3 id="feature-3-title">代码示例</h3>
                         <p id="feature-3-desc">每个函数都提供完整的代码示例和使用说明</p>
                     </div>
-                    <div class="feature-card">
+                    <div class="feature-card reveal reveal-3">
                         <h3 id="feature-4-title">性能评分</h3>
                         <p id="feature-4-desc">提供时间复杂度和空间复杂度评分参考</p>
                     </div>
-                    <a class="feature-card" href="/skillapi" style="text-decoration:none;color:inherit;display:block;">
+                    <a class="feature-card reveal reveal-4" href="/skillapi" style="text-decoration:none;color:inherit;display:block;">
                         <h3 id="feature-skill-title">AI Skill 接入</h3>
                         <p id="feature-skill-desc">让 AI 先查再写：把昂贵的输出 token 折成便宜的输入 token，并命中 Prompt 缓存</p>
                     </a>
@@ -196,7 +196,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
         <section class="latest-posts" aria-label="最新文章">
             <h2>最新文章</h2>
             <div class="latest-list">
-                <a class="post-item" href="/notes/003">
+                <a class="post-item reveal reveal-1" href="/notes/003">
                     <div class="post-meta">
                         <span class="post-date">2026-05-18</span>
                         <span class="post-tag">效率</span>
@@ -204,7 +204,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                     <h3 class="post-title">函数库加速开发的秘密</h3>
                     <p class="post-desc">探索函数库如何通过代码复用、减少重复造轮子、降低认知负荷来加速软件开发，让开发者聚焦业务逻辑而非基础实现。</p>
                 </a>
-                <a class="post-item" href="/notes/002">
+                <a class="post-item reveal reveal-2" href="/notes/002">
                     <div class="post-meta">
                         <span class="post-date">2025-09-29</span>
                         <span class="post-tag">教育</span>
@@ -212,7 +212,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                     <h3 class="post-title">给大学编程课的有力帮助</h3>
                     <p class="post-desc">函数库为大学生提供编程学习资源，快速查询常用函数，帮助理解算法和数据结构，提高编程效率。</p>
                 </a>
-                <a class="post-item" href="/notes/001">
+                <a class="post-item reveal reveal-3" href="/notes/001">
                     <div class="post-meta">
                         <span class="post-date">2025-09-17</span>
                         <span class="post-tag">公告</span>

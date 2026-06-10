@@ -10,7 +10,7 @@
 	<link rel="icon" type="image/png" href="../assets/logo.png">
 	<link rel="apple-touch-icon" href="../assets/logo.png">
 	<style>
-		.article { background:#fff;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,0.08);padding:1.4rem 1.4rem;border:1px solid rgba(102,126,234,0.12);margin-top:20px;}
+		.article { background:#fff;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,0.08);padding:1.4rem 1.4rem;border:1px solid rgba(46,109,164,0.12);margin-top:20px;}
 		.article h1 {font-size:1.8rem;color:#1f2937;margin-bottom:.6rem}
 		.article .meta {color:#64748b;font-size:.92rem;margin-bottom:1rem}
 		.article p {color:#4b5563;line-height:1.8;font-size:1.02rem;margin:0.6rem 0}
@@ -18,7 +18,7 @@
 		.article pre {background:#0f172a;color:#e2e8f0;border-radius:10px;padding:1rem;overflow:auto;border:1px solid #334155}
 		.article ul {margin:0.4rem 0 0.8rem 1.4rem;color:#4b5563;line-height:1.75}
 		.article li {margin-bottom:0.4rem}
-		.back-link {display:inline-block;margin-top:0rem;color:#4f46e5;text-decoration:none}
+		.back-link {display:inline-block;margin-top:0rem;color:#1B4E7A;text-decoration:none}
 		.back-link:hover {text-decoration:underline}
 	</style>
 	<meta name="robots" content="index,follow">
@@ -49,14 +49,14 @@
 				<div class="meta">发布日期：2025-09-17 · 分类：公告 · 标签：Skill / API / AI 集成</div>
 				<p>我们上线了面向 AI 智能体、IDE 插件与自动化工作流的 <a href="/skillapi">Skill 接口</a>。它不只是又一个"按关键词检索函数"的 API——它是为压缩大模型 token 成本而设计的工作流入口。</p>
 
-				<h2 style="margin-top:1.2rem;color:#4f46e5">为什么 AI 需要这个 Skill</h2>
+				<h2 style="margin-top:1.2rem;color:#1B4E7A">为什么 AI 需要这个 Skill</h2>
 				<p>让模型从零"现编"一个函数是昂贵且不可靠的：每一个 token 都按"输出"计费，且容易出现幻觉实现。Skill 接口换一种工作姿态：</p>
 				<ul>
 					<li><strong>把昂贵输出折为便宜输入</strong>：AI 先调用本 Skill 取回方法索引（签名 / 说明 / 标签 / 复杂度评分），再据此拼装最终代码。模型不必把整段函数体"打"出来——把贵的输出 token 折算成便宜得多的输入 token。</li>
 					<li><strong>更高的 Prompt 缓存命中</strong>：函数库内容长期稳定，作为 Skill 上下文最契合各家厂商的提示词缓存特性。同一类查询重复出现时，实际计费 token 趋近于零。</li>
 				</ul>
 
-				<h2 style="margin-top:1.2rem;color:#4f46e5">快速开始</h2>
+				<h2 style="margin-top:1.2rem;color:#1B4E7A">快速开始</h2>
 				<pre><code>GET https://www.functioncool.xyz/skillapi?token={your_token}&q={keyword}&lang={language}</code></pre>
 				<p>接口采用 <strong>Token</strong> 访问：支持 30 分钟周期 Token 与永久 Token。可以在 <a href="/skillapi">/skillapi</a> 文档页一键获取 Token 并查看快速调用示例。</p>
 				<p>响应字段：<code>results</code>（函数数组，含名称 / 签名 / 描述 / 标签 / 时间空间评分 / 代码示例）、<code>query</code>、<code>lang</code>。支持的 <code>lang</code> 包括 C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VERILOG 或 <code>all</code>。</p>

@@ -10,17 +10,17 @@
 	<link rel="icon" type="image/png" href="../assets/logo.png">
 	<link rel="apple-touch-icon" href="../assets/logo.png">
 	<style>
-		.article { background:#fff;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,0.08);padding:1.4rem 1.4rem;border:1px solid rgba(102,126,234,0.12);margin-top:20px;}
+		.article { background:#fff;border-radius:14px;box-shadow:0 6px 18px rgba(0,0,0,0.08);padding:1.4rem 1.4rem;border:1px solid rgba(46,109,164,0.12);margin-top:20px;}
 		.article h1 {font-size:1.8rem;color:#1f2937;margin-bottom:.6rem}
 		.article .meta {color:#64748b;font-size:.92rem;margin-bottom:1rem}
 		.article p {color:#4b5563;line-height:1.8;font-size:1.02rem;margin:0.6rem 0}
 		.article code, .article pre {font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
 		.article pre {background:#0f172a;color:#e2e8f0;border-radius:10px;padding:1rem;overflow:auto;border:1px solid #334155}
-		.back-link {display:inline-block;margin-top:0rem;color:#4f46e5;text-decoration:none}
+		.back-link {display:inline-block;margin-top:0rem;color:#1B4E7A;text-decoration:none}
 		.back-link:hover {text-decoration:underline}
 		.article ul {margin-top:0.5rem;margin-bottom:1rem}
 		.article li {margin-bottom:0.5rem;line-height:1.6}
-		.highlight-box {background:#f0f4ff;border-left:4px solid #4f46e5;padding:1rem;margin:1rem 0;border-radius:4px}
+		.highlight-box {background:#EAF4FC;border-left:4px solid #1B4E7A;padding:1rem;margin:1rem 0;border-radius:4px}
 	</style>
 	<meta name="robots" content="index,follow">
 	<meta property="og:title" content="给大学编程课的有力帮助 - 函数库">
@@ -51,7 +51,7 @@
 				
 				<p>大学编程课程往往充满挑战，尤其是对初学者而言。无论是数据结构、算法设计还是语言基础，学生们经常需要查找各种函数的用法和实现方式。函数库（FunctionCool）正是为此而生，为大学生提供一站式的函数查询和学习平台。</p>
 
-				<h2 style="margin-top:1rem;color:#4f46e5">为什么函数库对大学编程课有帮助？</h2>
+				<h2 style="margin-top:1rem;color:#1B4E7A">为什么函数库对大学编程课有帮助？</h2>
 				
 				<div class="highlight-box">
 					<strong>快速查询常用函数</strong>：告别漫无目的的网络搜索，在这里可以轻松找到多种编程语言的核心函数。
@@ -77,7 +77,7 @@
 					<li>提供实际应用场景，将理论知识与实践结合</li>
 				</ul>
 				
-				<h2 style="margin-top:1rem;color:#4f46e5">如何高效使用函数库进行学习</h2>
+				<h2 style="margin-top:1rem;color:#1B4E7A">如何高效使用函数库进行学习</h2>
 				
 				<p><strong>1. 课前预习：</strong>在学习新概念前，可以先在函数库中查看相关函数的实现和用法，提前熟悉。</p>
 				
@@ -91,11 +91,11 @@
 					<p><strong>提示：</strong>函数库的目标是辅助学习，而非替代学习。最有效的学习方式是理解函数的工作原理，然后尝试自己实现，最后再参考函数库中的标准实现进行比对和完善。</p>
 				</div>
 				
-				<h2 style="margin-top:1rem;color:#4f46e5">实际应用案例</h2>
+				<h2 style="margin-top:1rem;color:#1B4E7A">实际应用案例</h2>
 				
 				<p>小明是计算机科学专业大二学生，正在学习数据结构课程。教授布置了一个任务：实现一个二叉搜索树并完成插入、删除和遍历操作。小明对概念理解模糊，于是他在函数库中搜索"二叉搜索树"，找到了C++、Java和Python三种语言的实现。通过比较这些实现，他不仅理解了算法的核心逻辑，还学会了不同语言的特性应用。最终，他成功独立完成了作业，并对二叉搜索树有了深入理解。</p>
 				
-				<h2 style="margin-top:1rem;color:#4f46e5">持续更新与贡献</h2>
+				<h2 style="margin-top:1rem;color:#1B4E7A">持续更新与贡献</h2>
 				
 				<p>函数库将持续更新，关注教学中常用的算法和数据结构。我们也欢迎学生和教师贡献有价值的函数实现和使用技巧，共同建设这个学习资源库。</p>
 				

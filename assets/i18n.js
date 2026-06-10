@@ -66,7 +66,10 @@ const i18nTexts = {
         'skill-title': 'Skill 函数库接口',
         'skill-subtitle': '给 AI 与自动化工作流的函数库 Skill — 把输出折成输入、命中 Prompt 缓存',
         'skill-description-title': 'Skill 说明',
-        'skill-description-content': '本 Skill 接口面向 AI 智能体、IDE 插件与自动化工作流。<br>支持按关键词与语言检索函数库，返回结构化 JSON。<br>需先获取临时 token，免费 token 有效期 30 分钟。',
+        'skill-description-content': '本 Skill 接口面向 AI 智能体、IDE 插件与自动化工作流。<br>支持按关键词与语言检索函数库，返回结构化 JSON。<br>使用永久密钥访问，无需轮换。',
+        'perm-token-label': '永久密钥',
+        'skill-repo-title': 'Skill 安装与源码',
+        'skill-repo-desc': '在以下仓库获取可直接安装的 Skill 与接入示例：',
         'skill-value-tokens-title': '把昂贵输出折成便宜输入',
         'skill-value-tokens-desc': '让 AI 先调用本 Skill 取回方法索引（签名 / 说明 / 标签），再据此拼装最终代码。模型不必把整段函数体「打」出来——把贵的输出 token 折算成便宜得多的输入 token。',
         'skill-value-cache-title': '更高的 Prompt 缓存命中',
@@ -88,10 +91,10 @@ const i18nTexts = {
         'token-result-pattern': '您的 token：${token}（30分钟有效）',
         'quicktip-zh-title': '【中文】',
         'quicktip-zh-request': '请向以下地址发送 GET 请求，先取回方法索引，再据此拼装代码（输出 token → 输入 token，命中 Prompt 缓存）：',
-        'quicktip-zh-params': '参数：token=临时或永久 token；q=搜索关键词；lang=语言代码或 all（可选：C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VERILOG）。响应：JSON，包含 results（函数数组）、query（原查询）、lang（语言）。',
+        'quicktip-zh-params': '参数：token=mutantcat（永久密钥）；q=搜索关键词；lang=语言代码或 all（可选：C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VERILOG）。响应：JSON，包含 results（函数数组）、query（原查询）、lang（语言）。',
         'quicktip-en-title': '[English]',
         'quicktip-en-request': 'Send a GET request below to fetch method indices first, then assemble code from them (output → input tokens, prompt-cache friendly):',
-        'quicktip-en-params': 'Params: token=temporary or permanent token; q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON with results (array of functions), query (string), lang (string).'
+        'quicktip-en-params': 'Params: token=mutantcat (permanent key); q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON with results (array of functions), query (string), lang (string).'
     },
     en: {
         // 网站标题
@@ -159,7 +162,10 @@ const i18nTexts = {
         'skill-title': 'Skill — Function Library API',
         'skill-subtitle': 'A Skill for AI agents and automation workflows — turn output tokens into input tokens, hit the prompt cache',
         'skill-description-title': 'About the Skill',
-        'skill-description-content': 'This Skill API is built for AI agents, IDE plugins, and automation pipelines.<br>Search the function library by keyword and language, get structured JSON back.<br>Get a free temporary token (valid for 30 minutes) below.',
+        'skill-description-content': 'This Skill API is built for AI agents, IDE plugins, and automation pipelines.<br>Search the function library by keyword and language, get structured JSON back.<br>Access with a permanent key — no rotation needed.',
+        'perm-token-label': 'Permanent key',
+        'skill-repo-title': 'Install & Source',
+        'skill-repo-desc': 'Get the installable Skill and integration examples from the repository:',
         'skill-value-tokens-title': 'Trade expensive output for cheap input',
         'skill-value-tokens-desc': 'Have the AI hit this Skill first to fetch method indices (signature / description / tags), then assemble the final code from them. The model never has to emit the full function body — expensive output tokens become much cheaper input tokens.',
         'skill-value-cache-title': 'Higher prompt-cache hit rate',
@@ -181,10 +187,10 @@ const i18nTexts = {
         'token-result-pattern': 'Your token: ${token} (valid for 30 minutes)',
         'quicktip-zh-title': '【中文】',
         'quicktip-zh-request': 'Please send a GET request to the following address to fetch method indices first, then assemble code from them (output → input tokens, prompt-cache friendly):',
-        'quicktip-zh-params': 'Parameters: token=temporary or permanent token; q=search keywords; lang=language code or all (options: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON containing results (function array), query (original query), lang (language).',
+        'quicktip-zh-params': 'Parameters: token=mutantcat (permanent key); q=search keywords; lang=language code or all (options: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON containing results (function array), query (original query), lang (language).',
         'quicktip-en-title': '[English]',
         'quicktip-en-request': 'Send a GET request below to fetch method indices first, then assemble code from them (output → input tokens, prompt-cache friendly):',
-        'quicktip-en-params': 'Params: token=temporary or permanent token; q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON with results (array of functions), query (string), lang (string).'
+        'quicktip-en-params': 'Params: token=mutantcat (permanent key); q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON with results (array of functions), query (string), lang (string).'
     }
 };
 
