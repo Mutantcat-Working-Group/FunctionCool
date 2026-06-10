@@ -24,6 +24,8 @@ const i18nTexts = {
         'feature-3-desc': '每个函数都提供完整的代码示例和使用说明',
         'feature-4-title': '性能评分',
         'feature-4-desc': '提供时间复杂度和空间复杂度评分参考',
+        'feature-skill-title': 'AI Skill 接入',
+        'feature-skill-desc': '让 AI 先查再写：把昂贵的输出 token 折成便宜的输入 token，并命中 Prompt 缓存',
         
         // 搜索结果页
         'results-title': '搜索结果',
@@ -53,22 +55,26 @@ const i18nTexts = {
         'suggestions-title': '您可以尝试：',
         'suggestion-1': '检查网址拼写是否正确',
         'suggestion-2': '使用上方的搜索功能查找函数',
-        'suggestion-3': '访问 MCP API 了解接口文档',
+        'suggestion-3': '访问 Skill 接口了解 AI 集成文档',
         'suggestion-4': '如果问题持续，请联系我们：shun_@outlook.com',
         
         // 友情链接
         'friend-links': '友情链接：',
         
-        // MCP 接口页面
+        // Skill 接口页面
         'home-link': '返回首页',
-        'mcp-title': '函数库-MCP可集成接口',
-        'mcp-subtitle': '为自动化工具/平台提供函数库检索服务',
-        'mcp-description-title': '接口说明',
-        'mcp-description-content': '本接口用于自动化平台、MCP 工具等集成查询函数库。<br>支持按关键词和语言检索，返回 JSON 格式结果。<br>需先获取临时 token，免费 token 有效期 30 分钟。',
+        'skill-title': 'Skill 函数库接口',
+        'skill-subtitle': '给 AI 与自动化工作流的函数库 Skill — 把输出折成输入、命中 Prompt 缓存',
+        'skill-description-title': 'Skill 说明',
+        'skill-description-content': '本 Skill 接口面向 AI 智能体、IDE 插件与自动化工作流。<br>支持按关键词与语言检索函数库，返回结构化 JSON。<br>需先获取临时 token，免费 token 有效期 30 分钟。',
+        'skill-value-tokens-title': '把昂贵输出折成便宜输入',
+        'skill-value-tokens-desc': '让 AI 先调用本 Skill 取回方法索引（签名 / 说明 / 标签），再据此拼装最终代码。模型不必把整段函数体「打」出来——把贵的输出 token 折算成便宜得多的输入 token。',
+        'skill-value-cache-title': '更高的 Prompt 缓存命中',
+        'skill-value-cache-desc': '函数库内容长期稳定，作为 Skill 上下文最契合各家厂商的提示词缓存特性。重复或近似查询的实际计费 token 趋近于零。',
         'get-token-btn': '获取免费 token',
         'quicktip-title': '快捷提示词',
         'quicktip-copy-btn': '一键复制',
-        'api-endpoint-desc': '接口地址：<code>/mcpapi?token={你的token}&q={关键词}&lang={编程语言}</code>',
+        'api-endpoint-desc': '接口地址：<code>/skillapi?token={你的token}&q={关键词}&lang={编程语言}</code>',
         'token-requirement-desc': 'token 需通过下方按钮获取，不能直接爬取，谢谢配合',
         'response-fields-desc': '返回字段：results（函数列表[数组]）、query、lang',
         'addr-table-caption': '接口地址表',
@@ -80,13 +86,12 @@ const i18nTexts = {
         'language-header': '语言名称',
         'param-header': 'lang 参数值',
         'token-result-pattern': '您的 token：${token}（30分钟有效）',
-        'get-token-waiting': '请先查看广告页面，返回后将自动生成免费 Token…',
         'quicktip-zh-title': '【中文】',
-        'quicktip-zh-request': '请向以下地址发送 GET 请求，获取基础函数与相关函数：',
-        'quicktip-zh-params': '参数：token=临时或永久 token；q=搜索关键词；lang=语言代码或 all（可选：C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VARILOG）。响应：JSON，包含 results（函数数组）、query（原查询）、lang（语言）。',
+        'quicktip-zh-request': '请向以下地址发送 GET 请求，先取回方法索引，再据此拼装代码（输出 token → 输入 token，命中 Prompt 缓存）：',
+        'quicktip-zh-params': '参数：token=临时或永久 token；q=搜索关键词；lang=语言代码或 all（可选：C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VERILOG）。响应：JSON，包含 results（函数数组）、query（原查询）、lang（语言）。',
         'quicktip-en-title': '[English]',
-        'quicktip-en-request': 'Send a GET request to fetch base and related functions:',
-        'quicktip-en-params': 'Params: token=temporary or permanent token; q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VARILOG). Response: JSON with results (array of functions), query (string), lang (string).'
+        'quicktip-en-request': 'Send a GET request below to fetch method indices first, then assemble code from them (output → input tokens, prompt-cache friendly):',
+        'quicktip-en-params': 'Params: token=temporary or permanent token; q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON with results (array of functions), query (string), lang (string).'
     },
     en: {
         // 网站标题
@@ -112,6 +117,8 @@ const i18nTexts = {
         'feature-3-desc': 'Complete code examples and usage instructions for every function',
         'feature-4-title': 'Performance Scores',
         'feature-4-desc': 'Time and space complexity score references',
+        'feature-skill-title': 'AI Skill Integration',
+        'feature-skill-desc': 'Query first, write later: turn expensive output tokens into cheap input tokens, and hit the prompt cache',
         
         // 搜索结果页
         'results-title': 'Search Results',
@@ -141,22 +148,26 @@ const i18nTexts = {
         'suggestions-title': 'You can try:',
         'suggestion-1': 'Check if the URL spelling is correct',
         'suggestion-2': 'Use the search function above to find functions',
-        'suggestion-3': 'Visit MCP API to learn about interface documentation',
+        'suggestion-3': 'Visit the Skill API for AI integration docs',
         'suggestion-4': 'If the problem persists, please contact us: shun_@outlook.com',
         
         // 友情链接
         'friend-links': 'Friendly Links:',
         
-        // MCP 接口页面
+        // Skill API page
         'home-link': 'Home',
-        'mcp-title': 'MCP Integration API',
-        'mcp-subtitle': 'Function library search service for automation tools/platforms',
-        'mcp-description-title': 'API Documentation',
-        'mcp-description-content': 'This API is for automation platforms, MCP tools and other integrations to query function library.<br>Supports keyword and language search, returns JSON format results.<br>Temporary token required, free token valid for 30 minutes.',
+        'skill-title': 'Skill — Function Library API',
+        'skill-subtitle': 'A Skill for AI agents and automation workflows — turn output tokens into input tokens, hit the prompt cache',
+        'skill-description-title': 'About the Skill',
+        'skill-description-content': 'This Skill API is built for AI agents, IDE plugins, and automation pipelines.<br>Search the function library by keyword and language, get structured JSON back.<br>Get a free temporary token (valid for 30 minutes) below.',
+        'skill-value-tokens-title': 'Trade expensive output for cheap input',
+        'skill-value-tokens-desc': 'Have the AI hit this Skill first to fetch method indices (signature / description / tags), then assemble the final code from them. The model never has to emit the full function body — expensive output tokens become much cheaper input tokens.',
+        'skill-value-cache-title': 'Higher prompt-cache hit rate',
+        'skill-value-cache-desc': 'The function library is long-term stable, an ideal fit for vendor prompt caches when supplied as Skill context. Repeated or semantically-equivalent queries collapse in billed-token cost.',
         'get-token-btn': 'Get Free Token',
         'quicktip-title': 'Quick Prompt',
         'quicktip-copy-btn': 'Copy',
-        'api-endpoint-desc': 'API Endpoint: <code>/mcpapi?token={your_token}&q={keyword}&lang={language}</code>',
+        'api-endpoint-desc': 'API Endpoint: <code>/skillapi?token={your_token}&q={keyword}&lang={language}</code>',
         'token-requirement-desc': 'Token must be obtained via the button below, direct crawling not allowed',
         'response-fields-desc': 'Response fields: results (function array), query, lang',
         'addr-table-caption': 'API Endpoint Addresses',
@@ -168,13 +179,12 @@ const i18nTexts = {
         'language-header': 'Language Name',
         'param-header': 'lang Parameter Value',
         'token-result-pattern': 'Your token: ${token} (valid for 30 minutes)',
-        'get-token-waiting': 'Please view the ad page, token will be generated when you return...',
         'quicktip-zh-title': '【中文】',
-        'quicktip-zh-request': 'Please send a GET request to the following address to get basic and related functions:',
-        'quicktip-zh-params': 'Parameters: token=temporary or permanent token; q=search keywords; lang=language code or all (options: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VARILOG). Response: JSON containing results (function array), query (original query), lang (language).',
+        'quicktip-zh-request': 'Please send a GET request to the following address to fetch method indices first, then assemble code from them (output → input tokens, prompt-cache friendly):',
+        'quicktip-zh-params': 'Parameters: token=temporary or permanent token; q=search keywords; lang=language code or all (options: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON containing results (function array), query (original query), lang (language).',
         'quicktip-en-title': '[English]',
-        'quicktip-en-request': 'Send a GET request to fetch base and related functions:',
-        'quicktip-en-params': 'Params: token=temporary or permanent token; q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VARILOG). Response: JSON with results (array of functions), query (string), lang (string).'
+        'quicktip-en-request': 'Send a GET request below to fetch method indices first, then assemble code from them (output → input tokens, prompt-cache friendly):',
+        'quicktip-en-params': 'Params: token=temporary or permanent token; q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON with results (array of functions), query (string), lang (string).'
     }
 };
 
@@ -297,7 +307,7 @@ function toggleLanguage() {
     const newLang = currentLang === 'zh' ? 'en' : 'zh';
     setLanguage(newLang);
     
-    // MCP 页面特殊处理：更新复制按钮状态
+    // Skill 页面特殊处理：更新复制按钮状态
     if (typeof updateCopyButtonText === 'function') {
         updateCopyButtonText(newLang);
     }

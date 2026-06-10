@@ -6,8 +6,15 @@ if (preg_match('#^/search/?$#', $path)) {
     exit;
 }
 
+if (preg_match('#^/skillapi/?$#', $path)) {
+    require __DIR__ . '/skillapi.php';
+    exit;
+}
+
+// 兼容旧链接：/mcpapi -> /skillapi (301)
 if (preg_match('#^/mcpapi/?$#', $path)) {
-    require __DIR__ . '/mcpapi.php';
+    $qs = isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] !== '' ? '?' . $_SERVER['QUERY_STRING'] : '';
+    header('Location: /skillapi' . $qs, true, 301);
     exit;
 }
 
@@ -70,7 +77,6 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
     <link rel="stylesheet" href="assets/style.css?v=20260603">
     <meta name="google-site-verification" content="gDHkEX8quz2rZV-IhC2VDjSt8Lzva5bln1N3rkkBJPA" />
     <meta name="msvalidate.01" content="09EFDE13A2FAD0169413AF8FAFCC323A" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3718441900987965" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -80,7 +86,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                 <p id="site-subtitle">全世界开发者的函数库</p>
             </div>
             <div class="language-switcher">
-                <a href="/mcpapi" class="mcp-link" aria-label="MCP API">MCP</a>
+                <a href="/skillapi" class="skill-link" aria-label="Skill API">Skill</a>
                 <button id="lang-btn" onclick="toggleLanguage()">English</button>
             </div>
         </div>
@@ -152,7 +158,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                                 <span>Ruby</span>
                             </label>
                             <label class="lang-option">
-                                <input type="radio" name="lang" value="VARILOG">
+                                <input type="radio" name="lang" value="VERILOG">
                                 <span>Verilog</span>
                             </label>
                         </div>
@@ -176,6 +182,10 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                         <h3 id="feature-4-title">性能评分</h3>
                         <p id="feature-4-desc">提供时间复杂度和空间复杂度评分参考</p>
                     </div>
+                    <a class="feature-card" href="/skillapi" style="text-decoration:none;color:inherit;display:block;">
+                        <h3 id="feature-skill-title">AI Skill 接入</h3>
+                        <p id="feature-skill-desc">让 AI 先查再写：把昂贵的输出 token 折成便宜的输入 token，并命中 Prompt 缓存</p>
+                    </a>
                 </div>
             </div>
         </div>
@@ -207,8 +217,8 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                         <span class="post-date">2025-09-17</span>
                         <span class="post-tag">公告</span>
                     </div>
-                    <h3 class="post-title">函数库助力AI - MCP接口发布</h3>
-                    <p class="post-desc">我们上线了面向自动化平台/MCP工具的函数库检索接口，支持关键词+语言检索与 Token 访问，欢迎接入。</p>
+                    <h3 class="post-title">函数库助力AI - Skill 接口发布</h3>
+                    <p class="post-desc">我们上线了面向 AI 智能体的函数库 Skill 接口：让模型先查询方法索引再拼装代码，把贵的输出 token 折成便宜的输入 token，并最大化提示词缓存命中。</p>
                 </a>
             </div>
         </section>

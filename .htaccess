@@ -20,8 +20,11 @@ RewriteRule ^sitemap\.xml$ sitemap.php [L]
 # 4. 友好 URL: /search  -> 内部重写到 search.php (支持 /search 和 /search/)
 RewriteRule ^search/?$ search.php [L,QSA]
 
-# 6. MCP API: /mcpapi -> mcpapi.php (支持参数)
-RewriteRule ^mcpapi/?$ mcpapi.php [L,QSA]
+# 6. Skill API: /skillapi -> skillapi.php (支持参数)
+RewriteRule ^skillapi/?$ skillapi.php [L,QSA]
+
+# 6a. 兼容旧链接：/mcpapi -> /skillapi (301)
+RewriteRule ^mcpapi/?$ /skillapi [L,R=301,QSA]
 
 # 6.1 文章笔记: /notes/001 -> notes/note001.php
 RewriteRule ^notes/([0-9]{3,})/?$ notes/note$1.php [L,QSA]

@@ -37,7 +37,7 @@
 				<p>全世界开发者的函数库</p>
 			</div>
 			<div class="language-switcher">
-				<a href="/mcpapi" class="mcp-link" aria-label="MCP API">MCP</a>
+				<a href="/skillapi" class="skill-link" aria-label="Skill API">Skill</a>
 				<a href="/" class="back-link" style="color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.3);padding:.45rem .9rem;border-radius:20px;background:rgba(255,255,255,.18)">返回首页</a>
 			</div>
 		</div>

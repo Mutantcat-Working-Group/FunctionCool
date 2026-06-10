@@ -24,7 +24,7 @@ http_response_code(404);
                 <p>全世界开发者的函数库</p>
             </div>
             <div class="language-switcher">
-                <a href="/mcpapi" class="mcp-link" aria-label="MCP API">MCP</a>
+                <a href="/skillapi" class="skill-link" aria-label="Skill API">Skill</a>
                 <button id="lang-btn" onclick="toggleLanguage()">English</button>
             </div>
         </div>
@@ -53,7 +53,7 @@ http_response_code(404);
                         <ul>
                             <li data-i18n="suggestion-1">检查网址拼写是否正确</li>
                             <li data-i18n="suggestion-2">使用上方的搜索功能查找函数</li>
-                            <li data-i18n="suggestion-3">访问 <a href="/mcpapi">MCP API</a> 了解接口文档</li>
+                            <li data-i18n="suggestion-3">访问 <a href="/skillapi">Skill 接口</a> 了解 AI 集成文档</li>
                             <li data-i18n="suggestion-4">如果问题持续，请联系我们：shun_@outlook.com</li>
                         </ul>
                     </div>

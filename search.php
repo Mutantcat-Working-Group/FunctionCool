@@ -1,7 +1,16 @@
 <?php
+require_once __DIR__ . '/lib/ratelimit.php';
+rate_limit_check();
+
+// 语言别名：保留 VARILOG 兼容旧链接，规范名为 VERILOG
+$LANG_ALIASES = ['VARILOG' => 'VERILOG'];
+
 // 获取搜索参数
 $query = isset($_GET['q']) ? trim($_GET['q']) : '';
 $language = isset($_GET['lang']) ? $_GET['lang'] : 'all';
+if (isset($LANG_ALIASES[strtoupper($language)])) {
+    $language = $LANG_ALIASES[strtoupper($language)];
+}
 
 // 用于 SEO 动态标题与描述
 $baseTitle = '搜索结果 - FunctionCool';
@@ -17,7 +26,7 @@ $humanLangMap = [
     'MATLAB' => 'MATLAB',
     'PHP' => 'PHP',
     'RUBY' => 'Ruby',
-    'VARILOG' => 'Verilog'
+    'VERILOG' => 'Verilog'
 ];
 $languageLabel = $humanLangMap[$language] ?? '全部语言';
 $seoTitle = $baseTitle;
@@ -35,7 +44,7 @@ function searchFunctions($query, $language) {
     if ($query === null || trim($query) === '') {
         return [];
     }
-    $languages = ['C', 'CPP', 'GO', 'PYTHON', 'JAVA', 'JAVASCRIPT', 'RUST', 'MATLAB', 'PHP', 'RUBY', 'VARILOG'];
+    $languages = ['C', 'CPP', 'GO', 'PYTHON', 'JAVA', 'JAVASCRIPT', 'RUST', 'MATLAB', 'PHP', 'RUBY', 'VERILOG'];
     
     // 如果指定了特定语言，只搜索该语言
     if ($language !== 'all' && in_array($language, $languages)) {
@@ -176,7 +185,7 @@ if ($query !== '') {
                             <option value="MATLAB" <?php echo $language === 'MATLAB' ? 'selected' : ''; ?>>MATLAB</option>
                             <option value="PHP" <?php echo $language === 'PHP' ? 'selected' : ''; ?>>PHP</option>
                             <option value="RUBY" <?php echo $language === 'RUBY' ? 'selected' : ''; ?>>Ruby</option>
-                            <option value="VARILOG" <?php echo $language === 'VARILOG' ? 'selected' : ''; ?>>Verilog</option>
+                            <option value="VERILOG" <?php echo $language === 'VERILOG' ? 'selected' : ''; ?>>Verilog</option>
                         </select>
                     </div>
                     

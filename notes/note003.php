@@ -34,7 +34,7 @@
 				<p>全世界开发者的函数库</p>
 			</div>
 			<div class="language-switcher">
-				<a href="/mcpapi" class="mcp-link" aria-label="MCP API">MCP</a>
+				<a href="/skillapi" class="skill-link" aria-label="Skill API">Skill</a>
 				<a href="/" class="back-link" style="color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.3);padding:.45rem .9rem;border-radius:20px;background:rgba(255,255,255,.18)">返回首页</a>
 			</div>
 		</div>
@@ -62,12 +62,17 @@
 				<h2 style="margin-top:1.5rem;color:#4f46e5">4. 性能参考一目了然</h2>
 				<p>函数库中的每个条目都附带时间复杂度和空间复杂度评分。同样是排序，你可以快速对比不同实现的性能特征，选择最适合当前场景的方案，而不需要自己先实现再 benchmark。</p>
 
-				<h2 style="margin-top:1.5rem;color:#4f46e5">5. AI 时代的函数库：MCP 集成</h2>
-				<p>FunctionCool 已上线 <a href="/mcpapi">MCP API 接口</a>，支持自动化工具和 AI 智能体直接检索函数。你可以在 IDE 插件、ChatBot 或 CI/CD 流水线中集成函数查询能力，让函数复用进入"零延迟"时代。输入关键词和语言，结构化 JSON 结果即时返回，比手动搜索快一个数量级。</p>
+				<h2 style="margin-top:1.5rem;color:#4f46e5">5. AI 时代的函数库：Skill 集成</h2>
+				<p>FunctionCool 已上线 <a href="/skillapi">Skill 接口</a>，支持 AI 智能体、IDE 插件与自动化工具链直接检索函数。它在两个方向上压缩 token 成本：</p>
+				<ul style="margin:0.4rem 0 0.6rem 1.4rem;color:#4b5563;line-height:1.7;">
+					<li><strong>把昂贵输出折成便宜输入</strong>：让 AI 先调用 Skill 取回方法索引（签名 / 说明 / 标签），再据此拼装代码，模型不必把整段函数体「打」出来。</li>
+					<li><strong>更高的 Prompt 缓存命中</strong>：函数库内容长期稳定，作为 Skill 上下文最契合各家厂商的提示词缓存特性，重复查询的实际计费 token 趋近于零。</li>
+				</ul>
+				<p>结构化 JSON 即时返回，比手动搜索快一个数量级，也比让模型"现编"实现可靠得多。</p>
 
 				<h2 style="margin-top:1.5rem;color:#4f46e5">总结</h2>
 				<p>函数库不是银弹，但它解决了一个被长期忽视的问题：<strong>编程知识的结构化与可复用性</strong>。无论是新手还是资深开发者，将常见函数交给库管理，把精力留给真正需要创造力的部分，这才是高效开发的正确姿势。</p>
-				<p>欢迎访问 <a href="/">FunctionCool 首页</a> 开始检索，或通过 <a href="/mcpapi">MCP 接口</a> 集成到您的开发工具链中。</p>
+				<p>欢迎访问 <a href="/">FunctionCool 首页</a> 开始检索，或通过 <a href="/skillapi">Skill 接口</a> 集成到您的 AI 工作流与开发工具链中。</p>
 			</article>
 		</div>
 	</main>

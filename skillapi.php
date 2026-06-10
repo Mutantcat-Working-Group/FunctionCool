@@ -1,52 +1,59 @@
 <?php
-// MCP 可集成接口
-// 1. 无参数时显示说明界面（含广告与获取 token 按钮）
+// Skill 可集成接口
+// 1. 无参数时显示说明界面（含获取 token 按钮）
 // 2. 带 token/关键词/语言时返回 JSON 查询结果
 // 3. token 只能通过按钮获取，半小时有效
 
+require_once __DIR__ . '/lib/ratelimit.php';
+rate_limit_check();
 
 header('X-Robots-Tag: noindex, nofollow', true); // 防爬虫
 
-// MCP token 统一时段逻辑（全站共享，每 30 分钟刷新一次）
-define('MCP_TOKEN_FILE', __DIR__ . '/data/mcp_token.json');
-define('MCP_TOKEN_PERIOD', 1800); // 30分钟
+// Skill token 统一时段逻辑（全站共享，每 30 分钟刷新一次）
+define('SKILL_TOKEN_FILE', __DIR__ . '/data/skill_token.json');
+define('SKILL_TOKEN_PERIOD', 1800); // 30分钟
+// 语言别名：保留 VARILOG 兼容旧调用，规范名为 VERILOG
+define('LANG_ALIASES', ['VARILOG' => 'VERILOG']);
 
 function get_current_period() {
 	// 返回当天 0 点起第几个 30 分钟段
 	$now = time();
 	$day_start = strtotime(date('Y-m-d 00:00:00', $now));
-	return intval(($now - $day_start) / MCP_TOKEN_PERIOD);
+	return intval(($now - $day_start) / SKILL_TOKEN_PERIOD);
 }
 
 function get_token_data() {
-	if (!file_exists(MCP_TOKEN_FILE)) return ['token'=>'','ts'=>0,'period'=>-1];
-	$data = json_decode(file_get_contents(MCP_TOKEN_FILE), true);
+	if (!file_exists(SKILL_TOKEN_FILE)) return ['token'=>'','ts'=>0,'period'=>-1];
+	$data = json_decode(file_get_contents(SKILL_TOKEN_FILE), true);
 	if (!$data || !isset($data['token'],$data['ts'],$data['period'])) return ['token'=>'','ts'=>0,'period'=>-1];
 	return $data;
 }
 
 function save_token_data($token, $ts, $period) {
-	file_put_contents(MCP_TOKEN_FILE, json_encode(['token'=>$token,'ts'=>$ts,'period'=>$period]));
+	// LOCK_EX 避免跨 30 分钟边界的并发写入互相覆盖 / 写出半截 JSON
+	file_put_contents(SKILL_TOKEN_FILE, json_encode(['token'=>$token,'ts'=>$ts,'period'=>$period]), LOCK_EX);
 }
 
 function get_or_refresh_token() {
 	$period = get_current_period();
 	$data = get_token_data();
 	if ($data['period'] === $period && $data['token'] && $data['ts'] > 0) {
-		return ['token'=>$data['token'],'expire'=>MCP_TOKEN_PERIOD-($GLOBALS['now']=time())+$data['ts']];
+		$expire = SKILL_TOKEN_PERIOD - (time() - $data['ts']);
+		if ($expire < 1) $expire = 1;
+		return ['token'=>$data['token'],'expire'=>$expire];
 	}
 	// 新时段，生成新 token
 	$token = bin2hex(random_bytes(16));
 	$ts = time();
 	save_token_data($token, $ts, $period);
-	return ['token'=>$token,'expire'=>MCP_TOKEN_PERIOD];
+	return ['token'=>$token,'expire'=>SKILL_TOKEN_PERIOD];
 }
 
 function token_valid($token) {
 	$period = get_current_period();
 	$data = get_token_data();
 	// 检查永久 token
-	$permfile = __DIR__ . '/data/mcp_token_permanent.json';
+	$permfile = __DIR__ . '/data/skill_token_permanent.json';
 	if (file_exists($permfile)) {
 		$perms = json_decode(file_get_contents($permfile), true);
 		if (is_array($perms) && in_array($token, $perms, true)) return true;
@@ -75,10 +82,12 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 	}
 	// 支持 all 或具体语言
 	$languages = [
-		'C','CPP','GO','PYTHON','JAVA','JAVASCRIPT','RUST','MATLAB','PHP','RUBY','VARILOG'
+		'C','CPP','GO','PYTHON','JAVA','JAVASCRIPT','RUST','MATLAB','PHP','RUBY','VERILOG'
 	];
 	$results = [];
-	$search_langs = ($lang === 'all') ? $languages : [strtoupper($lang)];
+	$requested = strtoupper($lang);
+	if (isset(LANG_ALIASES[$requested])) $requested = LANG_ALIASES[$requested];
+	$search_langs = ($lang === 'all') ? $languages : [$requested];
 	$search_text = mb_strtolower($query);
 	foreach ($search_langs as $l) {
 		$jsonfile = __DIR__ . "/functions/$l/" . strtolower($l) . ".json";
@@ -118,11 +127,11 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>MCP可集成接口 - 函数库 FunctionCool</title>
+	<title>Skill 函数库接口 - FunctionCool</title>
 	<meta name="robots" content="noindex,nofollow">
-	<link rel="canonical" href="https://www.functioncool.xyz/mcpapi">
+	<link rel="canonical" href="https://www.functioncool.xyz/skillapi">
 	<link rel="stylesheet" href="assets/style.css">
-	<script src="assets/i18n.js?v=20260518"></script>
+	<script src="assets/i18n.js?v=20260610"></script>
     <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="apple-touch-icon" href="assets/logo.png">
 </head>
@@ -156,27 +165,69 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 			font-size: 0.8rem;
 		}
 	}
+	/* Skill 价值主张卡片 */
+	.skill-value-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.9rem;
+		text-align: left;
+		margin: 1.2rem 0 1.6rem;
+	}
+	.skill-value-card {
+		background: #f8fafc;
+		border: 1px solid #e2e8f0;
+		border-left: 3px solid #4f46e5;
+		border-radius: 8px;
+		padding: 0.9rem 1rem;
+		font-size: 0.95rem;
+		line-height: 1.55;
+	}
+	.skill-value-card h3 {
+		font-size: 1rem;
+		margin: 0 0 0.35rem;
+		color: #1f2937;
+	}
+	.skill-value-card p {
+		margin: 0;
+		color: #4b5563;
+	}
+	@media (max-width: 600px) {
+		.skill-value-grid { grid-template-columns: 1fr; }
+	}
 	</style>
 	<header>
 		<div class="container">
 			<div class="logo">
-				<h1 data-i18n="mcp-title">MCP可集成接口</h1>
-				<p data-i18n="mcp-subtitle">为自动化工具/平台提供函数库检索服务</p>
+				<h1 data-i18n="skill-title">Skill 函数库接口</h1>
+				<p data-i18n="skill-subtitle">给 AI 与自动化工作流的函数库 Skill — 把输出折成输入、命中 Prompt 缓存</p>
 			</div>
 		</div>
 	</header>
 	<main>
-		<div class="container" style="max-width:600px;margin:0 auto;">
-			<section class="mcpapi-intro" style="text-align:center;padding:2rem 1rem;">
-				<h2 data-i18n="mcp-description-title">接口说明</h2>
-				<p data-i18n="mcp-description-content">本接口用于自动化平台、MCP 工具等集成查询函数库。<br>支持按关键词和语言检索，返回 JSON 格式结果。<br>需先获取临时 token，免费 token 有效期 30 分钟。</p>
+		<div class="container" style="max-width:640px;margin:0 auto;">
+			<section class="skillapi-intro" style="text-align:center;padding:2rem 1rem;">
+				<h2 data-i18n="skill-description-title">Skill 说明</h2>
+				<p data-i18n="skill-description-content">本 Skill 接口面向 AI 智能体、IDE 插件与自动化工作流。<br>支持按关键词与语言检索函数库，返回结构化 JSON。<br>需先获取临时 token，免费 token 有效期 30 分钟。</p>
+
+				<!-- 价值主张：两点核心收益 -->
+				<div class="skill-value-grid">
+					<div class="skill-value-card">
+						<h3 data-i18n="skill-value-tokens-title">把昂贵输出折成便宜输入</h3>
+						<p data-i18n="skill-value-tokens-desc">让 AI 先调用本 Skill 取回方法索引（签名 / 说明 / 标签），再据此拼装最终代码。模型不必把整段函数体「打」出来——把贵的输出 token 折算成便宜得多的输入 token。</p>
+					</div>
+					<div class="skill-value-card">
+						<h3 data-i18n="skill-value-cache-title">更高的 Prompt 缓存命中</h3>
+						<p data-i18n="skill-value-cache-desc">函数库内容长期稳定，作为 Skill 上下文最契合各家厂商的提示词缓存特性。重复或近似查询的实际计费 token 趋近于零。</p>
+					</div>
+				</div>
+
 								<ul style="text-align:left;display:inline-block;margin:1rem auto 2rem;padding:0 1rem;">
-										<li data-i18n="api-endpoint-desc">接口地址：<code>/mcpapi?token={你的token}&q={关键词}&lang={编程语言}</code></li>
+										<li data-i18n="api-endpoint-desc">接口地址：<code>/skillapi?token={你的token}&q={关键词}&lang={编程语言}</code></li>
 										<li data-i18n="token-requirement-desc">token 需通过下方按钮获取，不能直接爬取，谢谢配合</li>
 										<li data-i18n="response-fields-desc">返回字段：results（函数列表[数组]）、query、lang</li>
 								</ul>
-																<div class="mcpapi-addr-table-wrapper" style="overflow-x:auto;margin-bottom:1.2rem;">
-																<table class="mcpapi-addr-table" border="1" cellpadding="6" style="border-collapse:collapse;margin:0 auto;background:#f8f9fa;min-width:220px;max-width:100%;font-size:1rem;">
+																<div class="skillapi-addr-table-wrapper" style="overflow-x:auto;margin-bottom:1.2rem;">
+																<table class="skillapi-addr-table" border="1" cellpadding="6" style="border-collapse:collapse;margin:0 auto;background:#f8f9fa;min-width:220px;max-width:100%;font-size:1rem;">
 																	<caption style="font-weight:bold;margin-bottom:0.5rem;" data-i18n="addr-table-caption">接口地址表</caption>
 																	<thead style="background:#e2e8f0;font-weight:bold;">
 																		<tr><td style="min-width:110px;" data-i18n="region-header">地区</td><td style="min-width:110px;" data-i18n="address-header">推荐地址</td></tr>
@@ -187,8 +238,8 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 																	</tbody>
 																</table>
 																</div>
-																<div class="mcpapi-lang-table-wrapper" style="overflow-x:auto;margin-bottom:2rem;">
-																<table class="mcpapi-lang-table" border="1" cellpadding="6" style="border-collapse:collapse;margin:0 auto;background:#f8f9fa;min-width:260px;max-width:100%;font-size:1rem;">
+																<div class="skillapi-lang-table-wrapper" style="overflow-x:auto;margin-bottom:2rem;">
+																<table class="skillapi-lang-table" border="1" cellpadding="6" style="border-collapse:collapse;margin:0 auto;background:#f8f9fa;min-width:260px;max-width:100%;font-size:1rem;">
 																	<caption style="font-weight:bold;margin-bottom:0.5rem;" data-i18n="lang-table-caption">支持语言及 lang 参数对照表</caption>
 																	<thead style="background:#e2e8f0;font-weight:bold;">
 																		<tr><td style="min-width:90px;" data-i18n="language-header">语言名称</td><td style="min-width:90px;" data-i18n="param-header">lang 参数值</td></tr>
@@ -204,23 +255,23 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 																		<tr><td>MATLAB</td><td>MATLAB</td></tr>
 																		<tr><td>PHP</td><td>PHP</td></tr>
 																		<tr><td>Ruby</td><td>RUBY</td></tr>
-																		<tr><td>Verilog</td><td>VARILOG</td></tr>
+																		<tr><td>Verilog</td><td>VERILOG</td></tr>
 																		<tr><td>全部语言</td><td>all</td></tr>
 																	</tbody>
 																</table>
 																</div>
 																<style>
 																@media (max-width: 600px) {
-																	.mcpapi-addr-table-wrapper, .mcpapi-lang-table-wrapper { margin-bottom:1rem; }
-																	.mcpapi-addr-table, .mcpapi-lang-table {
+																	.skillapi-addr-table-wrapper, .skillapi-lang-table-wrapper { margin-bottom:1rem; }
+																	.skillapi-addr-table, .skillapi-lang-table {
 																		font-size:0.92rem;
 																		min-width:140px;
 																		max-width:100vw;
 																	}
-																	.mcpapi-addr-table caption, .mcpapi-lang-table caption {
+																	.skillapi-addr-table caption, .skillapi-lang-table caption {
 																		font-size:1rem;
 																	}
-																	.mcpapi-addr-table td, .mcpapi-lang-table td {
+																	.skillapi-addr-table td, .skillapi-lang-table td {
 																		padding: 0.45rem 0.5rem;
 																		min-width:70px;
 																		word-break:break-all;
@@ -229,16 +280,16 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 																</style>
 												<style>
 												@media (max-width: 600px) {
-													.mcpapi-lang-table-wrapper { margin-bottom:1.2rem; }
-													.mcpapi-lang-table {
+													.skillapi-lang-table-wrapper { margin-bottom:1.2rem; }
+													.skillapi-lang-table {
 														font-size:0.92rem;
 														min-width:180px;
 														max-width:100vw;
 													}
-													.mcpapi-lang-table caption {
+													.skillapi-lang-table caption {
 														font-size:1rem;
 													}
-													.mcpapi-lang-table td {
+													.skillapi-lang-table td {
 														padding: 0.45rem 0.5rem;
 														min-width:70px;
 														word-break:break-all;
@@ -256,30 +307,19 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 										<div style="font-weight:bold;display:inline-block;" data-i18n="quicktip-title">快捷提示词</div>
 										<button id="quicktip-copy" data-i18n="quicktip-copy-btn" style="position:absolute;right:0;top:1px;padding:0.15rem 0.5rem;font-size:0.85rem;border-radius:3px;background:#f0f4f8;border:1px solid #d0d7de;">一键复制</button>
 									</div>
-									<div id="mcpapi-quicktip" style="background:#f8f9fa;border-radius:8px;padding:0.7rem;margin:0;font-size:0.95rem;border:1px solid #e2e8f0;text-align:left!important;line-height:1.5;">
+									<div id="skillapi-quicktip" style="background:#f8f9fa;border-radius:8px;padding:0.7rem;margin:0;font-size:0.95rem;border:1px solid #e2e8f0;text-align:left!important;line-height:1.5;">
 										<div class="quicktip-section zh-section">
-											<p><strong data-i18n="quicktip-zh-title">【中文】</strong> <span data-i18n="quicktip-zh-request">请向以下地址发送 GET 请求，获取基础函数与相关函数：</span></p>
-											<p style="margin:0.2rem 0 0.6rem 0;"><code class="api-url-zh" style="word-break:break-word;overflow-wrap:anywhere;">https://www.functioncool.xyz/mcpapi?token={你的token}&q={关键词}&lang={编程语言}</code></p>
-											<p data-i18n="quicktip-zh-params">参数：token=临时或永久 token；q=搜索关键词；lang=语言代码或 all（可选：C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VARILOG）。响应：JSON，包含 results（函数数组）、query（原查询）、lang（语言）。</p>
+											<p><strong data-i18n="quicktip-zh-title">【中文】</strong> <span data-i18n="quicktip-zh-request">请向以下地址发送 GET 请求，先取回方法索引，再据此拼装代码（输出 token → 输入 token，命中 Prompt 缓存）：</span></p>
+											<p style="margin:0.2rem 0 0.6rem 0;"><code class="api-url-zh" style="word-break:break-word;overflow-wrap:anywhere;">https://www.functioncool.xyz/skillapi?token={你的token}&q={关键词}&lang={编程语言}</code></p>
+											<p data-i18n="quicktip-zh-params">参数：token=临时或永久 token；q=搜索关键词；lang=语言代码或 all（可选：C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VERILOG）。响应：JSON，包含 results（函数数组）、query（原查询）、lang（语言）。</p>
 										</div>
 										<div class="quicktip-section en-section" style="margin-top:0.6rem;">
-											<p><strong data-i18n="quicktip-en-title">[English]</strong> <span data-i18n="quicktip-en-request">Send a GET request to fetch base and related functions:</span></p>
-											<p style="margin:0.2rem 0 0.6rem 0;"><code class="api-url-en" style="word-break:break-word;overflow-wrap:anywhere;">https://www.functioncool.xyz/mcpapi?token={your_token}&q={keyword}&lang={language}</code></p>
-											<p data-i18n="quicktip-en-params">Params: token=temporary or permanent token; q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VARILOG). Response: JSON with results (array of functions), query (string), lang (string).</p>
+											<p><strong data-i18n="quicktip-en-title">[English]</strong> <span data-i18n="quicktip-en-request">Send a GET request below to fetch method indices first, then assemble code from them (output → input tokens, prompt-cache friendly):</span></p>
+											<p style="margin:0.2rem 0 0.6rem 0;"><code class="api-url-en" style="word-break:break-word;overflow-wrap:anywhere;">https://www.functioncool.xyz/skillapi?token={your_token}&q={keyword}&lang={language}</code></p>
+											<p data-i18n="quicktip-en-params">Params: token=temporary or permanent token; q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON with results (array of functions), query (string), lang (string).</p>
 										</div>
 									</div>
 								</div>
-				<div style="margin:2.5rem 0 1.5rem;">
-					<!-- Google AdSense 广告位 -->
-					<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3718441900987965" crossorigin="anonymous"></script>
-					<ins class="adsbygoogle"
-						 style="display:block;text-align:center;"
-						 data-ad-client="ca-pub-3718441900987965"
-						 data-ad-slot="1234567890"
-						 data-ad-format="auto"
-						 data-full-width-responsive="true"></ins>
-					<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-				</div>
 			</section>
 		</div>
 	</main>
@@ -362,11 +402,6 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 
 		document.getElementById('get-token-btn').onclick = function() {
 			var currentLang = window.getCurrentLanguage ? window.getCurrentLanguage() : 'zh';
-			var tipText = currentLang === 'zh'
-				? '您将临时跳转至赞助商提供的网站，回到此界面可查看您的 token。（点击取消无法获取）'
-				: 'You will be redirected to a sponsor page. Return to this page to view your token.';
-			if (!confirm(tipText)) return;
-			window.open('https://omg10.com/4/11022129', '_blank');
 			fetch('?get_token=1').then(r => r.json()).then(data => {
 				// 获取当前语言并使用对应的文本模板
 				var tokenPattern = currentLang === 'zh' ?
@@ -378,7 +413,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 				var quicktipBlock = document.getElementById('quicktip-block');
 				quicktipBlock.style.display = 'block';
 				// 使用初始模板（HTML）进行替换，避免重复点击导致叠加
-				var tipEl = document.getElementById('mcpapi-quicktip');
+				var tipEl = document.getElementById('skillapi-quicktip');
 				var template = tipEl.getAttribute('data-template');
 				if (!template) {
 					template = tipEl.innerHTML; // 存储原始 HTML 模板
@@ -392,7 +427,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 			});
 		};
 		document.getElementById('quicktip-copy').onclick = function() {
-			var tip = document.getElementById('mcpapi-quicktip').innerText;
+			var tip = document.getElementById('skillapi-quicktip').innerText;
 			if (navigator.clipboard) {
 				navigator.clipboard.writeText(tip);
 			} else {
