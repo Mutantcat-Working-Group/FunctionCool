@@ -6,7 +6,7 @@
 	<title>函数库助力AI - Skill 接口发布</title>
 	<meta name="description" content="函数库 FunctionCool 发布 Skill 接口：让 AI 先查询方法索引再拼装代码，把昂贵的输出 token 折成便宜的输入 token，并最大化 Prompt 缓存命中。">
 	<link rel="canonical" href="https://www.functioncool.xyz/notes/001">
-		<link rel="stylesheet" href="../assets/style.css?v=20250917">
+		<link rel="stylesheet" href="../assets/style.css?v=20260610">
 	<link rel="icon" type="image/png" href="../assets/logo.png">
 	<link rel="apple-touch-icon" href="../assets/logo.png">
 	<style>
@@ -61,7 +61,7 @@
 				<p>接口采用 <strong>Token</strong> 访问：支持 30 分钟周期 Token 与永久 Token。可以在 <a href="/skillapi">/skillapi</a> 文档页一键获取 Token 并查看快速调用示例。</p>
 				<p>响应字段：<code>results</code>（函数数组，含名称 / 签名 / 描述 / 标签 / 时间空间评分 / 代码示例）、<code>query</code>、<code>lang</code>。支持的 <code>lang</code> 包括 C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VERILOG 或 <code>all</code>。</p>
 
-				<p>欢迎各类 AI 客户端、自动化平台、IDE 插件与机器人接入。如果您在使用过程中遇到问题或有功能建议，欢迎发邮件到 <strong>feedback@mutantcat.org</strong> 与我们交流。</p>
+				<p>欢迎各类 AI 客户端、自动化平台、IDE 插件与机器人接入。如果您在使用过程中遇到问题或有功能建议，欢迎发邮件到 <strong>mutantcat_org@outlook.com</strong> 与我们交流。</p>
 
 				<p style="color:#64748b;font-size:0.92rem;margin-top:1.2rem;">注：本接口此前以 "MCP 接口" 名义发布，现统一命名为 Skill 接口。旧的 <code>/mcpapi</code> 链接会自动 301 跳转到 <code>/skillapi</code>，老集成无需改动即可继续使用。</p>
 			</article>

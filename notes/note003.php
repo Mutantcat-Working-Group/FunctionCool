@@ -6,7 +6,7 @@
 	<title>函数库加速开发的秘密 - 函数库 FunctionCool</title>
 	<meta name="description" content="探索函数库如何通过代码复用、减少重复造轮子、降低认知负荷来加速软件开发，让开发者聚焦业务逻辑而非基础实现。">
 	<link rel="canonical" href="https://www.functioncool.xyz/notes/003">
-		<link rel="stylesheet" href="../assets/style.css?v=20250917">
+		<link rel="stylesheet" href="../assets/style.css?v=20260610">
 	<link rel="icon" type="image/png" href="../assets/logo.png">
 	<link rel="apple-touch-icon" href="../assets/logo.png">
 	<style>

@@ -138,64 +138,33 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
     <link rel="apple-touch-icon" href="assets/logo.png">
 </head>
 <body>
-	<!-- 顶部右侧操作：返回首页 & 语言切换 -->
-	<div class="page-actions" style="position:fixed;top:16px;right:16px;display:flex;gap:10px;z-index:1000;">
-		<a href="/" class="home-link" data-i18n="home-link" style="padding:8px 14px;border:1px solid #e5e7eb;border-radius:8px;background:rgba(255,255,255,0.95);color:#374151;text-decoration:none;font-size:0.875rem;font-weight:500;box-shadow:0 1px 3px rgba(0,0,0,0.1);backdrop-filter:blur(8px);transition:all 0.2s ease;">返回首页</a>
-		<button id="lang-btn" type="button" style="padding:8px 14px;border:1px solid #e5e7eb;border-radius:8px;background:rgba(249,250,251,0.95);color:#374151;font-size:0.875rem;font-weight:500;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,0.1);backdrop-filter:blur(8px);transition:all 0.2s ease;">English</button>
-	</div>
-	<style>
-	.page-actions .home-link:hover,
-	.page-actions button:hover {
-		background: rgba(243,244,246,0.95);
-		border-color: #d1d5db;
-		transform: translateY(-1px);
-		box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-	}
-	@media (max-width: 640px) {
-		.page-actions { top: 10px; right: 10px; gap: 6px; }
-		.page-actions .home-link, .page-actions button { padding: 6px 10px; font-size: 0.8rem; }
-	}
-	.skillapi-addr-table, .skillapi-lang-table {
-		border-collapse: collapse; margin: 0 auto; background: #fff;
-		border-radius: 12px; overflow: hidden; font-size: 1rem;
-		box-shadow: var(--shadow-sm); border: 1px solid var(--line);
-	}
-	.skillapi-addr-table caption, .skillapi-lang-table caption {
-		font-weight: 700; margin-bottom: 0.6rem; color: var(--ink);
-	}
-	.skillapi-addr-table thead, .skillapi-lang-table thead { background: #EAF4FC; }
-	.skillapi-addr-table td, .skillapi-lang-table td {
-		padding: 0.55rem 0.9rem; border: 1px solid var(--line); color: var(--ink-2);
-	}
-	.skillapi-addr-table code, .skillapi-lang-table code { color: var(--brand-ink); font-weight: 600; }
-	@media (max-width: 600px) {
-		.skillapi-addr-table, .skillapi-lang-table { font-size: 0.9rem; }
-		.skillapi-addr-table td, .skillapi-lang-table td { padding: 0.45rem 0.55rem; word-break: break-all; }
-	}
-	</style>
 	<header>
 		<div class="container">
 			<div class="logo">
 				<h1 data-i18n="skill-title">Skill 函数库接口</h1>
 				<p data-i18n="skill-subtitle">给 AI 与自动化工作流的函数库 Skill — 把输出折成输入、命中 Prompt 缓存</p>
 			</div>
+			<div class="language-switcher">
+				<a href="/" class="home-link" data-i18n="home-link" aria-label="返回首页">返回首页</a>
+				<button id="lang-btn" type="button">English</button>
+			</div>
 		</div>
 	</header>
 	<main>
 		<div class="container" style="max-width:720px;margin:0 auto;">
-			<section class="skillapi-intro reveal reveal-1" style="text-align:center;padding:2rem 1rem;">
-				<div class="skill-hero-badge">⚡ AI Skill</div>
+			<section class="skillapi-intro reveal reveal-1" style="text-align:center;padding:2rem 0;">
+				<div class="skill-hero-badge">AI SKILL</div>
 				<h2 class="grad-text" data-i18n="skill-description-title" style="margin:1rem 0 0.6rem;font-size:2rem;font-weight:800;letter-spacing:-0.02em;">Skill 说明</h2>
 				<p data-i18n="skill-description-content" style="color:var(--ink-2);">本 Skill 接口面向 AI 智能体、IDE 插件与自动化工作流。<br>支持按关键词与语言检索函数库，返回结构化 JSON。<br>使用永久密钥访问，无需轮换。</p>
 
 				<!-- 价值主张：两点核心收益 -->
 				<div class="skill-value-grid">
 					<div class="skill-value-card">
-						<h3 data-i18n="skill-value-tokens-title">⚖️ 把昂贵输出折成便宜输入</h3>
+						<h3 data-i18n="skill-value-tokens-title">把昂贵输出折成便宜输入</h3>
 						<p data-i18n="skill-value-tokens-desc">让 AI 先调用本 Skill 取回方法索引（签名 / 说明 / 标签），再据此拼装最终代码。模型不必把整段函数体「打」出来——把贵的输出 token 折算成便宜得多的输入 token。</p>
 					</div>
 					<div class="skill-value-card">
-						<h3 data-i18n="skill-value-cache-title">⚡ 更高的 Prompt 缓存命中</h3>
+						<h3 data-i18n="skill-value-cache-title">更高的 Prompt 缓存命中</h3>
 						<p data-i18n="skill-value-cache-desc">函数库内容长期稳定，作为 Skill 上下文最契合各家厂商的提示词缓存特性。重复或近似查询的实际计费 token 趋近于零。</p>
 					</div>
 				</div>
@@ -207,36 +176,40 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 					<li data-i18n="response-fields-desc">返回字段：results（函数列表[数组]）、query、lang</li>
 				</ul>
 
-				<div style="overflow-x:auto;margin-bottom:1.4rem;">
-					<table class="skillapi-addr-table">
-						<caption data-i18n="addr-table-caption">接口地址表</caption>
-						<thead><tr><td data-i18n="region-header">地区</td><td data-i18n="address-header">推荐地址</td></tr></thead>
-						<tbody>
-							<tr><td data-i18n="international-region">国际</td><td><code>www.functioncool.xyz</code></td></tr>
-							<tr><td data-i18n="china-region">中国地区</td><td><code>cn.functioncool.xyz</code></td></tr>
-						</tbody>
-					</table>
+				<div class="skillapi-table-block">
+					<h3 class="skillapi-table-caption" data-i18n="addr-table-caption">接口地址表</h3>
+					<div class="skillapi-table-wrap">
+						<table class="skillapi-addr-table">
+							<thead><tr><th data-i18n="region-header">地区</th><th data-i18n="address-header">推荐地址</th></tr></thead>
+							<tbody>
+								<tr><td data-i18n="international-region">国际</td><td><code>www.functioncool.xyz</code></td></tr>
+								<tr><td data-i18n="china-region">中国地区</td><td><code>cn.functioncool.xyz</code></td></tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 
-				<div style="overflow-x:auto;">
-					<table class="skillapi-lang-table">
-						<caption data-i18n="lang-table-caption">支持语言及 lang 参数对照表</caption>
-						<thead><tr><td data-i18n="language-header">语言名称</td><td data-i18n="param-header">lang 参数值</td></tr></thead>
-						<tbody>
-							<tr><td>C</td><td>C</td></tr>
-							<tr><td>C++</td><td>CPP</td></tr>
-							<tr><td>Go</td><td>GO</td></tr>
-							<tr><td>Python</td><td>PYTHON</td></tr>
-							<tr><td>Java</td><td>JAVA</td></tr>
-							<tr><td>JavaScript</td><td>JAVASCRIPT</td></tr>
-							<tr><td>Rust</td><td>RUST</td></tr>
-							<tr><td>MATLAB</td><td>MATLAB</td></tr>
-							<tr><td>PHP</td><td>PHP</td></tr>
-							<tr><td>Ruby</td><td>RUBY</td></tr>
-							<tr><td>Verilog</td><td>VERILOG</td></tr>
-							<tr><td>全部语言</td><td>all</td></tr>
-						</tbody>
-					</table>
+				<div class="skillapi-table-block">
+					<h3 class="skillapi-table-caption" data-i18n="lang-table-caption">支持语言及 lang 参数对照表</h3>
+					<div class="skillapi-table-wrap">
+						<table class="skillapi-lang-table">
+							<thead><tr><th data-i18n="language-header">语言名称</th><th data-i18n="param-header">lang 参数值</th></tr></thead>
+							<tbody>
+								<tr><td>C</td><td>C</td></tr>
+								<tr><td>C++</td><td>CPP</td></tr>
+								<tr><td>Go</td><td>GO</td></tr>
+								<tr><td>Python</td><td>PYTHON</td></tr>
+								<tr><td>Java</td><td>JAVA</td></tr>
+								<tr><td>JavaScript</td><td>JAVASCRIPT</td></tr>
+								<tr><td>Rust</td><td>RUST</td></tr>
+								<tr><td>MATLAB</td><td>MATLAB</td></tr>
+								<tr><td>PHP</td><td>PHP</td></tr>
+								<tr><td>Ruby</td><td>RUBY</td></tr>
+								<tr><td>Verilog</td><td>VERILOG</td></tr>
+								<tr><td>全部语言</td><td>all</td></tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</section>
 
@@ -244,7 +217,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 			<section class="skill-card reveal reveal-3" style="margin-bottom:2rem;">
 				<div style="display:flex;align-items:center;justify-content:space-between;gap:0.8rem;flex-wrap:wrap;margin-bottom:1rem;">
 					<div style="font-weight:800;color:var(--ink);font-size:1.15rem;" data-i18n="quicktip-title">快捷提示词</div>
-					<button id="quicktip-copy" class="skill-copy-btn" data-i18n="quicktip-copy-btn">📋 一键复制</button>
+					<button id="quicktip-copy" class="skill-copy-btn" data-i18n="quicktip-copy-btn">复制</button>
 				</div>
 				<p style="margin:0 0 0.9rem;color:var(--ink-2);">
 					<span data-i18n="perm-token-label">永久密钥</span>：
@@ -313,8 +286,8 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 
 	function updateCopyButtonText(lang) {
 		var copyBtn = document.getElementById('quicktip-copy');
-		if (copyBtn && !copyBtn.textContent.includes('已复制') && !copyBtn.textContent.includes('copied') && !copyBtn.textContent.includes('OK')) {
-			copyBtn.textContent = lang === 'zh' ? '📋 一键复制' : '📋 Copy';
+		if (copyBtn && !copyBtn.textContent.includes('已复制') && !copyBtn.textContent.includes('copied') && copyBtn.textContent.indexOf('✓') === -1) {
+			copyBtn.textContent = lang === 'zh' ? '复制' : 'Copy';
 		}
 	}
 
@@ -330,10 +303,10 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 			document.execCommand('copy');
 			document.body.removeChild(textarea);
 		}
-		this.textContent = '✓ OK';
+		this.textContent = '✓ 已复制';
 		setTimeout(()=>{
 			var currentLang = window.getCurrentLanguage ? window.getCurrentLanguage() : 'zh';
-			this.textContent = currentLang === 'zh' ? '📋 一键复制' : '📋 Copy';
+			this.textContent = currentLang === 'zh' ? '复制' : 'Copy';
 		}, 1200);
 	};
 	</script>

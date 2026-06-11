@@ -26,6 +26,12 @@ const i18nTexts = {
         'feature-4-desc': '提供时间复杂度和空间复杂度评分参考',
         'feature-skill-title': 'AI Skill 接入',
         'feature-skill-desc': '让 AI 先查再写：把昂贵的输出 token 折成便宜的输入 token，并命中 Prompt 缓存',
+        'features-eyebrow': '为什么选择',
+        'features-heading': '为开发者与 AI 打造',
+        'posts-eyebrow': '博客',
+        'posts-heading': '最新文章',
+        'info-eyebrow': '关于本站',
+        'info-heading': '支持 · 贡献 · 声明',
         
         // 搜索结果页
         'results-title': '搜索结果',
@@ -56,7 +62,7 @@ const i18nTexts = {
         'suggestion-1': '检查网址拼写是否正确',
         'suggestion-2': '使用上方的搜索功能查找函数',
         'suggestion-3': '访问 Skill 接口了解 AI 集成文档',
-        'suggestion-4': '如果问题持续，请联系我们：shun_@outlook.com',
+        'suggestion-4': '如果问题持续，请联系我们：mutantcat_org@outlook.com',
         
         // 友情链接
         'friend-links': '友情链接：',
@@ -76,7 +82,7 @@ const i18nTexts = {
         'skill-value-cache-desc': '函数库内容长期稳定，作为 Skill 上下文最契合各家厂商的提示词缓存特性。重复或近似查询的实际计费 token 趋近于零。',
         'get-token-btn': '获取免费 token',
         'quicktip-title': '快捷提示词',
-        'quicktip-copy-btn': '一键复制',
+        'quicktip-copy-btn': '复制',
         'api-endpoint-desc': '接口地址：<code>/skillapi?token={你的token}&q={关键词}&lang={编程语言}</code>',
         'token-requirement-desc': 'token 需通过下方按钮获取，不能直接爬取，谢谢配合',
         'response-fields-desc': '返回字段：results（函数列表[数组]）、query、lang',
@@ -122,6 +128,12 @@ const i18nTexts = {
         'feature-4-desc': 'Time and space complexity score references',
         'feature-skill-title': 'AI Skill Integration',
         'feature-skill-desc': 'Query first, write later: turn expensive output tokens into cheap input tokens, and hit the prompt cache',
+        'features-eyebrow': 'Why FunctionCool',
+        'features-heading': 'Built for developers & AI',
+        'posts-eyebrow': 'Blog',
+        'posts-heading': 'Latest Articles',
+        'info-eyebrow': 'About',
+        'info-heading': 'Support · Contribute · Notice',
         
         // 搜索结果页
         'results-title': 'Search Results',
@@ -152,7 +164,7 @@ const i18nTexts = {
         'suggestion-1': 'Check if the URL spelling is correct',
         'suggestion-2': 'Use the search function above to find functions',
         'suggestion-3': 'Visit the Skill API for AI integration docs',
-        'suggestion-4': 'If the problem persists, please contact us: shun_@outlook.com',
+        'suggestion-4': 'If the problem persists, please contact us: mutantcat_org@outlook.com',
         
         // 友情链接
         'friend-links': 'Friendly Links:',

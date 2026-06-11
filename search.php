@@ -137,7 +137,7 @@ if ($query !== '') {
       }
     }</script>
 
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/style.css?v=20260610">
     <!-- Favicon Start -->
     <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="apple-touch-icon" href="assets/logo.png">
@@ -310,7 +310,7 @@ if ($query !== '') {
         </div>
     </footer>
 
-    <script src="assets/i18n.js?v=20260518"></script>
+    <script src="assets/i18n.js?v=20260610"></script>
     <script>
         // 代码显示/隐藏切换
         document.addEventListener('DOMContentLoaded', function() {

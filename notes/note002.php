@@ -6,7 +6,7 @@
 	<title>给大学编程课的有力帮助 - 函数库</title>
 	<meta name="description" content="函数库 FunctionCool 为大学生提供编程课程的学习资源，快速查询常用函数，帮助理解算法和数据结构，提高编程效率。">
 	<link rel="canonical" href="https://www.functioncool.xyz/notes/002">
-	<link rel="stylesheet" href="../assets/style.css?v=20250917">
+	<link rel="stylesheet" href="../assets/style.css?v=20260610">
 	<link rel="icon" type="image/png" href="../assets/logo.png">
 	<link rel="apple-touch-icon" href="../assets/logo.png">
 	<style>
@@ -99,7 +99,7 @@
 				
 				<p>函数库将持续更新，关注教学中常用的算法和数据结构。我们也欢迎学生和教师贡献有价值的函数实现和使用技巧，共同建设这个学习资源库。</p>
 				
-				<p>如有任何建议或想要贡献内容，请发送邮件至 <strong>feedback@mutantcat.org</strong>。</p>
+				<p>如有任何建议或想要贡献内容，请发送邮件至 <strong>mutantcat_org@outlook.com</strong>。</p>
 				
 				<p>让我们一起，让编程学习更加高效和愉快！</p>
 			</article>

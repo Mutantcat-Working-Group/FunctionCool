@@ -11,10 +11,10 @@ http_response_code(404);
     <meta name="description" content="抱歉，您访问的页面不存在。请返回函数库首页继续浏览编程函数与代码示例。">
     <meta name="robots" content="noindex,nofollow">
     <link rel="canonical" href="https://www.functioncool.xyz/">
-    <link rel="stylesheet" href="assets/style.css?v=20250917">
+    <link rel="stylesheet" href="assets/style.css?v=20260610">
     <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="apple-touch-icon" href="assets/logo.png">
-    <script src="assets/i18n.js?v=20260518"></script>
+    <script src="assets/i18n.js?v=20260610"></script>
 </head>
 <body>
     <header>
@@ -54,7 +54,7 @@ http_response_code(404);
                             <li data-i18n="suggestion-1">检查网址拼写是否正确</li>
                             <li data-i18n="suggestion-2">使用上方的搜索功能查找函数</li>
                             <li data-i18n="suggestion-3">访问 <a href="/skillapi">Skill 接口</a> 了解 AI 集成文档</li>
-                            <li data-i18n="suggestion-4">如果问题持续，请联系我们：shun_@outlook.com</li>
+                            <li data-i18n="suggestion-4">如果问题持续，请联系我们：mutantcat_org@outlook.com</li>
                         </ul>
                     </div>
                 </div>

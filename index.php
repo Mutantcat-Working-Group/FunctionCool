@@ -74,7 +74,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
       }
     }</script>
 
-    <link rel="stylesheet" href="assets/style.css?v=20260603">
+    <link rel="stylesheet" href="assets/style.css?v=20260610">
     <meta name="google-site-verification" content="gDHkEX8quz2rZV-IhC2VDjSt8Lzva5bln1N3rkkBJPA" />
     <meta name="msvalidate.01" content="09EFDE13A2FAD0169413AF8FAFCC323A" />
 </head>
@@ -169,21 +169,25 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
             </div>
 
             <div class="features-section">
+                <div class="section-head reveal reveal-1">
+                    <span class="eyebrow" id="features-eyebrow">为什么选择</span>
+                    <h2 id="features-heading">为开发者与 AI 打造</h2>
+                </div>
                 <div class="features-grid">
                     <div class="feature-card reveal reveal-1">
-                        <h3 id="feature-2-title">快速搜索</h3>
+                        <h3 id="feature-2-title" data-num="01">快速搜索</h3>
                         <p id="feature-2-desc">通过函数名、描述、标签快速定位所需函数</p>
                     </div>
                     <div class="feature-card reveal reveal-2">
-                        <h3 id="feature-3-title">代码示例</h3>
+                        <h3 id="feature-3-title" data-num="02">代码示例</h3>
                         <p id="feature-3-desc">每个函数都提供完整的代码示例和使用说明</p>
                     </div>
                     <div class="feature-card reveal reveal-3">
-                        <h3 id="feature-4-title">性能评分</h3>
+                        <h3 id="feature-4-title" data-num="03">性能评分</h3>
                         <p id="feature-4-desc">提供时间复杂度和空间复杂度评分参考</p>
                     </div>
                     <a class="feature-card reveal reveal-4" href="/skillapi" style="text-decoration:none;color:inherit;display:block;">
-                        <h3 id="feature-skill-title">AI Skill 接入</h3>
+                        <h3 id="feature-skill-title" data-num="04">AI Skill 接入</h3>
                         <p id="feature-skill-desc">让 AI 先查再写：把昂贵的输出 token 折成便宜的输入 token，并命中 Prompt 缓存</p>
                     </a>
                 </div>
@@ -194,7 +198,10 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
     <!-- 最新文章模块 -->
     <div class="container">
         <section class="latest-posts" aria-label="最新文章">
-            <h2>最新文章</h2>
+            <div class="section-head reveal reveal-1">
+                <span class="eyebrow" id="posts-eyebrow">博客</span>
+                <h2 id="posts-heading">最新文章</h2>
+            </div>
             <div class="latest-list">
                 <a class="post-item reveal reveal-1" href="/notes/003">
                     <div class="post-meta">
@@ -227,6 +234,10 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
     <!-- 信息区块：支持我们 / 勘误与贡献 / 免责声明 -->
     <div class="container">
         <section class="info-section" aria-label="站点说明与支持">
+            <div class="section-head reveal reveal-1">
+                <span class="eyebrow" id="info-eyebrow">关于本站</span>
+                <h2 id="info-heading">支持 · 贡献 · 声明</h2>
+            </div>
             <div class="info-grid">
                 <div class="info-card support-card">
                     <h3>支持我们</h3>
@@ -238,7 +249,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
 
                 <div class="info-card">
                     <h3>勘误与贡献</h3>
-                    <p>此项目是一个公益项目，我们为了减少成本（可持续发展），每10秒限制单一用户请求次数为20次。如果您想分享一些相关的资料或者发现哪些资料有问题或侵犯了您的权益，请发邮件到 feedback@mutantcat.org，我们会认真处理您的问题和反馈。</p>
+                    <p>此项目是一个公益项目，我们为了减少成本（可持续发展），每10秒限制单一用户请求次数为20次。如果您想分享一些相关的资料或者发现哪些资料有问题或侵犯了您的权益，请发邮件到 mutantcat_org@outlook.com，我们会认真处理您的问题和反馈。</p>
                 </div>
 
                 <div class="info-card">
@@ -261,6 +272,6 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
         </div>
     </footer>
 
-    <script src="assets/i18n.js?v=20260531"></script>
+    <script src="assets/i18n.js?v=20260610"></script>
 </body>
 </html>
