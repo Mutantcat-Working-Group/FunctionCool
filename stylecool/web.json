@@ -833,5 +833,382 @@
       "selectors that cancel each other out"
     ],
     "category": "web"
+  },
+  {
+    "name-en": "BEM Naming — Block__Element--Modifier",
+    "name-zh": "BEM 命名法 — Block__Element--Modifier",
+    "description-en": "Use BEM (Block-Element-Modifier) to create clear, flat, low-specificity selectors. Block = the component (`.card`), Element = a part of the block (`.card__title`), Modifier = a variant (`.card--featured`). Double underscore separates elements, double dash separates modifiers. Use PascalCase blocks (`.ListingCard`) to mirror React/Vue component names. BEM keeps specificity flat and makes the relationship between HTML and CSS obvious at a glance. Source: Airbnb CSS/Sass Style Guide.",
+    "description-zh": "使用 BEM（Block-Element-Modifier）创建清晰、扁平、低优先级的类名。Block = 组件 (`.card`)，Element = 组件的部分 (`.card__title`)，Modifier = 变体 (`.card--featured`)。双下划线分隔元素，双中划线分隔修饰符。用 PascalCase 块名 (`.ListingCard`) 对应 React/Vue 组件名。BEM 保持优先级扁平，让 HTML 和 CSS 的关系一目了然。源自 Airbnb CSS/Sass Style Guide。",
+    "tags": [
+      "bem",
+      "naming",
+      "specificity",
+      "component",
+      "airbnb"
+    ],
+    "css": ".ListingCard{}.ListingCard__title{font-size:1.25rem}.ListingCard--featured{border-color:var(--gold)}",
+    "anti": [
+      "deeply nested selectors",
+      "ID-based naming",
+      ".card .body .title .highlight",
+      "high-specificity naming"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "JavaScript Hooks — .js- Prefix, Never Style with JS Classes",
+    "name-zh": "JavaScript 钩子 — .js- 前缀，绝不用样式类绑定 JS",
+    "description-en": "Use dedicated classes prefixed with `.js-` for JavaScript behavior hooks — never bind JS to CSS styling classes. This separates concerns: changing a component's appearance should never break its behavior, and vice versa. If a designer renames `.btn-primary` to `.btn-main`, the JS that depended on `.btn-primary` for click handling silently breaks. `.js-request-to-book` is immune to visual refactoring. Source: Airbnb CSS/Sass Style Guide.",
+    "description-zh": "用 `.js-` 前缀的专用类名作为 JavaScript 行为钩子——绝不在 CSS 样式类上绑定 JS。这分离了关注点：改外观不应破坏行为，反之亦然。如果设计师把 `.btn-primary` 改成 `.btn-main`，依赖 `.btn-primary` 做点击处理的 JS 就悄悄坏了。`.js-request-to-book` 对视觉重构免疫。源自 Airbnb CSS/Sass Style Guide。",
+    "tags": [
+      "javascript",
+      "hooks",
+      "separation",
+      "architecture",
+      "airbnb"
+    ],
+    "css": ".js-toggle-menu{}",
+    "anti": [
+      "binding JS to .btn-primary",
+      "querySelector('.card') for behavior",
+      "no separation between style and behavior"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "@extend — Never Use in Sass",
+    "name-zh": "@extend — Sass 中禁用",
+    "description-en": "In Sass/SCSS, never use @extend. It creates unpredictable, bloated CSS output by duplicating selectors in unexpected places and can generate selector chains thousands of lines long. The compiled output is often far larger than the input and nearly impossible to debug. Use @mixin for reusable patterns instead — mixins are explicit, predictable, and generate clean output. The one exception: @extend %placeholder-selector for truly shared base styles, but even then, prefer mixins. Source: Airbnb CSS/Sass Style Guide.",
+    "description-zh": "在 Sass/SCSS 中绝不用 @extend。它通过在不可预期的位置复制选择器来产生不可预测、臃肿的 CSS 输出，能生成数千行的选择器链。编译输出通常远大于输入，几乎无法调试。用 @mixin 替代——mixin 显式、可预测、输出干净。唯一例外：用 %placeholder 选择器做真正的共享基类，但即便如此也推荐用 mixin。源自 Airbnb CSS/Sass Style Guide。",
+    "tags": [
+      "sass",
+      "scss",
+      "extend",
+      "mixin",
+      "performance",
+      "airbnb"
+    ],
+    "css": "@mixin card-base{border:1px solid var(--line);border-radius:8px;padding:16px}.card{@include card-base}.featured-card{@include card-base;border-color:var(--gold)}",
+    "anti": [
+      "@extend .base-class",
+      "chained @extend",
+      "selector explosion from @extend",
+      "@extend in nested contexts"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Sass Nesting — Maximum 3 Levels Deep",
+    "name-zh": "Sass 嵌套 — 最多 3 层",
+    "description-en": "Limit Sass/SCSS nesting to a maximum of 3 levels. Deep nesting generates high-specificity selectors that are brittle, hard to override, and tightly coupled to DOM structure. If your nesting goes deeper than 3 levels, it's a signal to extract a new component or rethink the HTML structure. Never nest ID selectors. Flat, component-scoped selectors make overrides predictable and refactoring safe. Source: Airbnb CSS/Sass Style Guide.",
+    "description-zh": "Sass/SCSS 嵌套最多 3 层。深度嵌套生成高优先级选择器，脆弱、难覆盖、与 DOM 结构紧耦合。超过 3 层就是信号：该提取新组件或重新审视 HTML 结构了。禁止嵌套 ID 选择器。扁平的、组件作用域的选择器让覆盖可预测、重构安全。源自 Airbnb CSS/Sass Style Guide。",
+    "tags": [
+      "sass",
+      "nesting",
+      "specificity",
+      "maintainability",
+      "airbnb"
+    ],
+    "css": ".card{padding:16px;.title{font-weight:600}/* max depth: 2 */}",
+    "anti": [
+      ".page .content .card .body .title .highlight {}",
+      "4+ levels of nesting",
+      "nested ID selectors"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Component-Based File Organization — Not Pages",
+    "name-zh": "按组件组织文件 — 不按页面",
+    "description-en": "Structure stylesheets around components, not pages. A component's entire CSS lives in one place — layout, variants, states, and media queries all together. This mirrors modern component architecture (React, Vue, Web Components) and means when you delete a component, you delete exactly one CSS file. Page-based organization scatters styles across files and makes it impossible to know which styles are still in use. Source: Airbnb CSS/Sass Style Guide.",
+    "description-zh": "样式表按组件组织，不按页面。一个组件的全部 CSS 放在一起——布局、变体、状态、媒体查询全部归位。这与现代组件架构（React、Vue、Web Components）对应，删组件时刚好删一个 CSS 文件。按页面组织把样式散落各处，无法知道哪些样式还在使用。源自 Airbnb CSS/Sass Style Guide。",
+    "tags": [
+      "organization",
+      "component",
+      "architecture",
+      "maintainability",
+      "airbnb"
+    ],
+    "css": "/* card.css — everything about .card */\n.card{}.card:hover{}.card--featured{}\n@media(max-width:768px){.card{}}",
+    "anti": [
+      "page-based CSS files",
+      "homepage.css, about.css, contact.css",
+      "styles scattered across files by page"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Text Color Contrast — Minimum 4.5:1",
+    "name-zh": "文字颜色对比度 — 最低 4.5:1",
+    "description-en": "WCAG 2.1 Level AA requires text to have at least 4.5:1 contrast ratio against its background. Large text (18px+ bold or 24px+ regular) needs 3:1. UI components and icons need 3:1 against adjacent colors. Gray text on white (#ccc on #fff = 1.6:1) is one of the most common accessibility failures. Use a contrast checker tool. Don't rely on color alone to convey information — always combine with an icon, underline, or bold. Source: WCAG 2.2 — Success Criteria 1.4.3, 1.4.11.",
+    "description-zh": "WCAG 2.1 AA 级要求文字对背景至少有 4.5:1 的对比度。大号文字（18px+ 加粗或 24px+ 常规）需要 3:1。UI 组件和图标对相邻颜色需要 3:1。灰色文字在白底上（#ccc 对 #fff = 1.6:1）是最常见的无障碍失败。使用对比度检查工具。不要仅依赖颜色传达信息——始终组合图标、下划线或加粗。源自 WCAG 2.2 — SC 1.4.3、1.4.11。",
+    "tags": [
+      "contrast",
+      "wcag",
+      "accessibility",
+      "a11y",
+      "color"
+    ],
+    "css": "body{color:#15324C;background:#FFF}/* ≈ 12.5:1 */\n.text-secondary{color:#51677C}/* ≈ 5.5:1 on white */",
+    "anti": [
+      "#CCC text on #FFF (1.6:1)",
+      "#999 text on white (2.8:1)",
+      "color-only error indicators",
+      "assuming 'it looks fine' without checking"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Focus Indicator — 2px Thick + 3:1 Contrast",
+    "name-zh": "焦点指示器 — 2px 厚度 + 3:1 对比",
+    "description-en": "WCAG 2.2 requires a visible focus indicator on all interactive elements. The indicator must be at least 2 CSS pixels thick and have at least 3:1 contrast between focused and unfocused states. Use :focus-visible (not :focus) to avoid showing focus rings on mouse clicks. Use a two-color technique (white ring + colored ring) to guarantee contrast on any background. Never use outline:none without providing a better alternative — it breaks keyboard navigation. Source: WCAG 2.2 — SC 2.4.7, 2.4.11, 2.4.13.",
+    "description-zh": "WCAG 2.2 要求所有可交互元素有可见的焦点指示器。指示器至少 2 CSS 像素厚，聚焦与非聚焦状态之间至少有 3:1 对比度。使用 :focus-visible（而非 :focus）避免鼠标点击也出现焦点环。使用双色技巧（白色环 + 彩色环）确保在任何背景上都有对比度。禁止 outline:none 而不提供更好的替代方案——这会破坏键盘导航。源自 WCAG 2.2 — SC 2.4.7、2.4.11、2.4.13。",
+    "tags": [
+      "focus",
+      "accessibility",
+      "wcag",
+      "keyboard",
+      "a11y"
+    ],
+    "css": ":focus-visible{outline:2px solid #3A8DD0;outline-offset:2px;box-shadow:0 0 0 4px #FFF,0 0 0 6px #3A8DD0}",
+    "anti": [
+      "outline:none",
+      "1px focus ring",
+      "focus ring same color as background",
+      "using :focus instead of :focus-visible"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Focus Not Obscured — Sticky Elements Must Not Cover Focus",
+    "name-zh": "焦点不被遮挡 — 粘性元素不能盖住焦点",
+    "description-en": "WCAG 2.2's new Focus Not Obscured criterion (2.4.11 AA) requires that when an element receives keyboard focus, it must not be entirely hidden by sticky headers, fixed footers, cookie banners, or other author-created overlays. Use scroll-margin-top equal to sticky header height on all focusable sections. Test by tabbing through the page — if a focused element disappears behind a sticky bar, the page fails this criterion. Source: WCAG 2.2 — SC 2.4.11.",
+    "description-zh": "WCAG 2.2 新增的「焦点不被遮挡」标准 (2.4.11 AA) 要求元素获得键盘焦点时，不能被 sticky 头部、固定底部、cookie 横幅或其他作者创建的覆盖层完全隐藏。在所有可聚焦区域上设置 scroll-margin-top 等于 sticky 头部高度。用 Tab 遍历页面测试——如果聚焦元素消失在粘性栏后面，页面就不符合此标准。源自 WCAG 2.2 — SC 2.4.11。",
+    "tags": [
+      "focus",
+      "sticky",
+      "wcag",
+      "accessibility",
+      "scroll"
+    ],
+    "css": "header{position:sticky;top:0;height:64px}h2:focus-visible{scroll-margin-top:80px}",
+    "anti": [
+      "sticky header covering focused element",
+      "no scroll-margin-top on sections",
+      "cookie banner over keyboard focus",
+      "modals that trap focus behind overlay"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Touch Target Size — Minimum 24×24px (AA)",
+    "name-zh": "触摸目标尺寸 — 最小 24×24px (AA)",
+    "description-en": "WCAG 2.2 Target Size (2.5.8 AA) requires interactive elements to be at least 24×24 CSS pixels. You can keep a sleek 16px icon if you expand the tappable area to 48px using padding or a transparent pseudo-element. Apple recommends 44×44pt; Google Material Design recommends 48×48dp. Small touch targets cause 'rage taps' — multiple frustrated quick taps — especially on mobile. Use @media (any-pointer: coarse) to enlarge targets specifically for touch devices. Source: WCAG 2.2 — SC 2.5.8.",
+    "description-zh": "WCAG 2.2 目标尺寸 (2.5.8 AA) 要求交互元素至少 24×24 CSS 像素。你可以保留精致的 16px 图标，用 padding 或透明伪元素把可点击区域扩展到 48px。Apple 建议 44×44pt，Google Material Design 建议 48×48dp。小触摸目标导致「暴怒连点」——尤其手机上多次快速挫败点击。用 @media (any-pointer: coarse) 为触摸设备放大目标。源自 WCAG 2.2 — SC 2.5.8。",
+    "tags": [
+      "touch",
+      "target-size",
+      "wcag",
+      "mobile",
+      "accessibility"
+    ],
+    "css": ".icon-btn{width:16px;height:16px;padding:16px}.icon-btn::after{content:'';position:absolute;inset:-16px}@media(any-pointer:coarse){.btn{padding:12px 24px}}",
+    "anti": [
+      "16x16px clickable icon with no padding",
+      "tiny 'x' close button",
+      "dense table rows with small interactive cells",
+      "mobile touch targets below 44px"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Prefers Reduced Motion — Kill All Animation",
+    "name-zh": "尊重减少动效偏好 — 彻底关闭动画",
+    "description-en": "Always respect prefers-reduced-motion: reduce. Set animation-duration and transition-duration to 0.01ms (!important) for all elements, disable scroll-behavior: smooth, and remove parallax/scroll-triggered transforms entirely. Some users experience vertigo, nausea, or distraction from motion. This is not a 'nice to have' — it's a WCAG requirement. Wrap all animation code in @media (prefers-reduced-motion: no-preference) so it only activates for users who haven't opted out. Source: WCAG 2.2.",
+    "description-zh": "始终尊重 prefers-reduced-motion: reduce。所有元素设 animation-duration 和 transition-duration 为 0.01ms (!important)，禁用 scroll-behavior: smooth，完全移除视差/滚动触发变换。部分用户会因动效产生眩晕、恶心或分心。这不是'锦上添花'——是 WCAG 的要求。用 @media (prefers-reduced-motion: no-preference) 包裹所有动画代码，仅对未关闭动效的用户激活。源自 WCAG 2.2。",
+    "tags": [
+      "motion",
+      "reduced-motion",
+      "accessibility",
+      "wcag",
+      "animation"
+    ],
+    "css": "@media(prefers-reduced-motion:no-preference){.reveal{animation:fade-up .45s ease both}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}",
+    "anti": [
+      "animations without reduced-motion check",
+      "scroll-behavior:smooth without override",
+      "parallax without disable option",
+      "ignoring user motion preferences"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Animate Only transform & opacity — GPU-Composited",
+    "name-zh": "仅动画 transform 和 opacity — GPU 合成",
+    "description-en": "Only animate transform and opacity. These are the only CSS properties that trigger compositing — the browser offloads them to the GPU without recalculating layout or repainting. Animating width, height, top, left, or margin triggers expensive layout recalculations (reflow) on every frame. Use transform: translate() instead of top/left, transform: scale() instead of width/height, and opacity for fade effects. The performance difference is often 60fps vs 15fps on mobile. Source: CSS Performance Best Practices 2025.",
+    "description-zh": "仅动画 transform 和 opacity。这是仅有的触发合成的 CSS 属性——浏览器将它们卸载到 GPU 而不重新计算布局或重绘。动画 width、height、top、left 或 margin 在每一帧触发昂贵的布局重计算（reflow）。用 transform: translate() 替代 top/left，用 transform: scale() 替代 width/height，用 opacity 做淡入淡出。性能差距在移动端常达 60fps vs 15fps。源自 CSS 性能最佳实践 2025。",
+    "tags": [
+      "animation",
+      "performance",
+      "gpu",
+      "transform",
+      "opacity"
+    ],
+    "css": ".card:hover{transform:scale(1.02)}.toast{opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s}@keyframes slide-in{from{transform:translateX(32px);opacity:0}to{transform:translateX(0);opacity:1}}",
+    "anti": [
+      "animating width from 0 to 100%",
+      "transition:left .3s",
+      "animating height:auto",
+      "margin-based animation",
+      "top/left animation"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Logical Properties — Inline/Block Over Left/Right",
+    "name-zh": "逻辑属性 — inline/block 替代 left/right",
+    "description-en": "Use logical (flow-relative) CSS properties instead of physical ones. margin-inline-start instead of margin-left, padding-block instead of padding-top/padding-bottom, border-inline-end instead of border-right. Logical properties automatically flip for RTL languages (Arabic, Hebrew) without writing a single additional rule. They also work correctly in flexbox and grid when direction changes. A site that uses logical properties gains RTL support for free. Source: CSS Best Practices 2025.",
+    "description-zh": "使用逻辑（流相对）CSS 属性代替物理属性。margin-inline-start 代替 margin-left，padding-block 代替 padding-top/padding-bottom，border-inline-end 代替 border-right。逻辑属性在 RTL 语言（阿拉伯语、希伯来语）下自动翻转，无需额外写一行规则。在 flexbox 和 grid 方向变化时也能正确工作。使用逻辑属性的网站免费获得 RTL 支持。源自 CSS 最佳实践 2025。",
+    "tags": [
+      "logical-properties",
+      "rtl",
+      "i18n",
+      "layout",
+      "modern-css"
+    ],
+    "css": ".card{margin-inline-start:16px;padding-block:24px;border-inline-end:1px solid var(--line);text-align:start}",
+    "anti": [
+      "hardcoded margin-left",
+      "padding-right for spacing",
+      "text-align:left on RTL pages",
+      "duplicate CSS for RTL direction"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "CSS contain — Isolate Component Recalculations",
+    "name-zh": "CSS contain — 隔离组件重计算",
+    "description-en": "Use the contain property to tell the browser a component's layout, style, and paint are independent of the rest of the page. contain: content prevents internal changes from triggering full-page reflows. contain: strict is a stronger isolation guarantee. For a card list where each card is independent, adding contain: content to each card can dramatically improve scroll performance. Pair with content-visibility: auto for off-screen elements — the browser skips rendering them entirely until they scroll into view. Source: CSS Performance Best Practices 2025.",
+    "description-zh": "使用 contain 属性告诉浏览器一个组件的布局、样式和绘制独立于页面其余部分。contain: content 阻止内部变化触发全页面 reflow。contain: strict 提供更强的隔离保证。对于每张卡片都独立的卡片列表，给每张卡片加 contain: content 可大幅提升滚动性能。配合 content-visibility: auto 用于屏幕外元素——浏览器完全跳过渲染直到滚动到可见范围。源自 CSS 性能最佳实践 2025。",
+    "tags": [
+      "contain",
+      "performance",
+      "isolation",
+      "reflow",
+      "modern-css"
+    ],
+    "css": ".card{contain:content;content-visibility:auto;contain-intrinsic-size:200px}",
+    "anti": [
+      "full-page reflow from component changes",
+      "no contain on independent list items",
+      "measuring all content upfront",
+      "ignoring content-visibility for long pages"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Flexbox + Grid gap — Never Manual Margin on Children",
+    "name-zh": "Flexbox + Grid gap — 禁止在子元素上手写 margin",
+    "description-en": "Use the gap property on flex and grid containers instead of margin-right or margin-bottom on individual children. gap: 16px on the container is cleaner than margin-right: 16px on every child (and then needing to remove it from the last child). Gap works in both Flexbox and Grid since 2021 (all modern browsers). It's immune to wrapping issues — when items wrap, gap handles the row gap automatically. Source: CSS Best Practices 2025.",
+    "description-zh": "在 flex 和 grid 容器上用 gap 属性，而非在每个子元素上写 margin-right 或 margin-bottom。容器上 gap: 16px 比每个子元素 margin-right: 16px（然后还要去掉最后一个）干净得多。gap 自 2021 年起在所有现代浏览器的 Flexbox 和 Grid 中均可用。它天然免疫换行问题——元素换行时 gap 自动处理行间距。源自 CSS 最佳实践 2025。",
+    "tags": [
+      "gap",
+      "flexbox",
+      "grid",
+      "spacing",
+      "modern-css"
+    ],
+    "css": ".card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}.toolbar{display:flex;gap:12px;align-items:center}",
+    "anti": [
+      ".item{margin-right:16px}.item:last-child{margin-right:0}",
+      "manual margin on every flex child",
+      "margin-bottom on every list item"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "4dp Spacing Grid — All Spacing in Multiples of 4",
+    "name-zh": "4dp 间距网格 — 所有间距为 4 的倍数",
+    "description-en": "Material Design 3 uses a 4dp baseline grid: all spacing values are multiples of 4 (4, 8, 12, 16, 24, 32, 48, 64, 96, 128dp). Never use arbitrary values like 7px, 13px, or 23px. This constraint creates visual rhythm — elements snap to an invisible grid and feel intentionally placed rather than approximate. Translate to CSS using px or rem (4px = 0.25rem). All padding, margin, gap, and component dimensions should adhere to the 4px grid. Source: Material Design 3 Foundations.",
+    "description-zh": "Material Design 3 使用 4dp 基准网格：所有间距为 4 的倍数（4、8、12、16、24、32、48、64、96、128dp）。禁止使用任意值如 7px、13px 或 23px。这个约束创造了视觉节奏——元素吸附到隐形网格上，感觉是被有意放置而非近似摆放。转换到 CSS 用 px 或 rem（4px = 0.25rem）。所有 padding、margin、gap 和组件尺寸应遵守 4px 网格。源自 Material Design 3 基础规范。",
+    "tags": [
+      "spacing",
+      "grid",
+      "material-design",
+      "rhythm",
+      "layout"
+    ],
+    "css": ":root{--s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-6:24px;--s-8:32px;--s-12:48px}.card{padding:var(--s-4);gap:var(--s-2)}",
+    "anti": [
+      "padding:7px",
+      "margin:13px",
+      "gap:5px",
+      "random spacing values",
+      "inconsistent padding within same component"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Window Size Classes — Design for Width Categories",
+    "name-zh": "窗口尺寸分类 — 按宽度类别设计",
+    "description-en": "Material Design 3 defines 5 window size classes instead of arbitrary breakpoints: Compact (<600dp — phones), Medium (600-839dp — small tablets), Expanded (840-1199dp — large tablets), Large (1200-1599dp — desktops), Extra-large (1600dp+ — ultrawide). Design layouts that adapt to the size class, not the pixel value. A card grid might be 1 column on Compact, 2 on Medium, 3 on Expanded, and 4 on Large. This is more robust than targeting specific device widths. Source: Material Design 3 Layout.",
+    "description-zh": "Material Design 3 定义 5 个窗口尺寸分类代替任意断点：Compact (<600dp — 手机)、Medium (600-839dp — 小平板)、Expanded (840-1199dp — 大平板)、Large (1200-1599dp — 桌面)、Extra-large (1600dp+ — 超宽)。设计适配尺寸类别的布局，而非像素值。卡片网格可能是 Compact 1 列、Medium 2 列、Expanded 3 列、Large 4 列。这比针对特定设备宽度更健壮。源自 Material Design 3 布局规范。",
+    "tags": [
+      "responsive",
+      "breakpoint",
+      "material-design",
+      "layout",
+      "mobile-first"
+    ],
+    "css": ".grid{display:grid;gap:16px;grid-template-columns:1fr}@media(min-width:600px){.grid{grid-template-columns:repeat(2,1fr)}}@media(min-width:840px){.grid{grid-template-columns:repeat(3,1fr)}}@media(min-width:1200px){.grid{grid-template-columns:repeat(4,1fr)}}",
+    "anti": [
+      "breakpoints at arbitrary widths",
+      "only one breakpoint at 768px",
+      "designing for specific devices",
+      "ignoring 1600dp+ ultrawide"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Material Type Scale — 15 Tokenized Roles",
+    "name-zh": "Material 排版阶差 — 15 个 Token 化角色",
+    "description-en": "Material Design 3 defines a 15-role type scale organized from Display Large (57sp) to Label Small (11sp), using a Major Second ratio anchored at Body Medium (14sp). Each role is a design token (md.sys.typescale.*) with defined size, weight, line-height, and letter-spacing. Rules: Display for hero moments (≤2 per page), Headline for section titles, Title for component headers, Body for content, Label for buttons/captions. Never use more than 2 Display sizes on one page; never go below 12sp for body text. Source: Material Design 3 Typography.",
+    "description-zh": "Material Design 3 定义 15 个角色的排版阶差，从 Display Large (57sp) 到 Label Small (11sp)，使用大二度比例，以 Body Medium (14sp) 为锚点。每个角色是设计 token (md.sys.typescale.*)，含尺寸、字重、行高和字间距。规则：Display 用于 Hero（每页 ≤2）、Headline 用于区域标题、Title 用于组件标题、Body 用于正文、Label 用于按钮/标注。一页禁止超过 2 个 Display 尺寸；正文绝不低于 12sp。源自 Material Design 3 排版规范。",
+    "tags": [
+      "typography",
+      "type-scale",
+      "material-design",
+      "tokens",
+      "font"
+    ],
+    "css": "h1{font-size:clamp(2rem,5vw,3.5625rem);font-weight:400;line-height:1.12}h2{font-size:1.5rem;font-weight:400}p{font-size:.875rem;line-height:1.43}.label{font-size:.75rem;font-weight:500;letter-spacing:.5px}",
+    "anti": [
+      "more than 2 Display sizes on one page",
+      "body text below 12sp",
+      "mixing 7+ different font sizes",
+      "no line-height adjustment for larger text"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "M3 Dynamic Color — Adapt to User Preference",
+    "name-zh": "M3 动态颜色 — 适应用户偏好",
+    "description-en": "Material Design 3's Dynamic Color system generates a full tonal palette from a single source color (or the user's wallpaper on Android). Use CSS light-dark() for native light/dark mode: color: light-dark(#1B4E7A, #9CCBEC). The Accent color should have 13 tonal variants — a primary, on-primary, container, and on-container for both light and dark themes. Never define only light-theme colors. Every color token should have a light and dark variant. Source: Material Design 3 Color System.",
+    "description-zh": "Material Design 3 的动态颜色系统从单一源颜色（或 Android 用户壁纸）生成完整的色调色板。使用 CSS light-dark() 实现原生亮/暗模式：color: light-dark(#1B4E7A, #9CCBEC)。主色应有 13 个色调变体——primary、on-primary、container、on-container，亮暗各一套。绝不要只定义亮色主题的颜色。每个颜色 token 都应有亮暗变体。源自 Material Design 3 颜色系统。",
+    "tags": [
+      "color",
+      "dark-mode",
+      "material-design",
+      "dynamic-color",
+      "theme"
+    ],
+    "css": ":root{color-scheme:light dark;--primary:light-dark(#1B4E7A,#9CCBEC);--surface:light-dark(#FFF,#1A1C1E);--on-surface:light-dark(#15324C,#E1E3E5)}",
+    "anti": [
+      "light-only color scheme",
+      "hardcoded #FFF background",
+      "dark mode as an afterthought",
+      "using rgba() that doesn't work in dark mode"
+    ],
+    "category": "web"
   }
 ]
