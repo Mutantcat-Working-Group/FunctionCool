@@ -214,15 +214,23 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                 <h2 id="posts-heading">最新文章</h2>
             </div>
             <div class="latest-list">
-                <a class="post-item reveal reveal-1" href="/stylecool">
+                <a class="post-item reveal reveal-1" href="/notes/004">
+                    <div class="post-meta">
+                        <span class="post-date">2026-06-13</span>
+                        <span class="post-tag">公告</span>
+                    </div>
+                    <h3 class="post-title">永久免费的承诺 — 函数库与 StyleCool 为什么坚持开放</h3>
+                    <p class="post-desc">编程知识应该是公共品，品味也不应该是商品。聊聊 FunctionCool 和 StyleCool 为什么选择永久免费——不烧钱、不膨胀、不死锁，以及你可以如何参与让这件事持续下去。</p>
+                </a>
+                <a class="post-item reveal reveal-2" href="/stylecool">
                     <div class="post-meta">
                         <span class="post-date">2026-06-13</span>
                         <span class="post-tag">设计</span>
                     </div>
                     <h3 class="post-title">StyleCool 设计样式接口上线 — 给 AI 注入审美</h3>
-                    <p class="post-desc">AI 擅长写代码，但审美是盲区——它不知道什么是"好看"、什么是"低级感"。StyleCool 联网为 AI 注入由设计师精心筛选的品味共识：按 Web / 桌面 / 小程序 / 手机四个平台分类，提供设计规则、组件模式与反模式检索，让 AI 写出有审美的 UI，而不是千篇一律的模板代码。</p>
+                    <p class="post-desc">AI 擅长写代码，但审美是盲区——它不知道什么是"好看"、什么是"低级感"。StyleCool 联网为 AI 注入由设计师精心筛选的品味共识：按 Web / 桌面 / 小程序 / 手机四个平台分类，提供设计规则、组件样式与反模式检索，让 AI 写出有审美的 UI，而不是千篇一律的模板代码。</p>
                 </a>
-                <a class="post-item reveal reveal-2" href="/notes/003">
+                <a class="post-item reveal reveal-3" href="/notes/003">
                     <div class="post-meta">
                         <span class="post-date">2026-05-18</span>
                         <span class="post-tag">效率</span>
@@ -230,7 +238,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                     <h3 class="post-title">函数库加速开发的秘密</h3>
                     <p class="post-desc">探索函数库如何通过代码复用、减少重复造轮子、降低认知负荷来加速软件开发，让开发者聚焦业务逻辑而非基础实现。</p>
                 </a>
-                <a class="post-item reveal reveal-3" href="/notes/002">
+                <a class="post-item reveal reveal-4" href="/notes/002">
                     <div class="post-meta">
                         <span class="post-date">2025-09-29</span>
                         <span class="post-tag">教育</span>
@@ -238,7 +246,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                     <h3 class="post-title">给大学编程课的有力帮助</h3>
                     <p class="post-desc">函数库为大学生提供编程学习资源，快速查询常用函数，帮助理解算法和数据结构，提高编程效率。</p>
                 </a>
-                <a class="post-item reveal reveal-4" href="/notes/001">
+                <a class="post-item reveal reveal-5" href="/notes/001">
                     <div class="post-meta">
                         <span class="post-date">2025-09-17</span>
                         <span class="post-tag">公告</span>
