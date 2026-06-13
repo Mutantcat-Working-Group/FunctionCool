@@ -219,8 +219,8 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                         <span class="post-date">2026-06-13</span>
                         <span class="post-tag">设计</span>
                     </div>
-                    <h3 class="post-title">StyleCool 设计模式接口上线</h3>
-                    <p class="post-desc">面向 AI 编程助手的设计知识 JSON 接口正式发布。按 Web / 桌面 / 小程序 / 手机四个平台分类，提供设计规则、组件模式与反模式检索，让 AI 在生成 UI 时先查再写——把昂贵的输出 token 折成便宜的输入 token。</p>
+                    <h3 class="post-title">StyleCool 设计模式接口上线 — 给 AI 注入审美</h3>
+                    <p class="post-desc">AI 擅长写代码，但审美是盲区——它不知道什么是"好看"、什么是"低级感"。StyleCool 联网为 AI 注入由设计师精心筛选的品味共识：按 Web / 桌面 / 小程序 / 手机四个平台分类，提供设计规则、组件模式与反模式检索，让 AI 写出有审美的 UI，而不是千篇一律的模板代码。</p>
                 </a>
                 <a class="post-item reveal reveal-2" href="/notes/003">
                     <div class="post-meta">
