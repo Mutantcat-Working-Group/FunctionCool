@@ -146,6 +146,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 			</div>
 			<div class="language-switcher">
 				<a href="/" class="home-link" data-i18n="home-link" aria-label="返回首页">返回首页</a>
+					<a href="/stylecool" class="skill-link" aria-label="StyleCool">StyleCool</a>
 				<button id="lang-btn" type="button">English</button>
 			</div>
 		</div>

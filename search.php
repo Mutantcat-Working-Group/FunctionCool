@@ -151,6 +151,8 @@ if ($query !== '') {
                 <p id="site-subtitle">全世界开发者的函数库</p>
             </div>
             <div class="language-switcher">
+                <a href="/skillapi" class="skill-link" aria-label="Skill API">Skill</a>
+                <a href="/stylecool" class="skill-link" aria-label="StyleCool">StyleCool</a>
                 <button id="lang-btn" onclick="toggleLanguage()">English</button>
             </div>
         </div>

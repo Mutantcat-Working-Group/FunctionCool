@@ -97,6 +97,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
             </div>
             <div class="language-switcher">
                 <a href="/skillapi" class="skill-link" aria-label="Skill API">Skill</a>
+                <a href="/stylecool" class="skill-link" aria-label="StyleCool">StyleCool</a>
                 <button id="lang-btn" onclick="toggleLanguage()">English</button>
             </div>
         </div>
@@ -213,7 +214,15 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                 <h2 id="posts-heading">最新文章</h2>
             </div>
             <div class="latest-list">
-                <a class="post-item reveal reveal-1" href="/notes/003">
+                <a class="post-item reveal reveal-1" href="/stylecool">
+                    <div class="post-meta">
+                        <span class="post-date">2026-06-13</span>
+                        <span class="post-tag">设计</span>
+                    </div>
+                    <h3 class="post-title">StyleCool 设计模式接口上线</h3>
+                    <p class="post-desc">面向 AI 编程助手的设计知识 JSON 接口正式发布。按 Web / 桌面 / 小程序 / 手机四个平台分类，提供设计规则、组件模式与反模式检索，让 AI 在生成 UI 时先查再写——把昂贵的输出 token 折成便宜的输入 token。</p>
+                </a>
+                <a class="post-item reveal reveal-2" href="/notes/003">
                     <div class="post-meta">
                         <span class="post-date">2026-05-18</span>
                         <span class="post-tag">效率</span>
@@ -221,7 +230,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                     <h3 class="post-title">函数库加速开发的秘密</h3>
                     <p class="post-desc">探索函数库如何通过代码复用、减少重复造轮子、降低认知负荷来加速软件开发，让开发者聚焦业务逻辑而非基础实现。</p>
                 </a>
-                <a class="post-item reveal reveal-2" href="/notes/002">
+                <a class="post-item reveal reveal-3" href="/notes/002">
                     <div class="post-meta">
                         <span class="post-date">2025-09-29</span>
                         <span class="post-tag">教育</span>
@@ -229,7 +238,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                     <h3 class="post-title">给大学编程课的有力帮助</h3>
                     <p class="post-desc">函数库为大学生提供编程学习资源，快速查询常用函数，帮助理解算法和数据结构，提高编程效率。</p>
                 </a>
-                <a class="post-item reveal reveal-3" href="/notes/001">
+                <a class="post-item reveal reveal-4" href="/notes/001">
                     <div class="post-meta">
                         <span class="post-date">2025-09-17</span>
                         <span class="post-tag">公告</span>
