@@ -18,6 +18,16 @@ if (preg_match('#^/mcpapi/?$#', $path)) {
     exit;
 }
 
+// StyleCool 子站点（主域 /stylecool 或独立域 style.functioncool.xyz）→ stylecool/index.php
+if (preg_match('#^/stylecool/?$#', $path)) {
+    require __DIR__ . '/stylecool.php';
+    exit;
+}
+if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'style.functioncool.xyz') {
+    require __DIR__ . '/stylecool/index.php';
+    exit;
+}
+
 if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
     require __DIR__ . '/notes/note' . $m[1] . '.php';
     exit;

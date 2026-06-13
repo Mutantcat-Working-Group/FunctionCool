@@ -1,0 +1,59 @@
+[
+  {
+    "name-en": "Bottom Tab Bar",
+    "name-zh": "底部标签栏",
+    "description-en": "WeChat mini-program standard: 2-5 tabs, icon + label, fixed at bottom. Active tab: accent color icon + text. Inactive: gray. Tab bar height 50px + safe-area padding. Never use more than 5 tabs. Never mix text-only and icon-only tabs in the same bar.",
+    "description-zh": "微信小程序标准：2-5 个标签，图标+文字，底部固定。激活标签主色图标+文字，未激活灰色。标签栏高 50px + 安全区。禁止超过 5 个标签、禁止同一栏混用纯文字和纯图标。",
+    "tags": ["tab-bar", "bottom", "navigation", "wechat", "mini-program"],
+    "css": ".tab-bar{position:fixed;bottom:0;left:0;right:0;height:calc(50px + env(safe-area-inset-bottom));display:flex;background:#fff;border-top:1px solid rgba(0,0,0,.06)}.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.65rem;color:#999}.tab-item.active{color:#3A8DD0}"
+  },
+  {
+    "name-en": "Card-Feed List",
+    "name-zh": "卡片信息流",
+    "description-en": "The primary content pattern for mini-programs: a vertical scroll of cards, each with an image (16:9 or 1:1), title, 1-line description, and metadata row. Cards have 12px border-radius and a fine separator. Gap between cards: 12px. Pull-down to refresh, pull-up to load more.",
+    "description-zh": "小程序核心内容模式：纵向卡片信息流，每张卡片含图（16:9 或 1:1）、标题、一行描述、元数据行。12px 圆角、细分割线。卡片间距 12px。下拉刷新、上拉加载更多。",
+    "tags": ["card", "feed", "list", "scroll", "mini-program"],
+    "css": ".card-feed{padding:12px}.card{background:#fff;border-radius:12px;margin-bottom:12px;overflow:hidden}.card .thumb{width:100%;aspect-ratio:16/9;object-fit:cover}.card .body{padding:12px}.card .title{font-size:1rem;font-weight:600}.card .meta{font-size:.75rem;color:#999;margin-top:6px}"
+  },
+  {
+    "name-en": "Swiper Banner",
+    "name-zh": "轮播横幅",
+    "description-en": "A horizontal swiper/carousel at the top of the page. 2-5 panels, auto-play optional (3s interval). Dots indicator below, active dot in accent color. Aspect ratio 2:1 or 16:9. Never auto-play when the user has reduced-motion preference. Always show the dot indicator — never hide it.",
+    "description-zh": "页面顶部横向轮播，2-5 面板，可选自动播放（3s 间隔）。下方圆点指示器，激活点主色。宽高比 2:1 或 16:9。用户开启减少动效时禁止自动播放。始终显示圆点，不可隐藏。",
+    "tags": ["swiper", "banner", "carousel", "auto-play", "mini-program"],
+    "css": ".swiper{width:100%;aspect-ratio:2/1;border-radius:8px;overflow:hidden}.swiper-dots{display:flex;justify-content:center;gap:6px;padding:8px 0}.swiper-dot{width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,.2)}.swiper-dot.active{background:#3A8DD0}"
+  },
+  {
+    "name-en": "Form with Inline Validation",
+    "name-zh": "行内校验表单",
+    "description-en": "Each field: label on top, input below, error text below input in red #E53E3E. Validate on blur. Submit button at the bottom, full-width, 44px height, disabled until all fields pass. Required fields marked with a red asterisk. Phone number fields trigger the numeric keyboard.",
+    "description-zh": "每个字段：标签在上、输入框在下、错误提示红字 #E53E3E 在输入框下。失焦时校验。底部提交按钮全宽、44px 高、全部通过前禁用。必填项红色星号。手机号字段唤起数字键盘。",
+    "tags": ["form", "validation", "input", "submit", "mini-program"],
+    "css": ".form-field{margin-bottom:16px}.form-field label{display:block;font-size:.85rem;margin-bottom:6px}.form-field input{width:100%;height:44px;border:1px solid rgba(0,0,0,.12);border-radius:8px;padding:0 12px}.form-field .error{font-size:.75rem;color:#E53E3E;margin-top:4px}"
+  },
+  {
+    "name-en": "Custom Navigation Bar",
+    "name-zh": "自定义导航栏",
+    "description-en": "Replace the default WeChat nav bar with a custom one. Height: capsule-button-safe (varies by device, ~44px on modern iPhones). Back button left (← arrow), title centered, optional action button right. Background: white with a bottom hairline. Set navigationStyle to 'custom' in app.json.",
+    "description-zh": "用自定义导航栏替换微信默认栏。高度适配胶囊按钮（因设备而异，新 iPhone ~44px）。左返回箭头、标题居中、右侧可选操作按钮。白底底部发丝线。app.json 设 navigationStyle 为 custom。",
+    "tags": ["navigation-bar", "custom", "wechat", "capsule", "mini-program"],
+    "css": ".nav-bar{position:sticky;top:0;z-index:100;height:44px;display:flex;align-items:center;justify-content:center;background:#fff;border-bottom:1px solid rgba(0,0,0,.06)}.nav-bar .back{position:absolute;left:12px}",
+    "config": "app.json: {\"window\":{\"navigationStyle\":\"custom\"}}"
+  },
+  {
+    "name-en": "Pull-Down Refresh + Load More",
+    "name-zh": "下拉刷新 + 上拉加载",
+    "description-en": "Enable pull-down refresh (enablePullDownRefresh: true) with a custom loading spinner in the accent color. On refresh, reset page to 1. Scroll to bottom triggers load-more (onReachBottom): append page+1 results, show a 'loading' footer. If no more data, show '— No more —' in tertiary text. Never show both spinners simultaneously.",
+    "description-zh": "开启下拉刷新（enablePullDownRefresh: true），自定义主色加载动画。刷新时重置页码为 1。滚到底触发加载更多（onReachBottom），追加下一页结果，底部显示'加载中'。无更多数据时显示'— 没有更多了 —'三级灰色。禁止两个加载动画同时出现。",
+    "tags": ["pull-refresh", "load-more", "pagination", "scroll", "mini-program"],
+    "css": ".load-more{padding:16px;text-align:center;font-size:.8rem;color:#999}.no-more{color:#B5C2D0}"
+  },
+  {
+    "name-en": "Modal Action Sheet",
+    "name-zh": "模态操作面板",
+    "description-en": "A bottom sheet with a list of actions (e.g., Share, Report, Block). Title at top, action rows in the middle, Cancel button at the bottom separated by a 6px gap. Action rows: 48px height, centered text. Destructive actions in red. Cancel in bold. Backdrop: rgba(0,0,0,0.4). Slide-up animation 0.3s.",
+    "description-zh": "底部面板，含操作列表（如分享、举报、拉黑）。顶部标题，中部操作行，底部取消按钮以 6px 间距分隔。操作行高 48px，文字居中。破坏性操作红字。取消加粗。遮罩 rgba(0,0,0,0.4)。上滑动画 0.3s。",
+    "tags": ["action-sheet", "modal", "bottom-sheet", "mini-program"],
+    "css": ".action-sheet{position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:12px 12px 0 0;transform:translateY(100%);transition:transform .3s}.action-sheet.show{transform:translateY(0)}.action-sheet .action{height:48px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(0,0,0,.06)}.action-sheet .cancel{margin-top:6px;font-weight:700}"
+  }
+]

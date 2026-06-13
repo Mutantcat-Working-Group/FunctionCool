@@ -1,0 +1,10 @@
+#############################################
+# StyleCool standalone rewrite rules
+# 独立部署于 style.functioncool.xyz 时使用
+#############################################
+
+RewriteEngine On
+DirectoryIndex index.php
+
+# /skillapi → index.php（带参时为 JSON，无参时为文档页）
+RewriteRule ^skillapi/?$ index.php [L,QSA]

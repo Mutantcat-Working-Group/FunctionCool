@@ -1,0 +1,69 @@
+[
+  {
+    "name-en": "Thumb Zone Heatmap",
+    "name-zh": "拇指热区",
+    "description-en": "On a phone held one-handed, the bottom 60% of the screen is the 'easy reach' zone. Place primary actions (CTAs, tab bars, main navigation) in the bottom half. The top 20% is a 'stretch zone' — only put secondary info there. Never place a critical CTA in the top-right corner of a portrait phone.",
+    "description-zh": "单手持机时，屏幕底部 60% 为'舒适区'。主要操作（CTA、标签栏、主导航）放在下半部。顶部 20% 为'拉伸区'——仅放次要信息。禁止将关键 CTA 放在竖屏手机右上角。",
+    "tags": ["thumb-zone", "ergonomics", "reachability", "mobile", "one-handed"],
+    "guideline": "Bottom 60% = primary actions; Top 20% = secondary info only; Never CTA in top-right corner"
+  },
+  {
+    "name-en": "Bottom Sheet",
+    "name-zh": "底部抽屉",
+    "description-en": "A surface that slides up from the bottom. Two sizes: half-sheet (50% height) for quick actions, full-sheet (90% height) for forms or detail views. Drag handle: a 4px × 36px gray rounded bar at the top center. Dismiss by swiping down or tapping the scrim. Animation: spring, 300ms, translateY only.",
+    "description-zh": "从底部滑出的面板。两种尺寸：半屏 50% 高用于快捷操作，全屏 90% 高用于表单或详情。拖拽手柄：顶部居中 4px×36px 灰色圆角条。下滑或点击遮罩关闭。动画：弹性 300ms，仅 translateY。",
+    "tags": ["bottom-sheet", "panel", "mobile", "gesture", "modal"],
+    "css": ".sheet{position:fixed;bottom:0;left:0;right:0;background:#fff;border-radius:16px 16px 0 0;max-height:90vh;transform:translateY(100%);transition:transform .3s cubic-bezier(.22,1,.36,1)}.sheet.open{transform:translateY(0)}.sheet .handle{width:36px;height:4px;background:rgba(0,0,0,.2);border-radius:2px;margin:8px auto 0}"
+  },
+  {
+    "name-en": "44px Minimum Touch Target",
+    "name-zh": "44px 最小触控区",
+    "description-en": "Every interactive element — buttons, links, icons, checkboxes — must have a minimum touch target of 44×44px. Use padding to expand the hit area of small icons. Never rely on the visual size of a 16px icon alone; it's physically impossible to tap accurately. This is both an Apple HIG and Material Design requirement.",
+    "description-zh": "每个可交互元素——按钮、链接、图标、复选框——最小触控区必须 44×44px。用 padding 扩大小图标的点击区。禁止依赖 16px 图标自身大小，物理上无法准确点击。这既是 Apple HIG 也是 Material Design 要求。",
+    "tags": ["touch-target", "accessibility", "44px", "mobile", "tap"],
+    "css": ".icon-btn{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0}.icon-btn svg{width:20px;height:20px}",
+    "anti": ["16px icon without padding", "touch target < 44px"]
+  },
+  {
+    "name-en": "Safe Area Insets",
+    "name-zh": "安全区适配",
+    "description-en": "Use env(safe-area-inset-*) to avoid the notch, Dynamic Island, and home indicator. Pad the top with padding-top: env(safe-area-inset-top), bottom with padding-bottom: env(safe-area-inset-bottom). For fixed bottom bars, use calc(50px + env(safe-area-inset-bottom)). Always provide a fallback value for browsers that don't support the env() function.",
+    "description-zh": "用 env(safe-area-inset-*) 避开刘海、灵动岛和 Home 指示条。顶部用 padding-top: env(safe-area-inset-top)，底部用 padding-bottom: env(safe-area-inset-bottom)。固定底栏用 calc(50px + env(safe-area-inset-bottom))。始终提供不支持 env() 的浏览器的回退值。",
+    "tags": ["safe-area", "notch", "dynamic-island", "home-indicator", "mobile"],
+    "css": ".fixed-bottom{padding-bottom:env(safe-area-inset-bottom,0);bottom:0}.page-top{padding-top:env(safe-area-inset-top,0)}",
+    "ios": "viewport-fit=cover in meta tag"
+  },
+  {
+    "name-en": "Single-Column List",
+    "name-zh": "单列列表",
+    "description-en": "Mobile content flows in a single column. No side-by-side cards, no multi-column grids below 768px. Each list row: 48-56px height, a leading element (avatar/icon), title + subtitle stack, and optionally a trailing accessory (chevron/badge). Hairline separator between rows. Pull-to-refresh at top.",
+    "description-zh": "移动端内容单列流动。768px 以下禁止并排卡片、禁止多列网格。每行 48-56px 高，前导元素（头像/图标）、标题+副标题堆叠，可选尾部配件（箭头/徽记）。行间发丝线分割。顶部下拉刷新。",
+    "tags": ["list", "single-column", "mobile", "scroll", "row"],
+    "css": ".list-row{display:flex;align-items:center;gap:12px;min-height:48px;padding:10px 16px;border-bottom:1px solid rgba(0,0,0,.06)}.list-row .leading{width:40px;height:40px;border-radius:50%}.list-row .content{flex:1}.list-row .title{font-size:1rem}.list-row .subtitle{font-size:.8rem;color:#999}"
+  },
+  {
+    "name-en": "Keyboard Avoidance",
+    "name-zh": "键盘避让",
+    "description-en": "When the virtual keyboard appears, the focused input must remain visible. On iOS, use a KeyboardAvoidingView or scroll the form so the active field is above the keyboard. Never let the keyboard cover the submit button. On Android with 'adjustResize', the window shrinks — test both behaviors. Sticky bottom bars should hide or move above the keyboard.",
+    "description-zh": "虚拟键盘弹出时，聚焦的输入框必须保持可见。iOS 用 KeyboardAvoidingView 或上移表单使当前字段在键盘上方。禁止键盘遮住提交按钮。Android adjustResize 下窗口会收缩——两种行为都要测。粘性底栏应在键盘弹出时隐藏或上移。",
+    "tags": ["keyboard", "input", "avoidance", "form", "mobile"],
+    "css": "input:focus{scroll-margin-bottom:300px}",
+    "note": "iOS: KeyboardAvoidingView; Android: windowSoftInputMode=adjustResize"
+  },
+  {
+    "name-en": "Swipe Gesture — Row Actions",
+    "name-zh": "滑动操作 — 行内动作",
+    "description-en": "Swipe a list row left to reveal 1-2 action buttons (e.g., Delete, Archive). Max two actions. Destructive action in red on the far right. Swipe threshold: 60px to snap open. Spring animation to return. Never make swipe the only way to access an action — always provide a long-press or edit-mode fallback.",
+    "description-zh": "左滑列表行显示 1-2 个操作按钮（如删除、归档）。最多两个。破坏性操作在最右红底。滑动阈值 60px 吸附打开。弹性动画回弹。禁止将滑动作为操作的唯一入口——始终提供长按或编辑模式的回退方式。",
+    "tags": ["swipe", "gesture", "row-action", "delete", "mobile"],
+    "css": ".swipe-row{position:relative;overflow:hidden}.swipe-actions{position:absolute;right:0;top:0;bottom:0;display:flex;transform:translateX(100%);transition:transform .2s}.swipe-actions .delete{background:#E53E3E;color:#fff;width:72px;display:flex;align-items:center;justify-content:center}"
+  },
+  {
+    "name-en": "Full-Screen Modal on Mobile",
+    "name-zh": "移动端全屏模态",
+    "description-en": "On screens narrower than 480px, modals should go full-screen instead of centered. Slide up from the bottom, round only the top corners (16px), add a close button top-right or a swipe-down handle. Background: white. Never show a centered 400px dialog on a 375px screen — it feels claustrophobic and wastes space.",
+    "description-zh": "屏幕窄于 480px 时，模态应全屏而非居中弹窗。从底部滑入，仅顶部圆角 16px，右上角关闭按钮或下滑手柄。白底。禁止在 375px 屏上显示 400px 居中对话框——压抑且浪费空间。",
+    "tags": ["modal", "full-screen", "mobile", "responsive"],
+    "css": "@media(max-width:480px){.modal{position:fixed;inset:0;border-radius:16px 16px 0 0;top:10vh}}@media(min-width:481px){.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);max-width:480px;border-radius:12px}}"
+  }
+]
