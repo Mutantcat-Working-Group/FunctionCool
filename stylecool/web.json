@@ -407,5 +407,431 @@
       "no focus support for keyboard users"
     ],
     "category": "web"
+  },
+  {
+    "name-en": "Class Naming — Meaningful, Hyphen-Delimited",
+    "name-zh": "类命名 — 有意义、连字符分隔",
+    "description-en": "Class names must reflect purpose, not appearance. Use .gallery, .login, .video — never .button-green or .yee-1901. Separate words with hyphens (.video-id), never underscores or camelCase. Keep names as short as possible but as long as necessary — .nav over .navigation, but never .atr for .author. Optionally prefix with an app-specific namespace in large projects (.adw-help). Source: Google HTML/CSS Style Guide.",
+    "description-zh": "类名必须反映用途而非外观。用 .gallery、.login、.video——禁用 .button-green 或 .yee-1901。连字符分隔单词 (.video-id)，禁用下划线或驼峰。尽量短但够清晰——用 .nav 而非 .navigation，但不能把 .author 缩成 .atr。大型项目可用应用前缀 (.adw-help)。源自 Google HTML/CSS 风格指南。",
+    "tags": [
+      "naming",
+      "class",
+      "convention",
+      "maintainability",
+      "google-styleguide"
+    ],
+    "css": ".nav{}.video-id{}.ads-help{}",
+    "anti": [
+      ".button-green",
+      ".yee-1901",
+      ".error_status",
+      ".demoimage",
+      ".navigation (when .nav works)"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "No ID Selectors — Use Class Selectors",
+    "name-zh": "禁用 ID 选择器 — 用 class 替代",
+    "description-en": "ID selectors (#example) are banned for styling. IDs must be unique across the entire page — impossible to guarantee in a multi-component, multi-engineer codebase. Class selectors are preferred in all situations. If an id attribute is absolutely required, its value must contain a hyphen (user-profile, not userProfile) to avoid becoming a global JavaScript variable on window. Source: Google HTML/CSS Style Guide.",
+    "description-zh": "ID 选择器 (#example) 在样式中禁止使用。ID 必须在整个页面唯一——在多组件、多工程师的代码库中无法保证。所有场景优先使用 class 选择器。如果必须使用 id 属性，值必须含连字符 (user-profile 而非 userProfile)，以避免成为 window 上的全局 JavaScript 变量。源自 Google HTML/CSS 风格指南。",
+    "tags": [
+      "selector",
+      "id",
+      "class",
+      "specificity",
+      "google-styleguide"
+    ],
+    "css": ".user-profile{font-weight:600}",
+    "anti": [
+      "#example for CSS",
+      "id=\"userProfile\"",
+      "using id for styling",
+      "id without hyphen"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "!important — Never Use, Fix Specificity Instead",
+    "name-zh": "!important — 禁用，修复优先级代替",
+    "description-en": "The !important declaration breaks the natural cascade and makes styles impossible to reason about. Once one !important appears, others follow in an escalating war that no one wins. Fix the root cause: restructure selectors, use cascade layers (@layer), or refactor the component hierarchy. The only acceptable use is overriding third-party inline styles when no other option exists. Source: Google HTML/CSS Style Guide.",
+    "description-zh": "!important 声明会破坏自然级联，让样式变得不可推理。一个 !important 出现后，其他人跟着加，形成一场无人获胜的升级战争。修复根本原因：重构选择器、使用级联层 (@layer)、或重构组件层级。唯一可接受的使用场景是别无选择时覆盖第三方内联样式。源自 Google HTML/CSS 风格指南。",
+    "tags": [
+      "important",
+      "specificity",
+      "cascade",
+      "maintainability",
+      "google-styleguide"
+    ],
+    "css": "@layer components{.btn{font-weight:600}}.btn.special{font-weight:400}",
+    "anti": [
+      "font-weight:bold !important",
+      "escalating !important war",
+      "!important to fix specificity bugs",
+      "!important in library code"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Avoid Qualifying Class with Type Selector",
+    "name-zh": "避免用元素类型限定 class 选择器",
+    "description-en": "Writing ul.example or div.error ties the style to a specific HTML element for no benefit. If the element changes (div → section), the style silently breaks. Just write .example or .error — it's more reusable, more performant, and avoids unnecessary specificity. Only qualify when the class genuinely means different things on different elements (rare). Source: Google HTML/CSS Style Guide.",
+    "description-zh": "写 ul.example 或 div.error 把样式绑定到特定 HTML 元素上，毫无好处。如果元素变了（div → section），样式悄悄失效。只写 .example 或 .error——更可复用、性能更好、避免不必要优先级。仅当 class 在不同元素上确实有不同含义时才限定（罕见）。源自 Google HTML/CSS 风格指南。",
+    "tags": [
+      "selector",
+      "specificity",
+      "performance",
+      "refactoring",
+      "google-styleguide"
+    ],
+    "css": ".error{color:#d32f2f}",
+    "anti": [
+      "div.error{}",
+      "ul.example{}",
+      "span.price{}",
+      "a.button{}"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Shorthand Properties — Prefer Compact over Longhand",
+    "name-zh": "简写属性 — 优先紧凑写法",
+    "description-en": "Use CSS shorthand properties whenever possible, even when only one value is explicitly set. margin: 0 0 1em is clearer and more maintainable than margin-bottom: 1em alone — it communicates intent that the other sides are deliberately zero. Shorthand is easier to scan and less prone to partial-override bugs. Exceptions: when only setting one value of a truly unrelated set (e.g., background-position alone is fine). Source: Google HTML/CSS Style Guide.",
+    "description-zh": "尽可能使用 CSS 简写属性，即使只显式设置了一个值。margin: 0 0 1em 比单独 margin-bottom: 1em 更清晰、更易维护——它传达了其他边故意设为零的意图。简写更易扫读，更少部分覆盖 bug。例外：只设置一组无关属性中的某一个（如单独 background-position 可以）。源自 Google HTML/CSS 风格指南。",
+    "tags": [
+      "shorthand",
+      "css",
+      "maintainability",
+      "google-styleguide"
+    ],
+    "css": "padding:0 1em 2em;border-top:0;background:#fff url(a.png) no-repeat;font:italic 1em/1.5 sans-serif",
+    "anti": [
+      "padding-top:1em;padding-right:1em;padding-bottom:1em;padding-left:1em",
+      "margin-bottom:1em when margin:0 0 1em conveys intent"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Zero Without Units — Never 0px or 0em",
+    "name-zh": "零值不带单位 — 禁止 0px 或 0em",
+    "description-en": "Zero is zero regardless of unit. Write margin: 0 not margin: 0px. Cleaner, shorter, and the only universally agreed CSS convention. The sole exception is flex-basis (flex: 1 1 0px required in some browsers). Source: Google HTML/CSS Style Guide.",
+    "description-zh": "零就是零，无论什么单位。写 margin: 0 而非 margin: 0px。更干净、更短、CSS 社区唯一公认约定。唯一例外是 flex-basis（某些浏览器需要 flex: 1 1 0px）。源自 Google HTML/CSS 风格指南。",
+    "tags": [
+      "zero",
+      "units",
+      "convention",
+      "google-styleguide"
+    ],
+    "css": "margin:0;padding:0;border:0;outline:0",
+    "anti": [
+      "margin:0px",
+      "padding:0em",
+      "border:0rem"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Hex Colors — Use 3-Char Shorthand When Possible",
+    "name-zh": "十六进制颜色 — 能用 3 位就用 3 位",
+    "description-en": "#eebbcc should be written as #ebc. Shorter hex codes are easier to scan, and the 3-char form communicates that the color is a 'clean' value from the 216-color web-safe-ish palette. Never use uppercase hex (#EBC). Only use 6-char when the color genuinely cannot be abbreviated. Source: Google HTML/CSS Style Guide.",
+    "description-zh": "#eebbcc 应写为 #ebc。更短的十六进制更易扫读，且 3 位形式传达了颜色来自 216 色干净色板的信号。禁止大写十六进制 (#EBC)。仅当颜色确实无法缩写时才用 6 位。源自 Google HTML/CSS 风格指南。",
+    "tags": [
+      "hex",
+      "color",
+      "shorthand",
+      "google-styleguide"
+    ],
+    "css": "color:#ebc;background:#fff;border-color:#ddd",
+    "anti": [
+      "#EEBBCC",
+      "#eebbcc (when #ebc works)",
+      "uppercase hex #FFF"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "No Inline Styles — Separation of Concerns",
+    "name-zh": "禁止内联样式 — 结构表现分离",
+    "description-en": "HTML documents should contain only structural markup. All presentation goes in CSS stylesheets; all behavior goes in JavaScript files. Inline styles (<div style='...'>) blur this boundary and make the codebase unmaintainable. Every inline style is a style that cannot be cached, cannot be themed, and cannot be overridden without !important. Keep the contact surface between HTML and CSS as small as possible. Source: Google HTML/CSS Style Guide.",
+    "description-zh": "HTML 文档只应包含结构化标记。所有表现放在 CSS 样式表里，所有行为放在 JavaScript 文件里。内联样式 (<div style='...'>) 模糊了这个边界，让代码库不可维护。每个内联样式都是一个不能被缓存、不能被主题化、不能用 !important 之外方式覆盖的样式。保持 HTML 和 CSS 的接触面尽可能小。源自 Google HTML/CSS 风格指南。",
+    "tags": [
+      "inline-style",
+      "separation",
+      "architecture",
+      "maintainability",
+      "google-styleguide"
+    ],
+    "css": "",
+    "anti": [
+      "<div style=\"font-size:1em\">",
+      "<p style=\"color:red\">",
+      "style attribute for layout",
+      "dynamic inline styles from JS"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Semantic HTML — Elements for Their Purpose",
+    "name-zh": "语义化 HTML — 元素各司其职",
+    "description-en": "Use HTML elements for their intended purpose: headings for headings, p for paragraphs, a for anchors, button for buttons. Never use <div onclick='...'> when <a> or <button> is the correct element — this breaks keyboard navigation, screen readers, and SEO. Semantic HTML is a measurable quality baseline that pays dividends in accessibility, code efficiency, and maintainability. Source: Google HTML/CSS Style Guide.",
+    "description-zh": "按预期用途使用 HTML 元素：标题用 heading、段落用 p、链接用 a、按钮用 button。禁止 <div onclick='...'> 替代 <a> 或 <button>——这会破坏键盘导航、屏幕阅读器和 SEO。语义化 HTML 是可衡量的质量基线，在无障碍、代码效率和可维护性方面持续产生红利。源自 Google HTML/CSS 风格指南。",
+    "tags": [
+      "semantic",
+      "html",
+      "accessibility",
+      "a11y",
+      "google-styleguide"
+    ],
+    "css": "",
+    "anti": [
+      "<div onclick=\"navigate()\"> for links",
+      "<div class=\"button\"> for buttons",
+      "<span class=\"h1\"> for headings"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Three AI Cliché Palettes — Actively Avoid",
+    "name-zh": "三种 AI 陈词滥调色板 — 主动避开",
+    "description-en": "Three color palettes appear so often in AI-generated UIs that they have become defaults rather than choices: (1) Warm cream background (#F4F1EA) + high-contrast serif display + terracotta accent; (2) Near-black background + single bright acid-green or vermilion accent; (3) Broadsheet layout with hairline rules and dense newspaper columns. Unless the brief explicitly requests one of these, choose something else. Derive your palette from the subject's world, not from statistical averages. Source: Anthropic Frontend Design Skill.",
+    "description-zh": "三种色板在 AI 生成界面中出现频率极高，已成默认而非选择：(1) 暖奶油底色 (#F4F1EA) + 高对比衬线标题 + 赤陶点缀；(2) 近黑底色 + 单一亮酸绿或朱红点缀；(3) 报纸排版 + 发丝线分隔 + 密集列。除非需求明确要求，选择其他方案。从项目主题的世界中提取色板，而非从统计平均中获取。源自 Anthropic Frontend Design Skill。",
+    "tags": [
+      "color",
+      "palette",
+      "anti-pattern",
+      "ai-cliche",
+      "originality",
+      "anthropic-design"
+    ],
+    "css": "",
+    "anti": [
+      "warm cream + serif + terracotta",
+      "near-black + acid green accent",
+      "broadsheet newspaper layout",
+      "any palette chosen because 'AI usually picks this'",
+      "design without a subject to derive from"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Hero Section — Thesis, Not Template",
+    "name-zh": "Hero 区域 — 论点而非模板",
+    "description-en": "A hero section should open with the most characteristic thing in the subject's world — it is a thesis statement, not a template. Avoid the 'big number with a small label, supporting stats, and gradient accent' pattern unless it is genuinely the best option. The hero sets the tone for the entire page; if it reads like every other landing page, the user has already formed their impression before scrolling. Source: Anthropic Frontend Design Skill.",
+    "description-zh": "Hero 区域应该用主题世界中最有特征的东西开场——它是一个论点，不是一个模板。避免「大数字 + 小标签 + 支撑数据 + 渐变点缀」的套路，除非它确实是最佳选择。Hero 为整页定调；如果它读起来和其他着陆页一模一样，用户在滚动前就已经下了判断。源自 Anthropic Frontend Design Skill。",
+    "tags": [
+      "hero",
+      "landing",
+      "thesis",
+      "originality",
+      "anthropic-design"
+    ],
+    "css": ".hero{display:grid;grid-template-columns:7fr 5fr;align-items:center;min-height:80dvh}",
+    "anti": [
+      "big number + small label + stats + gradient hero",
+      "generic hero from template",
+      "hero that doesn't reference the subject's world",
+      "hero that could belong to any company"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Typography as Identity — Deliberate Pairing",
+    "name-zh": "排版即身份 — 刻意的字体搭配",
+    "description-en": "Typography carries the personality of the page. Pair display and body faces deliberately — not the same generic sans-serif families you would reach for on any other project. Use at minimum 2+ roles: a characterful display face (used with restraint), a complementary body face, and optionally a utility face for captions and data. Define a clear type scale with intentional weights, widths, and spacing. The type treatment itself should be a memorable part of the design, not a neutral delivery vehicle. Source: Anthropic Frontend Design Skill.",
+    "description-zh": "排版承载页面的个性。刻意搭配展示字体和正文字体——不是你给任何其他项目都会选的同一套通用无衬线字族。最少 2+ 个角色：有性格的展示字体（克制使用）、互补的正文字体，可选工具字体用于标注和数据。定义清晰的字体阶差，权重、宽度、间距都要有意图。字体处理本身就应该是设计中令人难忘的一部分，而非中性的传送工具。源自 Anthropic Frontend Design Skill。",
+    "tags": [
+      "typography",
+      "font",
+      "pairing",
+      "identity",
+      "display",
+      "anthropic-design"
+    ],
+    "css": "h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;letter-spacing:-0.02em}h2{font-family:'Fraunces',serif;font-size:1.75rem}p{font-family:'Inter',sans-serif;font-size:1rem;line-height:1.65}",
+    "anti": [
+      "same sans-serif for display and body",
+      "no font pairing strategy",
+      "generic system font stack with no character",
+      "type scale without intentional weights"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "One Signature Element — Spend Boldness Once",
+    "name-zh": "一个标志性元素 — 大胆只挥霍一次",
+    "description-en": "Spend your boldness in one place. Let the signature element be the single unique thing this page will be remembered by — keep everything else quiet and disciplined. This could be a distinctive type treatment, an unexpected layout move, a custom illustration style, or an interactive flourish. The key: it's ONE thing. If everything is special, nothing is. Cut any decoration that does not serve the brief. Not taking a risk can be a risk itself — but take only one. Source: Anthropic Frontend Design Skill.",
+    "description-zh": "大胆只挥霍在一处。让标志性元素成为这个页面被记住的唯一独特之处——其余一切保持安静和克制。可能是有个性的字体处理、意外的布局动作、定制插画风格、或交互上的一个闪光点。关键是：就这一处。如果什么都是特别的，就什么都不特别了。删掉任何不服务于需求的装饰。不冒险本身可能就是最大的风险——但只冒一个。源自 Anthropic Frontend Design Skill。",
+    "tags": [
+      "signature",
+      "boldness",
+      "focus",
+      "restraint",
+      "unique",
+      "anthropic-design"
+    ],
+    "css": "",
+    "anti": [
+      "decoration everywhere",
+      "everything is 'special'",
+      "no focal point",
+      "risk-averse design with zero distinctiveness",
+      "multiple competing signature elements"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Copy as Design Material — Specific > Clever",
+    "name-zh": "文案即设计材料 — 具体胜过聪明",
+    "description-en": "Words appear in a design for one reason: to make it easier to understand. They are design material, not decoration. Rules: (1) Write from the user's side — name things by what people control, not system architecture. (2) Be specific over clever — 'Save changes' not 'Submit'. (3) Active voice as default — the button says exactly what happens. (4) Maintain action-name consistency — 'Publish' button → 'Published' toast. (5) Errors explain what went wrong and how to fix it — never vague, never apologetic. (6) Empty screens are invitations to act. Source: Anthropic Frontend Design Skill.",
+    "description-zh": "文字在设计中只有一个理由：让理解更容易。它是设计材料，不是装饰。规则：(1) 从用户侧写作——用人们控制的东西命名，不用系统架构。 (2) 具体胜过聪明——「保存更改」而非「提交」。 (3) 默认主动语态——按钮准确说出会发生什么。 (4) 保持一致——「发布」按钮 → 「已发布」提示。 (5) 错误说明出了什么问题以及如何修复——禁止含糊、禁止道歉。 (6) 空页面是行动的邀请函。源自 Anthropic Frontend Design Skill。",
+    "tags": [
+      "copy",
+      "writing",
+      "ux-writing",
+      "label",
+      "specificity",
+      "anthropic-design"
+    ],
+    "css": "",
+    "anti": [
+      "vague 'Submit' button",
+      "error: 'Something went wrong'",
+      "empty state: 'No data' with no action",
+      "clever-but-unclear labels",
+      "system-architecture names in user-facing text"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Numbers as Information — Earn Every Marker",
+    "name-zh": "数字即信息 — 每个标记都要挣来",
+    "description-en": "Numbered markers (01 / 02 / 03) in UI are only appropriate when the content represents an actual sequence — a real process or a typed timeline where order carries genuine information. Never use numbered markers purely for decoration. The same principle applies to dividers, eyebrows, and labels: every structural device must encode something true about the content. 'Structure is information.' Source: Anthropic Frontend Design Skill.",
+    "description-zh": "界面中的数字标记 (01 / 02 / 03) 仅在内容代表真实序列时才适用——一个真实的流程或一条有信息含义的时间线。禁止仅为装饰使用数字标记。同样的原则适用于分割线、眉标和标签：每个结构装置都必须编码内容的真实信息。'结构即信息。' 源自 Anthropic Frontend Design Skill。",
+    "tags": [
+      "number",
+      "marker",
+      "structure",
+      "information",
+      "decoration",
+      "anthropic-design"
+    ],
+    "css": "",
+    "anti": [
+      "decorative 01/02/03 markers",
+      "numbered steps that aren't a real sequence",
+      "eyebrows and dividers with no semantic meaning"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Motion — One Orchestrated Moment > Scattered Effects",
+    "name-zh": "动效 — 一个编排时刻胜过分散特效",
+    "description-en": "Leverage motion deliberately. Consider page-load sequences, scroll-triggered reveals, hover micro-interactions, and ambient atmosphere — but don't use all of them. An orchestrated moment (e.g., a coordinated hero entrance with staggered reveals) usually lands harder than scattered effects sprinkled everywhere. Sometimes less animation is more — extra motion contributes to the feeling that the design is AI-generated. Always respect prefers-reduced-motion. Source: Anthropic Frontend Design Skill.",
+    "description-zh": "刻意运用动效。考虑页面加载序列、滚动触发揭示、悬停微交互和氛围动画——但不要全用。一个精心编排的时刻（如协调的 Hero 入场 + 错落揭示）通常比到处散落的效果更有冲击力。有时更少动效反而更好——过多的动效贡献了'这像 AI 做的'的感觉。始终尊重 prefers-reduced-motion。源自 Anthropic Frontend Design Skill。",
+    "tags": [
+      "motion",
+      "animation",
+      "orchestration",
+      "restraint",
+      "anthropic-design"
+    ],
+    "css": "@media(prefers-reduced-motion:no-preference){.reveal{animation:fade-up .45s cubic-bezier(.22,1,.36,1) both}.reveal-1{animation-delay:.05s}.reveal-2{animation-delay:.13s}}@keyframes fade-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}",
+    "anti": [
+      "scattered micro-interactions everywhere",
+      "animation on every element",
+      "ignoring prefers-reduced-motion",
+      "more than 2-3 animation types on one page"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Design Tokens — Named Values, Not Raw Hex",
+    "name-zh": "设计 Token — 命名值而非裸十六进制",
+    "description-en": "Define a compact token system of 4-6 named values before writing any CSS. Use CSS custom properties: --ink, --surface, --accent, --line, --shadow. Every color, spacing, and type decision references a token — never a raw hex or px value in a selector body. This makes the design system portable, themeable, and self-documenting. The token names themselves are design decisions: '--gold' tells a story; '#F2B53C' does not. Source: Google Style Guide (alphabetical declaration order) + Anthropic Design Skill (token system).",
+    "description-zh": "写 CSS 之前先定义一套 4-6 个命名值的紧凑 token 系统。用 CSS 自定义属性：--ink、--surface、--accent、--line、--shadow。每个颜色、间距、字体决策都引用 token——绝不在选择器体中裸写 hex 或 px 值。这让设计系统可移植、可主题化、自文档化。Token 名称本身就是设计决策：'--gold' 在讲一个故事；'#F2B53C' 没有。源自 Google Style Guide + Anthropic Design Skill。",
+    "tags": [
+      "tokens",
+      "custom-properties",
+      "design-system",
+      "naming",
+      "theme",
+      "anthropic-design"
+    ],
+    "css": ":root{--ink:#15324C;--surface:#FFF;--accent:#3A8DD0;--line:rgba(20,58,92,.1);--radius:8px}.card{color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}",
+    "anti": [
+      "raw hex in selector bodies",
+      "no :root token definition",
+      "inconsistent color values",
+      "magic numbers in CSS",
+      "using px for values that should be tokens"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Empty State — Invitation to Act, Not a Void",
+    "name-zh": "空状态 — 行动邀请而非空白",
+    "description-en": "An empty screen is an invitation to act — never just 'No data' or a blank space. Every empty state should: (1) name what would normally be here, (2) explain the benefit of filling it, and (3) provide a clear action to get started. A well-designed empty state converts a moment of absence into a moment of onboarding. The visual should be friendly but minimal — an illustration or icon, a headline, a sentence of explanation, and one primary CTA. Source: Anthropic Frontend Design Skill.",
+    "description-zh": "空页面是行动的邀请——绝不只是'暂无数据'或一片空白。每个空状态应该：(1) 说明这里通常有什么，(2) 解释填满它的好处，(3) 提供明确的开始行动入口。一个精心设计的空状态把缺失时刻转化为引导时刻。视觉应友好但克制——一个插画或图标、一个标题、一句解释、一个主 CTA。源自 Anthropic Frontend Design Skill。",
+    "tags": [
+      "empty-state",
+      "onboarding",
+      "ux-writing",
+      "action",
+      "anthropic-design"
+    ],
+    "css": ".empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 24px;text-align:center;min-height:300px}.empty-state img{width:120px;margin-bottom:24px;opacity:.8}.empty-state h3{font-size:1.25rem;font-weight:600;margin-bottom:8px}.empty-state p{color:var(--ink-2);margin-bottom:24px;max-width:36ch}.empty-state .btn-primary{padding:10px 24px}",
+    "anti": [
+      "'No data' with no action",
+      "blank empty screen",
+      "empty state without CTA",
+      "apologetic empty messaging",
+      "overly complex empty state illustration"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Responsive Down to Mobile — Quality Floor Without Announcement",
+    "name-zh": "响应式到移动端 — 默认品质基线，无需宣告",
+    "description-en": "Every web design must be responsive down to mobile (320px width) without the user having to ask for it. This is a quality floor, not a feature. Elements that work on desktop must adapt: multi-column grids become single-column, touch targets expand to ≥44px, font sizes remain readable without zoom, and hover-dependent interactions gain tap equivalents. Never hide this behind a 'mobile version' toggle — it should just work. Source: Anthropic Frontend Design Skill.",
+    "description-zh": "每个网页设计必须响应式到移动端 (320px)，用户不需要专门要求。这是品质基线，不是功能。桌面端有效的元素必须适配：多列网格变单列、触摸目标扩展到 ≥44px、字号无需缩放即可读、依赖悬停的交互增加点击替代方案。禁止隐藏在'手机版'按钮后面——应该直接可用。源自 Anthropic Frontend Design Skill。",
+    "tags": [
+      "responsive",
+      "mobile",
+      "quality",
+      "baseline",
+      "mobile-first",
+      "anthropic-design"
+    ],
+    "css": "@media(max-width:768px){.grid-2{grid-template-columns:1fr}.card{padding:16px}h1{font-size:clamp(1.5rem,6vw,2.5rem)}}@media(max-width:480px){.container{padding:0 16px}}",
+    "anti": [
+      "desktop-only design",
+      "'View mobile version' link",
+      "fixed-width layouts",
+      "touch targets <44px on mobile",
+      "hover-only interactions with no tap fallback"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Critique Before Building — Two-Pass Design Process",
+    "name-zh": "建造前批判 — 两次通过设计法",
+    "description-en": "Work in two passes: (1) First produce a design plan — a compact token system (color, type, layout, signature) — and critique it against the brief. Is it unique to this subject, or could this plan be for any similar page? (2) Only write code after confirming the plan is distinctive. During code: watch selector specificity — easily generated classes can cancel each other out. After building, critique again: cut one accessory you thought was essential. Revise generic defaults — if the plan reads like it could be for any similar page, state what you changed and why. Source: Anthropic Frontend Design Skill.",
+    "description-zh": "两次通过设计法：(1) 先产出设计计划——一套紧凑 token 系统（颜色、字体、布局、标志元素）——并对着需求批判它。它对这个主题是独特的，还是给任何类似页面都能用？ (2) 确认计划具有区分度后再写代码。编码时：留意选择器优先级——轻松生成的 class 可能相互抵消。建造后再次批判：删掉一个你原以为必要的装饰。修正通用默认值——如果计划读起来像给任何类似页面都能用的，说明你改了什么以及为什么。源自 Anthropic Frontend Design Skill。",
+    "tags": [
+      "process",
+      "critique",
+      "iteration",
+      "design-system",
+      "anthropic-design"
+    ],
+    "css": "",
+    "anti": [
+      "code-first design without a plan",
+      "plan that fits any generic page",
+      "no post-build critique",
+      "keeping every decoration",
+      "selectors that cancel each other out"
+    ],
+    "category": "web"
   }
 ]
