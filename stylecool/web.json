@@ -4,25 +4,50 @@
     "name-zh": "不对称英雄区",
     "description-en": "Split the hero into a 7:5 or 3:2 ratio instead of centering everything. Headline left, a subtle dot-grid or gradient bleed right. Never center the hero at Variance ≥ 4. No bouncing scroll arrows, no 'Scroll to explore' filler.",
     "description-zh": "英雄区用 7:5 或 3:2 不对称切分，标题左置，右侧点缀淡网点或渐变色渗。Variance ≥ 4 时禁止居中。禁止弹跳滚动箭头、禁止'下滑探索'填充文字。",
-    "tags": ["hero", "layout", "asymmetric", "landing", "split-screen"],
+    "tags": [
+      "hero",
+      "layout",
+      "asymmetric",
+      "landing",
+      "split-screen"
+    ],
     "css": ".hero{display:grid;grid-template-columns:7fr 5fr;align-items:center;min-height:80dvh}",
-    "anti": ["centered hero", "scroll-down arrow", "Scroll to explore"]
+    "anti": [
+      "centered hero",
+      "scroll-down arrow",
+      "Scroll to explore"
+    ]
   },
   {
     "name-en": "Card Grid — No Three Equal Columns",
     "name-zh": "卡片网格 — 禁止三等宽",
     "description-en": "The generic 3-equal-card feature row is an AI cliché and is banned. Use a 12-column grid with 5+7, 4+8, or 8+4 Z-pattern spans. Cards get a 1px hairline border and no shadow by default; hover adds a 1px lift and darkens the border.",
     "description-zh": "三等宽卡片行是 AI 陈词滥调，禁止。用 12 列网格，5+7、4+8 或 8+4 的 Z 形跨度。卡片默认仅 1px 发丝线边框，不放阴影；悬停时抬 1px 并加深边框色。",
-    "tags": ["card", "grid", "asymmetric", "feature", "z-pattern"],
+    "tags": [
+      "card",
+      "grid",
+      "asymmetric",
+      "feature",
+      "z-pattern"
+    ],
     "css": ".features{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem}.features .card:nth-child(1){grid-column:1/span 5}.features .card:nth-child(2){grid-column:6/span 7}",
-    "anti": ["3 equal columns", "equal-width card row"]
+    "anti": [
+      "3 equal columns",
+      "equal-width card row"
+    ]
   },
   {
     "name-en": "Hairline Border Cards",
     "name-zh": "发丝线边框卡片",
     "description-en": "Cards should use a 1px hairline border (rgba(20,58,92,0.10)) and no shadow by default. Hover: translateY(-1px) + border darkens to the accent's 300 tint. Shadow only appears as a hover subtraction — never additive. Never use heavy box-shadow as the default card treatment.",
     "description-zh": "卡片默认 1px 发丝线边框 rgba(20,58,92,0.10)，不放阴影。悬停：translateY(-1px) + 边框加深至主色 300 级。阴影仅作为悬停减法效果——从不叠加。禁止默认粗阴影卡片。",
-    "tags": ["card", "border", "hairline", "hover", "elevation"],
+    "tags": [
+      "card",
+      "border",
+      "hairline",
+      "hover",
+      "elevation"
+    ],
     "css": ".card{border:1px solid rgba(20,58,92,.10);border-radius:10px;background:#fff;transition:transform .25s,border-color .25s}.card:hover{transform:translateY(-1px);border-color:rgba(115,185,230,.5);box-shadow:0 10px 30px -10px rgba(20,58,92,.15)}"
   },
   {
@@ -30,16 +55,32 @@
     "name-zh": "搜索框 — 焦点环",
     "description-en": "A hairline-bordered input with a 3px accent focus ring (box-shadow, not outline). Placeholder in tertiary ink. Rounded corners at 10px. Label above in uppercase 0.7rem tracking 0.12em. Never use floating labels.",
     "description-zh": "发丝线边框输入框，聚焦时 3px 主色环（用 box-shadow 而非 outline）。placeholder 用三级墨色。10px 圆角。标签在上方，大写 0.7rem，字距 0.12em。禁止浮动标签。",
-    "tags": ["input", "search", "focus", "form", "accessibility"],
+    "tags": [
+      "input",
+      "search",
+      "focus",
+      "form",
+      "accessibility"
+    ],
     "css": "input{border:1px solid rgba(20,58,92,.18);border-radius:10px;padding:12px 16px;font-size:1rem}input:focus{border-color:#3A8DD0;box-shadow:0 0 0 3px rgba(115,185,230,.25);outline:none}",
-    "anti": ["floating labels", "neon glow focus", "outline focus ring"]
+    "anti": [
+      "floating labels",
+      "neon glow focus",
+      "outline focus ring"
+    ]
   },
   {
     "name-en": "Type Scale with clamp()",
     "name-zh": "clamp() 字体阶梯",
     "description-en": "Build a fluid type scale using CSS clamp(). Display: clamp(2.25rem, 5.2vw, 3.75rem), heading: clamp(2rem, 3.6vw, 2.75rem), body: 1rem. Line-height 1.65 for body, 1.15 for headings. Max 65 characters per line. Never use pure px-only font-size without a clamp fallback for responsive.",
     "description-zh": "用 CSS clamp() 做流体字体阶梯：Display clamp(2.25rem,5.2vw,3.75rem)、Heading clamp(2rem,3.6vw,2.75rem)、正文 1rem。正文行高 1.65，标题 1.15。每行最长 65 字符。禁止只用 px 定字号无 clamp 适配。",
-    "tags": ["typography", "clamp", "scale", "responsive", "fluid"],
+    "tags": [
+      "typography",
+      "clamp",
+      "scale",
+      "responsive",
+      "fluid"
+    ],
     "css": "h1{font-size:clamp(2.25rem,5.2vw,3.75rem);letter-spacing:-0.035em;line-height:1.05}p{max-width:65ch;font-size:1rem;line-height:1.65}"
   },
   {
@@ -47,17 +88,37 @@
     "name-zh": "单主色法则",
     "description-en": "Use exactly one brand accent color. Saturation below 80%. Derive a light tint for backgrounds and a deep shade for text/active states. The accent appears only on: CTAs, focus rings, active nav states, and link underlines. Never add a second accent. Gold/orange/yellow are reserved for identity marks, not functional UI.",
     "description-zh": "只用一个品牌主色，饱和度低于 80%。派生浅色背景和深色文字/激活态。主色仅用于：CTA 按钮、焦点环、导航激活态、链接下划线。禁止加第二个主色。金/橙/黄保留给身份标记，不能做功能色。",
-    "tags": ["color", "accent", "brand", "restraint"],
-    "tokens": {"accent": "#73B9E6", "accent-light": "#EAF5FC", "accent-dark": "#1B4E7A"},
+    "tags": [
+      "color",
+      "accent",
+      "brand",
+      "restraint"
+    ],
+    "tokens": {
+      "accent": "#73B9E6",
+      "accent-light": "#EAF5FC",
+      "accent-dark": "#1B4E7A"
+    },
     "css": ":root{--accent:#73B9E6;--accent-light:#EAF5FC;--accent-dark:#1B4E7A}",
-    "anti": ["purple accent", "neon accent", "dual accent", "saturation > 80%"]
+    "anti": [
+      "purple accent",
+      "neon accent",
+      "dual accent",
+      "saturation > 80%"
+    ]
   },
   {
     "name-en": "Staggered Reveal Animation",
     "name-zh": "错落入场动画",
     "description-en": "Cards and list items should reveal with a cascading stagger: 0.05s, 0.13s, 0.21s, 0.29s, 0.37s. Use a spring-out cubic-bezier(0.22,1,0.36,1) and animate only transform + opacity. Duration ~0.45s. Never animate width, height, top, or left.",
     "description-zh": "卡片和列表项用级联错落入场：0.05s, 0.13s, 0.21s, 0.29s, 0.37s。用弹性出 cubic-bezier(0.22,1,0.36,1)，仅动画 transform + opacity，时长约 0.45s。禁止动画 width/height/top/left。",
-    "tags": ["animation", "stagger", "reveal", "performance", "motion"],
+    "tags": [
+      "animation",
+      "stagger",
+      "reveal",
+      "performance",
+      "motion"
+    ],
     "css": "@keyframes reveal{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.reveal{animation:reveal .45s cubic-bezier(.22,1,.36,1) both}.reveal-1{animation-delay:.05s}.reveal-2{animation-delay:.13s}"
   },
   {
@@ -65,16 +126,29 @@
     "name-zh": "导航 — 干净顶栏",
     "description-en": "A white surface header with a 1px bottom border. Logo left, nav links center or right. Mobile: stack to single column, logo centered. Active nav link underlined with the accent. No sticky header unless content height justifies it. No hamburger menu on desktop. No dropdown mega-menus.",
     "description-zh": "白色顶栏，底部 1px 边框。Logo 左侧，导航链接居中或靠右。移动端竖排堆叠，Logo 居中。当前页用主色下划线标识。桌面端禁止汉堡菜单、禁止下拉巨型菜单。仅当内容高度合理时才用粘性定位。",
-    "tags": ["navigation", "header", "top-bar", "responsive"],
+    "tags": [
+      "navigation",
+      "header",
+      "top-bar",
+      "responsive"
+    ],
     "css": "header{background:#fff;border-bottom:1px solid rgba(20,58,92,.1);padding:16px 0}header .container{display:flex;justify-content:space-between;align-items:center}",
-    "anti": ["hamburger on desktop", "mega-menu", "sticky header always"]
+    "anti": [
+      "hamburger on desktop",
+      "mega-menu",
+      "sticky header always"
+    ]
   },
   {
     "name-en": "Footer — Editorial Close",
     "name-zh": "页脚 — 编辑式收束",
     "description-en": "White surface, top hairline, centered. Row 1: copyright. Row 2: friend links in uppercase 0.75rem tracking 0.1em. No heavy dark background — the footer should feel like the end of a page, not a separate zone. A 1px gold rule at the very top of the footer adds a warm close.",
     "description-zh": "白色面，顶发丝线，居中。第一行版权，第二行友链大写 0.75rem 字距 0.1em。不用深色厚重底——页脚应该像页面的自然结束，而非独立区域。页脚最顶加 1px 金色线做温暖收束。",
-    "tags": ["footer", "editorial", "closing"],
+    "tags": [
+      "footer",
+      "editorial",
+      "closing"
+    ],
     "css": "footer{background:#fff;border-top:1px solid rgba(20,58,92,.1);text-align:center;padding:32px 0}footer::before{content:'';display:block;height:2px;background:linear-gradient(90deg,#F8CE6B,#EBA62B);margin-bottom:16px}"
   },
   {
@@ -82,16 +156,32 @@
     "name-zh": "主按钮 — 扁平实心",
     "description-en": "A single primary CTA per viewport. Flat fill (accent dark), no shadow at rest, hairline bottom 1px for tactile depth. Hover: darken, lift 1px. Disabled: 40% opacity + not-allowed cursor. Never use neon outer glows, never put two primary buttons side by side, never use gradient fill on a button that also has a shadow.",
     "description-zh": "每视口最多一个主 CTA。扁平实心填充（主色深色），静止时不加阴影，底部 1px 细线提供触觉深度。悬停：加深、抬 1px。禁用：40% 透明度 + not-allowed 光标。禁止霓虹外发光、禁止并排两个主按钮、禁止渐变填充同时加阴影。",
-    "tags": ["button", "CTA", "primary", "interaction", "accessibility"],
+    "tags": [
+      "button",
+      "CTA",
+      "primary",
+      "interaction",
+      "accessibility"
+    ],
     "css": ".btn-primary{display:inline-flex;align-items:center;padding:10px 24px;font-size:.9rem;font-weight:600;color:#fff;background:var(--brand,#1B4E7A);border:none;border-radius:999px;cursor:pointer;box-shadow:0 1px 0 var(--brand-dark,#0E2E4A);transition:transform .2s,background .2s}.btn-primary:hover{background:var(--brand-dark,#0E2E4A);transform:translateY(-1px)}.btn-primary:disabled{opacity:.4;cursor:not-allowed}",
-    "anti": ["neon glow button", "dual primary buttons", "gradient + shadow button"]
+    "anti": [
+      "neon glow button",
+      "dual primary buttons",
+      "gradient + shadow button"
+    ]
   },
   {
     "name-en": "Code Block — Terminal Style",
     "name-zh": "代码块 — 终端风格",
     "description-en": "A dark surface code block with macOS traffic-light dots (red/yellow/green) in the top-left. Background: deep ink-tinted dark #0F2438. Text: soft blue-tinted light #DCEBF8. Mono font, rounded corners, subtle sky border. The traffic lights are CSS ::before decorative only. Never use a light-background code block — it reads as a note, not code.",
     "description-zh": "深色代码块，左上角 macOS 红绿灯装饰。底 #0F2438 墨蓝色，字 #DCEBF8 蓝调浅色。等宽字体，圆角，天蓝细边框。红绿灯纯 CSS ::before 装饰。禁止浅色代码块——读起来像注释。",
-    "tags": ["code", "terminal", "dark", "mono", "syntax"],
+    "tags": [
+      "code",
+      "terminal",
+      "dark",
+      "mono",
+      "syntax"
+    ],
     "css": "pre{position:relative;background:#0F2438;color:#DCEBF8;padding:24px 20px 20px;border-radius:10px;font-family:ui-monospace,monospace;font-size:.88rem;line-height:1.65;border:1px solid rgba(115,185,230,.18);overflow-x:auto}pre::before{content:'';position:absolute;top:12px;left:16px;width:38px;height:8px;background:radial-gradient(circle 3px at 4px 4px,#ED6A5E 60%,transparent 62%)0 0/14px 8px no-repeat,radial-gradient(circle 3px at 4px 4px,#F4BF4F 60%,transparent 62%)14px 0/14px 8px no-repeat,radial-gradient(circle 3px at 4px 4px,#61C554 60%,transparent 62%)28px 0/14px 8px no-repeat}"
   },
   {
@@ -99,17 +189,223 @@
     "name-zh": "骨架屏 — 形状匹配",
     "description-en": "Instead of a generic spinner, use skeleton placeholders that match the final layout dimensions. Light gray background with a shimmer animation (linear gradient sweeping left to right, 1.5s). Never use a single circular spinner as the only loading indicator for a content-heavy page.",
     "description-zh": "不要通用转圈，用与最终布局尺寸匹配的骨架占位。浅灰底色 + 微光动画 1.5s，与最终内容形状一致。禁止内容型页面仅用一个圆形转圈作加载指示。",
-    "tags": ["loading", "skeleton", "shimmer", "placeholder", "UX"],
+    "tags": [
+      "loading",
+      "skeleton",
+      "shimmer",
+      "placeholder",
+      "UX"
+    ],
     "css": ".skeleton{background:#EAF2F8;border-radius:8px;overflow:hidden}.skeleton::after{content:'';display:block;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);animation:shimmer 1.5s infinite}@keyframes shimmer{100%{transform:translateX(100%)}}",
-    "anti": ["single spinner for all content", "mismatched skeleton shapes"]
+    "anti": [
+      "single spinner for all content",
+      "mismatched skeleton shapes"
+    ]
   },
   {
     "name-en": "Empty State — Composed Composition",
     "name-zh": "空状态 — 完整构图",
     "description-en": "An empty state needs: a small illustration or icon (48-64px, accent tint), a short heading, a 1-line description, and a single primary CTA. All centered with generous whitespace. Never show an empty-state heading without a CTA.",
     "description-zh": "空状态需要：小插图/图标 48-64px 主色着色、简短标题、一行描述、一个主 CTA。全部居中宽裕留白。禁止有空状态标题却不跟 CTA。",
-    "tags": ["empty-state", "onboarding", "zero-state", "UX", "illustration"],
+    "tags": [
+      "empty-state",
+      "onboarding",
+      "zero-state",
+      "UX",
+      "illustration"
+    ],
     "css": ".empty-state{text-align:center;padding:64px 24px}.empty-state svg{width:56px;height:56px;color:var(--sky,#73B9E6);opacity:.6;margin-bottom:20px}.empty-state h3{font-size:1.15rem;font-weight:600;margin-bottom:8px}.empty-state p{color:var(--ink-2);max-width:36ch;margin:0 auto 24px}",
-    "anti": ["'No data' only", "empty state without CTA"]
+    "anti": [
+      "'No data' only",
+      "empty state without CTA"
+    ]
+  },
+  {
+    "name-en": "Container Query — Component-Driven Responsive",
+    "name-zh": "容器查询 — 组件驱动响应式",
+    "description-en": "Use @container queries to style a component based on its own width, not the viewport. This means a card placed in a 300px sidebar automatically switches to a vertical layout, while the same card in a 900px main area uses a horizontal layout — without media queries. Adopted by 40%+ of developers in 2023 State of CSS, now production-ready in Chrome and Firefox.",
+    "description-zh": "用 @container 查询让组件根据自身宽度决定样式，而非视口。同一张卡片，放在 300px 侧边栏里自动切竖排，放在 900px 主区域自动变横排——无需媒体查询。2023 年已有 40%+ 开发者使用，现已在 Chrome 和 Firefox 生产可用。",
+    "tags": [
+      "container-query",
+      "responsive",
+      "component",
+      "layout",
+      "modern-css"
+    ],
+    "css": ".card-container{container-type:inline-size}.card{display:grid;gap:1rem}@container(min-width:400px){.card{grid-template-columns:1fr 1fr}}",
+    "anti": [
+      "@media-only responsive",
+      "viewport-dependent component internals",
+      "hardcoded breakpoints inside components"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "CSS Cascade Layers (@layer) — Tame Specificity",
+    "name-zh": "CSS 级联层 — 驯服优先级",
+    "description-en": "Use @layer to organize stylesheets into explicit priority tiers: reset → base → components → utilities. This eliminates specificity wars and !important chains in large codebases. The browser resolves layers in declared order, making the cascade predictable regardless of selector complexity.",
+    "description-zh": "用 @layer 将样式表组织为明确的优先级层级：reset → base → components → utilities。这消除了大型项目中的优先级战争和 !important 链。浏览器按声明顺序解析层级，无论选择器多复杂，级联行为都可预测。",
+    "tags": [
+      "cascade",
+      "layer",
+      "specificity",
+      "architecture",
+      "modern-css"
+    ],
+    "css": "@layer reset,base,components,utilities;@layer reset{*,::before,::after{box-sizing:border-box;margin:0}}@layer utilities{.mt-0{margin-top:0}}",
+    "anti": [
+      "!important chains",
+      "specificity hacks",
+      "selector nesting for priority",
+      "no style architecture"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Minimalist Form — Underline-Only Fields",
+    "name-zh": "极简表单 — 仅底线输入框",
+    "description-en": "Form inputs with only a 1px bottom border, no box border, no inner shadow. This creates a clean, editorial feel. On focus, the bottom border thickens to 2px and changes to the accent color. Label floats up or stays above. The form stays scannable because visual noise (box borders) is removed.",
+    "description-zh": "表单输入框只有一条 1px 底部线，无边框、无内阴影。干净、有编辑质感。聚焦时底部线变粗为 2px 并变色为主色调。Label 浮动或保持在上方。因为没有边框噪音，表单整体更易扫读。",
+    "tags": [
+      "form",
+      "input",
+      "minimalist",
+      "editorial",
+      "underline"
+    ],
+    "css": ".field{border:0;border-bottom:1px solid rgba(20,58,92,.18);padding:8px 0;font-size:1rem;background:transparent;outline:0;transition:border .25s}.field:focus{border-bottom:2px solid #3A8DD0}",
+    "anti": [
+      "heavy box-border inputs",
+      "inner shadow on fields",
+      "border on all 4 sides for clean layouts",
+      "placeholder-only labels"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Focus Ring — Offset + Visible",
+    "name-zh": "焦点环 — 偏移可见",
+    "description-en": "Replace the browser default focus outline with a 3px ring offset 3px from the element, using the brand accent color. Always respect prefers-reduced-motion for the transition. Never remove :focus-visible entirely — it breaks keyboard navigation accessibility. The ring should be visible but subtle: a 2-3px solid ring with 3px offset.",
+    "description-zh": "替换浏览器默认焦点样式为 3px 环，距元素 3px 偏移，使用品牌色。永远不要完全移除 :focus-visible——这会破坏键盘导航无障碍。焦点环应可见但克制：2-3px 实线环，3px 偏移。",
+    "tags": [
+      "focus",
+      "accessibility",
+      "a11y",
+      "keyboard",
+      "focus-visible"
+    ],
+    "css": ":focus-visible{outline:3px solid #3A8DD0;outline-offset:3px;border-radius:4px}@media(prefers-reduced-motion:reduce){:focus-visible{transition:none}}",
+    "anti": [
+      "outline:none without replacement",
+      "browser default focus ring",
+      "focus ring that blends with background",
+      "same style for :focus and :focus-visible"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Gradient Text — Hero Headline Accent",
+    "name-zh": "渐变文字 — Hero 标题点缀",
+    "description-en": "Clip a linear gradient to text for hero headlines. Use only for 1-2 lines of large display text (≥ 2rem). The gradient should be subtle — 2-3 stops within the brand palette. Never apply to body text, long paragraphs, or functional labels. Always provide a solid fallback color for browsers that don't support background-clip: text.",
+    "description-zh": "将线性渐变剪切到文字上，仅用于 1-2 行大字号的展示级标题（≥ 2rem）。渐变应克制——2-3 个色标在品牌色板内。禁止用于正文、长段落或功能标签。务必提供不支持 background-clip: text 的浏览器的纯色回退。",
+    "tags": [
+      "typography",
+      "hero",
+      "gradient",
+      "headline",
+      "decorative"
+    ],
+    "css": "h1.gradient-text{background:linear-gradient(135deg,#1B4E7A,#3A8DD0,#73B9E6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;color:#1B4E7A}",
+    "anti": [
+      "gradient on body text",
+      "rainbow gradients",
+      "gradient text without solid fallback",
+      "gradient on functional labels"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Sticky Header — Backdrop Blur Glass",
+    "name-zh": "粘性头部 — 毛玻璃背景模糊",
+    "description-en": "A sticky navigation bar with backdrop-filter: blur() and a semi-transparent background. This creates a modern glass-morphism effect that lets content show through subtly while keeping the nav readable. The blur should be 8-12px — too much creates a foggy blob; too little fails to obscure underlying text. Always add a subtle bottom border to define the header edge when over complex backgrounds.",
+    "description-zh": "粘性导航栏使用 backdrop-filter: blur() 和半透明背景，创造现代毛玻璃效果。内容微透但不影响导航可读性。模糊值 8-12px——过重像雾气，过轻无法遮挡下方文字。务必在复杂背景上添加底部细线以定义 header 边界。",
+    "tags": [
+      "sticky",
+      "header",
+      "blur",
+      "glass",
+      "navigation"
+    ],
+    "css": ".nav-sticky{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.8);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(20,58,92,.08)}",
+    "anti": [
+      "solid opaque sticky header",
+      "excessive blur >16px",
+      "no border-bottom for edge definition",
+      "using backdrop-filter without transparent bg"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Scroll Snap — Section-by-Section Storytelling",
+    "name-zh": "滚动吸附 — 逐页故事叙述",
+    "description-en": "Use CSS scroll-snap for section-by-section vertical storytelling. The parent gets scroll-snap-type: y mandatory; children get scroll-snap-align: start. This creates a native, performant page-by-page experience without JavaScript scrolljacking. Always provide a way to skip (e.g., a dot nav) and respect prefers-reduced-motion to disable snapping.",
+    "description-zh": "用 CSS scroll-snap 实现逐页纵向叙述。父容器设 scroll-snap-type: y mandatory，子元素设 scroll-snap-align: start。无需 JavaScript 劫持滚动即实现原生的、高性能的翻页体验。务必提供跳过方式（如点导航），并尊重 prefers-reduced-motion 禁用吸附。",
+    "tags": [
+      "scroll-snap",
+      "landing",
+      "storytelling",
+      "full-page",
+      "performance"
+    ],
+    "css": ".snap-container{scroll-snap-type:y mandatory;overflow-y:scroll;height:100dvh}.snap-section{scroll-snap-align:start;height:100dvh}@media(prefers-reduced-motion:reduce){.snap-container{scroll-snap-type:none}}",
+    "anti": [
+      "JS scrolljacking",
+      "forced snap without escape",
+      "ignoring reduced-motion",
+      "snap on non-landing pages"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Accordion — Native <details>/<summary>",
+    "name-zh": "折叠面板 — 原生 <details>/<summary>",
+    "description-en": "Use the native HTML <details> and <summary> elements for accordions instead of building custom ones from divs. They are accessible by default (keyboard, screen readers), require zero JavaScript for toggle behavior, and can be styled with CSS. Add a custom marker via ::marker or a rotated chevron via ::after on summary.",
+    "description-zh": "用原生 HTML <details> 和 <summary> 元素做折叠面板，而非用 div 自行搭建。默认无障碍（键盘、屏幕阅读器）、零 JavaScript 切换、纯 CSS 可定制样式。通过 ::marker 或 summary::after 添加旋转箭头图标。",
+    "tags": [
+      "accordion",
+      "details",
+      "native-html",
+      "accessible",
+      "disclosure"
+    ],
+    "css": "details{border:1px solid rgba(20,58,92,.1);border-radius:8px;padding:0 16px}summary{padding:16px 0;cursor:pointer;font-weight:600;list-style:none}summary::after{content:'▾';float:right;transition:transform .25s}details[open] summary::after{transform:rotate(180deg)}",
+    "anti": [
+      "custom accordion from divs",
+      "JS-dependent toggle",
+      "missing keyboard support",
+      "summary without cursor:pointer"
+    ],
+    "category": "web"
+  },
+  {
+    "name-en": "Tooltip — CSS-Only on Hover/Focus",
+    "name-zh": "提示框 — 纯 CSS 悬停/聚焦",
+    "description-en": "A CSS-only tooltip using ::after pseudo-element positioned relative to the trigger element. Appears on hover and focus (keyboard accessible). The tooltip should never cover the trigger element itself. Use a small caret arrow and keep text to 1-2 lines max. For complex content, use a popover or dialog instead.",
+    "description-zh": "用 ::after 伪元素定位在触发元素旁边实现纯 CSS 提示框。悬停和聚焦时出现（键盘可访问）。提示框绝不能遮挡触发元素本身。用一个小三角箭头，文字最多 1-2 行。复杂内容请用 popover 或 dialog。",
+    "tags": [
+      "tooltip",
+      "css-only",
+      "hover",
+      "focus",
+      "pseudo-element"
+    ],
+    "css": ".tooltip{position:relative}.tooltip::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);padding:4px 12px;background:#0F2438;color:#fff;border-radius:6px;font-size:.8rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}.tooltip:hover::after,.tooltip:focus-visible::after{opacity:1}",
+    "anti": [
+      "tooltip covering target",
+      "multiline tooltip text",
+      "JS-only tooltip",
+      "no focus support for keyboard users"
+    ],
+    "category": "web"
   }
 ]
