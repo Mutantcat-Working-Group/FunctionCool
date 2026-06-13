@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// StyleCool — 设计模式可集成接口
+// StyleCool — 设计样式可集成接口
 // 独立部署于 style.functioncool.xyz（文件夹自包含，无外部依赖）
 // ============================================================
 // URL： / 或 /skillapi
@@ -94,7 +94,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['cat'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StyleCool — 设计模式接口 | FunctionCool</title>
+    <title>StyleCool — 设计样式接口 | FunctionCool</title>
     <meta name="robots" content="noindex,nofollow">
     <link rel="canonical" href="https://style.functioncool.xyz/">
     <link rel="stylesheet" href="https://www.functioncool.xyz/assets/style.css?v=20260610">
@@ -106,8 +106,8 @@ if (isset($_GET['token'], $_GET['q'], $_GET['cat'])) {
     <header>
         <div class="container">
             <div class="logo">
-                <h1><span data-i18n="stylecool-title">StyleCool</span><span style="font-weight:400;color:var(--ink-3);font-size:.75em;margin-left:.3em;" data-i18n="stylecool-badge">设计模式接口</span></h1>
-                <p data-i18n="stylecool-header-subtitle">给 AI 与自动化工作流的设计模式 StyleCool — 联网为 AI 注入审美判断力</p>
+                <h1><span data-i18n="stylecool-title">StyleCool</span><span style="font-weight:400;color:var(--ink-3);font-size:.75em;margin-left:.3em;" data-i18n="stylecool-badge">设计样式接口</span></h1>
+                <p data-i18n="stylecool-header-subtitle">给 AI 与自动化工作流的设计样式 StyleCool — 联网为 AI 注入审美判断力</p>
             </div>
             <div class="language-switcher">
                 <a href="https://www.functioncool.xyz/" class="home-link" aria-label="返回首页" data-i18n="stylecool-back-link">← 返回首页</a>
@@ -121,8 +121,8 @@ if (isset($_GET['token'], $_GET['q'], $_GET['cat'])) {
             <!-- Intro -->
             <section class="skillapi-intro reveal reveal-1" style="text-align:center;padding:2rem 0;">
                 <div class="skill-hero-badge" data-i18n="stylecool-hero-badge">AI 设计审美</div>
-                <h2 class="grad-text" style="margin:1rem 0 0.6rem;font-size:2rem;font-weight:800;letter-spacing:-0.02em;" data-i18n="stylecool-hero-title">设计模式索引</h2>
-                <p style="color:var(--ink-2);" data-i18n="stylecool-hero-desc">AI 模型擅长代码逻辑，但天生缺乏<strong>设计审美</strong>——它们不知道什么是"好看"、什么是"低级感"。<br>StyleCool 联网调用由人类设计师精心筛选的设计模式库，在 AI 动手写 CSS 之前<strong>为它注入品味</strong>：<br>正确的做法、必须避开的坑、平台特定的设计规则。结果不是"能用的 UI"，而是<strong>有审美的 UI</strong>。</p>
+                <h2 class="grad-text" style="margin:1rem 0 0.6rem;font-size:2rem;font-weight:800;letter-spacing:-0.02em;" data-i18n="stylecool-hero-title">设计样式索引</h2>
+                <p style="color:var(--ink-2);" data-i18n="stylecool-hero-desc">AI 模型擅长代码逻辑，但天生缺乏<strong>设计审美</strong>——它们不知道什么是"好看"、什么是"低级感"。<br>StyleCool 联网调用由人类设计师精心筛选的设计样式库，在 AI 动手写 CSS 之前<strong>为它注入品味</strong>：<br>正确的做法、必须避开的坑、平台特定的设计规则。结果不是"能用的 UI"，而是<strong>有审美的 UI</strong>。</p>
 
                 <div class="skill-value-grid">
                     <div class="skill-value-card">
@@ -141,7 +141,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['cat'])) {
                 <ul style="margin:0 0 1.4rem 1.2em;color:var(--ink-2);line-height:1.8;">
                     <li data-i18n="stylecool-api-endpoint-desc">端点：<code>/skillapi?token=mutantcat&q={关键词}&cat={分类}</code>（无参数时见此文档页）</li>
                     <li data-i18n="stylecool-api-key-desc">密钥：<code>mutantcat</code>（永久有效，直接调用，无需获取）</li>
-                    <li data-i18n="stylecool-api-response-desc">返回：JSON — <code>results</code>（设计模式数组）、<code>query</code>、<code>cat</code>、<code>count</code></li>
+                    <li data-i18n="stylecool-api-response-desc">返回：JSON — <code>results</code>（设计样式数组）、<code>query</code>、<code>cat</code>、<code>count</code></li>
                 </ul>
 
                 <div class="skillapi-table-block">
@@ -171,7 +171,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['cat'])) {
                     <code style="background:#EAF4FC;color:var(--ink);padding:0.2rem 0.6rem;border-radius:8px;font-weight:700;">mutantcat</code>
                 </p>
                 <div id="stylecool-quicktip" class="skill-prompt-box">
-                    <p style="margin:0 0 0.3rem;"><strong data-i18n="stylecool-quicktip-zh">【中文】 向以下地址发送 GET 请求，取回设计模式索引：</strong></p>
+                    <p style="margin:0 0 0.3rem;"><strong data-i18n="stylecool-quicktip-zh">【中文】 向以下地址发送 GET 请求，取回设计样式索引：</strong></p>
                     <p style="margin:0.2rem 0 0.7rem 0;"><code style="color:var(--gold-soft);font-family:ui-monospace,'SF Mono',monospace;word-break:break-word;overflow-wrap:anywhere;">https://style.functioncool.xyz/skillapi?token=mutantcat&q=button&cat=web</code></p>
                     <p style="margin:0 0 10px;">cat = web | desktop | miniapp | mobile | all</p>
                     <p style="margin:0.8rem 0 0.3rem;"><strong data-i18n="stylecool-quicktip-en">[English] GET https://style.functioncool.xyz/skillapi?token=mutantcat&q=button&cat=web</strong></p>
@@ -180,7 +180,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['cat'])) {
 
             <!-- 仓库 -->
             <section class="skill-card reveal reveal-4" style="margin-bottom:3rem;text-align:center;">
-                <h3 style="color:var(--ink);font-size:1.15rem;margin-bottom:0.4rem;" data-i18n="stylecool-repo-title">设计模式 JSON 开源</h3>
+                <h3 style="color:var(--ink);font-size:1.15rem;margin-bottom:0.4rem;" data-i18n="stylecool-repo-title">设计样式 JSON 开源</h3>
                 <p style="color:var(--ink-2);margin-bottom:1rem;" data-i18n="stylecool-repo-desc">欢迎扩充条目，在以下仓库提交 PR：</p>
                 <a class="skill-github-link" href="https://github.com/Mutantcat-Working-Group/StyleCool-Skill" target="_blank" rel="noopener">
                     <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
