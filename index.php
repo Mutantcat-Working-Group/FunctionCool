@@ -69,6 +69,9 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
     <link rel="apple-touch-icon" href="assets/logo.png">
     <!-- Favicon End -->
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3718441900987965"
+     crossorigin="anonymous"></script>
+
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">{
       "@context": "https://schema.org",
