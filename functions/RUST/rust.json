@@ -1,3103 +1,3232 @@
 [
-    {
-        "name-zh": "主函数示例",
-        "name-en": "Main Function Example",
-        "description-zh": "Rust程序的入口函数示例，包含命令行参数处理和错误处理",
-        "description-en": "Entry point function example for Rust programs, including command line arguments and error handling",
-        "dependencies": [
-            "std::env",
-            "std::process"
-        ],
-        "use_to": [
-            "program entry",
-            "command line",
-            "error handling"
-        ],
-        "tags": [
-            "basic",
-            "entry point",
-            "command line"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "Result"
-        ],
-        "return_type": [
-            "Result<(), Box<dyn std::error::Error>>"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "use std::env;\nuse std::error::Error;\nuse std::process;\n\n// 运行主程序逻辑\nfn run() -> Result<(), Box<dyn Error>> {\n    // 获取命令行参数\n    let args: Vec<String> = env::args().collect();\n    \n    // 打印程序信息\n    println!(\"Program: {}\", args[0]);\n    \n    // 打印命令行参数\n    println!(\"Arguments count: {}\", args.len() - 1);\n    println!(\"Arguments: {:?}\", &args[1..]);\n    \n    // 程序主要逻辑\n    let name = args.get(1).map(|s| s.as_str()).unwrap_or(\"World\");\n    println!(\"Hello, {}!\", name);\n    \n    Ok(())\n}\n\nfn main() {\n    if let Err(err) = run() {\n        eprintln!(\"Error: {}\", err);\n        process::exit(1);\n    }\n}"
-        ]
-    },
-    {
-        "name-zh": "向量长度",
-        "name-en": "Vector Length",
-        "description-zh": "获取向量的长度",
-        "description-en": "Get the length of a vector",
-        "dependencies": [],
-        "use_to": [
-            "vector operations"
-        ],
-        "tags": [
-            "basic",
-            "vector",
-            "beginner"
-        ],
-        "input": [
-            "vec"
-        ],
-        "input_type": [
-            "Vec<T>"
-        ],
-        "return": [
-            "length"
-        ],
-        "return_type": [
-            "usize"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn get_vector_length<T>(vec: &Vec<T>) -> usize {\n    vec.len()\n}"
-        ]
-    },
-    {
-        "name-zh": "向量求和",
-        "name-en": "Vector Sum",
-        "description-zh": "对整数向量求和",
-        "description-en": "Sum elements of an integer vector",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "math",
-            "vector"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "v"
-        ],
-        "input_type": [
-            "Vec<i64>"
-        ],
-        "return": [
-            "sum"
-        ],
-        "return_type": [
-            "i64"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn sum_vec(v: &Vec<i64>) -> i64 {\n    v.iter().sum()\n}"
-        ]
-    },
-    {
-        "name-zh": "字符串分割",
-        "name-en": "String Split",
-        "description-zh": "按分隔符分割字符串为向量",
-        "description-en": "Split string by delimiter into vector",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "basic",
-            "string"
-        ],
-        "input": [
-            "s",
-            "delim"
-        ],
-        "input_type": [
-            "&str",
-            "char"
-        ],
-        "return": [
-            "parts"
-        ],
-        "return_type": [
-            "Vec<String>"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn split_string(s: &str, delim: char) -> Vec<String> {\n    s.split(delim).map(|x| x.to_string()).collect()\n}"
-        ]
-    },
-    {
-        "name-zh": "读取文本文件",
-        "name-en": "Read Text File",
-        "description-zh": "读取文件为字符串",
-        "description-en": "Read file to string",
-        "dependencies": [
-            "std::fs"
-        ],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "intermediate",
-            "io"
-        ],
-        "input": [
-            "path"
-        ],
-        "input_type": [
-            "&str"
-        ],
-        "return": [
-            "content"
-        ],
-        "return_type": [
-            "Result<String, std::io::Error>"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "use std::fs;\n\nfn read_file(path: &str) -> Result<String, std::io::Error> {\n    fs::read_to_string(path)\n}"
-        ]
-    },
-    {
-        "name-zh": "写入文本文件",
-        "name-en": "Write Text File",
-        "description-zh": "将字符串写入文件",
-        "description-en": "Write string to file",
-        "dependencies": [
-            "std::fs"
-        ],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "intermediate",
-            "io"
-        ],
-        "input": [
-            "path",
-            "content"
-        ],
-        "input_type": [
-            "&str",
-            "&str"
-        ],
-        "return": [
-            "ok"
-        ],
-        "return_type": [
-            "Result<(), std::io::Error>"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "use std::fs;\n\nfn write_file(path: &str, content: &str) -> Result<(), std::io::Error> {\n    fs::write(path, content)\n}"
-        ]
-    },
-    {
-        "name-zh": "排序向量",
-        "name-en": "Sort Vector",
-        "description-zh": "对向量进行原地排序",
-        "description-en": "Sort a vector in place",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "sorting"
-        ],
-        "tags": [
-            "basic",
-            "sorting"
-        ],
-        "input": [
-            "v"
-        ],
-        "input_type": [
-            "&mut Vec<i32>"
-        ],
-        "return": [],
-        "return_type": [
-            "()"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn sort_vec(v: &mut Vec<i32>) {\n    v.sort();\n}"
-        ]
-    },
-    {
-        "name-zh": "哈希映射计数",
-        "name-en": "HashMap Count",
-        "description-zh": "统计词频",
-        "description-en": "Count word frequency",
-        "dependencies": [
-            "std::collections"
-        ],
-        "use_to": [
-            "map",
-            "count"
-        ],
-        "tags": [
-            "intermediate",
-            "collection"
-        ],
-        "input": [
-            "words"
-        ],
-        "input_type": [
-            "&[&str]"
-        ],
-        "return": [
-            "map"
-        ],
-        "return_type": [
-            "std::collections::HashMap<String, usize>"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "use std::collections::HashMap;\n\nfn word_count(words: &[&str]) -> HashMap<String, usize> {\n    let mut map = HashMap::new();\n    for w in words { *map.entry((*w).to_string()).or_insert(0) += 1; }\n    map\n}"
-        ]
-    },
-    {
-        "name-zh": "读取标准输入",
-        "name-en": "Read Stdin",
-        "description-zh": "从标准输入读取一行字符串",
-        "description-en": "Read a line from stdin",
-        "dependencies": [
-            "std::io"
-        ],
-        "use_to": [
-            "io"
-        ],
-        "tags": [
-            "basic",
-            "io"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "line"
-        ],
-        "return_type": [
-            "Result<String, std::io::Error>"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "use std::io::{self, Read};\n\nfn read_stdin_line() -> Result<String, io::Error> {\n    let mut s = String::new();\n    io::stdin().read_to_string(&mut s)?;\n    Ok(s)\n}"
-        ]
-    },
-    {
-        "name-zh": "计时",
-        "name-en": "Timing",
-        "description-zh": "测量函数执行时间(毫秒)",
-        "description-en": "Measure function execution time in ms",
-        "dependencies": [
-            "std::time"
-        ],
-        "use_to": [
-            "time",
-            "benchmark"
-        ],
-        "tags": [
-            "intermediate",
-            "time"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "elapsed_ms"
-        ],
-        "return_type": [
-            "u128"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "use std::time::Instant;\n\nfn elapsed_ms<F: FnOnce()>(f: F) -> u128 {\n    let start = Instant::now();\n    f();\n    start.elapsed().as_millis()\n}"
-        ]
-    },
-    {
-        "name-zh": "均值",
-        "name-en": "Mean",
-        "description-zh": "计算切片的平均值",
-        "description-en": "Compute mean of a slice",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "math"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "&[f64]"
-        ],
-        "return": [
-            "m"
-        ],
-        "return_type": [
-            "f64"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn mean(a: &[f64]) -> f64 {\n    if a.is_empty() { return f64::NAN; }\n    a.iter().sum::<f64>() / a.len() as f64\n}"
-        ]
-    },
-    {
-        "name-zh": "中位数",
-        "name-en": "Median",
-        "description-zh": "计算切片的中位数",
-        "description-en": "Compute median of a slice",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "math"
-        ],
-        "tags": [
-            "intermediate",
-            "math"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "&[f64]"
-        ],
-        "return": [
-            "med"
-        ],
-        "return_type": [
-            "f64"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "fn median(a: &[f64]) -> f64 {\n    if a.is_empty() { return f64::NAN; }\n    let mut v = a.to_vec();\n    v.sort_by(|x,y| x.partial_cmp(y).unwrap());\n    let n = v.len();\n    if n % 2 == 1 { v[n/2] } else { (v[n/2-1] + v[n/2]) / 2.0 }\n}"
-        ]
-    },
-    {
-        "name-zh": "标准差",
-        "name-en": "Standard Deviation",
-        "description-zh": "计算样本标准差",
-        "description-en": "Compute sample standard deviation",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "math"
-        ],
-        "tags": [
-            "intermediate",
-            "math"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "&[f64]"
-        ],
-        "return": [
-            "sd"
-        ],
-        "return_type": [
-            "f64"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "fn stdev(a: &[f64]) -> f64 {\n    if a.len() < 2 { return f64::NAN; }\n    let m = mean(a);\n    let s: f64 = a.iter().map(|x| (x - m)*(x - m)).sum();\n    (s / (a.len() as f64 - 1.0)).sqrt()\n}"
-        ]
-    },
-    {
-        "name-zh": "GCD",
-        "name-en": "GCD",
-        "description-zh": "欧几里得算法计算整数 GCD",
-        "description-en": "Euclid algorithm for integer GCD",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "math",
-            "number theory"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "a",
-            "b"
-        ],
-        "input_type": [
-            "i64",
-            "i64"
-        ],
-        "return": [
-            "g"
-        ],
-        "return_type": [
-            "i64"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn gcd(mut a: i64, mut b: i64) -> i64 {\n    a = a.abs(); b = b.abs();\n    while b != 0 { let t = b; b = a % b; a = t; }\n    a\n}"
-        ]
-    },
-    {
-        "name-zh": "LCM",
-        "name-en": "LCM",
-        "description-zh": "计算整数 LCM",
-        "description-en": "Compute integer LCM",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "math",
-            "number theory"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "a",
-            "b"
-        ],
-        "input_type": [
-            "i64",
-            "i64"
-        ],
-        "return": [
-            "l"
-        ],
-        "return_type": [
-            "i64"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn lcm(a: i64, b: i64) -> i64 {\n    if a == 0 || b == 0 { return 0; }\n    (a / gcd(a,b)) * b\n}"
-        ]
-    },
-    {
-        "name-zh": "大小写转换",
-        "name-en": "To Upper/Lower",
-        "description-zh": "将字符串转换为全大写与全小写",
-        "description-en": "Convert string to upper and lower case",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "basic",
-            "string"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "&str"
-        ],
-        "return": [
-            "upper",
-            "lower"
-        ],
-        "return_type": [
-            "String",
-            "String"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn upper_lower(s: &str) -> (String, String) {\n    (s.to_uppercase(), s.to_lowercase())\n}"
-        ]
-    },
-    {
-        "name-zh": "HTTP GET 文本(reqwest)",
-        "name-en": "HTTP GET Text (reqwest)",
-        "description-zh": "使用 reqwest 阻塞客户端发送 GET 请求并返回文本，失败返回 Err",
-        "description-en": "Blocking reqwest GET returning text; error on failure",
-        "dependencies": [
-            "reqwest = { version = \"^0.11\", features = [\"blocking\"] }"
-        ],
-        "use_to": [
-            "http",
-            "network"
-        ],
-        "tags": [
-            "network",
-            "http"
-        ],
-        "input": [
-            "url"
-        ],
-        "input_type": [
-            "&str"
-        ],
-        "return": [
-            "text"
-        ],
-        "return_type": [
-            "Result<String, Box<dyn std::error::Error>>"
-        ],
-        "timer_score": 65,
-        "memory_score": 80,
-        "code": [
-            "fn http_get_text(url: &str) -> Result<String, Box<dyn std::error::Error>> {\n    let body = reqwest::blocking::get(url)?.text()?;\n    Ok(body)\n}"
-        ]
-    },
-    {
-        "name-zh": "Dijkstra最短路",
-        "name-en": "Dijkstra Shortest Path",
-        "description-zh": "在非负权图上用最小堆求单源最短路",
-        "description-en": "Single-source shortest path on non-negative graph using min-heap",
-        "dependencies": [
-            "std::collections::BinaryHeap",
-            "std::cmp::Reverse"
-        ],
-        "use_to": [
-            "graph",
-            "shortest path"
-        ],
-        "tags": [
-            "graph",
-            "dijkstra",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "adj",
-            "src"
-        ],
-        "input_type": [
-            "usize",
-            "Vec<Vec<(usize, i64)>>",
-            "usize"
-        ],
-        "return": [
-            "dist"
-        ],
-        "return_type": [
-            "Vec<i64>"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "use std::cmp::Reverse;\nuse std::collections::BinaryHeap;\n\n// adj[u] = Vec of (v, w)\nfn dijkstra(n: usize, adj: &Vec<Vec<(usize, i64)>>, src: usize) -> Vec<i64> {\n    let inf = i64::MAX / 4;\n    let mut dist = vec![inf; n];\n    dist[src] = 0;\n    let mut heap = BinaryHeap::new(); // max-heap of Reverse((dist, node)) => min-heap\n    heap.push(Reverse((0i64, src)));\n    while let Some(Reverse((d, u))) = heap.pop() {\n        if d != dist[u] { continue; }\n        for &(v, w) in &adj[u] {\n            let nd = d + w;\n            if nd < dist[v] { dist[v] = nd; heap.push(Reverse((nd, v))); }\n        }\n    }\n    dist\n}"
-        ]
-    },
-    {
-        "name-zh": "Kruskal最小生成树",
-        "name-en": "Kruskal Minimum Spanning Tree",
-        "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
-        "description-en": "Kruskal with DSU to compute MST total weight (-1 if disconnected)",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "graph",
-            "mst"
-        ],
-        "tags": [
-            "graph",
-            "mst",
-            "kruskal",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "edges"
-        ],
-        "input_type": [
-            "usize",
-            "Vec<(usize,usize,i64)>"
-        ],
-        "return": [
-            "mstWeight"
-        ],
-        "return_type": [
-            "i64"
-        ],
-        "timer_score": 88,
-        "memory_score": 92,
-        "code": [
-            "#[derive(Clone)]\nstruct DSU { p: Vec<usize>, r: Vec<i32> }\nimpl DSU {\n    fn new(n: usize) -> Self { Self { p: (0..n).collect(), r: vec![0; n] } }\n    fn find(&mut self, x: usize) -> usize { if self.p[x]==x { x } else { let px = self.find(self.p[x]); self.p[x]=px; px } }\n    fn unite(&mut self, a: usize, b: usize) -> bool { let mut a=self.find(a); let mut b=self.find(b); if a==b { return false } if self.r[a]<self.r[b] { std::mem::swap(&mut a,&mut b) } self.p[b]=a; if self.r[a]==self.r[b] { self.r[a]+=1 } true }\n}\n\n// edges: (u,v,w)\nfn kruskal_mst(n: usize, mut edges: Vec<(usize,usize,i64)>) -> i64 {\n    edges.sort_by_key(|e| e.2);\n    let mut dsu = DSU::new(n);\n    let mut total: i64 = 0;\n    let mut cnt = 0;\n    for (u,v,w) in edges { if dsu.unite(u,v) { total += w; cnt += 1; if cnt==n-1 { break } } }\n    if cnt==n-1 { total } else { -1 }\n}"
-        ]
-    },
-    {
-        "name-zh": "Bellman-Ford最短路",
-        "name-en": "Bellman-Ford Shortest Path",
-        "description-zh": "允许负边权的单源最短路；检测负环",
-        "description-en": "Single-source shortest path with negative edges; detect negative cycles",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "graph",
-            "shortest path"
-        ],
-        "tags": [
-            "graph",
-            "bellman-ford",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "edges",
-            "src"
-        ],
-        "input_type": [
-            "usize",
-            "Vec<(usize,usize,i64)>",
-            "usize"
-        ],
-        "return": [
-            "dist",
-            "hasNegCycle"
-        ],
-        "return_type": [
-            "Vec<i64>",
-            "bool"
-        ],
-        "timer_score": 70,
-        "memory_score": 85,
-        "code": [
-            "// edges: (u,v,w)\nfn bellman_ford(n: usize, edges: &Vec<(usize,usize,i64)>, src: usize) -> (Vec<i64>, bool) {\n    let inf = i64::MAX/4;\n    let mut dist = vec![inf; n]; dist[src]=0;\n    for _ in 1..=n-1 {\n        let mut updated = false;\n        for &(u,v,w) in edges { if dist[u]!=inf && dist[u]+w < dist[v] { dist[v]=dist[u]+w; updated=true; } }\n        if !updated { break }\n    }\n    for &(u,v,w) in edges { if dist[u]!=inf && dist[u]+w < dist[v] { return (dist, true) } }\n    (dist, false)\n}"
-        ]
-    },
-    {
-        "name-zh": "拓扑排序(Kahn)",
-        "name-en": "Topological Sort (Kahn)",
-        "description-zh": "入度法Kahn算法返回拓扑序列",
-        "description-en": "Kahn algorithm using indegrees to return topo order",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "graph",
-            "topological sort"
-        ],
-        "tags": [
-            "graph",
-            "topo",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "adj"
-        ],
-        "input_type": [
-            "usize",
-            "Vec<Vec<usize>>"
-        ],
-        "return": [
-            "order"
-        ],
-        "return_type": [
-            "Vec<usize>"
-        ],
-        "timer_score": 88,
-        "memory_score": 92,
-        "code": [
-            "fn topo_sort_kahn(n: usize, adj: &Vec<Vec<usize>>) -> Vec<usize> {\n    let mut indeg = vec![0usize; n];\n    for u in 0..n { for &v in &adj[u] { indeg[v]+=1; } }\n    let mut q: Vec<usize> = Vec::new();\n    for i in 0..n { if indeg[i]==0 { q.push(i); } }\n    let mut order: Vec<usize> = Vec::with_capacity(n);\n    let mut h = 0usize;\n    while h < q.len() {\n        let u = q[h]; h+=1; order.push(u);\n        for &v in &adj[u] { indeg[v]-=1; if indeg[v]==0 { q.push(v); } }\n    }\n    order\n}"
-        ]
-    },
-    {
-        "name-zh": "KMP字符串匹配",
-        "name-en": "KMP String Match",
-        "description-zh": "返回所有匹配起始下标",
-        "description-en": "Return all match start indices",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "string",
-            "search"
-        ],
-        "tags": [
-            "string",
-            "kmp",
-            "algorithm"
-        ],
-        "input": [
-            "text",
-            "pattern"
-        ],
-        "input_type": [
-            "&str",
-            "&str"
-        ],
-        "return": [
-            "indices"
-        ],
-        "return_type": [
-            "Vec<usize>"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "fn kmp_search(text: &str, pat: &str) -> Vec<usize> {\n    let n = text.len(); let m = pat.len(); if m==0 { return vec![] }\n    let tb = text.as_bytes(); let pb = pat.as_bytes();\n    let mut lps = vec![0usize; m];\n    let (mut i, mut l) = (1usize, 0usize);\n    while i < m { if pb[i]==pb[l] { l+=1; lps[i]=l; i+=1; } else if l>0 { l=lps[l-1]; } else { lps[i]=0; i+=1; } }\n    let mut res = Vec::new();\n    let (mut x, mut y) = (0usize, 0usize);\n    while x < n { if tb[x]==pb[y] { x+=1; y+=1; if y==m { res.push(x-m); y=lps[y-1]; } } else if y>0 { y=lps[y-1]; } else { x+=1; } }\n    res\n}"
-        ]
-    },
-    {
-        "name-zh": "Rabin-Karp字符串匹配",
-        "name-en": "Rabin-Karp String Match",
-        "description-zh": "滚动哈希匹配，返回所有位置",
-        "description-en": "Rolling-hash matching, return all indices",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "string",
-            "search"
-        ],
-        "tags": [
-            "string",
-            "rabin-karp",
-            "algorithm"
-        ],
-        "input": [
-            "text",
-            "pattern"
-        ],
-        "input_type": [
-            "&str",
-            "&str"
-        ],
-        "return": [
-            "indices"
-        ],
-        "return_type": [
-            "Vec<usize>"
-        ],
-        "timer_score": 85,
-        "memory_score": 95,
-        "code": [
-            "fn rabin_karp(text: &str, pat: &str) -> Vec<usize> {\n    let n = text.len(); let m = pat.len(); if m==0 || m>n { return vec![] }\n    const B: u64 = 131; const MOD: u64 = 1_000_000_007;\n    let tb = text.as_bytes(); let pb = pat.as_bytes();\n    let mut powb = 1u64; for _ in 0..m-1 { powb = (powb * B) % MOD }\n    let (mut hpat, mut hwin) = (0u64, 0u64);\n    for i in 0..m { hpat = (hpat*B + pb[i] as u64) % MOD; hwin = (hwin*B + tb[i] as u64) % MOD }\n    let mut out = Vec::new();\n    for i in 0..=n-m {\n        if hpat==hwin && &text[i..i+m] == pat { out.push(i) }\n        if i < n-m {\n            hwin = ( (hwin + MOD - (tb[i] as u64)*powb%MOD) % MOD );\n            hwin = (hwin*B + tb[i+m] as u64) % MOD;\n        }\n    }\n    out\n}"
-        ]
-    },
-    {
-        "name-zh": "埃拉托斯特尼筛法",
-        "name-en": "Sieve of Eratosthenes",
-        "description-zh": "在[2,n]内标记素数",
-        "description-en": "Mark primes in [2,n]",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "prime",
-            "number theory"
-        ],
-        "tags": [
-            "math",
-            "prime",
-            "sieve",
-            "algorithm"
-        ],
-        "input": [
-            "n"
-        ],
-        "input_type": [
-            "usize"
-        ],
-        "return": [
-            "is_prime"
-        ],
-        "return_type": [
-            "Vec<bool>"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "fn sieve_is_prime(n: usize) -> Vec<bool> {\n    let mut is = vec![true; n+1];\n    if n>=0 { is[0]=false }\n    if n>=1 { is[1]=false }\n    let mut p = 2usize;\n    while p*p <= n {\n        if is[p] { let mut x = p*p; while x <= n { is[x] = false; x += p } }\n        p+=1;\n    }\n    is\n}"
-        ]
-    },
-    {
-        "name-zh": "编辑距离(Levenshtein)",
-        "name-en": "Levenshtein Edit Distance",
-        "description-zh": "动态规划计算编辑距离(滚动数组)",
-        "description-en": "DP edit distance with rolling array",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "string",
-            "dynamic programming"
-        ],
-        "tags": [
-            "dp",
-            "string",
-            "edit distance"
-        ],
-        "input": [
-            "a",
-            "b"
-        ],
-        "input_type": [
-            "&str",
-            "&str"
-        ],
-        "return": [
-            "distance"
-        ],
-        "return_type": [
-            "usize"
-        ],
-        "timer_score": 85,
-        "memory_score": 88,
-        "code": [
-            "fn edit_distance(a: &str, b: &str) -> usize {\n    let (m, n) = (a.len(), b.len());\n    let ab = a.as_bytes(); let bb = b.as_bytes();\n    let mut prev: Vec<usize> = (0..=n).collect();\n    let mut cur = vec![0usize; n+1];\n    for i in 1..=m {\n        cur[0] = i; let ai = ab[i-1];\n        for j in 1..=n {\n            let cost = if ai==bb[j-1] { 0 } else { 1 };\n            let del = prev[j] + 1; let ins = cur[j-1] + 1; let rep = prev[j-1] + cost;\n            cur[j] = del.min(ins).min(rep);\n        }\n        std::mem::swap(&mut prev, &mut cur);\n    }\n    prev[n]\n}"
-        ]
-    },
-    {
-        "name-zh": "最长上升子序列O(n log n)",
-        "name-en": "LIS O(n log n)",
-        "description-zh": "耐心排序+二分求LIS长度",
-        "description-en": "Patience sorting + binary search for LIS length",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "sequence",
-            "dynamic programming"
-        ],
-        "tags": [
-            "dp",
-            "lis",
-            "algorithm"
-        ],
-        "input": [
-            "arr"
-        ],
-        "input_type": [
-            "&[i64]"
-        ],
-        "return": [
-            "length"
-        ],
-        "return_type": [
-            "usize"
-        ],
-        "timer_score": 92,
-        "memory_score": 92,
-        "code": [
-            "fn lis_length(a: &[i64]) -> usize {\n    let mut tails: Vec<i64> = Vec::new();\n    for &x in a {\n        let i = lower_bound(&tails, x);\n        if i==tails.len() { tails.push(x); } else { tails[i]=x; }\n    }\n    tails.len()\n}\nfn lower_bound(a: &Vec<i64>, x: i64) -> usize {\n    let (mut l, mut r) = (0usize, a.len());\n    while l<r { let m=(l+r)/2; if a[m]>=x { r=m } else { l=m+1 } }\n    l\n}"
-        ]
-    },
-    {
-        "name-zh": "快速选择第k小",
-        "name-en": "Quickselect k-th",
-        "description-zh": "平均线性时间找到第k小(1<=k<=n)",
-        "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "selection",
-            "order statistics"
-        ],
-        "tags": [
-            "algorithm",
-            "divide-conquer"
-        ],
-        "input": [
-            "arr",
-            "k"
-        ],
-        "input_type": [
-            "&mut [i64]",
-            "usize"
-        ],
-        "return": [
-            "kth"
-        ],
-        "return_type": [
-            "i64"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "fn quickselect(a: &mut [i64], mut k: usize) -> i64 { // k: 1-based\n    let (mut l, mut r) = (0usize, a.len()-1); k-=1;\n    while l<=r {\n        let pivot = a[r]; let mut i = l;\n        for j in l..r { if a[j] <= pivot { a.swap(i,j); i+=1 } }\n        a.swap(i,r);\n        if i==k { return a[i] } else if i>k { if i==0 { break } r = i-1; } else { l = i+1; }\n    }\n    panic!(\"k out of range\");\n}"
-        ]
-    },
-    {
-        "name-zh": "并查集(独立结构)",
-        "name-en": "Disjoint Set Union (Standalone)",
-        "description-zh": "带路径压缩与按秩合并的并查集，提供 find/unite/same 接口",
-        "description-en": "Disjoint Set Union with path compression and union by rank; find/unite/same APIs",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "data structure",
-            "union-find"
-        ],
-        "tags": [
-            "dsu",
-            "union-find",
-            "data structure"
-        ],
-        "input": [
-            "n"
-        ],
-        "input_type": [
-            "usize"
-        ],
-        "return": [
-            "struct"
-        ],
-        "return_type": [
-            "DSU"
-        ],
-        "timer_score": 98,
-        "memory_score": 98,
-        "code": [
-            "#[derive(Clone)]\nstruct DSU { p: Vec<usize>, r: Vec<i32> }\nimpl DSU {\n    fn new(n: usize) -> Self { Self { p: (0..n).collect(), r: vec![0; n] } }\n    fn find(&mut self, x: usize) -> usize { if self.p[x]==x { x } else { let px = self.find(self.p[x]); self.p[x]=px; px } }\n    fn unite(&mut self, a: usize, b: usize) -> bool { let mut a=self.find(a); let mut b=self.find(b); if a==b { return false } if self.r[a]<self.r[b] { std::mem::swap(&mut a,&mut b) } self.p[b]=a; if self.r[a]==self.r[b] { self.r[a]+=1 } true }\n    fn same(&mut self, a: usize, b: usize) -> bool { self.find(a)==self.find(b) }\n}\n\n// 用法示例\n// let mut d = DSU::new(5);\n// d.unite(0,1); d.unite(3,4); assert!(d.same(0,1)); assert!(!d.same(1,2));"
-        ]
-    },
-    {
-        "name-zh": "树状数组(Fenwick/BIT)",
-        "name-en": "Fenwick Tree (BIT)",
-        "description-zh": "支持前缀和/单点更新，查询/更新均为 O(log n)",
-        "description-en": "Prefix sum and point update in O(log n)",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "data structure",
-            "prefix sum"
-        ],
-        "tags": [
-            "fenwick",
-            "bit",
-            "data structure"
-        ],
-        "input": [
-            "n"
-        ],
-        "input_type": [
-            "usize"
-        ],
-        "return": [
-            "struct"
-        ],
-        "return_type": [
-            "Fenwick"
-        ],
-        "timer_score": 96,
-        "memory_score": 96,
-        "code": [
-            "struct Fenwick { n: usize, bit: Vec<i64> }\nimpl Fenwick {\n    fn new(n: usize) -> Self { Self { n, bit: vec![0; n+1] } }\n    fn add(&mut self, mut idx: usize, delta: i64) {\n        idx += 1; // 1-based\n        while idx <= self.n {\n            self.bit[idx] += delta;\n            idx += idx & (!idx + 1); // idx += idx & -idx\n        }\n    }\n    fn sum_prefix(&self, mut idx: usize) -> i64 {\n        let mut res = 0i64; idx += 1;\n        while idx > 0 {\n            res += self.bit[idx];\n            idx &= idx - 1;\n        }\n        res\n    }\n    fn range_sum(&self, l: usize, r: usize) -> i64 {\n        if r < l { return 0 }\n        self.sum_prefix(r) - if l==0 { 0 } else { self.sum_prefix(l-1) }\n    }\n}\n\n// 用法示例\n// let mut fw = Fenwick::new(5);\n// fw.add(0, 1); fw.add(3, 2); assert_eq!(fw.range_sum(0,3), 3);"
-        ]
-    },
-    {
-        "name-zh": "Modbus CRC16",
-        "name-en": "Modbus CRC16",
-        "description-zh": "计算 Modbus CRC16，返回小端两字节(Vec<u8>长度2)",
-        "description-en": "Compute Modbus CRC16, return 2 bytes little-endian (Vec<u8>)",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "hardware",
-            "modbus",
-            "crc"
-        ],
-        "tags": [
-            "checksum",
-            "crc16",
-            "modbus"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "&[u8]"
-        ],
-        "return": [
-            "crc_le"
-        ],
-        "return_type": [
-            "Vec<u8>"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn modbus_crc16_le(data: &[u8]) -> Vec<u8> {\n    let mut crc: u16 = 0xFFFF;\n    for &b in data {\n        crc ^= b as u16;\n        for _ in 0..8 {\n            if (crc & 1) != 0 { crc = (crc >> 1) ^ 0xA001; } else { crc >>= 1; }\n        }\n    }\n    vec![(crc & 0xFF) as u8, (crc >> 8) as u8]\n}"
-        ]
-    },
-    {
-        "name-zh": "CRC32(IEEE)",
-        "name-en": "CRC32 (IEEE)",
-        "description-zh": "计算 CRC32(IEEE)，返回大端4字节(Vec<u8>)",
-        "description-en": "Compute CRC32 (IEEE), return 4 bytes big-endian (Vec<u8>)",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "hardware",
-            "crc",
-            "checksum"
-        ],
-        "tags": [
-            "checksum",
-            "crc32",
-            "ieee"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "&[u8]"
-        ],
-        "return": [
-            "crc_be"
-        ],
-        "return_type": [
-            "Vec<u8>"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn crc32_ieee_be(data: &[u8]) -> Vec<u8> {\n    const POLY: u32 = 0xEDB88320; // reflected poly for bitwise algo\n    let mut crc: u32 = 0xFFFF_FFFF;\n    for &b in data {\n        let mut x = (crc ^ (b as u32)) & 0xFF;\n        for _ in 0..8 {\n            x = if (x & 1) != 0 { (x >> 1) ^ POLY } else { x >> 1 };\n        }\n        crc = (crc >> 8) ^ x;\n    }\n    crc ^= 0xFFFF_FFFF;\n    crc.to_be_bytes().to_vec()\n}"
-        ]
-    },
-    {
-        "name-zh": "Sum8 校验",
-        "name-en": "Sum8 Checksum",
-        "description-zh": "对所有字节求和取低8位(0..255)",
-        "description-en": "Sum of all bytes modulo 256 (0..255)",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "hardware",
-            "checksum"
-        ],
-        "tags": [
-            "checksum",
-            "sum8"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "&[u8]"
-        ],
-        "return": [
-            "sum8"
-        ],
-        "return_type": [
-            "u8"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn checksum_sum8(data: &[u8]) -> u8 { data.iter().fold(0u16, |acc, &b| acc + b as u16) as u8 }"
-        ]
-    },
-    {
-        "name-zh": "LRC8 校验",
-        "name-en": "LRC8 Checksum",
-        "description-zh": "纵向冗余校验(LRC)，使 (sum + LRC) & 0xFF == 0",
-        "description-en": "Longitudinal Redundancy Check so that (sum + LRC) & 0xFF == 0",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "hardware",
-            "checksum"
-        ],
-        "tags": [
-            "checksum",
-            "lrc"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "&[u8]"
-        ],
-        "return": [
-            "lrc"
-        ],
-        "return_type": [
-            "u8"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn lrc8(data: &[u8]) -> u8 { ((-(data.iter().fold(0u16, |acc, &b| acc + b as u16) as i16)) as i16) as i32 as u8 }"
-        ]
-    },
-    {
-        "name-zh": "异或校验",
-        "name-en": "XOR Checksum",
-        "description-zh": "逐字节异或校验，返回0..255",
-        "description-en": "Byte-wise XOR checksum, returns 0..255",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "hardware",
-            "checksum"
-        ],
-        "tags": [
-            "checksum",
-            "xor"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "&[u8]"
-        ],
-        "return": [
-            "xor"
-        ],
-        "return_type": [
-            "u8"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn checksum_xor(data: &[u8]) -> u8 { data.iter().fold(0u8, |acc, &b| acc ^ b) }"
-        ]
-    },
-    {
-        "name-zh": "奇偶校验位",
-        "name-en": "Parity Bit",
-        "description-zh": "计算一个字节的奇/偶校验位；odd=true 为奇校验",
-        "description-en": "Compute parity bit for one byte; odd=true for odd parity",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "hardware",
-            "parity",
-            "serial"
-        ],
-        "tags": [
-            "parity",
-            "bit"
-        ],
-        "input": [
-            "byte",
-            "odd"
-        ],
-        "input_type": [
-            "u8",
-            "bool"
-        ],
-        "return": [
-            "parity_bit"
-        ],
-        "return_type": [
-            "u8"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn parity_bit(byte: u8, odd: bool) -> u8 { let ones = byte.count_ones() as u8; ((ones & 1) ^ (if odd {1} else {0})) as u8 }"
-        ]
-    },
-    {
-        "name-zh": "向量过滤",
-        "name-en": "Vector Filter",
-        "description-zh": "根据谓词过滤向量元素",
-        "description-en": "Filter vector elements by predicate",
-        "dependencies": [],
-        "use_to": [
-            "vector"
-        ],
-        "tags": [
-            "basic",
-            "vector"
-        ],
-        "input": [
-            "vec",
-            "pred"
-        ],
-        "input_type": [
-            "Vec<T>",
-            "fn(&T)->bool"
-        ],
-        "return": [
-            "filtered"
-        ],
-        "return_type": [
-            "Vec<T>"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "fn filter_vec<T: Clone>(v: &[T], pred: fn(&T) -> bool) -> Vec<T> {\n    v.iter().filter(|x| pred(x)).cloned().collect()\n}"
-        ]
-    },
-    {
-        "name-zh": "向量映射",
-        "name-en": "Vector Map",
-        "description-zh": "对向量元素执行函数转换",
-        "description-en": "Map vector elements through function",
-        "dependencies": [],
-        "use_to": [
-            "vector"
-        ],
-        "tags": [
-            "basic",
-            "vector"
-        ],
-        "input": [
-            "vec",
-            "mapper"
-        ],
-        "input_type": [
-            "Vec<T>",
-            "fn(T)->U"
-        ],
-        "return": [
-            "mapped"
-        ],
-        "return_type": [
-            "Vec<U>"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "fn map_vec<T: Clone, U>(v: &[T], f: fn(T) -> U) -> Vec<U> {\n    v.iter().cloned().map(|x| f(x)).collect()\n}"
-        ]
-    },
-    {
-        "name-zh": "向量反转",
-        "name-en": "Vector Reverse",
-        "description-zh": "反转向量元素顺序",
-        "description-en": "Reverse vector element order",
-        "dependencies": [],
-        "use_to": [
-            "vector"
-        ],
-        "tags": [
-            "basic",
-            "vector"
-        ],
-        "input": [
-            "vec"
-        ],
-        "input_type": [
-            "Vec<T>"
-        ],
-        "return": [
-            "reversed"
-        ],
-        "return_type": [
-            "Vec<T>"
-        ],
-        "timer_score": 90,
-        "memory_score": 85,
-        "code": [
-            "fn reverse_vec<T: Clone>(v: &[T]) -> Vec<T> {\n    let mut r = v.iter().cloned().collect::<Vec<_>>();\n    r.reverse();\n    r\n}"
-        ]
-    },
-    {
-        "name-zh": "向量查找",
-        "name-en": "Vector Find",
-        "description-zh": "在向量中查找满足条件的第一个元素",
-        "description-en": "Find first element in vector satisfying condition",
-        "dependencies": [],
-        "use_to": [
-            "vector"
-        ],
-        "tags": [
-            "basic",
-            "vector"
-        ],
-        "input": [
-            "vec",
-            "pred"
-        ],
-        "input_type": [
-            "Vec<T>",
-            "fn(&T)->bool"
-        ],
-        "return": [
-            "found"
-        ],
-        "return_type": [
-            "Option<T>"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "fn find_in_vec<T: Clone>(v: &[T], pred: fn(&T) -> bool) -> Option<T> {\n    v.iter().find(|x| pred(x)).cloned()\n}"
-        ]
-    },
-    {
-        "name-zh": "字符串包含",
-        "name-en": "String Contains",
-        "description-zh": "检查字符串是否包含子串",
-        "description-en": "Check if string contains substring",
-        "dependencies": [],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "basic",
-            "string"
-        ],
-        "input": [
-            "s",
-            "sub"
-        ],
-        "input_type": [
-            "&str",
-            "&str"
-        ],
-        "return": [
-            "contains"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "fn str_contains(s: &str, sub: &str) -> bool {\n    s.contains(sub)\n}"
-        ]
-    },
-    {
-        "name-zh": "字符串替换",
-        "name-en": "String Replace",
-        "description-zh": "替换字符串中的子串",
-        "description-en": "Replace substring in string",
-        "dependencies": [],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "basic",
-            "string"
-        ],
-        "input": [
-            "s",
-            "old",
-            "new"
-        ],
-        "input_type": [
-            "&str",
-            "&str",
-            "&str"
-        ],
-        "return": [
-            "result"
-        ],
-        "return_type": [
-            "String"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "fn str_replace(s: &str, old: &str, new: &str) -> String {\n    s.replace(old, new)\n}"
-        ]
-    },
-    {
-        "name-zh": "字符串分割",
-        "name-en": "String Split",
-        "description-zh": "按分隔符分割字符串为向量",
-        "description-en": "Split string by delimiter into vector",
-        "dependencies": [],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "basic",
-            "string"
-        ],
-        "input": [
-            "s",
-            "delim"
-        ],
-        "input_type": [
-            "&str",
-            "&str"
-        ],
-        "return": [
-            "parts"
-        ],
-        "return_type": [
-            "Vec<String>"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "fn str_split(s: &str, delim: &str) -> Vec<String> {\n    s.split(delim).map(|x| x.to_string()).collect()\n}"
-        ]
-    },
-    {
-        "name-zh": "读取标准输入",
-        "name-en": "Read Stdin",
-        "description-zh": "读取一行标准输入",
-        "description-en": "Read a line from stdin",
-        "dependencies": [],
-        "use_to": [
-            "io",
-            "stdin"
-        ],
-        "tags": [
-            "basic",
-            "io"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "line"
-        ],
-        "return_type": [
-            "String"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "use std::io::{self,BufRead};\nfn read_stdin()->String{\n    let stdin=io::stdin();\n    let mut line=String::new();\n    stdin.lock().read_line(&mut line).unwrap();\n    line.trim().to_string()\n}"
-        ]
-    },
-    {
-        "name-zh": "向量求和",
-        "name-en": "Vector Sum Generic",
-        "description-zh": "对向量所有元素求和（泛型）",
-        "description-en": "Sum all elements in vector generically",
-        "dependencies": [],
-        "use_to": [
-            "vector",
-            "math"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "v"
-        ],
-        "input_type": [
-            "Vec<T>"
-        ],
-        "return": [
-            "sum"
-        ],
-        "return_type": [
-            "T"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "fn sum_vec<T: std::iter::Sum<T>+Copy>(v: &[T]) -> T {\n    v.iter().sum()\n}"
-        ]
-    },
-    {
-        "name-zh": "向量最大值",
-        "name-en": "Vector Max",
-        "description-zh": "返回向量中的最大值",
-        "description-en": "Return maximum value in vector",
-        "dependencies": [],
-        "use_to": [
-            "vector",
-            "math"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "v"
-        ],
-        "input_type": [
-            "Vec<T>"
-        ],
-        "return": [
-            "max"
-        ],
-        "return_type": [
-            "Option<T>"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "fn max_vec<T: std::cmp::PartialOrd>(v: &[T]) -> Option<T> {\n    v.iter().max().cloned()\n}"
-        ]
-    },
-    {
-        "name-zh": "向量最小值",
-        "name-en": "Vector Min",
-        "description-zh": "返回向量中的最小值",
-        "description-en": "Return minimum value in vector",
-        "dependencies": [],
-        "use_to": [
-            "vector",
-            "math"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "v"
-        ],
-        "input_type": [
-            "Vec<T>"
-        ],
-        "return": [
-            "min"
-        ],
-        "return_type": [
-            "Option<T>"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "fn min_vec<T: std::cmp::PartialOrd>(v: &[T]) -> Option<T> {\n    v.iter().min().cloned()\n}"
-        ]
-    },
-    {
-        "name-zh": "向量去重",
-        "name-en": "Vector Unique",
-        "description-zh": "去除向量中的重复元素",
-        "description-en": "Remove duplicate elements from vector",
-        "dependencies": [],
-        "use_to": [
-            "vector"
-        ],
-        "tags": [
-            "basic",
-            "vector"
-        ],
-        "input": [
-            "v"
-        ],
-        "input_type": [
-            "Vec<T>"
-        ],
-        "return": [
-            "uniq"
-        ],
-        "return_type": [
-            "Vec<T>"
-        ],
-        "timer_score": 90,
-        "memory_score": 85,
-        "code": [
-            "fn unique_vec<T: Eq+Clone>(v: &[T]) -> Vec<T> {\n    let mut r = v.to_vec();\n    r.sort();\n    r.dedup();\n    r\n}"
-        ]
-    },
-    {
-        "name-zh": "范围数组",
-        "name-en": "Range Array",
-        "description-zh": "生成指定范围的整数向量",
-        "description-en": "Generate integer vector in range",
-        "dependencies": [],
-        "use_to": [
-            "vector"
-        ],
-        "tags": [
-            "basic",
-            "vector"
-        ],
-        "input": [
-            "start",
-            "end",
-            "step"
-        ],
-        "input_type": [
-            "i64",
-            "i64",
-            "i64"
-        ],
-        "return": [
-            "range"
-        ],
-        "return_type": [
-            "Vec<i64>"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "fn range_vec(start: i64, end: i64, step: i64) -> Vec<i64> {\n    (start..end).step_by(step as usize).collect()\n}"
-        ]
-    },
-    {
-        "name-zh": "迭代器过滤",
-        "name-en": "Iterator Filter",
-        "description-zh": "对迭代器进行过滤",
-        "description-en": "Filter an iterator",
-        "dependencies": [],
-        "use_to": [
-            "iterator"
-        ],
-        "tags": [
-            "basic",
-            "iterator"
-        ],
-        "input": [
-            "iter",
-            "pred"
-        ],
-        "input_type": [
-            "I",
-            "fn(&T)->bool"
-        ],
-        "return": [
-            "filtered"
-        ],
-        "return_type": [
-            "Vec<T>"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "fn filter_iter<T>(iter: impl IntoIterator<Item=T>, pred: fn(&T) -> bool) -> Vec<T> {\n    iter.into_iter().filter(|x| pred(x)).collect()\n}"
-        ]
-    },
-    {
-        "name-zh": "迭代器映射",
-        "name-en": "Iterator Map",
-        "description-zh": "对迭代器进行映射转换",
-        "description-en": "Map an iterator",
-        "dependencies": [],
-        "use_to": [
-            "iterator"
-        ],
-        "tags": [
-            "basic",
-            "iterator"
-        ],
-        "input": [
-            "iter",
-            "mapper"
-        ],
-        "input_type": [
-            "I",
-            "fn(T)->U"
-        ],
-        "return": [
-            "mapped"
-        ],
-        "return_type": [
-            "Vec<U>"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "fn map_iter<T,U>(iter: impl IntoIterator<Item=T>, f: fn(T) -> U) -> Vec<U> {\n    iter.into_iter().map(f).collect()\n}"
-        ]
-    },
-    {
-        "name-zh": "Option链式调用",
-        "name-en": "Option Chain",
-        "description-zh": "链式调用 Option 的 map 和 unwrap_or",
-        "description-en": "Chain Option with map and unwrap_or",
-        "dependencies": [],
-        "use_to": [
-            "option"
-        ],
-        "tags": [
-            "basic",
-            "option"
-        ],
-        "input": [
-            "opt",
-            "mapper"
-        ],
-        "input_type": [
-            "Option<T>",
-            "fn(T)->U"
-        ],
-        "return": [
-            "result"
-        ],
-        "return_type": [
-            "U"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "fn option_chain<T: Copy, U>(opt: Option<T>, f: fn(T) -> U) -> U {\n    opt.map(f).unwrap_or_default()\n}"
-        ]
-    },
-    {
-        "name-zh": "Result处理",
-        "name-en": "Result Handle",
-        "description-zh": "处理 Result，转换为 Option",
-        "description-en": "Handle Result, convert to Option",
-        "dependencies": [],
-        "use_to": [
-            "result",
-            "error"
-        ],
-        "tags": [
-            "basic",
-            "result"
-        ],
-        "input": [
-            "res"
-        ],
-        "input_type": [
-            "Result<T,E>"
-        ],
-        "return": [
-            "option"
-        ],
-        "return_type": [
-            "Option<T>"
-        ],
-        "timer_score": 90,
-        "memory_score": 100,
-        "code": [
-            "fn result_to_option<T,E>(res: Result<T,E>) -> Option<T> {\n    res.ok()\n}"
-        ]
-    },
-    {
-        "name-zh": "哈希映射获取",
-        "name-en": "HashMap Get",
-        "description-zh": "安全获取哈希映射中的值",
-        "description-en": "Safely get value from HashMap",
-        "dependencies": [],
-        "use_to": [
-            "hashmap"
-        ],
-        "tags": [
-            "basic",
-            "hashmap"
-        ],
-        "input": [
-            "map",
-            "key",
-            "default"
-        ],
-        "input_type": [
-            "std::collections::HashMap<K,V>",
-            "K",
-            "V"
-        ],
-        "return": [
-            "value"
-        ],
-        "return_type": [
-            "V"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "fn hashmap_get<K: std::hash::Hash+Eq+Clone, V: Clone>(map: &std::collections::HashMap<K,V>, key: &K, default_val: V) -> V {\n    map.get(key).cloned().unwrap_or(default_val)\n}"
-        ]
-    },
-    {
-        "name-zh": "哈希映射插入",
-        "name-en": "HashMap Insert",
-        "description-zh": "插入键值对到哈希映射",
-        "description-en": "Insert key-value pair into HashMap",
-        "dependencies": [],
-        "use_to": [
-            "hashmap"
-        ],
-        "tags": [
-            "basic",
-            "hashmap"
-        ],
-        "input": [
-            "map",
-            "key",
-            "value"
-        ],
-        "input_type": [
-            "std::collections::HashMap<K,V>",
-            "K",
-            "V"
-        ],
-        "return": [
-            "old"
-        ],
-        "return_type": [
-            "Option<V>"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "fn hashmap_insert<K: std::hash::Hash+Eq, V>(map: &mut std::collections::HashMap<K,V>, key: K, value: V) -> Option<V> {\n    map.insert(key, value)\n}"
-        ]
-    },
-    {
-        "name-zh": "时间戳",
-        "name-en": "Timestamp",
-        "description-zh": "获取当前 Unix 时间戳（秒）",
-        "description-en": "Get current Unix timestamp in seconds",
-        "dependencies": [],
-        "use_to": [
-            "time"
-        ],
-        "tags": [
-            "basic",
-            "time"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "timestamp"
-        ],
-        "return_type": [
-            "i64"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "use std::time::{SystemTime,UNIX_EPOCH};\nfn timestamp() -> i64 {\n    SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs() as i64\n}"
-        ]
-    },
-    {
-        "name-zh": "格式化时间",
-        "name-en": "Format Time",
-        "description-zh": "将时间格式化为字符串",
-        "description-en": "Format time as string",
-        "dependencies": [],
-        "use_to": [
-            "time",
-            "formatting"
-        ],
-        "tags": [
-            "basic",
-            "time"
-        ],
-        "input": [
-            "t",
-            "fmt"
-        ],
-        "input_type": [
-            "SystemTime",
-            "&str"
-        ],
-        "return": [
-            "formatted"
-        ],
-        "return_type": [
-            "String"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "use std::time::{SystemTime,UNIX_EPOCH}; fn format_time(t: SystemTime, fmt: &str) -> String { let chrono_offset=1970; let secs=t.duration_since(UNIX_EPOCH).unwrap().as_secs(); format!(\"{}\", secs) }"
-        ]
-    },
-    {
-        "name-zh": "快速排序",
-        "name-en": "Quick Sort",
-        "description-zh": "简单快速排序实现",
-        "description-en": "Simple quick sort implementation",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "v"
-        ],
-        "input_type": [
-            "Vec<i32>"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "Vec<i32>"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "fn quick_sort(v: &mut [i32]) {\n    if v.len() <= 1 { return; }\n    let p = v.len() / 2;\n    let mut i = 0;\n    for j in 0..v.len() {\n        if v[j] < v[p] { v.swap(i, j); i += 1; }\n    }\n    v.swap(i, p);\n    let (lo, hi) = v.split_at_mut(i);\n    if !lo.is_empty() { quick_sort(lo); }\n    if !hi.is_empty() { quick_sort(&mut hi[1..]); }\n}"
-        ]
-    },
-    {
-        "name-zh": "归并排序",
-        "name-en": "Merge Sort",
-        "description-zh": "自顶向下归并排序",
-        "description-en": "Top-down merge sort",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "v"
-        ],
-        "input_type": [
-            "Vec<i32>"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "Vec<i32>"
-        ],
-        "timer_score": 80,
-        "memory_score": 75,
-        "code": [
-            "fn merge_sort(v: &[i32]) -> Vec<i32> {\n    if v.len() <= 1 { return v.to_vec(); }\n    let m = v.len() / 2;\n    let l = merge_sort(&v[..m]);\n    let r = merge_sort(&v[m..]);\n    merge(&l, &r)\n}\nfn merge(l: &[i32], r: &[i32]) -> Vec<i32> {\n    let mut res = Vec::with_capacity(l.len() + r.len());\n    let mut i = 0; let mut j = 0;\n    while i < l.len() && j < r.len() {\n        if l[i] <= r[j] { res.push(l[i]); i += 1; } else { res.push(r[j]); j += 1; }\n    }\n    res.extend_from_slice(&l[i..]); res.extend_from_slice(&r[j..]);\n    res\n}"
-        ]
-    },
-    {
-        "name-zh": "二分查找",
-        "name-en": "Binary Search",
-        "description-zh": "有序向量二分查找",
-        "description-en": "Binary search in sorted vector",
-        "dependencies": [],
-        "use_to": [
-            "search",
-            "algorithm"
-        ],
-        "tags": [
-            "search",
-            "algorithm"
-        ],
-        "input": [
-            "v",
-            "target"
-        ],
-        "input_type": [
-            "Vec<i32>",
-            "i32"
-        ],
-        "return": [
-            "index"
-        ],
-        "return_type": [
-            "Option<usize>"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "fn binary_search(v: &[i32], target: i32) -> Option<usize> {\n    let mut l = 0; let mut r = v.len();\n    while l < r {\n        let m = (l + r) / 2;\n        if v[m] == target { return Some(m); }\n        else if v[m] < target { l = m + 1; } else { r = m; }\n    }\n    None\n}"
-        ]
-    },
-    {
-        "name-zh": "哈希集",
-        "name-en": "HashSet",
-        "description-zh": "创建并操作哈希集合",
-        "description-en": "Create and operate on hash set",
-        "dependencies": [],
-        "use_to": [
-            "set",
-            "hash"
-        ],
-        "tags": [
-            "set",
-            "basic"
-        ],
-        "input": [
-            "items"
-        ],
-        "input_type": [
-            "Vec<i32>"
-        ],
-        "return": [
-            "set"
-        ],
-        "return_type": [
-            "std::collections::HashSet<i32>"
-        ],
-        "timer_score": 95,
-        "memory_score": 85,
-        "code": [
-            "use std::collections::HashSet;\nfn to_hashset(items: &[i32]) -> HashSet<i32> {\n    items.iter().cloned().collect()\n}\nfn set_intersection(a: &HashSet<i32>, b: &HashSet<i32>) -> HashSet<i32> {\n    a.intersection(b).cloned().collect()\n}\nfn set_union(a: &HashSet<i32>, b: &HashSet<i32>) -> HashSet<i32> {\n    a.union(b).cloned().collect()\n}\nfn set_difference(a: &HashSet<i32>, b: &HashSet<i32>) -> HashSet<i32> {\n    a.difference(b).cloned().collect()\n}"
-        ]
-    },
-    {
-        "name-zh": "命令行参数解析",
-        "name-en": "Parse CLI Args",
-        "description-zh": "简单解析命令行键值参数",
-        "description-en": "Simple key-value CLI argument parser",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "cli",
-            "args"
-        ],
-        "tags": [
-            "basic",
-            "cli"
-        ],
-        "input": [
-            "args"
-        ],
-        "input_type": [
-            "Vec<String>"
-        ],
-        "return": [
-            "params"
-        ],
-        "return_type": [
-            "std::collections::HashMap<String,String>"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "use std::collections::HashMap;\nfn parse_args(args: &[String]) -> HashMap<String, String> {\n    let mut m = HashMap::new();\n    for a in args {\n        if a.starts_with(\"--\") {\n            let kv: Vec<&str> = a[2..].splitn(2, '=').collect();\n            if kv.len() == 2 { m.insert(kv[0].to_string(), kv[1].to_string()); }\n        }\n    }\n    m\n}"
-        ]
-    },
-    {
-        "name-zh": "文件存在检查",
-        "name-en": "File Exists",
-        "description-zh": "检查文件或目录是否存在",
-        "description-en": "Check if file or directory exists",
-        "dependencies": [
-            "std::fs",
-            "std::path"
-        ],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "file",
-            "basic"
-        ],
-        "input": [
-            "path"
-        ],
-        "input_type": [
-            "&str"
-        ],
-        "return": [
-            "exists"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "use std::path::Path;\nfn file_exists(path: &str) -> bool {\n    Path::new(path).exists()\n}"
-        ]
-    },
-    {
-        "name-zh": "读取目录",
-        "name-en": "Read Directory",
-        "description-zh": "读取目录下所有文件条目",
-        "description-en": "Read all entries in a directory",
-        "dependencies": [
-            "std::fs"
-        ],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "file",
-            "basic"
-        ],
-        "input": [
-            "dir"
-        ],
-        "input_type": [
-            "&str"
-        ],
-        "return": [
-            "entries"
-        ],
-        "return_type": [
-            "Vec<String>"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "use std::fs;\nfn read_dir(dir: &str) -> Vec<String> {\n    fs::read_dir(dir).unwrap().iter()\n        .filter_map(|e| e.ok())\n        .map(|e| e.file_name().to_string_lossy().into_owned())\n        .collect()\n}"
-        ]
-    },
-    {
-        "name-zh": "创建目录",
-        "name-en": "Create Directory",
-        "description-zh": "递归创建目录",
-        "description-en": "Create directory recursively",
-        "dependencies": [
-            "std::fs"
-        ],
-        "use_to": [
-            "file",
-            "dir"
-        ],
-        "tags": [
-            "file",
-            "basic"
-        ],
-        "input": [
-            "path"
-        ],
-        "input_type": [
-            "&str"
-        ],
-        "return": [
-            "ok"
-        ],
-        "return_type": [
-            "Result<(),std::io::Error>"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "use std::fs;\nfn create_dir(path: &str) -> std::io::Result<()> {\n    fs::create_dir_all(path)\n}"
-        ]
-    },
-    {
-        "name-zh": "复制文件",
-        "name-en": "Copy File",
-        "description-zh": "复制文件内容",
-        "description-en": "Copy file content",
-        "dependencies": [
-            "std::fs"
-        ],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "file",
-            "basic"
-        ],
-        "input": [
-            "src",
-            "dst"
-        ],
-        "input_type": [
-            "&str",
-            "&str"
-        ],
-        "return": [
-            "ok"
-        ],
-        "return_type": [
-            "Result<(),std::io::Error>"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "use std::fs;\nfn copy_file(src: &str, dst: &str) -> std::io::Result<()> {\n    fs::copy(src, dst)?;\n    Ok(())\n}"
-        ]
-    },
-    {
-        "name-zh": "删除文件",
-        "name-en": "Delete File",
-        "description-zh": "删除文件",
-        "description-en": "Delete file",
-        "dependencies": [
-            "std::fs"
-        ],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "file",
-            "basic"
-        ],
-        "input": [
-            "path"
-        ],
-        "input_type": [
-            "&str"
-        ],
-        "return": [
-            "ok"
-        ],
-        "return_type": [
-            "Result<(),std::io::Error>"
-        ],
-        "timer_score": 90,
-        "memory_score": 100,
-        "code": [
-            "use std::fs;\nfn delete_file(path: &str) -> std::io::Result<()> {\n    fs::remove_file(path)\n}"
-        ]
-    },
-    {
-        "name-zh": "定时器",
-        "name-en": "Timer / Stopwatch",
-        "description-zh": "记录代码执行时间",
-        "description-en": "Measure code execution time",
-        "dependencies": [
-            "std::time"
-        ],
-        "use_to": [
-            "time",
-            "benchmark"
-        ],
-        "tags": [
-            "time",
-            "basic"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "elapsed"
-        ],
-        "return_type": [
-            "std::time::Duration"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "use std::time::Instant;\nstruct Stopwatch { start: Instant }\nimpl Stopwatch {\n    fn new() -> Self { Self { start: Instant::now() } }\n    fn elapsed(&self) -> std::time::Duration { self.start.elapsed() }\n}"
-        ]
-    },
-    {
-        "name-zh": "雪花ID",
-        "name-en": "Snowflake ID",
-        "description-zh": "生成分布式唯一 ID（简化的雪花算法）",
-        "description-en": "Generate distributed unique ID (simplified snowflake)",
-        "dependencies": [
-            "std::sync::atomic",
-            "std::sync::atomic::Ordering"
-        ],
-        "use_to": [
-            "id",
-            "distributed"
-        ],
-        "tags": [
-            "intermediate",
-            "id"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "id"
-        ],
-        "return_type": [
-            "u64"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "use std::sync::atomic::{AtomicU64, Ordering};\nstatic SNOWFLAKE: AtomicU64 = AtomicU64::new(0);\nfn next_snowflake_id() -> u64 {\n    SNOWFLAKE.fetch_add(1, Ordering::Relaxed)\n}"
-        ]
-    },
-    {
-        "name-zh": "Once 单例",
-        "name-en": "Once Singleton",
-        "description-zh": "确保闭包只执行一次（用于单例初始化）",
-        "description-en": "Ensure closure runs only once (for singleton init)",
-        "dependencies": [
-            "std::sync::Once"
-        ],
-        "use_to": [
-            "concurrency",
-            "singleton"
-        ],
-        "tags": [
-            "intermediate",
-            "concurrency"
-        ],
-        "input": [
-            "fn"
-        ],
-        "input_type": [
-            "fn()"
-        ],
-        "return": [
-            "result"
-        ],
-        "return_type": [
-            "T"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "use std::sync::Once;\nstatic INIT: Once = Once::new();\nstatic mut VALUE: Option<u32> = None;\nfn do_once<F: FnOnce()>(f: F) {\n    INIT.call_once(|| unsafe { VALUE = Some(f()); });\n}"
-        ]
-    },
-    {
-        "name-zh": "读写锁",
-        "name-en": "Read Write Lock",
-        "description-zh": "使用 RwLock 进行读写锁操作",
-        "description-en": "Read-write lock using RwLock",
-        "dependencies": [
-            "std::sync"
-        ],
-        "use_to": [
-            "concurrency",
-            "lock"
-        ],
-        "tags": [
-            "concurrent",
-            "lock"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "rwlock"
-        ],
-        "return_type": [
-            "std::sync::RwLock<T>"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "use std::sync::{RwLock, RwLockReadGuard, RwLockWriteGuard};\nstruct SafeData { lock: RwLock<Vec<i32>> }\nimpl SafeData {\n    fn new() -> Self { Self { lock: RwLock::new(Vec::new()) } }\n    fn read(&self) -> RwLockReadGuard<Vec<i32>> { self.lock.read().unwrap() }\n    fn write(&self) -> RwLockWriteGuard<Vec<i32>> { self.lock.write().unwrap() }\n}"
-        ]
-    },
-    {
-        "name-zh": "信号量",
-        "name-en": "Semaphore",
-        "description-zh": "使用 Semaphore 控制并发数量",
-        "description-en": "Control concurrency count with Semaphore",
-        "dependencies": [
-            "std::sync"
-        ],
-        "use_to": [
-            "concurrency",
-            "semaphore"
-        ],
-        "tags": [
-            "concurrent",
-            "semaphore"
-        ],
-        "input": [
-            "permits"
-        ],
-        "input_type": [
-            "usize"
-        ],
-        "return": [
-            "sem"
-        ],
-        "return_type": [
-            "std::sync::Semaphore"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "use std::sync::{Arc, Semaphore};\nfn new_semaphore(permits: usize) -> Arc<Semaphore> {\n    Arc::new(Semaphore::new(permits))\n}"
-        ]
-    },
-    {
-        "name-zh": "Barrier 同步",
-        "name-en": "Barrier Sync",
-        "description-zh": "使用 Barrier 让多线程相互等待",
-        "description-en": "Use Barrier to make threads wait for each other",
-        "dependencies": [
-            "std::sync"
-        ],
-        "use_to": [
-            "concurrency",
-            "barrier"
-        ],
-        "tags": [
-            "concurrent",
-            "barrier"
-        ],
-        "input": [
-            "n"
-        ],
-        "input_type": [
-            "usize"
-        ],
-        "return": [
-            "barrier"
-        ],
-        "return_type": [
-            "std::sync::Barrier"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "use std::sync::{Arc, Barrier};\nfn new_barrier(n: usize) -> Arc<Barrier> {\n    Arc::new(Barrier::new(n))\n}"
-        ]
-    },
-    {
-        "name-zh": "线程本地存储",
-        "name-en": "Thread Local Storage",
-        "description-zh": "使用 thread_local 定义线程局部变量",
-        "description-en": "Define thread-local variable with thread_local",
-        "dependencies": [
-            "std::thread"
-        ],
-        "use_to": [
-            "concurrency",
-            "tls"
-        ],
-        "tags": [
-            "concurrent",
-            "tls"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "value"
-        ],
-        "return_type": [
-            "thread_local!"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "use std::cell::RefCell;\nthread_local! static COUNTER: RefCell<i32> = RefCell::new(0);\nfn inc_counter() { COUNTER.with(|c| *c.borrow_mut() += 1); }\nfn get_counter() -> i32 { COUNTER.with(|c| *c.borrow()) }"
-        ]
-    },
-    {
-        "name-zh": "Result 链式处理",
-        "name-en": "Result Chain",
-        "description-zh": "使用 ? 和 and_then 链式处理 Result",
-        "description-en": "Chain Result processing with ? and and_then",
-        "dependencies": [],
-        "use_to": [
-            "result",
-            "error"
-        ],
-        "tags": [
-            "basic",
-            "result"
-        ],
-        "input": [
-            "r"
-        ],
-        "input_type": [
-            "Result<T,E>"
-        ],
-        "return": [
-            "chained"
-        ],
-        "return_type": [
-            "Result<U,E>"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "fn chain_result<T: Copy, U, E: Clone>(r: Result<T, E>) -> Result<U, E> {\n    r.and_then(|v| {\n        let _: u32 = v as u32;\n        Ok(v as u32)\n    })\n}"
-        ]
-    },
-    {
-        "name-zh": "Option 链式处理",
-        "name-en": "Option Chain",
-        "description-zh": "链式调用 Option 的 map/filter/or/unwrap_or",
-        "description-en": "Chain Option with map/filter/or/unwrap_or",
-        "dependencies": [],
-        "use_to": [
-            "option"
-        ],
-        "tags": [
-            "basic",
-            "option"
-        ],
-        "input": [
-            "opt",
-            "pred"
-        ],
-        "input_type": [
-            "Option<T>",
-            "fn(T)->bool"
-        ],
-        "return": [
-            "chained"
-        ],
-        "return_type": [
-            "Option<T>"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "fn option_chain<T: Copy>(opt: Option<T>, pred: fn(T) -> bool) -> Option<T> {\n    opt.filter(pred)\n}"
-        ]
-    },
-    {
-        "name-zh": "希尔排序",
-        "name-en": "Shell Sort",
-        "description-zh": "希尔排序（递减增量排序）",
-        "description-en": "Shell sort with diminishing gap",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "v"
-        ],
-        "input_type": [
-            "&mut [i32]"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "&mut [i32]"
-        ],
-        "timer_score": 75,
-        "memory_score": 90,
-        "code": [
-            "fn shell_sort(a: &mut [i32]) { let n = a.len(); let mut gap = n / 2; while gap > 0 { for i in gap..n { let mut j = i; let tmp = a[i]; while j >= gap && a[j - gap] > tmp { a[j] = a[j - gap]; j -= gap; } a[j] = tmp; } gap /= 2; } }"
-        ]
-    },
-    {
-        "name-zh": "堆排序",
-        "name-en": "Heap Sort",
-        "description-zh": "二叉堆实现的堆排序",
-        "description-en": "Heap sort using binary heap",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "&mut [i32]"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "&mut [i32]"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "fn heap_sort(a: &mut [i32]) { let n = a.len(); for i in (0..n/2).rev() { heapify(a, n, i); } for i in (1..n).rev() { a.swap(0, i); heapify(a, i, 0); } } fn heapify(a: &mut [i32], n: usize, i: usize) { let mut largest = i; let l = 2*i+1; let r = 2*i+2; if l < n && a[l] > a[largest] { largest = l; } if r < n && a[r] > a[largest] { largest = r; } if largest != i { a.swap(i, largest); heapify(a, n, largest); } }"
-        ]
-    },
-    {
-        "name-zh": "计数排序",
-        "name-en": "Counting Sort",
-        "description-zh": "计数排序（适用于小范围整数）",
-        "description-en": "Counting sort for small integer range",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "a",
-            "max"
-        ],
-        "input_type": [
-            "&[i32]",
-            "i32"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "Vec<i32>"
-        ],
-        "timer_score": 85,
-        "memory_score": 80,
-        "code": [
-            "fn counting_sort(a: &[i32], max: i32) -> Vec<i32> { let mut cnt = vec![0i32; (max+1) as usize]; for &v in a { cnt[v as usize] += 1; } let mut res = Vec::new(); for (i, &c) in cnt.iter().enumerate() { res.extend(std::iter::repeat(i as i32).take(c as usize)); } res }"
-        ]
-    },
-    {
-        "name-zh": "Boyer-Moore字符串匹配",
-        "name-en": "Boyer-Moore String Match",
-        "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
-        "description-en": "Boyer-Moore string matching with bad character rule",
-        "dependencies": [],
-        "use_to": [
-            "string",
-            "search"
-        ],
-        "tags": [
-            "string",
-            "boyer-moore",
-            "algorithm"
-        ],
-        "input": [
-            "text",
-            "pattern"
-        ],
-        "input_type": [
-            "&str",
-            "&str"
-        ],
-        "return": [
-            "index"
-        ],
-        "return_type": [
-            "Option<usize>"
-        ],
-        "timer_score": 88,
-        "memory_score": 92,
-        "code": [
-            "fn boyer_moore(text: &str, pattern: &str) -> Option<usize> { let n = text.len(); let m = pattern.len(); if m == 0 { return Some(0); } let mut bc = [m; 256]; for (i, c) in pattern.char_indices() { bc[c as usize] = m - i - 1; } let mut shift = 0; while shift <= n.saturating_sub(m) { let mut j = m; while j > 0 && pattern.chars().nth(j-1) == text.chars().nth(shift+j-1) { j -= 1; } if j == 0 { return Some(shift); } let c = text.chars().nth(shift+j-1).unwrap_or('\\0') as usize; shift += (j - bc[c]).max(1); } None }"
-        ]
-    },
-    {
-        "name-zh": "Sunday字符串匹配",
-        "name-en": "Sunday String Match",
-        "description-zh": "Sunday 字符串匹配算法",
-        "description-en": "Sunday string matching algorithm",
-        "dependencies": [],
-        "use_to": [
-            "string",
-            "search"
-        ],
-        "tags": [
-            "string",
-            "sunday",
-            "algorithm"
-        ],
-        "input": [
-            "text",
-            "pattern"
-        ],
-        "input_type": [
-            "&str",
-            "&str"
-        ],
-        "return": [
-            "index"
-        ],
-        "return_type": [
-            "Option<usize>"
-        ],
-        "timer_score": 88,
-        "memory_score": 92,
-        "code": [
-            "fn sunday(text: &str, pattern: &str) -> Option<usize> { let n = text.len(); let m = pattern.len(); if m == 0 { return Some(0); } let mut shift = [m+1; 256]; for (i, c) in pattern.char_indices() { shift[c as usize] = m - i; } let mut pos = 0; while pos <= n.saturating_sub(m) { let mut j = 0; while j < m && text.chars().nth(pos+j) == pattern.chars().nth(j) { j += 1; } if j == m { return Some(pos); } let next_pos = pos + m; if next_pos < n { let c = text.chars().nth(next_pos).unwrap() as usize; pos += shift[c]; } else { return None; } } None }"
-        ]
-    },
-    {
-        "name-zh": "LRU缓存（标准库实现）",
-        "name-en": "LRU Cache (std impl)",
-        "description-zh": "使用标准库实现 LRU 缓存",
-        "description-en": "LRU cache using std",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "cache",
-            "data structure"
-        ],
-        "tags": [
-            "lru",
-            "cache",
-            "data structure"
-        ],
-        "input": [
-            "capacity"
-        ],
-        "input_type": [
-            "usize"
-        ],
-        "return": [
-            "cache"
-        ],
-        "return_type": [
-            "LRUCache<i32,i32>"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "use std::collections::HashMap;\nstruct LRUCache<K, V> { capacity: usize, map: HashMap<K, (V, usize)>, order: Vec<K>, counter: usize }"
-        ]
-    },
-    {
-        "name-zh": "限流器（令牌桶）",
-        "name-en": "Token Bucket Rate Limiter",
-        "description-zh": "令牌桶限流器实现",
-        "description-en": "Token bucket rate limiter",
-        "dependencies": [
-            "std",
-            "tokio"
-        ],
-        "use_to": [
-            "rate limit",
-            "concurrency"
-        ],
-        "tags": [
-            "rate limit",
-            "concurrent"
-        ],
-        "input": [
-            "rate",
-            "burst"
-        ],
-        "input_type": [
-            "f64",
-            "usize"
-        ],
-        "return": [
-            "limiter"
-        ],
-        "return_type": [
-            "TokenBucket"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "use std::time::{Duration, Instant};\npub struct TokenBucket { rate: f64, tokens: f64, last_update: Instant } impl TokenBucket { pub fn new(rate: f64, burst: usize) -> Self { Self { rate, tokens: burst as f64, last_update: Instant::now() } } pub fn allow(&mut self) -> bool { let now = Instant::now(); let elapsed = now.duration_since(self.last_update).as_secs_f64(); self.last_update = now; self.tokens = (self.tokens + elapsed * self.rate).min(self.tokens.max(self.tokens as f64) as f64); if self.tokens >= 1.0 { self.tokens -= 1.0; true } else { false } } } }"
-        ]
-    },
-    {
-        "name-zh": "布隆过滤器",
-        "name-en": "Bloom Filter",
-        "description-zh": "简单布隆过滤器实现",
-        "description-en": "Simple bloom filter",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "bloom filter",
-            "data structure"
-        ],
-        "tags": [
-            "bloom filter",
-            "data structure"
-        ],
-        "input": [
-            "size"
-        ],
-        "input_type": [
-            "usize"
-        ],
-        "return": [
-            "filter"
-        ],
-        "return_type": [
-            "BloomFilter"
-        ],
-        "timer_score": 85,
-        "memory_score": 80,
-        "code": [
-            "use std::collections::hash_map::DefaultHasher;\nuse std::hash::{Hash, Hasher};\nstruct BloomFilter { size: usize, bits: Vec<bool> } impl BloomFilter { pub fn new(size: usize) -> Self { Self { size, bits: vec![false; size] } fn hash1<T: Hash>(&self, v: &T) -> usize { let mut h = DefaultHasher::new(); v.hash(&mut h); h.finish() as usize % self.size } fn hash2<T: Hash>(&self, v: &T) -> usize { let mut h = DefaultHasher::new(); v.hash(&mut h); (h.finish() * 0x9e3779b97f4a7c15) as usize % self.size } pub fn insert<T: Hash>(&mut self, v: &T) { self.bits[self.hash1(v)] = true; self.bits[self.hash2(v)] = true; } pub fn contains<T: Hash>(&self, v: &T) -> bool { self.bits[self.hash1(v)] && self.bits[self.hash2(v)] } }"
-        ]
-    },
-    {
-        "name-zh": "环形缓冲区",
-        "name-en": "Ring Buffer",
-        "description-zh": "无锁 FIFO 环形缓冲区",
-        "description-en": "Lock-free FIFO ring buffer",
-        "dependencies": [
-            "std::sync::atomic"
-        ],
-        "use_to": [
-            "data structure",
-            "buffer"
-        ],
-        "tags": [
-            "ring buffer",
-            "data structure"
-        ],
-        "input": [
-            "capacity"
-        ],
-        "input_type": [
-            "usize"
-        ],
-        "return": [
-            "ring"
-        ],
-        "return_type": [
-            "RingBuffer<i32>"
-        ],
-        "timer_score": 88,
-        "memory_score": 88,
-        "code": [
-            "use std::sync::atomic::{AtomicUsize, Ordering};\npub struct RingBuffer<T> { buf: Vec<T>, cap: usize, head: AtomicUsize, tail: AtomicUsize } impl<T: Clone + Default> RingBuffer<T> { pub fn new(capacity: usize) -> Self { Self { buf: vec![T::default(); capacity], cap: capacity, head: AtomicUsize::new(0), tail: AtomicUsize::new(0) } } pub fn push(&self, v: T) -> bool { let tail = self.tail.load(Ordering::Relaxed); let head = self.head.load(Ordering::Relaxed); if tail.wrapping_sub(head) >= self.cap { return false; } self.buf[tail % self.cap] = v; self.tail.fetch_add(1, Ordering::Relaxed); true } pub fn pop(&self) -> Option<T> { let tail = self.tail.load(Ordering::Relaxed); let head = self.head.load(Ordering::Relaxed); if tail == head { return None; } let v = self.buf[head % self.cap].clone(); self.head.fetch_add(1, Ordering::Relaxed); Some(v) } }"
-        ]
-    },
-    {
-        "name-zh": "跳表",
-        "name-en": "Skip List",
-        "description-zh": "简化的跳表实现",
-        "description-en": "Simplified skip list",
-        "dependencies": [
-            "rand"
-        ],
-        "use_to": [
-            "data structure",
-            "skiplist"
-        ],
-        "tags": [
-            "skiplist",
-            "data structure"
-        ],
-        "input": [
-            "max_level"
-        ],
-        "input_type": [
-            "i32"
-        ],
-        "return": [
-            "skiplist"
-        ],
-        "return_type": [
-            "SkipList<i32>"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "use rand::Rng;\n#[derive(Clone)]\nstruct SkipListNode<T: Clone> { key: T, forward: Vec<Option<Box<SkipListNode<T>>>, value: Option<T> }\npub struct SkipList<T: Clone + PartialOrd> { head: Option<Box<SkipListNode<T>>>, max_level: i32 }"
-        ]
-    },
-    {
-        "name-zh": "Actor 模型基础",
-        "name-en": "Actor Model Basics",
-        "description-zh": "简化的 Actor 消息传递模型",
-        "description-en": "Simplified actor message passing model",
-        "dependencies": [
-            "std",
-            "std::sync::mpsc"
-        ],
-        "use_to": [
-            "concurrency",
-            "actor"
-        ],
-        "tags": [
-            "actor",
-            "concurrent"
-        ],
-        "input": [
-            "actorFn"
-        ],
-        "input_type": [
-            "fn(Box<dyn FnOnce(String) + Send>)"
-        ],
-        "return": [
-            "sender"
-        ],
-        "return_type": [
-            "std::sync::mpsc::Sender<String>"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "use std::sync::mpsc::{channel, Sender, Receiver};\npub struct Actor { rx: Receiver<String> }\nimpl Actor { pub fn new() -> (Self, Sender<String>) { let (tx, rx) = channel(); (Self { rx }, tx) } pub fn run<F: FnOnce(String) + Send + 'static>(self, handler: F) { std::thread::spawn(move || { while let Ok(msg) = self.rx.recv() { handler(msg); } }); } }"
-        ]
-    },
-    {
-        "name-zh": "观察者模式",
-        "name-en": "Observer Pattern",
-        "description-zh": "简单的观察者模式实现",
-        "description-en": "Simple observer pattern",
-        "dependencies": [
-            "std",
-            "std::cell::RefCell"
-        ],
-        "use_to": [
-            "design pattern",
-            "observer"
-        ],
-        "tags": [
-            "observer",
-            "pattern"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "subject"
-        ],
-        "return_type": [
-            "Subject"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "use std::cell::RefCell;\nuse std::rc::Rc;\ntrait Observer<T> { fn update(&self, event: &T); }\nstruct Subject<T> { observers: Vec<Rc<dyn Observer<T>> }"
-        ]
-    },
-    {
-        "name-zh": "策略模式",
-        "name-en": "Strategy Pattern",
-        "description-zh": "简化的策略模式实现",
-        "description-en": "Simplified strategy pattern",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "design pattern",
-            "strategy"
-        ],
-        "tags": [
-            "strategy",
-            "pattern"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "ctx"
-        ],
-        "return_type": [
-            "Context"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "trait Strategy<T> { fn execute(&self, data: &T) -> T; }\nstruct Context<S: Strategy<T>, T> { strategy: S, _data: std::marker::PhantomData<T> }"
-        ]
-    },
-    {
-        "name-zh": "装饰器模式",
-        "name-en": "Decorator Pattern",
-        "description-zh": "简化的装饰器模式实现",
-        "description-en": "Simplified decorator pattern",
-        "dependencies": [
-            "std"
-        ],
-        "use_to": [
-            "design pattern",
-            "decorator"
-        ],
-        "tags": [
-            "decorator",
-            "pattern"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "wrapped"
-        ],
-        "return_type": [
-            "Box<dyn Fn(i32) -> i32>"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "trait FnDecorator { fn call(&self, x: i32) -> i32; }\nstruct TimingDecorator<F: Fn(i32)->i32> { inner: F }\nimpl<F: Fn(i32)->i32> FnDecorator for TimingDecorator<F> { fn call(&self, x: i32) -> i32 { let start = std::time::Instant::now(); let r = (self.inner)(x); println!(\"took {:?}\", start.elapsed()); r } }"
-        ]
-    },
-    {
-        "name-zh": "配置文件解析（TOML）",
-        "name-en": "Parse TOML Config",
-        "description-zh": "解析 TOML 配置文件",
-        "description-en": "Parse TOML config file",
-        "dependencies": [
-            "toml"
-        ],
-        "use_to": [
-            "config",
-            "toml"
-        ],
-        "tags": [
-            "config",
-            "toml"
-        ],
-        "input": [
-            "content"
-        ],
-        "input_type": [
-            "&str"
-        ],
-        "return": [
-            "config"
-        ],
-        "return_type": [
-            "toml::Value"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "use toml::Value;\nfn parse_toml(content: &str) -> Result<Value, toml::de::Error> { content.parse() }"
-        ]
-    },
-    {
-        "name-zh": "配置文件解析（YAML）",
-        "name-en": "Parse YAML Config",
-        "description-zh": "解析 YAML 配置文件",
-        "description-en": "Parse YAML config file",
-        "dependencies": [
-            "serde_yaml"
-        ],
-        "use_to": [
-            "config",
-            "yaml"
-        ],
-        "tags": [
-            "config",
-            "yaml"
-        ],
-        "input": [
-            "content"
-        ],
-        "input_type": [
-            "&str"
-        ],
-        "return": [
-            "config"
-        ],
-        "return_type": [
-            "serde_yaml::Value"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "use serde_yaml::Value;\nfn parse_yaml(content: &str) -> Result<Value, serde_yaml::Error> { serde_yaml::from_str(content) }"
-        ]
-    },
-    {
-        "name-zh": "配置文件解析（JSON）",
-        "name-en": "Parse JSON Config",
-        "description-zh": "解析 JSON 配置文件",
-        "description-en": "Parse JSON config file",
-        "dependencies": [
-            "serde_json"
-        ],
-        "use_to": [
-            "config",
-            "json"
-        ],
-        "tags": [
-            "config",
-            "json"
-        ],
-        "input": [
-            "content"
-        ],
-        "input_type": [
-            "&str"
-        ],
-        "return": [
-            "config"
-        ],
-        "return_type": [
-            "serde_json::Value"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "use serde_json::Value;\nfn parse_json(content: &str) -> Result<Value, serde_json::Error> { serde_json::from_str(content) }"
-        ]
-    }
+  {
+    "name-zh": "主函数示例",
+    "name-en": "Main Function Example",
+    "description-zh": "Rust程序的入口函数示例，包含命令行参数处理和错误处理",
+    "description-en": "Entry point function example for Rust programs, including command line arguments and error handling",
+    "dependencies": [
+      "std::env",
+      "std::process"
+    ],
+    "use_to": [
+      "program entry",
+      "command line",
+      "error handling"
+    ],
+    "tags": [
+      "basic",
+      "entry point",
+      "command line"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "Result"
+    ],
+    "return_type": [
+      "Result<(), Box<dyn std::error::Error>>"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "use std::env;\nuse std::error::Error;\nuse std::process;\n\n// 运行主程序逻辑\nfn run() -> Result<(), Box<dyn Error>> {\n    // 获取命令行参数\n    let args: Vec<String> = env::args().collect();\n    \n    // 打印程序信息\n    println!(\"Program: {}\", args[0]);\n    \n    // 打印命令行参数\n    println!(\"Arguments count: {}\", args.len() - 1);\n    println!(\"Arguments: {:?}\", &args[1..]);\n    \n    // 程序主要逻辑\n    let name = args.get(1).map(|s| s.as_str()).unwrap_or(\"World\");\n    println!(\"Hello, {}!\", name);\n    \n    Ok(())\n}\n\nfn main() {\n    if let Err(err) = run() {\n        eprintln!(\"Error: {}\", err);\n        process::exit(1);\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "向量长度",
+    "name-en": "Vector Length",
+    "description-zh": "获取向量的长度",
+    "description-en": "Get the length of a vector",
+    "dependencies": [],
+    "use_to": [
+      "vector operations"
+    ],
+    "tags": [
+      "basic",
+      "vector",
+      "beginner"
+    ],
+    "input": [
+      "vec"
+    ],
+    "input_type": [
+      "Vec<T>"
+    ],
+    "return": [
+      "length"
+    ],
+    "return_type": [
+      "usize"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn get_vector_length<T>(vec: &Vec<T>) -> usize {\n    vec.len()\n}"
+    ]
+  },
+  {
+    "name-zh": "向量求和",
+    "name-en": "Vector Sum",
+    "description-zh": "对整数向量求和",
+    "description-en": "Sum elements of an integer vector",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "math",
+      "vector"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "v"
+    ],
+    "input_type": [
+      "Vec<i64>"
+    ],
+    "return": [
+      "sum"
+    ],
+    "return_type": [
+      "i64"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn sum_vec(v: &Vec<i64>) -> i64 {\n    v.iter().sum()\n}"
+    ]
+  },
+  {
+    "name-zh": "字符串分割",
+    "name-en": "String Split",
+    "description-zh": "按分隔符分割字符串为向量",
+    "description-en": "Split string by delimiter into vector",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "string"
+    ],
+    "tags": [
+      "basic",
+      "string"
+    ],
+    "input": [
+      "s",
+      "delim"
+    ],
+    "input_type": [
+      "&str",
+      "char"
+    ],
+    "return": [
+      "parts"
+    ],
+    "return_type": [
+      "Vec<String>"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn split_string(s: &str, delim: char) -> Vec<String> {\n    s.split(delim).map(|x| x.to_string()).collect()\n}"
+    ]
+  },
+  {
+    "name-zh": "读取文本文件",
+    "name-en": "Read Text File",
+    "description-zh": "读取文件为字符串",
+    "description-en": "Read file to string",
+    "dependencies": [
+      "std::fs"
+    ],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "intermediate",
+      "io"
+    ],
+    "input": [
+      "path"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "content"
+    ],
+    "return_type": [
+      "Result<String, std::io::Error>"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "use std::fs;\n\nfn read_file(path: &str) -> Result<String, std::io::Error> {\n    fs::read_to_string(path)\n}"
+    ]
+  },
+  {
+    "name-zh": "写入文本文件",
+    "name-en": "Write Text File",
+    "description-zh": "将字符串写入文件",
+    "description-en": "Write string to file",
+    "dependencies": [
+      "std::fs"
+    ],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "intermediate",
+      "io"
+    ],
+    "input": [
+      "path",
+      "content"
+    ],
+    "input_type": [
+      "&str",
+      "&str"
+    ],
+    "return": [
+      "ok"
+    ],
+    "return_type": [
+      "Result<(), std::io::Error>"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "use std::fs;\n\nfn write_file(path: &str, content: &str) -> Result<(), std::io::Error> {\n    fs::write(path, content)\n}"
+    ]
+  },
+  {
+    "name-zh": "排序向量",
+    "name-en": "Sort Vector",
+    "description-zh": "对向量进行原地排序",
+    "description-en": "Sort a vector in place",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "sorting"
+    ],
+    "tags": [
+      "basic",
+      "sorting"
+    ],
+    "input": [
+      "v"
+    ],
+    "input_type": [
+      "&mut Vec<i32>"
+    ],
+    "return": [],
+    "return_type": [
+      "()"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn sort_vec(v: &mut Vec<i32>) {\n    v.sort();\n}"
+    ]
+  },
+  {
+    "name-zh": "哈希映射计数",
+    "name-en": "HashMap Count",
+    "description-zh": "统计词频",
+    "description-en": "Count word frequency",
+    "dependencies": [
+      "std::collections"
+    ],
+    "use_to": [
+      "map",
+      "count"
+    ],
+    "tags": [
+      "intermediate",
+      "collection"
+    ],
+    "input": [
+      "words"
+    ],
+    "input_type": [
+      "&[&str]"
+    ],
+    "return": [
+      "map"
+    ],
+    "return_type": [
+      "std::collections::HashMap<String, usize>"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "use std::collections::HashMap;\n\nfn word_count(words: &[&str]) -> HashMap<String, usize> {\n    let mut map = HashMap::new();\n    for w in words { *map.entry((*w).to_string()).or_insert(0) += 1; }\n    map\n}"
+    ]
+  },
+  {
+    "name-zh": "读取标准输入",
+    "name-en": "Read Stdin",
+    "description-zh": "从标准输入读取一行字符串",
+    "description-en": "Read a line from stdin",
+    "dependencies": [
+      "std::io"
+    ],
+    "use_to": [
+      "io"
+    ],
+    "tags": [
+      "basic",
+      "io"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "line"
+    ],
+    "return_type": [
+      "Result<String, std::io::Error>"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "use std::io::{self, Read};\n\nfn read_stdin_line() -> Result<String, io::Error> {\n    let mut s = String::new();\n    io::stdin().read_to_string(&mut s)?;\n    Ok(s)\n}"
+    ]
+  },
+  {
+    "name-zh": "计时",
+    "name-en": "Timing",
+    "description-zh": "测量函数执行时间(毫秒)",
+    "description-en": "Measure function execution time in ms",
+    "dependencies": [
+      "std::time"
+    ],
+    "use_to": [
+      "time",
+      "benchmark"
+    ],
+    "tags": [
+      "intermediate",
+      "time"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "elapsed_ms"
+    ],
+    "return_type": [
+      "u128"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "use std::time::Instant;\n\nfn elapsed_ms<F: FnOnce()>(f: F) -> u128 {\n    let start = Instant::now();\n    f();\n    start.elapsed().as_millis()\n}"
+    ]
+  },
+  {
+    "name-zh": "均值",
+    "name-en": "Mean",
+    "description-zh": "计算切片的平均值",
+    "description-en": "Compute mean of a slice",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "math"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "&[f64]"
+    ],
+    "return": [
+      "m"
+    ],
+    "return_type": [
+      "f64"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn mean(a: &[f64]) -> f64 {\n    if a.is_empty() { return f64::NAN; }\n    a.iter().sum::<f64>() / a.len() as f64\n}"
+    ]
+  },
+  {
+    "name-zh": "中位数",
+    "name-en": "Median",
+    "description-zh": "计算切片的中位数",
+    "description-en": "Compute median of a slice",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "math"
+    ],
+    "tags": [
+      "intermediate",
+      "math"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "&[f64]"
+    ],
+    "return": [
+      "med"
+    ],
+    "return_type": [
+      "f64"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "fn median(a: &[f64]) -> f64 {\n    if a.is_empty() { return f64::NAN; }\n    let mut v = a.to_vec();\n    v.sort_by(|x,y| x.partial_cmp(y).unwrap());\n    let n = v.len();\n    if n % 2 == 1 { v[n/2] } else { (v[n/2-1] + v[n/2]) / 2.0 }\n}"
+    ]
+  },
+  {
+    "name-zh": "标准差",
+    "name-en": "Standard Deviation",
+    "description-zh": "计算样本标准差",
+    "description-en": "Compute sample standard deviation",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "math"
+    ],
+    "tags": [
+      "intermediate",
+      "math"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "&[f64]"
+    ],
+    "return": [
+      "sd"
+    ],
+    "return_type": [
+      "f64"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "fn stdev(a: &[f64]) -> f64 {\n    if a.len() < 2 { return f64::NAN; }\n    let m = mean(a);\n    let s: f64 = a.iter().map(|x| (x - m)*(x - m)).sum();\n    (s / (a.len() as f64 - 1.0)).sqrt()\n}"
+    ]
+  },
+  {
+    "name-zh": "GCD",
+    "name-en": "GCD",
+    "description-zh": "欧几里得算法计算整数 GCD",
+    "description-en": "Euclid algorithm for integer GCD",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "math",
+      "number theory"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "a",
+      "b"
+    ],
+    "input_type": [
+      "i64",
+      "i64"
+    ],
+    "return": [
+      "g"
+    ],
+    "return_type": [
+      "i64"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn gcd(mut a: i64, mut b: i64) -> i64 {\n    a = a.abs(); b = b.abs();\n    while b != 0 { let t = b; b = a % b; a = t; }\n    a\n}"
+    ]
+  },
+  {
+    "name-zh": "LCM",
+    "name-en": "LCM",
+    "description-zh": "计算整数 LCM",
+    "description-en": "Compute integer LCM",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "math",
+      "number theory"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "a",
+      "b"
+    ],
+    "input_type": [
+      "i64",
+      "i64"
+    ],
+    "return": [
+      "l"
+    ],
+    "return_type": [
+      "i64"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn lcm(a: i64, b: i64) -> i64 {\n    if a == 0 || b == 0 { return 0; }\n    (a / gcd(a,b)) * b\n}"
+    ]
+  },
+  {
+    "name-zh": "大小写转换",
+    "name-en": "To Upper/Lower",
+    "description-zh": "将字符串转换为全大写与全小写",
+    "description-en": "Convert string to upper and lower case",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "string"
+    ],
+    "tags": [
+      "basic",
+      "string"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "upper",
+      "lower"
+    ],
+    "return_type": [
+      "String",
+      "String"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn upper_lower(s: &str) -> (String, String) {\n    (s.to_uppercase(), s.to_lowercase())\n}"
+    ]
+  },
+  {
+    "name-zh": "HTTP GET 文本(reqwest)",
+    "name-en": "HTTP GET Text (reqwest)",
+    "description-zh": "使用 reqwest 阻塞客户端发送 GET 请求并返回文本，失败返回 Err",
+    "description-en": "Blocking reqwest GET returning text; error on failure",
+    "dependencies": [
+      "reqwest = { version = \"^0.11\", features = [\"blocking\"] }"
+    ],
+    "use_to": [
+      "http",
+      "network"
+    ],
+    "tags": [
+      "network",
+      "http"
+    ],
+    "input": [
+      "url"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "text"
+    ],
+    "return_type": [
+      "Result<String, Box<dyn std::error::Error>>"
+    ],
+    "timer_score": 65,
+    "memory_score": 80,
+    "code": [
+      "fn http_get_text(url: &str) -> Result<String, Box<dyn std::error::Error>> {\n    let body = reqwest::blocking::get(url)?.text()?;\n    Ok(body)\n}"
+    ]
+  },
+  {
+    "name-zh": "Dijkstra最短路",
+    "name-en": "Dijkstra Shortest Path",
+    "description-zh": "在非负权图上用最小堆求单源最短路",
+    "description-en": "Single-source shortest path on non-negative graph using min-heap",
+    "dependencies": [
+      "std::collections::BinaryHeap",
+      "std::cmp::Reverse"
+    ],
+    "use_to": [
+      "graph",
+      "shortest path"
+    ],
+    "tags": [
+      "graph",
+      "dijkstra",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "adj",
+      "src"
+    ],
+    "input_type": [
+      "usize",
+      "Vec<Vec<(usize, i64)>>",
+      "usize"
+    ],
+    "return": [
+      "dist"
+    ],
+    "return_type": [
+      "Vec<i64>"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "use std::cmp::Reverse;\nuse std::collections::BinaryHeap;\n\n// adj[u] = Vec of (v, w)\nfn dijkstra(n: usize, adj: &Vec<Vec<(usize, i64)>>, src: usize) -> Vec<i64> {\n    let inf = i64::MAX / 4;\n    let mut dist = vec![inf; n];\n    dist[src] = 0;\n    let mut heap = BinaryHeap::new(); // max-heap of Reverse((dist, node)) => min-heap\n    heap.push(Reverse((0i64, src)));\n    while let Some(Reverse((d, u))) = heap.pop() {\n        if d != dist[u] { continue; }\n        for &(v, w) in &adj[u] {\n            let nd = d + w;\n            if nd < dist[v] { dist[v] = nd; heap.push(Reverse((nd, v))); }\n        }\n    }\n    dist\n}"
+    ]
+  },
+  {
+    "name-zh": "Kruskal最小生成树",
+    "name-en": "Kruskal Minimum Spanning Tree",
+    "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
+    "description-en": "Kruskal with DSU to compute MST total weight (-1 if disconnected)",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "graph",
+      "mst"
+    ],
+    "tags": [
+      "graph",
+      "mst",
+      "kruskal",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "edges"
+    ],
+    "input_type": [
+      "usize",
+      "Vec<(usize,usize,i64)>"
+    ],
+    "return": [
+      "mstWeight"
+    ],
+    "return_type": [
+      "i64"
+    ],
+    "timer_score": 88,
+    "memory_score": 92,
+    "code": [
+      "#[derive(Clone)]\nstruct DSU { p: Vec<usize>, r: Vec<i32> }\nimpl DSU {\n    fn new(n: usize) -> Self { Self { p: (0..n).collect(), r: vec![0; n] } }\n    fn find(&mut self, x: usize) -> usize { if self.p[x]==x { x } else { let px = self.find(self.p[x]); self.p[x]=px; px } }\n    fn unite(&mut self, a: usize, b: usize) -> bool { let mut a=self.find(a); let mut b=self.find(b); if a==b { return false } if self.r[a]<self.r[b] { std::mem::swap(&mut a,&mut b) } self.p[b]=a; if self.r[a]==self.r[b] { self.r[a]+=1 } true }\n}\n\n// edges: (u,v,w)\nfn kruskal_mst(n: usize, mut edges: Vec<(usize,usize,i64)>) -> i64 {\n    edges.sort_by_key(|e| e.2);\n    let mut dsu = DSU::new(n);\n    let mut total: i64 = 0;\n    let mut cnt = 0;\n    for (u,v,w) in edges { if dsu.unite(u,v) { total += w; cnt += 1; if cnt==n-1 { break } } }\n    if cnt==n-1 { total } else { -1 }\n}"
+    ]
+  },
+  {
+    "name-zh": "Bellman-Ford最短路",
+    "name-en": "Bellman-Ford Shortest Path",
+    "description-zh": "允许负边权的单源最短路；检测负环",
+    "description-en": "Single-source shortest path with negative edges; detect negative cycles",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "graph",
+      "shortest path"
+    ],
+    "tags": [
+      "graph",
+      "bellman-ford",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "edges",
+      "src"
+    ],
+    "input_type": [
+      "usize",
+      "Vec<(usize,usize,i64)>",
+      "usize"
+    ],
+    "return": [
+      "dist",
+      "hasNegCycle"
+    ],
+    "return_type": [
+      "Vec<i64>",
+      "bool"
+    ],
+    "timer_score": 70,
+    "memory_score": 85,
+    "code": [
+      "// edges: (u,v,w)\nfn bellman_ford(n: usize, edges: &Vec<(usize,usize,i64)>, src: usize) -> (Vec<i64>, bool) {\n    let inf = i64::MAX/4;\n    let mut dist = vec![inf; n]; dist[src]=0;\n    for _ in 1..=n-1 {\n        let mut updated = false;\n        for &(u,v,w) in edges { if dist[u]!=inf && dist[u]+w < dist[v] { dist[v]=dist[u]+w; updated=true; } }\n        if !updated { break }\n    }\n    for &(u,v,w) in edges { if dist[u]!=inf && dist[u]+w < dist[v] { return (dist, true) } }\n    (dist, false)\n}"
+    ]
+  },
+  {
+    "name-zh": "拓扑排序(Kahn)",
+    "name-en": "Topological Sort (Kahn)",
+    "description-zh": "入度法Kahn算法返回拓扑序列",
+    "description-en": "Kahn algorithm using indegrees to return topo order",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "graph",
+      "topological sort"
+    ],
+    "tags": [
+      "graph",
+      "topo",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "adj"
+    ],
+    "input_type": [
+      "usize",
+      "Vec<Vec<usize>>"
+    ],
+    "return": [
+      "order"
+    ],
+    "return_type": [
+      "Vec<usize>"
+    ],
+    "timer_score": 88,
+    "memory_score": 92,
+    "code": [
+      "fn topo_sort_kahn(n: usize, adj: &Vec<Vec<usize>>) -> Vec<usize> {\n    let mut indeg = vec![0usize; n];\n    for u in 0..n { for &v in &adj[u] { indeg[v]+=1; } }\n    let mut q: Vec<usize> = Vec::new();\n    for i in 0..n { if indeg[i]==0 { q.push(i); } }\n    let mut order: Vec<usize> = Vec::with_capacity(n);\n    let mut h = 0usize;\n    while h < q.len() {\n        let u = q[h]; h+=1; order.push(u);\n        for &v in &adj[u] { indeg[v]-=1; if indeg[v]==0 { q.push(v); } }\n    }\n    order\n}"
+    ]
+  },
+  {
+    "name-zh": "KMP字符串匹配",
+    "name-en": "KMP String Match",
+    "description-zh": "返回所有匹配起始下标",
+    "description-en": "Return all match start indices",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "string",
+      "kmp",
+      "algorithm"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "&str",
+      "&str"
+    ],
+    "return": [
+      "indices"
+    ],
+    "return_type": [
+      "Vec<usize>"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "fn kmp_search(text: &str, pat: &str) -> Vec<usize> {\n    let n = text.len(); let m = pat.len(); if m==0 { return vec![] }\n    let tb = text.as_bytes(); let pb = pat.as_bytes();\n    let mut lps = vec![0usize; m];\n    let (mut i, mut l) = (1usize, 0usize);\n    while i < m { if pb[i]==pb[l] { l+=1; lps[i]=l; i+=1; } else if l>0 { l=lps[l-1]; } else { lps[i]=0; i+=1; } }\n    let mut res = Vec::new();\n    let (mut x, mut y) = (0usize, 0usize);\n    while x < n { if tb[x]==pb[y] { x+=1; y+=1; if y==m { res.push(x-m); y=lps[y-1]; } } else if y>0 { y=lps[y-1]; } else { x+=1; } }\n    res\n}"
+    ]
+  },
+  {
+    "name-zh": "Rabin-Karp字符串匹配",
+    "name-en": "Rabin-Karp String Match",
+    "description-zh": "滚动哈希匹配，返回所有位置",
+    "description-en": "Rolling-hash matching, return all indices",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "string",
+      "rabin-karp",
+      "algorithm"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "&str",
+      "&str"
+    ],
+    "return": [
+      "indices"
+    ],
+    "return_type": [
+      "Vec<usize>"
+    ],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": [
+      "fn rabin_karp(text: &str, pat: &str) -> Vec<usize> {\n    let n = text.len(); let m = pat.len(); if m==0 || m>n { return vec![] }\n    const B: u64 = 131; const MOD: u64 = 1_000_000_007;\n    let tb = text.as_bytes(); let pb = pat.as_bytes();\n    let mut powb = 1u64; for _ in 0..m-1 { powb = (powb * B) % MOD }\n    let (mut hpat, mut hwin) = (0u64, 0u64);\n    for i in 0..m { hpat = (hpat*B + pb[i] as u64) % MOD; hwin = (hwin*B + tb[i] as u64) % MOD }\n    let mut out = Vec::new();\n    for i in 0..=n-m {\n        if hpat==hwin && &text[i..i+m] == pat { out.push(i) }\n        if i < n-m {\n            hwin = ( (hwin + MOD - (tb[i] as u64)*powb%MOD) % MOD );\n            hwin = (hwin*B + tb[i+m] as u64) % MOD;\n        }\n    }\n    out\n}"
+    ]
+  },
+  {
+    "name-zh": "埃拉托斯特尼筛法",
+    "name-en": "Sieve of Eratosthenes",
+    "description-zh": "在[2,n]内标记素数",
+    "description-en": "Mark primes in [2,n]",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "prime",
+      "number theory"
+    ],
+    "tags": [
+      "math",
+      "prime",
+      "sieve",
+      "algorithm"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "usize"
+    ],
+    "return": [
+      "is_prime"
+    ],
+    "return_type": [
+      "Vec<bool>"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "fn sieve_is_prime(n: usize) -> Vec<bool> {\n    let mut is = vec![true; n+1];\n    if n>=0 { is[0]=false }\n    if n>=1 { is[1]=false }\n    let mut p = 2usize;\n    while p*p <= n {\n        if is[p] { let mut x = p*p; while x <= n { is[x] = false; x += p } }\n        p+=1;\n    }\n    is\n}"
+    ]
+  },
+  {
+    "name-zh": "编辑距离(Levenshtein)",
+    "name-en": "Levenshtein Edit Distance",
+    "description-zh": "动态规划计算编辑距离(滚动数组)",
+    "description-en": "DP edit distance with rolling array",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "string",
+      "dynamic programming"
+    ],
+    "tags": [
+      "dp",
+      "string",
+      "edit distance"
+    ],
+    "input": [
+      "a",
+      "b"
+    ],
+    "input_type": [
+      "&str",
+      "&str"
+    ],
+    "return": [
+      "distance"
+    ],
+    "return_type": [
+      "usize"
+    ],
+    "timer_score": 85,
+    "memory_score": 88,
+    "code": [
+      "fn edit_distance(a: &str, b: &str) -> usize {\n    let (m, n) = (a.len(), b.len());\n    let ab = a.as_bytes(); let bb = b.as_bytes();\n    let mut prev: Vec<usize> = (0..=n).collect();\n    let mut cur = vec![0usize; n+1];\n    for i in 1..=m {\n        cur[0] = i; let ai = ab[i-1];\n        for j in 1..=n {\n            let cost = if ai==bb[j-1] { 0 } else { 1 };\n            let del = prev[j] + 1; let ins = cur[j-1] + 1; let rep = prev[j-1] + cost;\n            cur[j] = del.min(ins).min(rep);\n        }\n        std::mem::swap(&mut prev, &mut cur);\n    }\n    prev[n]\n}"
+    ]
+  },
+  {
+    "name-zh": "最长上升子序列O(n log n)",
+    "name-en": "LIS O(n log n)",
+    "description-zh": "耐心排序+二分求LIS长度",
+    "description-en": "Patience sorting + binary search for LIS length",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "sequence",
+      "dynamic programming"
+    ],
+    "tags": [
+      "dp",
+      "lis",
+      "algorithm"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "&[i64]"
+    ],
+    "return": [
+      "length"
+    ],
+    "return_type": [
+      "usize"
+    ],
+    "timer_score": 92,
+    "memory_score": 92,
+    "code": [
+      "fn lis_length(a: &[i64]) -> usize {\n    let mut tails: Vec<i64> = Vec::new();\n    for &x in a {\n        let i = lower_bound(&tails, x);\n        if i==tails.len() { tails.push(x); } else { tails[i]=x; }\n    }\n    tails.len()\n}\nfn lower_bound(a: &Vec<i64>, x: i64) -> usize {\n    let (mut l, mut r) = (0usize, a.len());\n    while l<r { let m=(l+r)/2; if a[m]>=x { r=m } else { l=m+1 } }\n    l\n}"
+    ]
+  },
+  {
+    "name-zh": "快速选择第k小",
+    "name-en": "Quickselect k-th",
+    "description-zh": "平均线性时间找到第k小(1<=k<=n)",
+    "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "selection",
+      "order statistics"
+    ],
+    "tags": [
+      "algorithm",
+      "divide-conquer"
+    ],
+    "input": [
+      "arr",
+      "k"
+    ],
+    "input_type": [
+      "&mut [i64]",
+      "usize"
+    ],
+    "return": [
+      "kth"
+    ],
+    "return_type": [
+      "i64"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "fn quickselect(a: &mut [i64], mut k: usize) -> i64 { // k: 1-based\n    let (mut l, mut r) = (0usize, a.len()-1); k-=1;\n    while l<=r {\n        let pivot = a[r]; let mut i = l;\n        for j in l..r { if a[j] <= pivot { a.swap(i,j); i+=1 } }\n        a.swap(i,r);\n        if i==k { return a[i] } else if i>k { if i==0 { break } r = i-1; } else { l = i+1; }\n    }\n    panic!(\"k out of range\");\n}"
+    ]
+  },
+  {
+    "name-zh": "并查集(独立结构)",
+    "name-en": "Disjoint Set Union (Standalone)",
+    "description-zh": "带路径压缩与按秩合并的并查集，提供 find/unite/same 接口",
+    "description-en": "Disjoint Set Union with path compression and union by rank; find/unite/same APIs",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "data structure",
+      "union-find"
+    ],
+    "tags": [
+      "dsu",
+      "union-find",
+      "data structure"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "usize"
+    ],
+    "return": [
+      "struct"
+    ],
+    "return_type": [
+      "DSU"
+    ],
+    "timer_score": 98,
+    "memory_score": 98,
+    "code": [
+      "#[derive(Clone)]\nstruct DSU { p: Vec<usize>, r: Vec<i32> }\nimpl DSU {\n    fn new(n: usize) -> Self { Self { p: (0..n).collect(), r: vec![0; n] } }\n    fn find(&mut self, x: usize) -> usize { if self.p[x]==x { x } else { let px = self.find(self.p[x]); self.p[x]=px; px } }\n    fn unite(&mut self, a: usize, b: usize) -> bool { let mut a=self.find(a); let mut b=self.find(b); if a==b { return false } if self.r[a]<self.r[b] { std::mem::swap(&mut a,&mut b) } self.p[b]=a; if self.r[a]==self.r[b] { self.r[a]+=1 } true }\n    fn same(&mut self, a: usize, b: usize) -> bool { self.find(a)==self.find(b) }\n}\n\n// 用法示例\n// let mut d = DSU::new(5);\n// d.unite(0,1); d.unite(3,4); assert!(d.same(0,1)); assert!(!d.same(1,2));"
+    ]
+  },
+  {
+    "name-zh": "树状数组(Fenwick/BIT)",
+    "name-en": "Fenwick Tree (BIT)",
+    "description-zh": "支持前缀和/单点更新，查询/更新均为 O(log n)",
+    "description-en": "Prefix sum and point update in O(log n)",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "data structure",
+      "prefix sum"
+    ],
+    "tags": [
+      "fenwick",
+      "bit",
+      "data structure"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "usize"
+    ],
+    "return": [
+      "struct"
+    ],
+    "return_type": [
+      "Fenwick"
+    ],
+    "timer_score": 96,
+    "memory_score": 96,
+    "code": [
+      "struct Fenwick { n: usize, bit: Vec<i64> }\nimpl Fenwick {\n    fn new(n: usize) -> Self { Self { n, bit: vec![0; n+1] } }\n    fn add(&mut self, mut idx: usize, delta: i64) {\n        idx += 1; // 1-based\n        while idx <= self.n {\n            self.bit[idx] += delta;\n            idx += idx & (!idx + 1); // idx += idx & -idx\n        }\n    }\n    fn sum_prefix(&self, mut idx: usize) -> i64 {\n        let mut res = 0i64; idx += 1;\n        while idx > 0 {\n            res += self.bit[idx];\n            idx &= idx - 1;\n        }\n        res\n    }\n    fn range_sum(&self, l: usize, r: usize) -> i64 {\n        if r < l { return 0 }\n        self.sum_prefix(r) - if l==0 { 0 } else { self.sum_prefix(l-1) }\n    }\n}\n\n// 用法示例\n// let mut fw = Fenwick::new(5);\n// fw.add(0, 1); fw.add(3, 2); assert_eq!(fw.range_sum(0,3), 3);"
+    ]
+  },
+  {
+    "name-zh": "Modbus CRC16",
+    "name-en": "Modbus CRC16",
+    "description-zh": "计算 Modbus CRC16，返回小端两字节(Vec<u8>长度2)",
+    "description-en": "Compute Modbus CRC16, return 2 bytes little-endian (Vec<u8>)",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "hardware",
+      "modbus",
+      "crc"
+    ],
+    "tags": [
+      "checksum",
+      "crc16",
+      "modbus"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "&[u8]"
+    ],
+    "return": [
+      "crc_le"
+    ],
+    "return_type": [
+      "Vec<u8>"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn modbus_crc16_le(data: &[u8]) -> Vec<u8> {\n    let mut crc: u16 = 0xFFFF;\n    for &b in data {\n        crc ^= b as u16;\n        for _ in 0..8 {\n            if (crc & 1) != 0 { crc = (crc >> 1) ^ 0xA001; } else { crc >>= 1; }\n        }\n    }\n    vec![(crc & 0xFF) as u8, (crc >> 8) as u8]\n}"
+    ]
+  },
+  {
+    "name-zh": "CRC32(IEEE)",
+    "name-en": "CRC32 (IEEE)",
+    "description-zh": "计算 CRC32(IEEE)，返回大端4字节(Vec<u8>)",
+    "description-en": "Compute CRC32 (IEEE), return 4 bytes big-endian (Vec<u8>)",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "hardware",
+      "crc",
+      "checksum"
+    ],
+    "tags": [
+      "checksum",
+      "crc32",
+      "ieee"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "&[u8]"
+    ],
+    "return": [
+      "crc_be"
+    ],
+    "return_type": [
+      "Vec<u8>"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn crc32_ieee_be(data: &[u8]) -> Vec<u8> {\n    const POLY: u32 = 0xEDB88320; // reflected poly for bitwise algo\n    let mut crc: u32 = 0xFFFF_FFFF;\n    for &b in data {\n        let mut x = (crc ^ (b as u32)) & 0xFF;\n        for _ in 0..8 {\n            x = if (x & 1) != 0 { (x >> 1) ^ POLY } else { x >> 1 };\n        }\n        crc = (crc >> 8) ^ x;\n    }\n    crc ^= 0xFFFF_FFFF;\n    crc.to_be_bytes().to_vec()\n}"
+    ]
+  },
+  {
+    "name-zh": "Sum8 校验",
+    "name-en": "Sum8 Checksum",
+    "description-zh": "对所有字节求和取低8位(0..255)",
+    "description-en": "Sum of all bytes modulo 256 (0..255)",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "hardware",
+      "checksum"
+    ],
+    "tags": [
+      "checksum",
+      "sum8"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "&[u8]"
+    ],
+    "return": [
+      "sum8"
+    ],
+    "return_type": [
+      "u8"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn checksum_sum8(data: &[u8]) -> u8 { data.iter().fold(0u16, |acc, &b| acc + b as u16) as u8 }"
+    ]
+  },
+  {
+    "name-zh": "LRC8 校验",
+    "name-en": "LRC8 Checksum",
+    "description-zh": "纵向冗余校验(LRC)，使 (sum + LRC) & 0xFF == 0",
+    "description-en": "Longitudinal Redundancy Check so that (sum + LRC) & 0xFF == 0",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "hardware",
+      "checksum"
+    ],
+    "tags": [
+      "checksum",
+      "lrc"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "&[u8]"
+    ],
+    "return": [
+      "lrc"
+    ],
+    "return_type": [
+      "u8"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn lrc8(data: &[u8]) -> u8 { ((-(data.iter().fold(0u16, |acc, &b| acc + b as u16) as i16)) as i16) as i32 as u8 }"
+    ]
+  },
+  {
+    "name-zh": "异或校验",
+    "name-en": "XOR Checksum",
+    "description-zh": "逐字节异或校验，返回0..255",
+    "description-en": "Byte-wise XOR checksum, returns 0..255",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "hardware",
+      "checksum"
+    ],
+    "tags": [
+      "checksum",
+      "xor"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "&[u8]"
+    ],
+    "return": [
+      "xor"
+    ],
+    "return_type": [
+      "u8"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn checksum_xor(data: &[u8]) -> u8 { data.iter().fold(0u8, |acc, &b| acc ^ b) }"
+    ]
+  },
+  {
+    "name-zh": "奇偶校验位",
+    "name-en": "Parity Bit",
+    "description-zh": "计算一个字节的奇/偶校验位；odd=true 为奇校验",
+    "description-en": "Compute parity bit for one byte; odd=true for odd parity",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "hardware",
+      "parity",
+      "serial"
+    ],
+    "tags": [
+      "parity",
+      "bit"
+    ],
+    "input": [
+      "byte",
+      "odd"
+    ],
+    "input_type": [
+      "u8",
+      "bool"
+    ],
+    "return": [
+      "parity_bit"
+    ],
+    "return_type": [
+      "u8"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn parity_bit(byte: u8, odd: bool) -> u8 { let ones = byte.count_ones() as u8; ((ones & 1) ^ (if odd {1} else {0})) as u8 }"
+    ]
+  },
+  {
+    "name-zh": "向量过滤",
+    "name-en": "Vector Filter",
+    "description-zh": "根据谓词过滤向量元素",
+    "description-en": "Filter vector elements by predicate",
+    "dependencies": [],
+    "use_to": [
+      "vector"
+    ],
+    "tags": [
+      "basic",
+      "vector"
+    ],
+    "input": [
+      "vec",
+      "pred"
+    ],
+    "input_type": [
+      "Vec<T>",
+      "fn(&T)->bool"
+    ],
+    "return": [
+      "filtered"
+    ],
+    "return_type": [
+      "Vec<T>"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "fn filter_vec<T: Clone>(v: &[T], pred: fn(&T) -> bool) -> Vec<T> {\n    v.iter().filter(|x| pred(x)).cloned().collect()\n}"
+    ]
+  },
+  {
+    "name-zh": "向量映射",
+    "name-en": "Vector Map",
+    "description-zh": "对向量元素执行函数转换",
+    "description-en": "Map vector elements through function",
+    "dependencies": [],
+    "use_to": [
+      "vector"
+    ],
+    "tags": [
+      "basic",
+      "vector"
+    ],
+    "input": [
+      "vec",
+      "mapper"
+    ],
+    "input_type": [
+      "Vec<T>",
+      "fn(T)->U"
+    ],
+    "return": [
+      "mapped"
+    ],
+    "return_type": [
+      "Vec<U>"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "fn map_vec<T: Clone, U>(v: &[T], f: fn(T) -> U) -> Vec<U> {\n    v.iter().cloned().map(|x| f(x)).collect()\n}"
+    ]
+  },
+  {
+    "name-zh": "向量反转",
+    "name-en": "Vector Reverse",
+    "description-zh": "反转向量元素顺序",
+    "description-en": "Reverse vector element order",
+    "dependencies": [],
+    "use_to": [
+      "vector"
+    ],
+    "tags": [
+      "basic",
+      "vector"
+    ],
+    "input": [
+      "vec"
+    ],
+    "input_type": [
+      "Vec<T>"
+    ],
+    "return": [
+      "reversed"
+    ],
+    "return_type": [
+      "Vec<T>"
+    ],
+    "timer_score": 90,
+    "memory_score": 85,
+    "code": [
+      "fn reverse_vec<T: Clone>(v: &[T]) -> Vec<T> {\n    let mut r = v.iter().cloned().collect::<Vec<_>>();\n    r.reverse();\n    r\n}"
+    ]
+  },
+  {
+    "name-zh": "向量查找",
+    "name-en": "Vector Find",
+    "description-zh": "在向量中查找满足条件的第一个元素",
+    "description-en": "Find first element in vector satisfying condition",
+    "dependencies": [],
+    "use_to": [
+      "vector"
+    ],
+    "tags": [
+      "basic",
+      "vector"
+    ],
+    "input": [
+      "vec",
+      "pred"
+    ],
+    "input_type": [
+      "Vec<T>",
+      "fn(&T)->bool"
+    ],
+    "return": [
+      "found"
+    ],
+    "return_type": [
+      "Option<T>"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "fn find_in_vec<T: Clone>(v: &[T], pred: fn(&T) -> bool) -> Option<T> {\n    v.iter().find(|x| pred(x)).cloned()\n}"
+    ]
+  },
+  {
+    "name-zh": "字符串包含",
+    "name-en": "String Contains",
+    "description-zh": "检查字符串是否包含子串",
+    "description-en": "Check if string contains substring",
+    "dependencies": [],
+    "use_to": [
+      "string"
+    ],
+    "tags": [
+      "basic",
+      "string"
+    ],
+    "input": [
+      "s",
+      "sub"
+    ],
+    "input_type": [
+      "&str",
+      "&str"
+    ],
+    "return": [
+      "contains"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "fn str_contains(s: &str, sub: &str) -> bool {\n    s.contains(sub)\n}"
+    ]
+  },
+  {
+    "name-zh": "字符串替换",
+    "name-en": "String Replace",
+    "description-zh": "替换字符串中的子串",
+    "description-en": "Replace substring in string",
+    "dependencies": [],
+    "use_to": [
+      "string"
+    ],
+    "tags": [
+      "basic",
+      "string"
+    ],
+    "input": [
+      "s",
+      "old",
+      "new"
+    ],
+    "input_type": [
+      "&str",
+      "&str",
+      "&str"
+    ],
+    "return": [
+      "result"
+    ],
+    "return_type": [
+      "String"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "fn str_replace(s: &str, old: &str, new: &str) -> String {\n    s.replace(old, new)\n}"
+    ]
+  },
+  {
+    "name-zh": "向量求和",
+    "name-en": "Vector Sum Generic",
+    "description-zh": "对向量所有元素求和（泛型）",
+    "description-en": "Sum all elements in vector generically",
+    "dependencies": [],
+    "use_to": [
+      "vector",
+      "math"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "v"
+    ],
+    "input_type": [
+      "Vec<T>"
+    ],
+    "return": [
+      "sum"
+    ],
+    "return_type": [
+      "T"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn sum_vec<T: std::iter::Sum<T>+Copy>(v: &[T]) -> T {\n    v.iter().sum()\n}"
+    ]
+  },
+  {
+    "name-zh": "向量最大值",
+    "name-en": "Vector Max",
+    "description-zh": "返回向量中的最大值",
+    "description-en": "Return maximum value in vector",
+    "dependencies": [],
+    "use_to": [
+      "vector",
+      "math"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "v"
+    ],
+    "input_type": [
+      "Vec<T>"
+    ],
+    "return": [
+      "max"
+    ],
+    "return_type": [
+      "Option<T>"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "fn max_vec<T: std::cmp::PartialOrd>(v: &[T]) -> Option<T> {\n    v.iter().max().cloned()\n}"
+    ]
+  },
+  {
+    "name-zh": "向量最小值",
+    "name-en": "Vector Min",
+    "description-zh": "返回向量中的最小值",
+    "description-en": "Return minimum value in vector",
+    "dependencies": [],
+    "use_to": [
+      "vector",
+      "math"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "v"
+    ],
+    "input_type": [
+      "Vec<T>"
+    ],
+    "return": [
+      "min"
+    ],
+    "return_type": [
+      "Option<T>"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "fn min_vec<T: std::cmp::PartialOrd>(v: &[T]) -> Option<T> {\n    v.iter().min().cloned()\n}"
+    ]
+  },
+  {
+    "name-zh": "向量去重",
+    "name-en": "Vector Unique",
+    "description-zh": "去除向量中的重复元素",
+    "description-en": "Remove duplicate elements from vector",
+    "dependencies": [],
+    "use_to": [
+      "vector"
+    ],
+    "tags": [
+      "basic",
+      "vector"
+    ],
+    "input": [
+      "v"
+    ],
+    "input_type": [
+      "Vec<T>"
+    ],
+    "return": [
+      "uniq"
+    ],
+    "return_type": [
+      "Vec<T>"
+    ],
+    "timer_score": 90,
+    "memory_score": 85,
+    "code": [
+      "fn unique_vec<T: Eq+Clone>(v: &[T]) -> Vec<T> {\n    let mut r = v.to_vec();\n    r.sort();\n    r.dedup();\n    r\n}"
+    ]
+  },
+  {
+    "name-zh": "范围数组",
+    "name-en": "Range Array",
+    "description-zh": "生成指定范围的整数向量",
+    "description-en": "Generate integer vector in range",
+    "dependencies": [],
+    "use_to": [
+      "vector"
+    ],
+    "tags": [
+      "basic",
+      "vector"
+    ],
+    "input": [
+      "start",
+      "end",
+      "step"
+    ],
+    "input_type": [
+      "i64",
+      "i64",
+      "i64"
+    ],
+    "return": [
+      "range"
+    ],
+    "return_type": [
+      "Vec<i64>"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "fn range_vec(start: i64, end: i64, step: i64) -> Vec<i64> {\n    (start..end).step_by(step as usize).collect()\n}"
+    ]
+  },
+  {
+    "name-zh": "迭代器过滤",
+    "name-en": "Iterator Filter",
+    "description-zh": "对迭代器进行过滤",
+    "description-en": "Filter an iterator",
+    "dependencies": [],
+    "use_to": [
+      "iterator"
+    ],
+    "tags": [
+      "basic",
+      "iterator"
+    ],
+    "input": [
+      "iter",
+      "pred"
+    ],
+    "input_type": [
+      "I",
+      "fn(&T)->bool"
+    ],
+    "return": [
+      "filtered"
+    ],
+    "return_type": [
+      "Vec<T>"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "fn filter_iter<T>(iter: impl IntoIterator<Item=T>, pred: fn(&T) -> bool) -> Vec<T> {\n    iter.into_iter().filter(|x| pred(x)).collect()\n}"
+    ]
+  },
+  {
+    "name-zh": "迭代器映射",
+    "name-en": "Iterator Map",
+    "description-zh": "对迭代器进行映射转换",
+    "description-en": "Map an iterator",
+    "dependencies": [],
+    "use_to": [
+      "iterator"
+    ],
+    "tags": [
+      "basic",
+      "iterator"
+    ],
+    "input": [
+      "iter",
+      "mapper"
+    ],
+    "input_type": [
+      "I",
+      "fn(T)->U"
+    ],
+    "return": [
+      "mapped"
+    ],
+    "return_type": [
+      "Vec<U>"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "fn map_iter<T,U>(iter: impl IntoIterator<Item=T>, f: fn(T) -> U) -> Vec<U> {\n    iter.into_iter().map(f).collect()\n}"
+    ]
+  },
+  {
+    "name-zh": "Result处理",
+    "name-en": "Result Handle",
+    "description-zh": "处理 Result，转换为 Option",
+    "description-en": "Handle Result, convert to Option",
+    "dependencies": [],
+    "use_to": [
+      "result",
+      "error"
+    ],
+    "tags": [
+      "basic",
+      "result"
+    ],
+    "input": [
+      "res"
+    ],
+    "input_type": [
+      "Result<T,E>"
+    ],
+    "return": [
+      "option"
+    ],
+    "return_type": [
+      "Option<T>"
+    ],
+    "timer_score": 90,
+    "memory_score": 100,
+    "code": [
+      "fn result_to_option<T,E>(res: Result<T,E>) -> Option<T> {\n    res.ok()\n}"
+    ]
+  },
+  {
+    "name-zh": "哈希映射获取",
+    "name-en": "HashMap Get",
+    "description-zh": "安全获取哈希映射中的值",
+    "description-en": "Safely get value from HashMap",
+    "dependencies": [],
+    "use_to": [
+      "hashmap"
+    ],
+    "tags": [
+      "basic",
+      "hashmap"
+    ],
+    "input": [
+      "map",
+      "key",
+      "default"
+    ],
+    "input_type": [
+      "std::collections::HashMap<K,V>",
+      "K",
+      "V"
+    ],
+    "return": [
+      "value"
+    ],
+    "return_type": [
+      "V"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "fn hashmap_get<K: std::hash::Hash+Eq+Clone, V: Clone>(map: &std::collections::HashMap<K,V>, key: &K, default_val: V) -> V {\n    map.get(key).cloned().unwrap_or(default_val)\n}"
+    ]
+  },
+  {
+    "name-zh": "哈希映射插入",
+    "name-en": "HashMap Insert",
+    "description-zh": "插入键值对到哈希映射",
+    "description-en": "Insert key-value pair into HashMap",
+    "dependencies": [],
+    "use_to": [
+      "hashmap"
+    ],
+    "tags": [
+      "basic",
+      "hashmap"
+    ],
+    "input": [
+      "map",
+      "key",
+      "value"
+    ],
+    "input_type": [
+      "std::collections::HashMap<K,V>",
+      "K",
+      "V"
+    ],
+    "return": [
+      "old"
+    ],
+    "return_type": [
+      "Option<V>"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "fn hashmap_insert<K: std::hash::Hash+Eq, V>(map: &mut std::collections::HashMap<K,V>, key: K, value: V) -> Option<V> {\n    map.insert(key, value)\n}"
+    ]
+  },
+  {
+    "name-zh": "时间戳",
+    "name-en": "Timestamp",
+    "description-zh": "获取当前 Unix 时间戳（秒）",
+    "description-en": "Get current Unix timestamp in seconds",
+    "dependencies": [],
+    "use_to": [
+      "time"
+    ],
+    "tags": [
+      "basic",
+      "time"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "timestamp"
+    ],
+    "return_type": [
+      "i64"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "use std::time::{SystemTime,UNIX_EPOCH};\nfn timestamp() -> i64 {\n    SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs() as i64\n}"
+    ]
+  },
+  {
+    "name-zh": "格式化时间",
+    "name-en": "Format Time",
+    "description-zh": "将时间格式化为字符串",
+    "description-en": "Format time as string",
+    "dependencies": [],
+    "use_to": [
+      "time",
+      "formatting"
+    ],
+    "tags": [
+      "basic",
+      "time"
+    ],
+    "input": [
+      "t",
+      "fmt"
+    ],
+    "input_type": [
+      "SystemTime",
+      "&str"
+    ],
+    "return": [
+      "formatted"
+    ],
+    "return_type": [
+      "String"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "use std::time::{SystemTime,UNIX_EPOCH}; fn format_time(t: SystemTime, fmt: &str) -> String { let chrono_offset=1970; let secs=t.duration_since(UNIX_EPOCH).unwrap().as_secs(); format!(\"{}\", secs) }"
+    ]
+  },
+  {
+    "name-zh": "快速排序",
+    "name-en": "Quick Sort",
+    "description-zh": "简单快速排序实现",
+    "description-en": "Simple quick sort implementation",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "v"
+    ],
+    "input_type": [
+      "Vec<i32>"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "Vec<i32>"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "fn quick_sort(v: &mut [i32]) {\n    if v.len() <= 1 { return; }\n    let p = v.len() / 2;\n    let mut i = 0;\n    for j in 0..v.len() {\n        if v[j] < v[p] { v.swap(i, j); i += 1; }\n    }\n    v.swap(i, p);\n    let (lo, hi) = v.split_at_mut(i);\n    if !lo.is_empty() { quick_sort(lo); }\n    if !hi.is_empty() { quick_sort(&mut hi[1..]); }\n}"
+    ]
+  },
+  {
+    "name-zh": "归并排序",
+    "name-en": "Merge Sort",
+    "description-zh": "自顶向下归并排序",
+    "description-en": "Top-down merge sort",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "v"
+    ],
+    "input_type": [
+      "Vec<i32>"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "Vec<i32>"
+    ],
+    "timer_score": 80,
+    "memory_score": 75,
+    "code": [
+      "fn merge_sort(v: &[i32]) -> Vec<i32> {\n    if v.len() <= 1 { return v.to_vec(); }\n    let m = v.len() / 2;\n    let l = merge_sort(&v[..m]);\n    let r = merge_sort(&v[m..]);\n    merge(&l, &r)\n}\nfn merge(l: &[i32], r: &[i32]) -> Vec<i32> {\n    let mut res = Vec::with_capacity(l.len() + r.len());\n    let mut i = 0; let mut j = 0;\n    while i < l.len() && j < r.len() {\n        if l[i] <= r[j] { res.push(l[i]); i += 1; } else { res.push(r[j]); j += 1; }\n    }\n    res.extend_from_slice(&l[i..]); res.extend_from_slice(&r[j..]);\n    res\n}"
+    ]
+  },
+  {
+    "name-zh": "二分查找",
+    "name-en": "Binary Search",
+    "description-zh": "有序向量二分查找",
+    "description-en": "Binary search in sorted vector",
+    "dependencies": [],
+    "use_to": [
+      "search",
+      "algorithm"
+    ],
+    "tags": [
+      "search",
+      "algorithm"
+    ],
+    "input": [
+      "v",
+      "target"
+    ],
+    "input_type": [
+      "Vec<i32>",
+      "i32"
+    ],
+    "return": [
+      "index"
+    ],
+    "return_type": [
+      "Option<usize>"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "fn binary_search(v: &[i32], target: i32) -> Option<usize> {\n    let mut l = 0; let mut r = v.len();\n    while l < r {\n        let m = (l + r) / 2;\n        if v[m] == target { return Some(m); }\n        else if v[m] < target { l = m + 1; } else { r = m; }\n    }\n    None\n}"
+    ]
+  },
+  {
+    "name-zh": "哈希集",
+    "name-en": "HashSet",
+    "description-zh": "创建并操作哈希集合",
+    "description-en": "Create and operate on hash set",
+    "dependencies": [],
+    "use_to": [
+      "set",
+      "hash"
+    ],
+    "tags": [
+      "set",
+      "basic"
+    ],
+    "input": [
+      "items"
+    ],
+    "input_type": [
+      "Vec<i32>"
+    ],
+    "return": [
+      "set"
+    ],
+    "return_type": [
+      "std::collections::HashSet<i32>"
+    ],
+    "timer_score": 95,
+    "memory_score": 85,
+    "code": [
+      "use std::collections::HashSet;\nfn to_hashset(items: &[i32]) -> HashSet<i32> {\n    items.iter().cloned().collect()\n}\nfn set_intersection(a: &HashSet<i32>, b: &HashSet<i32>) -> HashSet<i32> {\n    a.intersection(b).cloned().collect()\n}\nfn set_union(a: &HashSet<i32>, b: &HashSet<i32>) -> HashSet<i32> {\n    a.union(b).cloned().collect()\n}\nfn set_difference(a: &HashSet<i32>, b: &HashSet<i32>) -> HashSet<i32> {\n    a.difference(b).cloned().collect()\n}"
+    ]
+  },
+  {
+    "name-zh": "命令行参数解析",
+    "name-en": "Parse CLI Args",
+    "description-zh": "简单解析命令行键值参数",
+    "description-en": "Simple key-value CLI argument parser",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "cli",
+      "args"
+    ],
+    "tags": [
+      "basic",
+      "cli"
+    ],
+    "input": [
+      "args"
+    ],
+    "input_type": [
+      "Vec<String>"
+    ],
+    "return": [
+      "params"
+    ],
+    "return_type": [
+      "std::collections::HashMap<String,String>"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "use std::collections::HashMap;\nfn parse_args(args: &[String]) -> HashMap<String, String> {\n    let mut m = HashMap::new();\n    for a in args {\n        if a.starts_with(\"--\") {\n            let kv: Vec<&str> = a[2..].splitn(2, '=').collect();\n            if kv.len() == 2 { m.insert(kv[0].to_string(), kv[1].to_string()); }\n        }\n    }\n    m\n}"
+    ]
+  },
+  {
+    "name-zh": "文件存在检查",
+    "name-en": "File Exists",
+    "description-zh": "检查文件或目录是否存在",
+    "description-en": "Check if file or directory exists",
+    "dependencies": [
+      "std::fs",
+      "std::path"
+    ],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "file",
+      "basic"
+    ],
+    "input": [
+      "path"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "exists"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "use std::path::Path;\nfn file_exists(path: &str) -> bool {\n    Path::new(path).exists()\n}"
+    ]
+  },
+  {
+    "name-zh": "读取目录",
+    "name-en": "Read Directory",
+    "description-zh": "读取目录下所有文件条目",
+    "description-en": "Read all entries in a directory",
+    "dependencies": [
+      "std::fs"
+    ],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "file",
+      "basic"
+    ],
+    "input": [
+      "dir"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "entries"
+    ],
+    "return_type": [
+      "Vec<String>"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "use std::fs;\nfn read_dir(dir: &str) -> Vec<String> {\n    fs::read_dir(dir).unwrap().iter()\n        .filter_map(|e| e.ok())\n        .map(|e| e.file_name().to_string_lossy().into_owned())\n        .collect()\n}"
+    ]
+  },
+  {
+    "name-zh": "创建目录",
+    "name-en": "Create Directory",
+    "description-zh": "递归创建目录",
+    "description-en": "Create directory recursively",
+    "dependencies": [
+      "std::fs"
+    ],
+    "use_to": [
+      "file",
+      "dir"
+    ],
+    "tags": [
+      "file",
+      "basic"
+    ],
+    "input": [
+      "path"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "ok"
+    ],
+    "return_type": [
+      "Result<(),std::io::Error>"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "use std::fs;\nfn create_dir(path: &str) -> std::io::Result<()> {\n    fs::create_dir_all(path)\n}"
+    ]
+  },
+  {
+    "name-zh": "复制文件",
+    "name-en": "Copy File",
+    "description-zh": "复制文件内容",
+    "description-en": "Copy file content",
+    "dependencies": [
+      "std::fs"
+    ],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "file",
+      "basic"
+    ],
+    "input": [
+      "src",
+      "dst"
+    ],
+    "input_type": [
+      "&str",
+      "&str"
+    ],
+    "return": [
+      "ok"
+    ],
+    "return_type": [
+      "Result<(),std::io::Error>"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "use std::fs;\nfn copy_file(src: &str, dst: &str) -> std::io::Result<()> {\n    fs::copy(src, dst)?;\n    Ok(())\n}"
+    ]
+  },
+  {
+    "name-zh": "删除文件",
+    "name-en": "Delete File",
+    "description-zh": "删除文件",
+    "description-en": "Delete file",
+    "dependencies": [
+      "std::fs"
+    ],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "file",
+      "basic"
+    ],
+    "input": [
+      "path"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "ok"
+    ],
+    "return_type": [
+      "Result<(),std::io::Error>"
+    ],
+    "timer_score": 90,
+    "memory_score": 100,
+    "code": [
+      "use std::fs;\nfn delete_file(path: &str) -> std::io::Result<()> {\n    fs::remove_file(path)\n}"
+    ]
+  },
+  {
+    "name-zh": "定时器",
+    "name-en": "Timer / Stopwatch",
+    "description-zh": "记录代码执行时间",
+    "description-en": "Measure code execution time",
+    "dependencies": [
+      "std::time"
+    ],
+    "use_to": [
+      "time",
+      "benchmark"
+    ],
+    "tags": [
+      "time",
+      "basic"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "elapsed"
+    ],
+    "return_type": [
+      "std::time::Duration"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "use std::time::Instant;\nstruct Stopwatch { start: Instant }\nimpl Stopwatch {\n    fn new() -> Self { Self { start: Instant::now() } }\n    fn elapsed(&self) -> std::time::Duration { self.start.elapsed() }\n}"
+    ]
+  },
+  {
+    "name-zh": "雪花ID",
+    "name-en": "Snowflake ID",
+    "description-zh": "生成分布式唯一 ID（简化的雪花算法）",
+    "description-en": "Generate distributed unique ID (simplified snowflake)",
+    "dependencies": [
+      "std::sync::atomic",
+      "std::sync::atomic::Ordering"
+    ],
+    "use_to": [
+      "id",
+      "distributed"
+    ],
+    "tags": [
+      "intermediate",
+      "id"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "id"
+    ],
+    "return_type": [
+      "u64"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "use std::sync::atomic::{AtomicU64, Ordering};\nstatic SNOWFLAKE: AtomicU64 = AtomicU64::new(0);\nfn next_snowflake_id() -> u64 {\n    SNOWFLAKE.fetch_add(1, Ordering::Relaxed)\n}"
+    ]
+  },
+  {
+    "name-zh": "Once 单例",
+    "name-en": "Once Singleton",
+    "description-zh": "确保闭包只执行一次（用于单例初始化）",
+    "description-en": "Ensure closure runs only once (for singleton init)",
+    "dependencies": [
+      "std::sync::Once"
+    ],
+    "use_to": [
+      "concurrency",
+      "singleton"
+    ],
+    "tags": [
+      "intermediate",
+      "concurrency"
+    ],
+    "input": [
+      "fn"
+    ],
+    "input_type": [
+      "fn()"
+    ],
+    "return": [
+      "result"
+    ],
+    "return_type": [
+      "T"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "use std::sync::Once;\nstatic INIT: Once = Once::new();\nstatic mut VALUE: Option<u32> = None;\nfn do_once<F: FnOnce()>(f: F) {\n    INIT.call_once(|| unsafe { VALUE = Some(f()); });\n}"
+    ]
+  },
+  {
+    "name-zh": "读写锁",
+    "name-en": "Read Write Lock",
+    "description-zh": "使用 RwLock 进行读写锁操作",
+    "description-en": "Read-write lock using RwLock",
+    "dependencies": [
+      "std::sync"
+    ],
+    "use_to": [
+      "concurrency",
+      "lock"
+    ],
+    "tags": [
+      "concurrent",
+      "lock"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "rwlock"
+    ],
+    "return_type": [
+      "std::sync::RwLock<T>"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "use std::sync::{RwLock, RwLockReadGuard, RwLockWriteGuard};\nstruct SafeData { lock: RwLock<Vec<i32>> }\nimpl SafeData {\n    fn new() -> Self { Self { lock: RwLock::new(Vec::new()) } }\n    fn read(&self) -> RwLockReadGuard<Vec<i32>> { self.lock.read().unwrap() }\n    fn write(&self) -> RwLockWriteGuard<Vec<i32>> { self.lock.write().unwrap() }\n}"
+    ]
+  },
+  {
+    "name-zh": "信号量",
+    "name-en": "Semaphore",
+    "description-zh": "使用 Semaphore 控制并发数量",
+    "description-en": "Control concurrency count with Semaphore",
+    "dependencies": [
+      "std::sync"
+    ],
+    "use_to": [
+      "concurrency",
+      "semaphore"
+    ],
+    "tags": [
+      "concurrent",
+      "semaphore"
+    ],
+    "input": [
+      "permits"
+    ],
+    "input_type": [
+      "usize"
+    ],
+    "return": [
+      "sem"
+    ],
+    "return_type": [
+      "std::sync::Semaphore"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "use std::sync::{Arc, Semaphore};\nfn new_semaphore(permits: usize) -> Arc<Semaphore> {\n    Arc::new(Semaphore::new(permits))\n}"
+    ]
+  },
+  {
+    "name-zh": "Barrier 同步",
+    "name-en": "Barrier Sync",
+    "description-zh": "使用 Barrier 让多线程相互等待",
+    "description-en": "Use Barrier to make threads wait for each other",
+    "dependencies": [
+      "std::sync"
+    ],
+    "use_to": [
+      "concurrency",
+      "barrier"
+    ],
+    "tags": [
+      "concurrent",
+      "barrier"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "usize"
+    ],
+    "return": [
+      "barrier"
+    ],
+    "return_type": [
+      "std::sync::Barrier"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "use std::sync::{Arc, Barrier};\nfn new_barrier(n: usize) -> Arc<Barrier> {\n    Arc::new(Barrier::new(n))\n}"
+    ]
+  },
+  {
+    "name-zh": "线程本地存储",
+    "name-en": "Thread Local Storage",
+    "description-zh": "使用 thread_local 定义线程局部变量",
+    "description-en": "Define thread-local variable with thread_local",
+    "dependencies": [
+      "std::thread"
+    ],
+    "use_to": [
+      "concurrency",
+      "tls"
+    ],
+    "tags": [
+      "concurrent",
+      "tls"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "value"
+    ],
+    "return_type": [
+      "thread_local!"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "use std::cell::RefCell;\nthread_local! static COUNTER: RefCell<i32> = RefCell::new(0);\nfn inc_counter() { COUNTER.with(|c| *c.borrow_mut() += 1); }\nfn get_counter() -> i32 { COUNTER.with(|c| *c.borrow()) }"
+    ]
+  },
+  {
+    "name-zh": "Result 链式处理",
+    "name-en": "Result Chain",
+    "description-zh": "使用 ? 和 and_then 链式处理 Result",
+    "description-en": "Chain Result processing with ? and and_then",
+    "dependencies": [],
+    "use_to": [
+      "result",
+      "error"
+    ],
+    "tags": [
+      "basic",
+      "result"
+    ],
+    "input": [
+      "r"
+    ],
+    "input_type": [
+      "Result<T,E>"
+    ],
+    "return": [
+      "chained"
+    ],
+    "return_type": [
+      "Result<U,E>"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "fn chain_result<T: Copy, U, E: Clone>(r: Result<T, E>) -> Result<U, E> {\n    r.and_then(|v| {\n        let _: u32 = v as u32;\n        Ok(v as u32)\n    })\n}"
+    ]
+  },
+  {
+    "name-zh": "Option 链式处理",
+    "name-en": "Option Chain",
+    "description-zh": "链式调用 Option 的 map/filter/or/unwrap_or",
+    "description-en": "Chain Option with map/filter/or/unwrap_or",
+    "dependencies": [],
+    "use_to": [
+      "option"
+    ],
+    "tags": [
+      "basic",
+      "option"
+    ],
+    "input": [
+      "opt",
+      "pred"
+    ],
+    "input_type": [
+      "Option<T>",
+      "fn(T)->bool"
+    ],
+    "return": [
+      "chained"
+    ],
+    "return_type": [
+      "Option<T>"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "fn option_chain<T: Copy>(opt: Option<T>, pred: fn(T) -> bool) -> Option<T> {\n    opt.filter(pred)\n}"
+    ]
+  },
+  {
+    "name-zh": "希尔排序",
+    "name-en": "Shell Sort",
+    "description-zh": "希尔排序（递减增量排序）",
+    "description-en": "Shell sort with diminishing gap",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "v"
+    ],
+    "input_type": [
+      "&mut [i32]"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "&mut [i32]"
+    ],
+    "timer_score": 75,
+    "memory_score": 90,
+    "code": [
+      "fn shell_sort(a: &mut [i32]) { let n = a.len(); let mut gap = n / 2; while gap > 0 { for i in gap..n { let mut j = i; let tmp = a[i]; while j >= gap && a[j - gap] > tmp { a[j] = a[j - gap]; j -= gap; } a[j] = tmp; } gap /= 2; } }"
+    ]
+  },
+  {
+    "name-zh": "堆排序",
+    "name-en": "Heap Sort",
+    "description-zh": "二叉堆实现的堆排序",
+    "description-en": "Heap sort using binary heap",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "&mut [i32]"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "&mut [i32]"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "fn heap_sort(a: &mut [i32]) { let n = a.len(); for i in (0..n/2).rev() { heapify(a, n, i); } for i in (1..n).rev() { a.swap(0, i); heapify(a, i, 0); } } fn heapify(a: &mut [i32], n: usize, i: usize) { let mut largest = i; let l = 2*i+1; let r = 2*i+2; if l < n && a[l] > a[largest] { largest = l; } if r < n && a[r] > a[largest] { largest = r; } if largest != i { a.swap(i, largest); heapify(a, n, largest); } }"
+    ]
+  },
+  {
+    "name-zh": "计数排序",
+    "name-en": "Counting Sort",
+    "description-zh": "计数排序（适用于小范围整数）",
+    "description-en": "Counting sort for small integer range",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "a",
+      "max"
+    ],
+    "input_type": [
+      "&[i32]",
+      "i32"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "Vec<i32>"
+    ],
+    "timer_score": 85,
+    "memory_score": 80,
+    "code": [
+      "fn counting_sort(a: &[i32], max: i32) -> Vec<i32> { let mut cnt = vec![0i32; (max+1) as usize]; for &v in a { cnt[v as usize] += 1; } let mut res = Vec::new(); for (i, &c) in cnt.iter().enumerate() { res.extend(std::iter::repeat(i as i32).take(c as usize)); } res }"
+    ]
+  },
+  {
+    "name-zh": "Boyer-Moore字符串匹配",
+    "name-en": "Boyer-Moore String Match",
+    "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
+    "description-en": "Boyer-Moore string matching with bad character rule",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "string",
+      "boyer-moore",
+      "algorithm"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "&str",
+      "&str"
+    ],
+    "return": [
+      "index"
+    ],
+    "return_type": [
+      "Option<usize>"
+    ],
+    "timer_score": 88,
+    "memory_score": 92,
+    "code": [
+      "fn boyer_moore(text: &str, pattern: &str) -> Option<usize> { let n = text.len(); let m = pattern.len(); if m == 0 { return Some(0); } let mut bc = [m; 256]; for (i, c) in pattern.char_indices() { bc[c as usize] = m - i - 1; } let mut shift = 0; while shift <= n.saturating_sub(m) { let mut j = m; while j > 0 && pattern.chars().nth(j-1) == text.chars().nth(shift+j-1) { j -= 1; } if j == 0 { return Some(shift); } let c = text.chars().nth(shift+j-1).unwrap_or('\\0') as usize; shift += (j - bc[c]).max(1); } None }"
+    ]
+  },
+  {
+    "name-zh": "Sunday字符串匹配",
+    "name-en": "Sunday String Match",
+    "description-zh": "Sunday 字符串匹配算法",
+    "description-en": "Sunday string matching algorithm",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "string",
+      "sunday",
+      "algorithm"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "&str",
+      "&str"
+    ],
+    "return": [
+      "index"
+    ],
+    "return_type": [
+      "Option<usize>"
+    ],
+    "timer_score": 88,
+    "memory_score": 92,
+    "code": [
+      "fn sunday(text: &str, pattern: &str) -> Option<usize> { let n = text.len(); let m = pattern.len(); if m == 0 { return Some(0); } let mut shift = [m+1; 256]; for (i, c) in pattern.char_indices() { shift[c as usize] = m - i; } let mut pos = 0; while pos <= n.saturating_sub(m) { let mut j = 0; while j < m && text.chars().nth(pos+j) == pattern.chars().nth(j) { j += 1; } if j == m { return Some(pos); } let next_pos = pos + m; if next_pos < n { let c = text.chars().nth(next_pos).unwrap() as usize; pos += shift[c]; } else { return None; } } None }"
+    ]
+  },
+  {
+    "name-zh": "LRU缓存（标准库实现）",
+    "name-en": "LRU Cache (std impl)",
+    "description-zh": "使用标准库实现 LRU 缓存",
+    "description-en": "LRU cache using std",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "cache",
+      "data structure"
+    ],
+    "tags": [
+      "lru",
+      "cache",
+      "data structure"
+    ],
+    "input": [
+      "capacity"
+    ],
+    "input_type": [
+      "usize"
+    ],
+    "return": [
+      "cache"
+    ],
+    "return_type": [
+      "LRUCache<i32,i32>"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "use std::collections::HashMap;\nstruct LRUCache<K, V> { capacity: usize, map: HashMap<K, (V, usize)>, order: Vec<K>, counter: usize }"
+    ]
+  },
+  {
+    "name-zh": "限流器（令牌桶）",
+    "name-en": "Token Bucket Rate Limiter",
+    "description-zh": "令牌桶限流器实现",
+    "description-en": "Token bucket rate limiter",
+    "dependencies": [
+      "std",
+      "tokio"
+    ],
+    "use_to": [
+      "rate limit",
+      "concurrency"
+    ],
+    "tags": [
+      "rate limit",
+      "concurrent"
+    ],
+    "input": [
+      "rate",
+      "burst"
+    ],
+    "input_type": [
+      "f64",
+      "usize"
+    ],
+    "return": [
+      "limiter"
+    ],
+    "return_type": [
+      "TokenBucket"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "use std::time::{Duration, Instant};\npub struct TokenBucket { rate: f64, tokens: f64, last_update: Instant } impl TokenBucket { pub fn new(rate: f64, burst: usize) -> Self { Self { rate, tokens: burst as f64, last_update: Instant::now() } } pub fn allow(&mut self) -> bool { let now = Instant::now(); let elapsed = now.duration_since(self.last_update).as_secs_f64(); self.last_update = now; self.tokens = (self.tokens + elapsed * self.rate).min(self.tokens.max(self.tokens as f64) as f64); if self.tokens >= 1.0 { self.tokens -= 1.0; true } else { false } } } }"
+    ]
+  },
+  {
+    "name-zh": "布隆过滤器",
+    "name-en": "Bloom Filter",
+    "description-zh": "简单布隆过滤器实现",
+    "description-en": "Simple bloom filter",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "bloom filter",
+      "data structure"
+    ],
+    "tags": [
+      "bloom filter",
+      "data structure"
+    ],
+    "input": [
+      "size"
+    ],
+    "input_type": [
+      "usize"
+    ],
+    "return": [
+      "filter"
+    ],
+    "return_type": [
+      "BloomFilter"
+    ],
+    "timer_score": 85,
+    "memory_score": 80,
+    "code": [
+      "use std::collections::hash_map::DefaultHasher;\nuse std::hash::{Hash, Hasher};\nstruct BloomFilter { size: usize, bits: Vec<bool> } impl BloomFilter { pub fn new(size: usize) -> Self { Self { size, bits: vec![false; size] } fn hash1<T: Hash>(&self, v: &T) -> usize { let mut h = DefaultHasher::new(); v.hash(&mut h); h.finish() as usize % self.size } fn hash2<T: Hash>(&self, v: &T) -> usize { let mut h = DefaultHasher::new(); v.hash(&mut h); (h.finish() * 0x9e3779b97f4a7c15) as usize % self.size } pub fn insert<T: Hash>(&mut self, v: &T) { self.bits[self.hash1(v)] = true; self.bits[self.hash2(v)] = true; } pub fn contains<T: Hash>(&self, v: &T) -> bool { self.bits[self.hash1(v)] && self.bits[self.hash2(v)] } }"
+    ]
+  },
+  {
+    "name-zh": "环形缓冲区",
+    "name-en": "Ring Buffer",
+    "description-zh": "无锁 FIFO 环形缓冲区",
+    "description-en": "Lock-free FIFO ring buffer",
+    "dependencies": [
+      "std::sync::atomic"
+    ],
+    "use_to": [
+      "data structure",
+      "buffer"
+    ],
+    "tags": [
+      "ring buffer",
+      "data structure"
+    ],
+    "input": [
+      "capacity"
+    ],
+    "input_type": [
+      "usize"
+    ],
+    "return": [
+      "ring"
+    ],
+    "return_type": [
+      "RingBuffer<i32>"
+    ],
+    "timer_score": 88,
+    "memory_score": 88,
+    "code": [
+      "use std::sync::atomic::{AtomicUsize, Ordering};\npub struct RingBuffer<T> { buf: Vec<T>, cap: usize, head: AtomicUsize, tail: AtomicUsize } impl<T: Clone + Default> RingBuffer<T> { pub fn new(capacity: usize) -> Self { Self { buf: vec![T::default(); capacity], cap: capacity, head: AtomicUsize::new(0), tail: AtomicUsize::new(0) } } pub fn push(&self, v: T) -> bool { let tail = self.tail.load(Ordering::Relaxed); let head = self.head.load(Ordering::Relaxed); if tail.wrapping_sub(head) >= self.cap { return false; } self.buf[tail % self.cap] = v; self.tail.fetch_add(1, Ordering::Relaxed); true } pub fn pop(&self) -> Option<T> { let tail = self.tail.load(Ordering::Relaxed); let head = self.head.load(Ordering::Relaxed); if tail == head { return None; } let v = self.buf[head % self.cap].clone(); self.head.fetch_add(1, Ordering::Relaxed); Some(v) } }"
+    ]
+  },
+  {
+    "name-zh": "跳表",
+    "name-en": "Skip List",
+    "description-zh": "简化的跳表实现",
+    "description-en": "Simplified skip list",
+    "dependencies": [
+      "rand"
+    ],
+    "use_to": [
+      "data structure",
+      "skiplist"
+    ],
+    "tags": [
+      "skiplist",
+      "data structure"
+    ],
+    "input": [
+      "max_level"
+    ],
+    "input_type": [
+      "i32"
+    ],
+    "return": [
+      "skiplist"
+    ],
+    "return_type": [
+      "SkipList<i32>"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "use rand::Rng;\n#[derive(Clone)]\nstruct SkipListNode<T: Clone> { key: T, forward: Vec<Option<Box<SkipListNode<T>>>, value: Option<T> }\npub struct SkipList<T: Clone + PartialOrd> { head: Option<Box<SkipListNode<T>>>, max_level: i32 }"
+    ]
+  },
+  {
+    "name-zh": "Actor 模型基础",
+    "name-en": "Actor Model Basics",
+    "description-zh": "简化的 Actor 消息传递模型",
+    "description-en": "Simplified actor message passing model",
+    "dependencies": [
+      "std",
+      "std::sync::mpsc"
+    ],
+    "use_to": [
+      "concurrency",
+      "actor"
+    ],
+    "tags": [
+      "actor",
+      "concurrent"
+    ],
+    "input": [
+      "actorFn"
+    ],
+    "input_type": [
+      "fn(Box<dyn FnOnce(String) + Send>)"
+    ],
+    "return": [
+      "sender"
+    ],
+    "return_type": [
+      "std::sync::mpsc::Sender<String>"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "use std::sync::mpsc::{channel, Sender, Receiver};\npub struct Actor { rx: Receiver<String> }\nimpl Actor { pub fn new() -> (Self, Sender<String>) { let (tx, rx) = channel(); (Self { rx }, tx) } pub fn run<F: FnOnce(String) + Send + 'static>(self, handler: F) { std::thread::spawn(move || { while let Ok(msg) = self.rx.recv() { handler(msg); } }); } }"
+    ]
+  },
+  {
+    "name-zh": "观察者模式",
+    "name-en": "Observer Pattern",
+    "description-zh": "简单的观察者模式实现",
+    "description-en": "Simple observer pattern",
+    "dependencies": [
+      "std",
+      "std::cell::RefCell"
+    ],
+    "use_to": [
+      "design pattern",
+      "observer"
+    ],
+    "tags": [
+      "observer",
+      "pattern"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "subject"
+    ],
+    "return_type": [
+      "Subject"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "use std::cell::RefCell;\nuse std::rc::Rc;\ntrait Observer<T> { fn update(&self, event: &T); }\nstruct Subject<T> { observers: Vec<Rc<dyn Observer<T>> }"
+    ]
+  },
+  {
+    "name-zh": "策略模式",
+    "name-en": "Strategy Pattern",
+    "description-zh": "简化的策略模式实现",
+    "description-en": "Simplified strategy pattern",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "design pattern",
+      "strategy"
+    ],
+    "tags": [
+      "strategy",
+      "pattern"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "ctx"
+    ],
+    "return_type": [
+      "Context"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "trait Strategy<T> { fn execute(&self, data: &T) -> T; }\nstruct Context<S: Strategy<T>, T> { strategy: S, _data: std::marker::PhantomData<T> }"
+    ]
+  },
+  {
+    "name-zh": "装饰器模式",
+    "name-en": "Decorator Pattern",
+    "description-zh": "简化的装饰器模式实现",
+    "description-en": "Simplified decorator pattern",
+    "dependencies": [
+      "std"
+    ],
+    "use_to": [
+      "design pattern",
+      "decorator"
+    ],
+    "tags": [
+      "decorator",
+      "pattern"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "wrapped"
+    ],
+    "return_type": [
+      "Box<dyn Fn(i32) -> i32>"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "trait FnDecorator { fn call(&self, x: i32) -> i32; }\nstruct TimingDecorator<F: Fn(i32)->i32> { inner: F }\nimpl<F: Fn(i32)->i32> FnDecorator for TimingDecorator<F> { fn call(&self, x: i32) -> i32 { let start = std::time::Instant::now(); let r = (self.inner)(x); println!(\"took {:?}\", start.elapsed()); r } }"
+    ]
+  },
+  {
+    "name-zh": "配置文件解析（TOML）",
+    "name-en": "Parse TOML Config",
+    "description-zh": "解析 TOML 配置文件",
+    "description-en": "Parse TOML config file",
+    "dependencies": [
+      "toml"
+    ],
+    "use_to": [
+      "config",
+      "toml"
+    ],
+    "tags": [
+      "config",
+      "toml"
+    ],
+    "input": [
+      "content"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "config"
+    ],
+    "return_type": [
+      "toml::Value"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "use toml::Value;\nfn parse_toml(content: &str) -> Result<Value, toml::de::Error> { content.parse() }"
+    ]
+  },
+  {
+    "name-zh": "配置文件解析（YAML）",
+    "name-en": "Parse YAML Config",
+    "description-zh": "解析 YAML 配置文件",
+    "description-en": "Parse YAML config file",
+    "dependencies": [
+      "serde_yaml"
+    ],
+    "use_to": [
+      "config",
+      "yaml"
+    ],
+    "tags": [
+      "config",
+      "yaml"
+    ],
+    "input": [
+      "content"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "config"
+    ],
+    "return_type": [
+      "serde_yaml::Value"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "use serde_yaml::Value;\nfn parse_yaml(content: &str) -> Result<Value, serde_yaml::Error> { serde_yaml::from_str(content) }"
+    ]
+  },
+  {
+    "name-zh": "配置文件解析（JSON）",
+    "name-en": "Parse JSON Config",
+    "description-zh": "解析 JSON 配置文件",
+    "description-en": "Parse JSON config file",
+    "dependencies": [
+      "serde_json"
+    ],
+    "use_to": [
+      "config",
+      "json"
+    ],
+    "tags": [
+      "config",
+      "json"
+    ],
+    "input": [
+      "content"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "config"
+    ],
+    "return_type": [
+      "serde_json::Value"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "use serde_json::Value;\nfn parse_json(content: &str) -> Result<Value, serde_json::Error> { serde_json::from_str(content) }"
+    ]
+  },
+  {
+    "name-zh": "数值钳制",
+    "name-en": "Clamp",
+    "description-zh": "将值限制在 [min, max] 范围内。Rust 内置 f64::clamp() (1.50+)。",
+    "description-en": "Clamp a value to [min, max]. Rust has built-in f64::clamp() (1.50+).",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "utility"
+    ],
+    "tags": [
+      "basic",
+      "math",
+      "utility"
+    ],
+    "input": [
+      "val",
+      "min",
+      "max"
+    ],
+    "input_type": [
+      "f64",
+      "f64",
+      "f64"
+    ],
+    "return": [
+      "clamped"
+    ],
+    "return_type": [
+      "f64"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn clamp(val: f64, min: f64, max: f64) -> f64 {\n    val.max(min).min(max)\n}"
+    ]
+  },
+  {
+    "name-zh": "Base64 编解码",
+    "name-en": "Base64 Encode/Decode",
+    "description-zh": "使用 base64 crate 进行 Base64 编解码。",
+    "description-en": "Base64 encode/decode using the base64 crate.",
+    "dependencies": [
+      "base64"
+    ],
+    "use_to": [
+      "encoding",
+      "conversion"
+    ],
+    "tags": [
+      "encoding",
+      "base64",
+      "conversion"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "&[u8]"
+    ],
+    "return": [
+      "encoded"
+    ],
+    "return_type": [
+      "String"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "use base64::{Engine as _, engine::general_purpose};\n\nfn base64_encode(data: &[u8]) -> String {\n    general_purpose::STANDARD.encode(data)\n}\n\nfn base64_decode(encoded: &str) -> Result<Vec<u8>, base64::DecodeError> {\n    general_purpose::STANDARD.decode(encoded)\n}"
+    ]
+  },
+  {
+    "name-zh": "字符串反转",
+    "name-en": "String Reverse",
+    "description-zh": "反转字符串。使用 chars().rev() 迭代器。",
+    "description-en": "Reverse a string using chars().rev() iterator.",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "utility"
+    ],
+    "tags": [
+      "string",
+      "basic",
+      "utility"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "&str"
+    ],
+    "return": [
+      "reversed"
+    ],
+    "return_type": [
+      "String"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "fn str_reverse(s: &str) -> String {\n    s.chars().rev().collect()\n}"
+    ]
+  },
+  {
+    "name-zh": "阶乘",
+    "name-en": "Factorial",
+    "description-zh": "计算非负整数的阶乘。迭代实现。",
+    "description-en": "Compute factorial of a non-negative integer. Iterative.",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "basic"
+    ],
+    "tags": [
+      "math",
+      "algorithm",
+      "basic"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "u64"
+    ],
+    "return": [
+      "result"
+    ],
+    "return_type": [
+      "u64"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "fn factorial(n: u64) -> u64 {\n    (1..=n).product()\n}"
+    ]
+  },
+  {
+    "name-zh": "选择排序",
+    "name-en": "Selection Sort",
+    "description-zh": "简单选择排序。时间 O(n²)，空间 O(1)。",
+    "description-en": "Simple selection sort. Time O(n²), space O(1).",
+    "dependencies": [],
+    "use_to": [
+      "sorting",
+      "algorithm"
+    ],
+    "tags": [
+      "algorithm",
+      "sorting",
+      "basic"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "&mut [i32]"
+    ],
+    "return": [],
+    "return_type": [],
+    "timer_score": 80,
+    "memory_score": 90,
+    "code": [
+      "fn selection_sort(arr: &mut [i32]) {\n    for i in 0..arr.len() - 1 {\n        let min_idx = (i..arr.len()).min_by_key(|&j| arr[j]).unwrap();\n        arr.swap(i, min_idx);\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "插入排序",
+    "name-en": "Insertion Sort",
+    "description-zh": "简单插入排序。时间 O(n²)，稳定。",
+    "description-en": "Simple insertion sort. Time O(n²), stable.",
+    "dependencies": [],
+    "use_to": [
+      "sorting",
+      "algorithm"
+    ],
+    "tags": [
+      "algorithm",
+      "sorting",
+      "basic"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "&mut [i32]"
+    ],
+    "return": [],
+    "return_type": [],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": [
+      "fn insertion_sort(arr: &mut [i32]) {\n    for i in 1..arr.len() {\n        let key = arr[i];\n        let mut j = i;\n        while j > 0 && arr[j - 1] > key {\n            arr[j] = arr[j - 1];\n            j -= 1;\n        }\n        arr[j] = key;\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "队列",
+    "name-en": "Queue",
+    "description-zh": "使用 VecDeque 实现的队列。O(1) 入队出队。",
+    "description-en": "Queue using VecDeque. O(1) enqueue/dequeue.",
+    "dependencies": [
+      "std::collections::VecDeque"
+    ],
+    "use_to": [
+      "data structure",
+      "queue"
+    ],
+    "tags": [
+      "data structure",
+      "queue",
+      "basic"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [],
+    "return_type": [],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "use std::collections::VecDeque;\n\nstruct Queue<T> {\n    data: VecDeque<T>,\n}\n\nimpl<T> Queue<T> {\n    fn new() -> Self { Queue { data: VecDeque::new() } }\n    fn enqueue(&mut self, item: T) { self.data.push_back(item); }\n    fn dequeue(&mut self) -> Option<T> { self.data.pop_front() }\n    fn peek(&self) -> Option<&T> { self.data.front() }\n    fn len(&self) -> usize { self.data.len() }\n    fn is_empty(&self) -> bool { self.data.is_empty() }\n}"
+    ]
+  }
 ]

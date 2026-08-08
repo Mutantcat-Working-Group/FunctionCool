@@ -1,3170 +1,3296 @@
 [
-    {
-        "name-zh": "切片过滤",
-        "name-en": "Slice Filter",
-        "description-zh": "根据条件函数过滤切片元素",
-        "description-en": "Filter slice elements based on predicate function",
-        "dependencies": [],
-        "use_to": [
-            "slice"
-        ],
-        "tags": [
-            "basic",
-            "slice",
-            "beginner"
-        ],
-        "input": [
-            "nums",
-            "predicate"
-        ],
-        "input_type": [
-            "[]int",
-            "func(int) bool"
-        ],
-        "return": [
-            "filtered"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "func filterSlice(nums []int, predicate func(int) bool) []int {\n    result := make([]int, 0)\n    for _, num := range nums {\n        if predicate(num) {\n            result = append(result, num)\n        }\n    }\n    return result\n}"
-        ]
-    },
-    {
-        "name-zh": "随机数生成",
-        "name-en": "Random Number",
-        "description-zh": "生成指定范围内的随机整数",
-        "description-en": "Generate random integer within range",
-        "dependencies": [
-            "math/rand",
-            "time"
-        ],
-        "use_to": [
-            "random"
-        ],
-        "tags": [
-            "basic",
-            "random",
-            "beginner"
-        ],
-        "input": [
-            "min",
-            "max"
-        ],
-        "input_type": [
-            "int",
-            "int"
-        ],
-        "return": [
-            "random"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "import (\n    \"math/rand\"\n    \"time\"\n)\n\nfunc init() {\n    rand.Seed(time.Now().UnixNano())\n}\n\nfunc randomInt(min, max int) int {\n    if min > max {\n        min, max = max, min\n    }\n    return min + rand.Intn(max-min+1)\n}"
-        ]
-    },
-    {
-        "name-zh": "文件是否存在",
-        "name-en": "File Exists",
-        "description-zh": "检查文件或目录是否存在",
-        "description-en": "Check if file or directory exists",
-        "dependencies": [
-            "os"
-        ],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "basic",
-            "file",
-            "beginner"
-        ],
-        "input": [
-            "path"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "exists"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "import \"os\"\n\nfunc fileExists(path string) bool {\n    _, err := os.Stat(path)\n    return !os.IsNotExist(err)\n}"
-        ]
-    },
-    {
-        "name-zh": "字符串包含",
-        "name-en": "String Contains Any",
-        "description-zh": "检查字符串是否包含任意给定子串",
-        "description-en": "Check if string contains any of the given substrings",
-        "dependencies": [
-            "strings"
-        ],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "basic",
-            "string",
-            "beginner"
-        ],
-        "input": [
-            "s",
-            "subs"
-        ],
-        "input_type": [
-            "string",
-            "[]string"
-        ],
-        "return": [
-            "contains"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "import \"strings\"\n\nfunc containsAny(s string, subs []string) bool {\n    for _, sub := range subs {\n        if strings.Contains(s, sub) {\n            return true\n        }\n    }\n    return false\n}"
-        ]
-    },
-    {
-        "name-zh": "时间格式化",
-        "name-en": "Time Format",
-        "description-zh": "将时间格式化为指定格式字符串",
-        "description-en": "Format time to specified layout string",
-        "dependencies": [
-            "time"
-        ],
-        "use_to": [
-            "time",
-            "formatting"
-        ],
-        "tags": [
-            "basic",
-            "time",
-            "beginner"
-        ],
-        "input": [
-            "t",
-            "layout"
-        ],
-        "input_type": [
-            "time.Time",
-            "string"
-        ],
-        "return": [
-            "formatted"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "import \"time\"\n\nfunc formatTime(t time.Time, layout string) string {\n    if layout == \"\" {\n        layout = \"2006-01-02 15:04:05\"\n    }\n    return t.Format(layout)\n}"
-        ]
-    },
-    {
-        "name-zh": "切片排序",
-        "name-en": "Slice Sort",
-        "description-zh": "对整数切片进行升序排序",
-        "description-en": "Sort integer slice in ascending order",
-        "dependencies": [
-            "sort"
-        ],
-        "use_to": [
-            "slice",
-            "sorting"
-        ],
-        "tags": [
-            "basic",
-            "slice",
-            "beginner"
-        ],
-        "input": [
-            "nums"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "import \"sort\"\n\nfunc sortSlice(nums []int) []int {\n    result := make([]int, len(nums))\n    copy(result, nums)\n    sort.Ints(result)\n    return result\n}"
-        ]
-    },
-    {
-        "name-zh": "切片去重",
-        "name-en": "Slice Unique",
-        "description-zh": "移除切片中的重复元素",
-        "description-en": "Remove duplicate elements from slice",
-        "dependencies": [],
-        "use_to": [
-            "slice"
-        ],
-        "tags": [
-            "basic",
-            "slice",
-            "beginner"
-        ],
-        "input": [
-            "nums"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "unique"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 90,
-        "memory_score": 85,
-        "code": [
-            "func uniqueSlice(nums []int) []int {\n    seen := make(map[int]bool)\n    result := make([]int, 0)\n    for _, num := range nums {\n        if !seen[num] {\n            seen[num] = true\n            result = append(result, num)\n        }\n    }\n    return result\n}"
-        ]
-    },
-    {
-        "name-zh": "字符串分割",
-        "name-en": "String Split",
-        "description-zh": "按指定分隔符分割字符串并移除空白字符",
-        "description-en": "Split string by delimiter and trim spaces",
-        "dependencies": [
-            "strings"
-        ],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "basic",
-            "string",
-            "beginner"
-        ],
-        "input": [
-            "s",
-            "sep"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "parts"
-        ],
-        "return_type": [
-            "[]string"
-        ],
-        "timer_score": 100,
-        "memory_score": 95,
-        "code": [
-            "import \"strings\"\n\nfunc splitAndTrim(s, sep string) []string {\n    parts := strings.Split(s, sep)\n    result := make([]string, 0, len(parts))\n    for _, part := range parts {\n        if trimmed := strings.TrimSpace(part); trimmed != \"\" {\n            result = append(result, trimmed)\n        }\n    }\n    return result\n}"
-        ]
-    },
-    {
-        "name-zh": "错误包装",
-        "name-en": "Error Wrap",
-        "description-zh": "为错误添加上下文信息",
-        "description-en": "Add context to an error",
-        "dependencies": [
-            "fmt"
-        ],
-        "use_to": [
-            "error handling"
-        ],
-        "tags": [
-            "basic",
-            "error",
-            "beginner"
-        ],
-        "input": [
-            "err",
-            "msg"
-        ],
-        "input_type": [
-            "error",
-            "string"
-        ],
-        "return": [
-            "wrapped"
-        ],
-        "return_type": [
-            "error"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "import \"fmt\"\n\nfunc wrapError(err error, msg string) error {\n    if err == nil {\n        return nil\n    }\n    return fmt.Errorf(\"%s: %w\", msg, err)\n}"
-        ]
-    },
-    {
-        "name-zh": "环境变量获取",
-        "name-en": "Get Environment",
-        "description-zh": "获取环境变量值，不存在则返回默认值",
-        "description-en": "Get environment variable with default value",
-        "dependencies": [
-            "os"
-        ],
-        "use_to": [
-            "configuration"
-        ],
-        "tags": [
-            "basic",
-            "env",
-            "beginner"
-        ],
-        "input": [
-            "key",
-            "defaultValue"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "value"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "import \"os\"\n\nfunc getEnv(key, defaultValue string) string {\n    if value, exists := os.LookupEnv(key); exists {\n        return value\n    }\n    return defaultValue\n}"
-        ]
-    },
-    {
-        "name-zh": "主函数示例",
-        "name-en": "Main Function Example",
-        "description-zh": "Go程序的入口函数示例，包含命令行参数处理和错误处理",
-        "description-en": "Entry point function example for Go programs, including command line arguments and error handling",
-        "dependencies": [
-            "fmt",
-            "flag",
-            "os"
-        ],
-        "use_to": [
-            "program entry",
-            "command line"
-        ],
-        "tags": [
-            "basic",
-            "entry point",
-            "command line"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [],
-        "return_type": [],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "package main\n\nimport (\n    \"fmt\"\n    \"flag\"\n    \"os\"\n)\n\n// 运行主程序逻辑\nfunc run() error {\n    // 定义命令行参数\n    name := flag.String(\"name\", \"World\", \"名字\")\n    flag.Parse()\n    \n    // 打印程序信息\n    fmt.Printf(\"Program: %s\\n\", os.Args[0])\n    \n    // 打印命令行参数\n    fmt.Printf(\"Arguments count: %d\\n\", len(os.Args[1:]))\n    fmt.Printf(\"Arguments: %v\\n\", os.Args[1:])\n    \n    // 程序主要逻辑\n    fmt.Printf(\"Hello, %s!\\n\", *name)\n    \n    return nil\n}\n\nfunc main() {\n    if err := run(); err != nil {\n        fmt.Fprintf(os.Stderr, \"Error: %v\\n\", err)\n        os.Exit(1)\n    }\n}"
-        ]
-    },
-    {
-        "name-zh": "切片长度",
-        "name-en": "Slice Length",
-        "description-zh": "获取切片的长度",
-        "description-en": "Get the length of a slice",
-        "dependencies": [],
-        "use_to": [
-            "slice operations"
-        ],
-        "tags": [
-            "basic",
-            "slice",
-            "beginner"
-        ],
-        "input": [
-            "slice"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "length"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func sliceLength(slice []int) int {\n    return len(slice)\n}"
-        ]
-    },
-    {
-        "name-zh": "HTTP GET请求",
-        "name-en": "HTTP GET Request",
-        "description-zh": "发送HTTP GET请求并返回响应",
-        "description-en": "Send HTTP GET request and return response",
-        "dependencies": [
-            "net/http",
-            "io/ioutil"
-        ],
-        "use_to": [
-            "web requests",
-            "API calls"
-        ],
-        "tags": [
-            "intermediate",
-            "http",
-            "network"
-        ],
-        "input": [
-            "url"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "body",
-            "err"
-        ],
-        "return_type": [
-            "[]byte",
-            "error"
-        ],
-        "timer_score": 70,
-        "memory_score": 80,
-        "code": [
-            "import (\n    \"io/ioutil\"\n    \"net/http\"\n)\n\nfunc httpGet(url string) ([]byte, error) {\n    resp, err := http.Get(url)\n    if err != nil {\n        return nil, err\n    }\n    defer resp.Body.Close()\n    return ioutil.ReadAll(resp.Body)\n}"
-        ]
-    },
-    {
-        "name-zh": "切片求和",
-        "name-en": "Slice Sum",
-        "description-zh": "对整数切片求和",
-        "description-en": "Sum elements of an int slice",
-        "dependencies": [],
-        "use_to": [
-            "math",
-            "slice"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "sum"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func sumSlice(a []int) int {\n    s := 0\n    for _, v := range a { s += v }\n    return s\n}"
-        ]
-    },
-    {
-        "name-zh": "切片最大值",
-        "name-en": "Slice Max",
-        "description-zh": "返回切片中的最大值",
-        "description-en": "Return max value of a slice",
-        "dependencies": [],
-        "use_to": [
-            "math",
-            "slice"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "max"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func maxSlice(a []int) int {\n    if len(a) == 0 { return 0 }\n    m := a[0]\n    for _, v := range a { if v > m { m = v } }\n    return m\n}"
-        ]
-    },
-    {
-        "name-zh": "字符串反转",
-        "name-en": "String Reverse",
-        "description-zh": "反转字符串(按 rune)",
-        "description-en": "Reverse a UTF-8 string by runes",
-        "dependencies": [],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "intermediate",
-            "string"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "reversed"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "func reverseString(s string) string {\n    r := []rune(s)\n    for i, j := 0, len(r)-1; i < j; i, j = i+1, j-1 {\n        r[i], r[j] = r[j], r[i]\n    }\n    return string(r)\n}"
-        ]
-    },
-    {
-        "name-zh": "读取文本文件",
-        "name-en": "Read Text File",
-        "description-zh": "读取文件为字符串",
-        "description-en": "Read file to string",
-        "dependencies": [
-            "os",
-            "io"
-        ],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "intermediate",
-            "io"
-        ],
-        "input": [
-            "path"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "content",
-            "err"
-        ],
-        "return_type": [
-            "string",
-            "error"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "import (\n    \"io\"\n    \"os\"\n)\n\nfunc readFile(path string) (string, error) {\n    f, err := os.Open(path)\n    if err != nil { return \"\", err }\n    defer f.Close()\n    b, err := io.ReadAll(f)\n    if err != nil { return \"\", err }\n    return string(b), nil\n}"
-        ]
-    },
-    {
-        "name-zh": "写入文本文件",
-        "name-en": "Write Text File",
-        "description-zh": "将字符串写入文件(覆盖)",
-        "description-en": "Write string to file (overwrite)",
-        "dependencies": [
-            "os"
-        ],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "intermediate",
-            "io"
-        ],
-        "input": [
-            "path",
-            "content"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "err"
-        ],
-        "return_type": [
-            "error"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "import \"os\"\n\nfunc writeFile(path, content string) error {\n    return os.WriteFile(path, []byte(content), 0644)\n}"
-        ]
-    },
-    {
-        "name-zh": "时间戳(毫秒)",
-        "name-en": "Unix Milli",
-        "description-zh": "返回当前时间戳(毫秒)",
-        "description-en": "Return current unix time in milliseconds",
-        "dependencies": [
-            "time"
-        ],
-        "use_to": [
-            "time"
-        ],
-        "tags": [
-            "basic",
-            "time"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "ms"
-        ],
-        "return_type": [
-            "int64"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "import \"time\"\n\nfunc unixMilli() int64 {\n    return time.Now().UnixMilli()\n}"
-        ]
-    },
-    {
-        "name-zh": "JSON 编解码",
-        "name-en": "JSON Encode/Decode",
-        "description-zh": "将 map 编码为 JSON 并解码回来",
-        "description-en": "Encode map to JSON then decode back",
-        "dependencies": [
-            "encoding/json"
-        ],
-        "use_to": [
-            "json"
-        ],
-        "tags": [
-            "intermediate",
-            "json"
-        ],
-        "input": [
-            "m"
-        ],
-        "input_type": [
-            "map[string]string"
-        ],
-        "return": [
-            "jsonStr",
-            "m2",
-            "err"
-        ],
-        "return_type": [
-            "string",
-            "map[string]string",
-            "error"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "import \"encoding/json\"\n\nfunc jsonRoundtrip(m map[string]string) (string, map[string]string, error) {\n    b, err := json.Marshal(m)\n    if err != nil { return \"\", nil, err }\n    var m2 map[string]string\n    if err := json.Unmarshal(b, &m2); err != nil { return \"\", nil, err }\n    return string(b), m2, nil\n}"
-        ]
-    },
-    {
-        "name-zh": "均值",
-        "name-en": "Mean",
-        "description-zh": "计算 float64 切片的平均值",
-        "description-en": "Compute mean of float64 slice",
-        "dependencies": [
-            "math"
-        ],
-        "use_to": [
-            "math"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]float64"
-        ],
-        "return": [
-            "m"
-        ],
-        "return_type": [
-            "float64"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "import \"math\"\n\nfunc mean(a []float64) float64 {\n    if len(a) == 0 { return math.NaN() }\n    s := 0.0\n    for _, v := range a { s += v }\n    return s / float64(len(a))\n}"
-        ]
-    },
-    {
-        "name-zh": "中位数",
-        "name-en": "Median",
-        "description-zh": "计算 float64 切片的中位数",
-        "description-en": "Compute median of float64 slice",
-        "dependencies": [
-            "sort",
-            "math"
-        ],
-        "use_to": [
-            "math"
-        ],
-        "tags": [
-            "intermediate",
-            "math"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]float64"
-        ],
-        "return": [
-            "med"
-        ],
-        "return_type": [
-            "float64"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "import (\n    \"sort\"\n    \"math\"\n)\n\nfunc median(a []float64) float64 {\n    if len(a) == 0 { return math.NaN() }\n    b := append([]float64(nil), a...)\n    sort.Float64s(b)\n    n := len(b)\n    if n%2 == 1 { return b[n/2] }\n    return (b[n/2-1] + b[n/2]) / 2\n}"
-        ]
-    },
-    {
-        "name-zh": "标准差",
-        "name-en": "Standard Deviation",
-        "description-zh": "计算样本标准差",
-        "description-en": "Compute sample standard deviation",
-        "dependencies": [
-            "math"
-        ],
-        "use_to": [
-            "math"
-        ],
-        "tags": [
-            "intermediate",
-            "math"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]float64"
-        ],
-        "return": [
-            "sd"
-        ],
-        "return_type": [
-            "float64"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "import \"math\"\n\nfunc stdev(a []float64) float64 {\n    n := len(a)\n    if n < 2 { return math.NaN() }\n    m := mean(a)\n    s := 0.0\n    for _, x := range a { d := x - m; s += d * d }\n    return math.Sqrt(s / float64(n-1))\n}"
-        ]
-    },
-    {
-        "name-zh": "GCD",
-        "name-en": "GCD",
-        "description-zh": "欧几里得算法计算整数 GCD",
-        "description-en": "Euclid algorithm for integer GCD",
-        "dependencies": [],
-        "use_to": [
-            "math",
-            "number theory"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "a",
-            "b"
-        ],
-        "input_type": [
-            "int",
-            "int"
-        ],
-        "return": [
-            "g"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func gcd(a, b int) int {\n    if a < 0 { a = -a }\n    if b < 0 { b = -b }\n    for b != 0 { a, b = b, a % b }\n    return a\n}"
-        ]
-    },
-    {
-        "name-zh": "LCM",
-        "name-en": "LCM",
-        "description-zh": "计算整数 LCM",
-        "description-en": "Compute integer LCM",
-        "dependencies": [],
-        "use_to": [
-            "math",
-            "number theory"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "a",
-            "b"
-        ],
-        "input_type": [
-            "int",
-            "int"
-        ],
-        "return": [
-            "l"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func lcm(a, b int) int {\n    if a == 0 || b == 0 { return 0 }\n    return abs(a*b) / gcd(a, b)\n}\n\nfunc abs(x int) int { if x < 0 { return -x }; return x }"
-        ]
-    },
-    {
-        "name-zh": "Clamp",
-        "name-en": "Clamp",
-        "description-zh": "将数值限制在区间内",
-        "description-en": "Clamp value into [lo, hi]",
-        "dependencies": [],
-        "use_to": [
-            "math"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "x",
-            "lo",
-            "hi"
-        ],
-        "input_type": [
-            "float64",
-            "float64",
-            "float64"
-        ],
-        "return": [
-            "y"
-        ],
-        "return_type": [
-            "float64"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func clamp(x, lo, hi float64) float64 {\n    if x < lo { return lo }\n    if x > hi { return hi }\n    return x\n}"
-        ]
-    },
-    {
-        "name-zh": "Base64 编解码",
-        "name-en": "Base64 Encode/Decode",
-        "description-zh": "Base64 编解码字符串",
-        "description-en": "Base64 encode/decode string",
-        "dependencies": [
-            "encoding/base64"
-        ],
-        "use_to": [
-            "encoding"
-        ],
-        "tags": [
-            "basic",
-            "encoding"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "enc",
-            "dec",
-            "err"
-        ],
-        "return_type": [
-            "string",
-            "string",
-            "error"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "import \"encoding/base64\"\n\nfunc b64Encode(s string) string {\n    return base64.StdEncoding.EncodeToString([]byte(s))\n}\n\nfunc b64Decode(s string) (string, error) {\n    b, err := base64.StdEncoding.DecodeString(s)\n    return string(b), err\n}"
-        ]
-    },
-    {
-        "name-zh": "SHA-256",
-        "name-en": "SHA-256",
-        "description-zh": "计算字符串的 SHA-256 十六进制哈希",
-        "description-en": "Compute SHA-256 hex of string",
-        "dependencies": [
-            "crypto/sha256",
-            "encoding/hex"
-        ],
-        "use_to": [
-            "hash"
-        ],
-        "tags": [
-            "intermediate",
-            "hash"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "hex"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 85,
-        "memory_score": 95,
-        "code": [
-            "import (\n    \"crypto/sha256\"\n    \"encoding/hex\"\n)\n\nfunc sha256Hex(s string) string {\n    sum := sha256.Sum256([]byte(s))\n    return hex.EncodeToString(sum[:])\n}"
-        ]
-    },
-    {
-        "name-zh": "HTTP 客户端(超时)",
-        "name-en": "HTTP Client (timeout)",
-        "description-zh": "创建带超时的 http.Client",
-        "description-en": "Create http.Client with timeout",
-        "dependencies": [
-            "net/http",
-            "time"
-        ],
-        "use_to": [
-            "http",
-            "client"
-        ],
-        "tags": [
-            "network",
-            "http"
-        ],
-        "input": [
-            "ms"
-        ],
-        "input_type": [
-            "int"
-        ],
-        "return": [
-            "client"
-        ],
-        "return_type": [
-            "*http.Client"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "import (\n  \"net/http\"\n  \"time\"\n)\n\nfunc httpClientTimeout(ms int) *http.Client {\n  return &http.Client{ Timeout: time.Duration(ms) * time.Millisecond }\n}"
-        ]
-    },
-    {
-        "name-zh": "HTTP POST(JSON)",
-        "name-en": "HTTP POST (JSON)",
-        "description-zh": "POST JSON 并返回响应文本",
-        "description-en": "POST JSON and return response body text",
-        "dependencies": [
-            "net/http",
-            "bytes",
-            "time",
-            "io"
-        ],
-        "use_to": [
-            "http",
-            "json"
-        ],
-        "tags": [
-            "network",
-            "http",
-            "json"
-        ],
-        "input": [
-            "url",
-            "jsonBody",
-            "timeoutMs"
-        ],
-        "input_type": [
-            "string",
-            "[]byte",
-            "int"
-        ],
-        "return": [
-            "text",
-            "err"
-        ],
-        "return_type": [
-            "string",
-            "error"
-        ],
-        "timer_score": 70,
-        "memory_score": 85,
-        "code": [
-            "import (\n  \"bytes\"\n  \"io\"\n  \"net/http\"\n  \"time\"\n)\n\nfunc httpPostJSON(url string, jsonBody []byte, timeoutMs int) (string, error) {\n  client := &http.Client{ Timeout: time.Duration(timeoutMs) * time.Millisecond }\n  req, err := http.NewRequest(\"POST\", url, bytes.NewBuffer(jsonBody))\n  if err != nil { return \"\", err }\n  req.Header.Set(\"Content-Type\", \"application/json\")\n  resp, err := client.Do(req)\n  if err != nil { return \"\", err }\n  defer resp.Body.Close()\n  b, err := io.ReadAll(resp.Body)\n  if err != nil { return \"\", err }\n  return string(b), nil\n}"
-        ]
-    },
-    {
-        "name-zh": "构建查询参数",
-        "name-en": "Build Query Params",
-        "description-zh": "将 map[string]string 构建为 URL 查询串",
-        "description-en": "Build URL query string from map[string]string",
-        "dependencies": [
-            "net/url"
-        ],
-        "use_to": [
-            "url",
-            "string"
-        ],
-        "tags": [
-            "url",
-            "string"
-        ],
-        "input": [
-            "params"
-        ],
-        "input_type": [
-            "map[string]string"
-        ],
-        "return": [
-            "query"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "import \"net/url\"\n\nfunc buildQuery(params map[string]string) string {\n  v := url.Values{}\n  for k, val := range params { v.Set(k, val) }\n  return v.Encode()\n}"
-        ]
-    },
-    {
-        "name-zh": "Dijkstra最短路",
-        "name-en": "Dijkstra Shortest Path",
-        "description-zh": "在非负权图上用最小堆求单源最短路",
-        "description-en": "Single-source shortest path on non-negative graph using min-heap",
-        "dependencies": [
-            "container/heap"
-        ],
-        "use_to": [
-            "graph",
-            "shortest path"
-        ],
-        "tags": [
-            "graph",
-            "dijkstra",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "adj",
-            "src"
-        ],
-        "input_type": [
-            "int",
-            "[][][2]int",
-            "int"
-        ],
-        "return": [
-            "dist"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "// adj[u] = list of [v, w]\n// Dijkstra with min-heap\nimport \"container/heap\"\n\ntype pair struct{ d, u int }\n\ntype minHeap []pair\nfunc (h minHeap) Len() int { return len(h) }\nfunc (h minHeap) Less(i, j int) bool { return h[i].d < h[j].d }\nfunc (h minHeap) Swap(i, j int) { h[i], h[j] = h[j], h[i] }\nfunc (h *minHeap) Push(x any) { *h = append(*h, x.(pair)) }\nfunc (h *minHeap) Pop() any { old := *h; n := len(old); x := old[n-1]; *h = old[:n-1]; return x }\n\nfunc dijkstra(n int, adj [][][2]int, src int) []int {\n    const INF = int(1e9)\n    dist := make([]int, n)\n    for i := range dist { dist[i] = INF }\n    dist[src] = 0\n    h := &minHeap{}\n    heap.Init(h)\n    heap.Push(h, pair{0, src})\n    for h.Len() > 0 {\n        p := heap.Pop(h).(pair)\n        d, u := p.d, p.u\n        if d != dist[u] { continue }\n        for _, e := range adj[u] { v, w := e[0], e[1]; nd := d + w; if nd < dist[v] { dist[v] = nd; heap.Push(h, pair{nd, v}) } }\n    }\n    return dist\n}"
-        ]
-    },
-    {
-        "name-zh": "Kruskal最小生成树",
-        "name-en": "Kruskal Minimum Spanning Tree",
-        "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
-        "description-en": "Kruskal with DSU to compute MST total weight (-1 if disconnected)",
-        "dependencies": [],
-        "use_to": [
-            "graph",
-            "mst"
-        ],
-        "tags": [
-            "graph",
-            "mst",
-            "kruskal",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "edges"
-        ],
-        "input_type": [
-            "int",
-            "[][3]int"
-        ],
-        "return": [
-            "mstWeight"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 88,
-        "memory_score": 92,
-        "code": [
-            "// edges: [u,v,w]\nimport \"sort\"\n\ntype dsu struct{ p, r []int }\nfunc newDSU(n int) *dsu { p:=make([]int,n); r:=make([]int,n); for i:=0;i<n;i++{p[i]=i}; return &dsu{p,r} }\nfunc (d *dsu) find(x int) int { if d.p[x]==x { return x }; d.p[x]=d.find(d.p[x]); return d.p[x] }\nfunc (d *dsu) unite(a,b int) bool { a=d.find(a); b=d.find(b); if a==b { return false }; if d.r[a]<d.r[b] { a,b=b,a }; d.p[b]=a; if d.r[a]==d.r[b] { d.r[a]++ }; return true }\n\nfunc kruskalMST(n int, edges [][3]int) int {\n    sort.Slice(edges, func(i,j int){ return edges[i][2] < edges[j][2] })\n    d := newDSU(n)\n    total, cnt := 0, 0\n    for _, e := range edges { if d.unite(e[0], e[1]) { total += e[2]; cnt++; if cnt==n-1 { break } } }\n    if cnt != n-1 { return -1 }\n    return total\n}"
-        ]
-    },
-    {
-        "name-zh": "Bellman-Ford最短路",
-        "name-en": "Bellman-Ford Shortest Path",
-        "description-zh": "允许负边权的单源最短路；检测负环",
-        "description-en": "Single-source shortest path with negative edges; detect negative cycles",
-        "dependencies": [],
-        "use_to": [
-            "graph",
-            "shortest path"
-        ],
-        "tags": [
-            "graph",
-            "bellman-ford",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "edges",
-            "src"
-        ],
-        "input_type": [
-            "int",
-            "[][3]int",
-            "int"
-        ],
-        "return": [
-            "dist",
-            "hasNegCycle"
-        ],
-        "return_type": [
-            "[]int",
-            "bool"
-        ],
-        "timer_score": 70,
-        "memory_score": 85,
-        "code": [
-            "// edges: [u,v,w]\nfunc bellmanFord(n int, edges [][3]int, src int) ([]int, bool){\n    const INF = int(1e9)\n    dist := make([]int, n)\n    for i:=range dist { dist[i]=INF }\n    dist[src]=0\n    for i:=1; i<=n-1; i++ {\n        updated := false\n        for _, e := range edges { u,v,w := e[0], e[1], e[2]; if dist[u]!=INF && dist[u]+w<dist[v] { dist[v]=dist[u]+w; updated=true } }\n        if !updated { break }\n    }\n    for _, e := range edges { u,v,w := e[0], e[1], e[2]; if dist[u]!=INF && dist[u]+w<dist[v] { return dist, true } }\n    return dist, false\n}"
-        ]
-    },
-    {
-        "name-zh": "拓扑排序(Kahn)",
-        "name-en": "Topological Sort (Kahn)",
-        "description-zh": "入度法Kahn算法返回拓扑序列",
-        "description-en": "Kahn algorithm with indegrees to return topo order",
-        "dependencies": [],
-        "use_to": [
-            "graph",
-            "topological sort"
-        ],
-        "tags": [
-            "graph",
-            "topo",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "adj"
-        ],
-        "input_type": [
-            "int",
-            "[][]int"
-        ],
-        "return": [
-            "order"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 88,
-        "memory_score": 92,
-        "code": [
-            "func topoSortKahn(n int, adj [][]int) []int {\n    indeg := make([]int, n)\n    for u:=0; u<n; u++ { for _, v := range adj[u] { indeg[v]++ } }\n    q := make([]int,0)\n    for i:=0;i<n;i++ { if indeg[i]==0 { q = append(q,i) } }\n    order := make([]int,0,n)\n    for h:=0; h<len(q); h++ { u := q[h]; order = append(order,u); for _, v := range adj[u] { indeg[v]--; if indeg[v]==0 { q = append(q,v) } } }\n    return order\n}"
-        ]
-    },
-    {
-        "name-zh": "KMP字符串匹配",
-        "name-en": "KMP String Match",
-        "description-zh": "返回所有匹配起始下标",
-        "description-en": "Return all match start indices",
-        "dependencies": [],
-        "use_to": [
-            "string",
-            "search"
-        ],
-        "tags": [
-            "string",
-            "kmp",
-            "algorithm"
-        ],
-        "input": [
-            "text",
-            "pattern"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "indices"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "func kmpSearch(text, pat string) []int {\n    n, m := len(text), len(pat)\n    if m==0 { return []int{} }\n    lps := make([]int, m)\n    for i, l := 1, 0; i < m; { if pat[i]==pat[l] { lps[i]=l+1; i++; l++; } else if l>0 { l=lps[l-1] } else { lps[i]=0; i++; } }\n    res := []int{}\n    for i, j := 0, 0; i < n; { if text[i]==pat[j] { i++; j++; if j==m { res = append(res, i-m); j=lps[j-1] } } else if j>0 { j=lps[j-1] } else { i++ } }\n    return res\n}"
-        ]
-    },
-    {
-        "name-zh": "Rabin-Karp字符串匹配",
-        "name-en": "Rabin-Karp String Match",
-        "description-zh": "滚动哈希匹配，返回所有位置",
-        "description-en": "Rolling-hash based matching, return all indices",
-        "dependencies": [],
-        "use_to": [
-            "string",
-            "search"
-        ],
-        "tags": [
-            "string",
-            "rabin-karp",
-            "algorithm"
-        ],
-        "input": [
-            "text",
-            "pattern"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "indices"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 85,
-        "memory_score": 95,
-        "code": [
-            "func rabinKarp(text, pat string) []int {\n    n, m := len(text), len(pat)\n    if m==0 || m>n { return []int{} }\n    const B, MOD = 131, 1000000007\n    powB := 1\n    for i:=0; i<m-1; i++ { powB = (powB*B)%MOD }\n    hpat, hwin := 0, 0\n    for i:=0; i<m; i++ { hpat=(hpat*B+int(pat[i]))%MOD; hwin=(hwin*B+int(text[i]))%MOD }\n    out := []int{}\n    for i:=0; i<=n-m; i++ {\n        if hpat==hwin && text[i:i+m]==pat { out = append(out, i) }\n        if i<n-m { hwin = ((hwin - int(text[i])*powB)%MOD + MOD)%MOD; hwin = (hwin*B + int(text[i+m]))%MOD }\n    }\n    return out\n}"
-        ]
-    },
-    {
-        "name-zh": "埃拉托斯特尼筛法",
-        "name-en": "Sieve of Eratosthenes",
-        "description-zh": "在[2,n]内标记素数",
-        "description-en": "Mark primes in [2,n]",
-        "dependencies": [],
-        "use_to": [
-            "prime",
-            "number theory"
-        ],
-        "tags": [
-            "math",
-            "prime",
-            "sieve",
-            "algorithm"
-        ],
-        "input": [
-            "n"
-        ],
-        "input_type": [
-            "int"
-        ],
-        "return": [
-            "isPrime"
-        ],
-        "return_type": [
-            "[]bool"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "func sieveIsPrime(n int) []bool {\n    is := make([]bool, n+1)\n    for i:=range is { is[i]=true }\n    if n>=0 { is[0]=false }\n    if n>=1 { is[1]=false }\n    for p:=2; p*p<=n; p++ { if is[p] { for x:=p*p; x<=n; x+=p { is[x]=false } } }\n    return is\n}"
-        ]
-    },
-    {
-        "name-zh": "编辑距离(Levenshtein)",
-        "name-en": "Levenshtein Edit Distance",
-        "description-zh": "动态规划计算编辑距离(滚动数组)",
-        "description-en": "DP edit distance with rolling array",
-        "dependencies": [],
-        "use_to": [
-            "string",
-            "dynamic programming"
-        ],
-        "tags": [
-            "dp",
-            "string",
-            "edit distance"
-        ],
-        "input": [
-            "a",
-            "b"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "distance"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 85,
-        "memory_score": 88,
-        "code": [
-            "func editDistance(a, b string) int {\n    m, n := len(a), len(b)\n    prev := make([]int, n+1)\n    cur := make([]int, n+1)\n    for j:=0; j<=n; j++ { prev[j]=j }\n    for i:=1; i<=m; i++ {\n        cur[0]=i; ai:=a[i-1]\n        for j:=1; j<=n; j++ {\n            cost := 0; if ai!=b[j-1] { cost=1 }\n            del:=prev[j]+1; ins:=cur[j-1]+1; rep:=prev[j-1]+cost\n            cur[j]=min3(del,ins,rep)\n        }\n        prev,cur = cur,prev\n    }\n    return prev[n]\n}\nfunc min3(a,b,c int) int { if a<b { if a<c { return a }; return c } else { if b<c { return b }; return c } }"
-        ]
-    },
-    {
-        "name-zh": "最长上升子序列O(n log n)",
-        "name-en": "LIS O(n log n)",
-        "description-zh": "耐心排序+二分求LIS长度",
-        "description-en": "Patience sorting + binary search for LIS length",
-        "dependencies": [],
-        "use_to": [
-            "sequence",
-            "dynamic programming"
-        ],
-        "tags": [
-            "dp",
-            "lis",
-            "algorithm"
-        ],
-        "input": [
-            "arr"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "length"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 92,
-        "memory_score": 92,
-        "code": [
-            "func lisLength(a []int) int {\n    tails := make([]int, 0, len(a))\n    for _, x := range a {\n        i := lowerBound(tails, x)\n        if i==len(tails) { tails = append(tails, x) } else { tails[i]=x }\n    }\n    return len(tails)\n}\nfunc lowerBound(a []int, x int) int {\n    l, r := 0, len(a)\n    for l<r { m:=(l+r)/2; if a[m]>=x { r=m } else { l=m+1 } }\n    return l\n}"
-        ]
-    },
-    {
-        "name-zh": "快速选择第k小",
-        "name-en": "Quickselect k-th",
-        "description-zh": "平均线性时间找到第k小(1<=k<=n)",
-        "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
-        "dependencies": [],
-        "use_to": [
-            "selection",
-            "order statistics"
-        ],
-        "tags": [
-            "algorithm",
-            "divide-conquer"
-        ],
-        "input": [
-            "arr",
-            "k"
-        ],
-        "input_type": [
-            "[]int",
-            "int"
-        ],
-        "return": [
-            "kth"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "func quickselect(a []int, k int) int { // k: 1-based\n    l, r := 0, len(a)-1; k--\n    for l<=r {\n        pivot := a[r]; i := l\n        for j:=l; j<r; j++ { if a[j]<=pivot { a[i],a[j]=a[j],a[i]; i++ } }\n        a[i],a[r]=a[r],a[i]\n        if i==k { return a[i] } else if i>k { r=i-1 } else { l=i+1 }\n    }\n    panic(\"k out of range\")\n}"
-        ]
-    },
-    {
-        "name-zh": "二分查找(有序切片)",
-        "name-en": "Binary Search (sorted slice)",
-        "description-zh": "在升序有序切片中查找目标值，找到返回下标，否则返回-1",
-        "description-en": "Binary search in ascending sorted slice; return index or -1",
-        "dependencies": [],
-        "use_to": [
-            "search",
-            "array"
-        ],
-        "tags": [
-            "basic",
-            "algorithm",
-            "binary-search"
-        ],
-        "input": [
-            "a",
-            "target"
-        ],
-        "input_type": [
-            "[]int",
-            "int"
-        ],
-        "return": [
-            "idx"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func binarySearchInt(a []int, target int) int {\n    l, r := 0, len(a)-1\n    for l <= r {\n        m := (l + r) / 2\n        if a[m] == target { return m }\n        if a[m] < target { l = m + 1 } else { r = m - 1 }\n    }\n    return -1\n}"
-        ]
-    },
-    {
-        "name-zh": "归并排序(整数)",
-        "name-en": "Merge Sort (int)",
-        "description-zh": "使用归并排序返回新有序切片(稳定)",
-        "description-en": "Return new sorted slice using stable merge sort",
-        "dependencies": [],
-        "use_to": [
-            "sorting"
-        ],
-        "tags": [
-            "algorithm",
-            "sorting"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "b"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 90,
-        "memory_score": 85,
-        "code": [
-            "func mergeSortInt(a []int) []int {\n    n := len(a)\n    if n <= 1 { return append([]int(nil), a...) }\n    m := n/2\n    left := mergeSortInt(a[:m])\n    right := mergeSortInt(a[m:])\n    return mergeInt(left, right)\n}\nfunc mergeInt(a, b []int) []int {\n    res := make([]int, 0, len(a)+len(b))\n    i, j := 0, 0\n    for i < len(a) && j < len(b) {\n        if a[i] <= b[j] { res = append(res, a[i]); i++ } else { res = append(res, b[j]); j++ }\n    }\n    res = append(res, a[i:]...)\n    res = append(res, b[j:]...)\n    return res\n}"
-        ]
-    },
-    {
-        "name-zh": "Fenwick树(树状数组)",
-        "name-en": "Fenwick Tree (BIT)",
-        "description-zh": "支持区间前缀和与单点修改的数据结构",
-        "description-en": "Data structure supporting prefix sums and point updates",
-        "dependencies": [],
-        "use_to": [
-            "prefix sum",
-            "data structure"
-        ],
-        "tags": [
-            "fenwick",
-            "bit",
-            "data-structure"
-        ],
-        "input": [
-            "n"
-        ],
-        "input_type": [
-            "int"
-        ],
-        "return": [
-            "fenwick"
-        ],
-        "return_type": [
-            "Fenwick"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "type Fenwick struct {\n    n int\n    t []int\n}\nfunc NewFenwick(n int) Fenwick { return Fenwick{ n: n, t: make([]int, n+1) } }\nfunc (f *Fenwick) Add(i, delta int) {\n    for i += 1; i <= f.n; i += i & -i { f.t[i] += delta }\n}\nfunc (f *Fenwick) Sum(i int) int { // sum of [0..i]\n    s := 0\n    for i += 1; i > 0; i -= i & -i { s += f.t[i] }\n    return s\n}\nfunc (f *Fenwick) RangeSum(l, r int) int { if r < l { return 0 }; return f.Sum(r) - f.Sum(l-1) }"
-        ]
-    },
-    {
-        "name-zh": "BFS最短步数(无权图)",
-        "name-en": "BFS shortest steps (unweighted)",
-        "description-zh": "无权图单源最短步数，无法到达返回-1",
-        "description-en": "Single-source shortest steps in unweighted graph; -1 if unreachable",
-        "dependencies": [],
-        "use_to": [
-            "graph",
-            "shortest path"
-        ],
-        "tags": [
-            "graph",
-            "bfs",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "adj",
-            "src"
-        ],
-        "input_type": [
-            "int",
-            "[][]int",
-            "int"
-        ],
-        "return": [
-            "dist"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "func bfsDist(n int, adj [][]int, src int) []int {\n    dist := make([]int, n)\n    for i:=range dist { dist[i] = -1 }\n    q := make([]int, 1, n)\n    q[0] = src\n    dist[src] = 0\n    for h:=0; h<len(q); h++ {\n        u := q[h]\n        for _, v := range adj[u] {\n            if dist[v] == -1 { dist[v] = dist[u] + 1; q = append(q, v) }\n        }\n    }\n    return dist\n}"
-        ]
-    },
-    {
-        "name-zh": "0-1 BFS",
-        "name-en": "0-1 BFS",
-        "description-zh": "边权为0或1的图上求单源最短路",
-        "description-en": "Single-source shortest path on graph with edge weights 0 or 1",
-        "dependencies": [
-            "container/list"
-        ],
-        "use_to": [
-            "graph",
-            "shortest path"
-        ],
-        "tags": [
-            "graph",
-            "bfs",
-            "zero-one",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "adj",
-            "src"
-        ],
-        "input_type": [
-            "int",
-            "[][][2]int",
-            "int"
-        ],
-        "return": [
-            "dist"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 90,
-        "memory_score": 92,
-        "code": [
-            "// adj[u] = list of [v, w] where w in {0,1}\nimport \"container/list\"\n\nfunc zeroOneBFS(n int, adj [][][2]int, src int) []int {\n    const INF = int(1e9)\n    dist := make([]int, n)\n    for i:=range dist { dist[i]=INF }\n    dist[src]=0\n    dq := list.New()\n    dq.PushBack(src)\n    for dq.Len() > 0 {\n        front := dq.Front(); dq.Remove(front)\n        u := front.Value.(int)\n        for _, e := range adj[u] { v, w := e[0], e[1]\n            if dist[u]+w < dist[v] {\n                dist[v] = dist[u]+w\n                if w==0 { dq.PushFront(v) } else { dq.PushBack(v) }\n            }\n        }\n    }\n    return dist\n}"
-        ]
-    },
-    {
-        "name-zh": "Floyd-Warshall全源最短路",
-        "name-en": "Floyd-Warshall APSP",
-        "description-zh": "基于DP的全源最短路算法，支持负边但不支持负环",
-        "description-en": "All-pairs shortest paths using DP; supports negative edges but not negative cycles",
-        "dependencies": [],
-        "use_to": [
-            "graph",
-            "shortest path"
-        ],
-        "tags": [
-            "graph",
-            "floyd-warshall",
-            "algorithm"
-        ],
-        "input": [
-            "dist"
-        ],
-        "input_type": [
-            "[][]int"
-        ],
-        "return": [
-            "dist"
-        ],
-        "return_type": [
-            "[][]int"
-        ],
-        "timer_score": 70,
-        "memory_score": 80,
-        "code": [
-            "// dist is n x n matrix; use a big INF for no edge\nfunc floydWarshall(dist [][]int) [][]int {\n    n := len(dist)\n    d := make([][]int, n)\n    for i:=0;i<n;i++ { d[i] = append([]int(nil), dist[i]...) }\n    for k:=0;k<n;k++ {\n        for i:=0;i<n;i++ { if d[i][k] == int(1e9) { continue }\n            for j:=0;j<n;j++ { if d[k][j] == int(1e9) { continue }\n                if nd := d[i][k] + d[k][j]; nd < d[i][j] { d[i][j] = nd }\n            }\n        }\n    }\n    return d\n}"
-        ]
-    },
-    {
-        "name-zh": "前缀和(含0位)",
-        "name-en": "Prefix sums (with 0)",
-        "description-zh": "返回长度为n+1的前缀和数组，ps[0]=0，ps[i]=a[0..i-1]之和",
-        "description-en": "Return prefix sums of length n+1: ps[0]=0, ps[i]=sum a[0..i-1]",
-        "dependencies": [],
-        "use_to": [
-            "prefix sum",
-            "array"
-        ],
-        "tags": [
-            "array",
-            "prefix"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "ps"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func prefixSums(a []int) []int {\n    ps := make([]int, len(a)+1)\n    for i:=1; i<=len(a); i++ { ps[i] = ps[i-1] + a[i-1] }\n    return ps\n}"
-        ]
-    },
-    {
-        "name-zh": "最长无重复子串长度",
-        "name-en": "Length of Longest Substring (no repeat)",
-        "description-zh": "滑动窗口计算最长无重复字符子串的长度(按字节)",
-        "description-en": "Sliding window length of longest substring without repeating characters (by byte)",
-        "dependencies": [],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "string",
-            "sliding-window",
-            "algorithm"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "length"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "func lengthOfLongestSubstring(s string) int {\n    last := make(map[byte]int)\n    best, l := 0, 0\n    for r := 0; r < len(s); r++ {\n        if idx, ok := last[s[r]]; ok && idx >= l { l = idx + 1 }\n        last[s[r]] = r\n        if cur := r - l + 1; cur > best { best = cur }\n    }\n    return best\n}"
-        ]
-    },
-    {
-        "name-zh": "快速幂(取模)",
-        "name-en": "Fast Power (mod)",
-        "description-zh": "二分快速幂计算 a^e mod m",
-        "description-en": "Binary exponentiation: compute a^e mod m",
-        "dependencies": [],
-        "use_to": [
-            "number theory",
-            "mod"
-        ],
-        "tags": [
-            "math",
-            "pow",
-            "mod"
-        ],
-        "input": [
-            "a",
-            "e",
-            "m"
-        ],
-        "input_type": [
-            "int64",
-            "int64",
-            "int64"
-        ],
-        "return": [
-            "res"
-        ],
-        "return_type": [
-            "int64"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func modPow(a, e, m int64) int64 {\n    a %= m\n    if a < 0 { a += m }\n    res := int64(1)\n    for e > 0 {\n        if e & 1 == 1 { res = (res * a) % m }\n        a = (a * a) % m\n        e >>= 1\n    }\n    return res\n}"
-        ]
-    },
-    {
-        "name-zh": "扩展GCD/模逆",
-        "name-en": "Extended GCD / Mod Inverse",
-        "description-zh": "扩展欧几里得求 ax+by=gcd(a,b)，并据此求模逆(若存在)",
-        "description-en": "Extended Euclid to get ax+by=gcd(a,b) and modular inverse if gcd=1",
-        "dependencies": [],
-        "use_to": [
-            "number theory",
-            "mod"
-        ],
-        "tags": [
-            "math",
-            "egcd",
-            "inverse"
-        ],
-        "input": [
-            "a",
-            "b",
-            "m"
-        ],
-        "input_type": [
-            "int64",
-            "int64",
-            "int64"
-        ],
-        "return": [
-            "g",
-            "x",
-            "y",
-            "inv"
-        ],
-        "return_type": [
-            "int64",
-            "int64",
-            "int64",
-            "int64"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "func egcd(a, b int64) (g, x, y int64) {\n    if b == 0 { return a, 1, 0 }\n    g1, x1, y1 := egcd(b, a%b)\n    return g1, y1, x1 - (a/b)*y1\n}\nfunc modInverse(a, m int64) int64 {\n    g, x, _ := egcd(a, m)\n    if g != 1 && g != -1 { return -1 }\n    x %= m\n    if x < 0 { x += m }\n    return x\n}"
-        ]
-    },
-    {
-        "name-zh": "线段树(区间和, 单点更新)",
-        "name-en": "Segment Tree (range sum)",
-        "description-zh": "支持区间和查询与单点更新的线段树",
-        "description-en": "Segment tree supporting range-sum query and point update",
-        "dependencies": [],
-        "use_to": [
-            "data structure",
-            "range query"
-        ],
-        "tags": [
-            "data-structure",
-            "segment-tree"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [],
-        "return_type": [],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "type SegTree struct { n int; t []int }\nfunc NewSegTree(a []int) *SegTree { n0:=len(a); n:=1; for n<n0 { n<<=1 }; t:=make([]int, n<<1); for i:=0;i<n0;i++{ t[n+i]=a[i] }; for i:=n-1;i>0;i--{ t[i]=t[i<<1]+t[i<<1|1] }; return &SegTree{n:n, t:t} }\nfunc (s *SegTree) PointUpdate(i, val int){ p:=s.n+i; s.t[p]=val; for p>>=1; p>0; p>>=1 { s.t[p]=s.t[p<<1]+s.t[p<<1|1] } }\nfunc (s *SegTree) RangeSum(l, r int) int { l+=s.n; r+=s.n; res:=0; for l<=r { if (l&1)==1 { res+=s.t[l]; l++ } ; if (r&1)==0 { res+=s.t[r]; r-- } ; l>>=1; r>>=1 } ; return res }"
-        ]
-    },
-    {
-        "name-zh": "并查集(独立结构)",
-        "name-en": "Disjoint Set Union (standalone)",
-        "description-zh": "带路径压缩与按秩合并的并查集，支持Find/Unite/Same",
-        "description-en": "Union-Find with path compression and union by rank; supports Find/Unite/Same",
-        "dependencies": [],
-        "use_to": [
-            "data structure",
-            "union-find"
-        ],
-        "tags": [
-            "data-structure",
-            "dsu",
-            "union-find"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [],
-        "return_type": [],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "type DSU struct { p, r []int }\nfunc NewDSU(n int) *DSU { p:=make([]int,n); r:=make([]int,n); for i:=0;i<n;i++{ p[i]=i }; return &DSU{p,r} }\nfunc (d *DSU) Find(x int) int { if d.p[x]==x { return x }; d.p[x]=d.Find(d.p[x]); return d.p[x] }\nfunc (d *DSU) Unite(a, b int) bool { a=d.Find(a); b=d.Find(b); if a==b { return false }; if d.r[a]<d.r[b] { a,b=b,a }; d.p[b]=a; if d.r[a]==d.r[b] { d.r[a]++ }; return true }\nfunc (d *DSU) Same(a, b int) bool { return d.Find(a)==d.Find(b) }"
-        ]
-    },
-    {
-        "name-zh": "Modbus CRC16",
-        "name-en": "Modbus CRC16",
-        "description-zh": "计算 Modbus CRC16，返回小端2字节",
-        "description-en": "Compute Modbus CRC16, return 2 bytes little-endian",
-        "dependencies": [],
-        "use_to": [
-            "hardware",
-            "modbus",
-            "crc"
-        ],
-        "tags": [
-            "checksum",
-            "crc16",
-            "modbus"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "[]byte"
-        ],
-        "return": [
-            "crcLE"
-        ],
-        "return_type": [
-            "[]byte"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func ModbusCRC16(data []byte) []byte {\n    crc := uint16(0xFFFF)\n    for _, b := range data {\n        crc ^= uint16(b)\n        for i := 0; i < 8; i++ {\n            if (crc & 1) != 0 {\n                crc = (crc >> 1) ^ 0xA001\n            } else {\n                crc >>= 1\n            }\n        }\n    }\n    return []byte{byte(crc & 0xFF), byte(crc >> 8)}\n}"
-        ]
-    },
-    {
-        "name-zh": "CRC32(IEEE)",
-        "name-en": "CRC32 (IEEE)",
-        "description-zh": "计算 CRC-32(IEEE) 并以大端4字节返回",
-        "description-en": "Compute CRC-32 (IEEE) and return 4 bytes big-endian",
-        "dependencies": [
-            "hash/crc32"
-        ],
-        "use_to": [
-            "hardware",
-            "crc",
-            "checksum"
-        ],
-        "tags": [
-            "checksum",
-            "crc32",
-            "ieee"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "[]byte"
-        ],
-        "return": [
-            "crcBE"
-        ],
-        "return_type": [
-            "[]byte"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "import \"hash/crc32\"\n\nfunc CRC32IEEE(data []byte) []byte {\n    v := crc32.ChecksumIEEE(data)\n    return []byte{byte(v >> 24), byte(v >> 16), byte(v >> 8), byte(v)}\n}"
-        ]
-    },
-    {
-        "name-zh": "Sum8 校验",
-        "name-en": "Sum8 Checksum",
-        "description-zh": "对所有字节求和取低8位(0..255)",
-        "description-en": "Sum of all bytes modulo 256 (0..255)",
-        "dependencies": [],
-        "use_to": [
-            "hardware",
-            "checksum"
-        ],
-        "tags": [
-            "checksum",
-            "sum8"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "[]byte"
-        ],
-        "return": [
-            "sum8"
-        ],
-        "return_type": [
-            "byte"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func ChecksumSum8(data []byte) byte {\n    var s uint32\n    for _, b := range data { s += uint32(b) }\n    return byte(s & 0xFF)\n}"
-        ]
-    },
-    {
-        "name-zh": "LRC8 校验",
-        "name-en": "LRC8 Checksum",
-        "description-zh": "纵向冗余校验(LRC)，使 (sum + LRC) & 0xFF == 0",
-        "description-en": "Longitudinal Redundancy Check so that (sum + LRC) & 0xFF == 0",
-        "dependencies": [],
-        "use_to": [
-            "hardware",
-            "checksum"
-        ],
-        "tags": [
-            "checksum",
-            "lrc"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "[]byte"
-        ],
-        "return": [
-            "lrc"
-        ],
-        "return_type": [
-            "byte"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func LRC8(data []byte) byte {\n    var s uint32\n    for _, b := range data { s += uint32(b) }\n    return byte((-int32(s)) & 0xFF)\n}"
-        ]
-    },
-    {
-        "name-zh": "异或校验",
-        "name-en": "XOR Checksum",
-        "description-zh": "逐字节异或校验，返回0..255",
-        "description-en": "Byte-wise XOR checksum, returns 0..255",
-        "dependencies": [],
-        "use_to": [
-            "hardware",
-            "checksum"
-        ],
-        "tags": [
-            "checksum",
-            "xor"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "[]byte"
-        ],
-        "return": [
-            "xor"
-        ],
-        "return_type": [
-            "byte"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func ChecksumXOR(data []byte) byte {\n    var x byte\n    for _, b := range data { x ^= b }\n    return x\n}"
-        ]
-    },
-    {
-        "name-zh": "奇偶校验位",
-        "name-en": "Parity Bit",
-        "description-zh": "计算一个字节的奇/偶校验位；odd=true为奇校验",
-        "description-en": "Compute parity bit for one byte; odd=true for odd parity",
-        "dependencies": [],
-        "use_to": [
-            "hardware",
-            "parity",
-            "serial"
-        ],
-        "tags": [
-            "parity",
-            "bit"
-        ],
-        "input": [
-            "b",
-            "odd"
-        ],
-        "input_type": [
-            "byte",
-            "bool"
-        ],
-        "return": [
-            "parity"
-        ],
-        "return_type": [
-            "byte"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "func ParityBit(b byte, odd bool) byte {\n    ones := 0\n    for i := 0; i < 8; i++ { if ((b>>uint(i)) & 1) == 1 { ones++ } }\n    if odd { return byte((ones & 1) ^ 1) }\n    return byte(ones & 1)\n}"
-        ]
-    },
-    {
-        "name-zh": "最小栈(MinStack)",
-        "name-en": "Min Stack",
-        "description-zh": "支持O(1)获取最小值的栈，双栈实现",
-        "description-en": "Stack with O(1) getMin implemented by two slices",
-        "dependencies": [],
-        "use_to": [
-            "data structure",
-            "stack"
-        ],
-        "tags": [
-            "data-structure",
-            "stack",
-            "minstack"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [],
-        "return_type": [],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "type MinStack struct { s []int; mn []int }\nfunc NewMinStack() *MinStack { return &MinStack{s:make([]int,0), mn:make([]int,0)} }\nfunc (m *MinStack) Push(x int){ m.s = append(m.s, x); if len(m.mn)==0 || x <= m.mn[len(m.mn)-1] { m.mn = append(m.mn, x) } }\nfunc (m *MinStack) Pop() int { x := m.s[len(m.s)-1]; m.s = m.s[:len(m.s)-1]; if x == m.mn[len(m.mn)-1] { m.mn = m.mn[:len(m.mn)-1] }; return x }\nfunc (m *MinStack) Top() int { return m.s[len(m.s)-1] }\nfunc (m *MinStack) GetMin() int { return m.mn[len(m.mn)-1] }\nfunc (m *MinStack) IsEmpty() bool { return len(m.s)==0 }"
-        ]
-    },
-    {
-        "name-zh": "切片映射",
-        "name-en": "Slice Map",
-        "description-zh": "对切片元素执行函数转换",
-        "description-en": "Map slice elements through function",
-        "dependencies": [],
-        "use_to": [
-            "slice"
-        ],
-        "tags": [
-            "basic",
-            "slice"
-        ],
-        "input": [
-            "s",
-            "mapper"
-        ],
-        "input_type": [
-            "[]int",
-            "func(int)int"
-        ],
-        "return": [
-            "mapped"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "func mapSlice(nums []int, f func(int) int) []int {\n    result := make([]int, len(nums))\n    for i, num := range nums {\n        result[i] = f(num)\n    }\n    return result\n}"
-        ]
-    },
-    {
-        "name-zh": "快速排序",
-        "name-en": "Quick Sort",
-        "description-zh": "原地快速排序",
-        "description-en": "In-place quick sort",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "func quickSort(a []int) []int {\n    if len(a) <= 1 { return a }\n    pivot := a[len(a)/2]\n    var l, r []int\n    for _, v := range a {\n        if v < pivot { l = append(l, v) } else if v > pivot { r = append(r, v) }\n    }\n    l = quickSort(l)\n    r = quickSort(r)\n    return append(append(l, pivot), r...)\n}"
-        ]
-    },
-    {
-        "name-zh": "归并排序",
-        "name-en": "Merge Sort",
-        "description-zh": "自顶向下归并排序",
-        "description-en": "Top-down merge sort",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 80,
-        "memory_score": 75,
-        "code": [
-            "func mergeSort(a []int) []int {\n    if len(a) <= 1 { return a }\n    m := len(a) / 2\n    l := mergeSort(a[:m])\n    r := mergeSort(a[m:])\n    return merge(l, r)\n}\nfunc merge(l, r []int) []int {\n    res := make([]int, 0, len(l)+len(r))\n    i, j := 0, 0\n    for i < len(l) && j < len(r) {\n        if l[i] < r[j] { res = append(res, l[i]); i++ } else { res = append(res, r[j]); j++ }\n    }\n    res = append(res, l[i:]...)\n    res = append(res, r[j:]...)\n    return res\n}"
-        ]
-    },
-    {
-        "name-zh": "二分查找",
-        "name-en": "Binary Search",
-        "description-zh": "有序切片二分查找",
-        "description-en": "Binary search in sorted slice",
-        "dependencies": [],
-        "use_to": [
-            "search",
-            "algorithm"
-        ],
-        "tags": [
-            "search",
-            "algorithm"
-        ],
-        "input": [
-            "a",
-            "target"
-        ],
-        "input_type": [
-            "[]int",
-            "int"
-        ],
-        "return": [
-            "index"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "func binarySearch(a []int, target int) int {\n    l, r := 0, len(a)-1\n    for l <= r {\n        m := l + r >> 1\n        if a[m] == target { return m } else if a[m] < target { l = m + 1 } else { r = m - 1 }\n    }\n    return -1\n}"
-        ]
-    },
-    {
-        "name-zh": "栈封装",
-        "name-en": "Stack",
-        "description-zh": "泛型栈，支持 push/pop/peek",
-        "description-en": "Generic stack with push/pop/peek",
-        "dependencies": [],
-        "use_to": [
-            "stack",
-            "data structure"
-        ],
-        "tags": [
-            "stack",
-            "data structure"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "stack"
-        ],
-        "return_type": [
-            "Stack"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "type Stack[T any] struct { arr []T }\nfunc (s *Stack[T]) Push(v T) { s.arr = append(s.arr, v) }\nfunc (s *Stack[T]) Pop() T { v := s.arr[len(s.arr)-1]; s.arr = s.arr[:len(s.arr)-1]; return v }\nfunc (s *Stack[T]) Peek() T { return s.arr[len(s.arr)-1] }\nfunc (s *Stack[T]) IsEmpty() bool { return len(s.arr) == 0 }\nfunc (s *Stack[T]) Size() int { return len(s.arr) }"
-        ]
-    },
-    {
-        "name-zh": "队列封装",
-        "name-en": "Queue",
-        "description-zh": "FIFO 队列封装",
-        "description-en": "FIFO queue",
-        "dependencies": [],
-        "use_to": [
-            "queue",
-            "data structure"
-        ],
-        "tags": [
-            "queue",
-            "data structure"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "queue"
-        ],
-        "return_type": [
-            "Queue"
-        ],
-        "timer_score": 90,
-        "memory_score": 85,
-        "code": [
-            "type Queue[T any] struct { arr []T }\nfunc (q *Queue[T]) Enqueue(v T) { q.arr = append(q.arr, v) }\nfunc (q *Queue[T]) Dequeue() T { v := q.arr[0]; q.arr = q.arr[1:]; return v }\nfunc (q *Queue[T]) Peek() T { return q.arr[0] }\nfunc (q *Queue[T]) IsEmpty() bool { return len(q.arr) == 0 }\nfunc (q *Queue[T]) Size() int { return len(q.arr) }"
-        ]
-    },
-    {
-        "name-zh": "有序集合（跳表）",
-        "name-en": "Sorted Set (SkipList)",
-        "description-zh": "基于 map 的简化有序集合",
-        "description-en": "Simplified sorted set using map",
-        "dependencies": [],
-        "use_to": [
-            "data structure",
-            "set"
-        ],
-        "tags": [
-            "data structure",
-            "set"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "sortedset"
-        ],
-        "return_type": [
-            "SortedSet"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "type SortedSet struct {\n    m map[int]bool\n    s []int\n}\nfunc NewSortedSet() *SortedSet { return &SortedSet{m: make(map[int]bool), s: []int{}} }\nfunc (ss *SortedSet) Add(v int) { if !ss.m[v] { ss.m[v] = true; ss.s = append(ss.s, v); sort.Ints(ss.s) } }\nfunc (ss *SortedSet) Has(v int) bool { return ss.m[v] }\nfunc (ss *SortedSet) Remove(v int) { if ss.m[v] { delete(ss.m, v); i := sort.SearchInts(ss.s, v); ss.s = append(ss.s[:i], ss.s[i+1:]...) } }\nfunc (ss *SortedSet) Len() int { return len(ss.m) }\nfunc (ss *SortedSet) Slice() []int { return ss.s }"
-        ]
-    },
-    {
-        "name-zh": "定时器",
-        "name-en": "Timer",
-        "description-zh": "记录代码执行时间",
-        "description-en": "Measure code execution time",
-        "dependencies": [
-            "time"
-        ],
-        "use_to": [
-            "time",
-            "benchmark"
-        ],
-        "tags": [
-            "time",
-            "basic"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "elapsed"
-        ],
-        "return_type": [
-            "time.Duration"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "import \"time\"\ntype Timer struct{ t time.Time }\nfunc NewTimer() *Timer { return &Timer{time.Now()} }\nfunc (t *Timer) Elapsed() time.Duration { return time.Since(t.t) }\nfunc (t *Timer) Reset() { t.t = time.Now() }"
-        ]
-    },
-    {
-        "name-zh": "限流器",
-        "name-en": "Rate Limiter",
-        "description-zh": "简单令牌桶限流器",
-        "description-en": "Simple token-bucket rate limiter",
-        "dependencies": [
-            "time"
-        ],
-        "use_to": [
-            "concurrency",
-            "rate limit"
-        ],
-        "tags": [
-            "intermediate",
-            "concurrency"
-        ],
-        "input": [
-            "rate",
-            "burst"
-        ],
-        "input_type": [
-            "float64",
-            "int"
-        ],
-        "return": [
-            "allow"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "import \"time\"\ntype RateLimiter struct {\n    rate float64\n    burst int\n    tokens float64\n    last time.Time\n}\nfunc NewRateLimiter(rate float64, burst int) *RateLimiter {\n    return &RateLimiter{rate: rate, burst: burst, tokens: float64(burst), last: time.Now()}\n}\nfunc (rl *RateLimiter) Allow() bool {\n    now := time.Now()\n    elapsed := now.Sub(rl.last).Seconds()\n    rl.last = now\n    rl.tokens += elapsed * rl.rate\n    if rl.tokens > float64(rl.burst) { rl.tokens = float64(rl.burst) }\n    if rl.tokens >= 1 { rl.tokens--; return true }\n    return false\n}"
-        ]
-    },
-    {
-        "name-zh": "信号通道",
-        "name-en": "Signal Channel",
-        "description-zh": "优雅处理系统信号",
-        "description-en": "Gracefully handle OS signals",
-        "dependencies": [
-            "os",
-            "syscall",
-            "signal"
-        ],
-        "use_to": [
-            "signal",
-            "system"
-        ],
-        "tags": [
-            "intermediate",
-            "system"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "done"
-        ],
-        "return_type": [
-            "<-chan os.Signal"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "import (\n    \"os\"\n    \"syscall\"\n    \"os/signal\"\n)\nfunc sigChan() <-chan os.Signal {\n    ch := make(chan os.Signal, 1)\n    signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)\n    return ch\n}"
-        ]
-    },
-    {
-        "name-zh": "解析命令行参数",
-        "name-en": "Parse CLI Args",
-        "description-zh": "简单解析命令行键值参数",
-        "description-en": "Simple key-value CLI argument parser",
-        "dependencies": [
-            "flag"
-        ],
-        "use_to": [
-            "cli",
-            "args"
-        ],
-        "tags": [
-            "basic",
-            "cli"
-        ],
-        "input": [
-            "args"
-        ],
-        "input_type": [
-            "[]string"
-        ],
-        "return": [
-            "params"
-        ],
-        "return_type": [
-            "map[string]string"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "import \"flag\"\nfunc parseArgs(args []string) map[string]string {\n    m := make(map[string]string)\n    for _, a := range args {\n        if strings.HasPrefix(a, \"--\") {\n            kv := strings.SplitN(a[2:], \"=\", 2)\n            if len(kv) == 2 { m[kv[0]] = kv[1] }\n        }\n    }\n    return m\n}"
-        ]
-    },
-    {
-        "name-zh": "日志记录器",
-        "name-en": "Logger",
-        "description-zh": "简单日志记录器，支持 info/error/debug 级别",
-        "description-en": "Simple logger with info/error/debug levels",
-        "dependencies": [
-            "log",
-            "time"
-        ],
-        "use_to": [
-            "logging",
-            "debug"
-        ],
-        "tags": [
-            "basic",
-            "logging"
-        ],
-        "input": [
-            "level",
-            "msg"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "log"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "import \"log\"\ntype Logger struct {\n    prefix string\n}\nfunc NewLogger(prefix string) *Logger { return &Logger{prefix: prefix} }\nfunc (l *Logger) Info(msg string) { log.Printf(\"[INFO] %s %s\", l.prefix, msg) }\nfunc (l *Logger) Error(msg string) { log.Printf(\"[ERROR] %s %s\", l.prefix, msg) }\nfunc (l *Logger) Debug(msg string) { log.Printf(\"[DEBUG] %s %s\", l.prefix, msg) }"
-        ]
-    },
-    {
-        "name-zh": "配置解析",
-        "name-en": "Parse Config (INI)",
-        "description-zh": "简单解析 INI 格式配置文件",
-        "description-en": "Simple INI config file parser",
-        "dependencies": [
-            "bufio",
-            "strings"
-        ],
-        "use_to": [
-            "config",
-            "file"
-        ],
-        "tags": [
-            "intermediate",
-            "config"
-        ],
-        "input": [
-            "content"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "config"
-        ],
-        "return_type": [
-            "map[string]map[string]string"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "func parseINI(content string) map[string]map[string]string {\n    cfg := make(map[string]map[string]string)\n    var section string\n    for _, line := range strings.Split(content, \"\\n\") {\n        line = strings.TrimSpace(line)\n        if strings.HasPrefix(line, \"[\") && strings.HasSuffix(line, \"]\") {\n            section = line[1 : len(line)-1]\n            cfg[section] = make(map[string]string)\n        } else if p := strings.Index(line, \"=\"); p > 0 && section != \"\" {\n            cfg[section][strings.TrimSpace(line[:p])] = strings.TrimSpace(line[p+1:])\n        }\n    }\n    return cfg\n}"
-        ]
-    },
-    {
-        "name-zh": "CRC32 校验",
-        "name-en": "CRC32 Checksum",
-        "description-zh": "计算数据的 CRC32 校验和",
-        "description-en": "Compute CRC32 checksum of data",
-        "dependencies": [
-            "hash/crc32"
-        ],
-        "use_to": [
-            "checksum",
-            "crc"
-        ],
-        "tags": [
-            "checksum",
-            "crc32"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "[]byte"
-        ],
-        "return": [
-            "crc"
-        ],
-        "return_type": [
-            "uint32"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "import \"hash/crc32\"\nfunc crc32Checksum(data []byte) uint32 {\n    return crc32.Checksum(data, crc32.MakeTable(crc32.IEEE))\n}"
-        ]
-    },
-    {
-        "name-zh": "MD5 哈希",
-        "name-en": "MD5 Hash",
-        "description-zh": "计算字节切片的 MD5 哈希（十六进制字符串）",
-        "description-en": "Compute MD5 hash as hex string",
-        "dependencies": [
-            "crypto/md5",
-            "fmt"
-        ],
-        "use_to": [
-            "hash",
-            "md5"
-        ],
-        "tags": [
-            "hash",
-            "md5"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "[]byte"
-        ],
-        "return": [
-            "hex"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "import (\n    \"crypto/md5\"\n    \"fmt\"\n)\nfunc md5Hex(data []byte) string {\n    return fmt.Sprintf(\"%x\", md5.Sum(data))\n}"
-        ]
-    },
-    {
-        "name-zh": "雪花ID",
-        "name-en": "Snowflake ID",
-        "description-zh": "生成分布式唯一 ID（简化的雪花算法）",
-        "description-en": "Generate distributed unique ID (simplified snowflake)",
-        "dependencies": [
-            "sync",
-            "time"
-        ],
-        "use_to": [
-            "id",
-            "distributed"
-        ],
-        "tags": [
-            "intermediate",
-            "id"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "id"
-        ],
-        "return_type": [
-            "int64"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "import (\n    \"sync\"\n    \"time\"\n)\ntype Snowflake struct {\n    mu     sync.Mutex\n    stamped int64\n}\nfunc NewSnowflake() *Snowflake { return &Snowflake{stamped: time.Now().UnixNano()} }\nfunc (sf *Snowflake) Next() int64 {\n    sf.mu.Lock()\n    defer sf.mu.Unlock()\n    sf.stamped++\n    return sf.stamped\n}"
-        ]
-    },
-    {
-        "name-zh": "Once 单例",
-        "name-en": "Once (Singleton)",
-        "description-zh": "确保函数只被执行一次（用于单例初始化）",
-        "description-en": "Ensure function runs only once (for singleton init)",
-        "dependencies": [
-            "sync"
-        ],
-        "use_to": [
-            "concurrency",
-            "singleton"
-        ],
-        "tags": [
-            "intermediate",
-            "concurrency"
-        ],
-        "input": [
-            "fn"
-        ],
-        "input_type": [
-            "func()"
-        ],
-        "return": [
-            "result"
-        ],
-        "return_type": [
-            "any"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "import \"sync\"\ntype Once struct {\n    o sync.Once\n    v any\n}\nfunc (o *Once) Do(fn func() any) any {\n    o.o.Do(func() { o.v = fn() })\n    return o.v\n}"
-        ]
-    },
-    {
-        "name-zh": "快速排序（原地）",
-        "name-en": "Quick Sort Inplace",
-        "description-zh": "原地快速排序（切片）",
-        "description-en": "In-place quick sort for slices",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "func quickSort(a []int) []int {\n    if len(a) <= 1 { return a }\n    pivot := a[len(a)/2]\n    var left, right []int\n    for _, v := range a {\n        if v < pivot { left = append(left, v) } else if v > pivot { right = append(right, v) }\n    }\n    left = quickSort(left)\n    right = quickSort(right)\n    return append(append(left, pivot), right...)\n}"
-        ]
-    },
-    {
-        "name-zh": "希尔排序",
-        "name-en": "Shell Sort",
-        "description-zh": "希尔排序（递减增量）",
-        "description-en": "Shell sort with diminishing gap",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 75,
-        "memory_score": 90,
-        "code": [
-            "func shellSort(a []int) []int {\n    n := len(a)\n    for gap := n/2; gap > 0; gap /= 2 {\n        for i := gap; i < n; i++ {\n            tmp := a[i]\n            j := i\n            for j >= gap && a[j-gap] > tmp {\n                a[j] = a[j-gap]\n                j -= gap\n            }\n            a[j] = tmp\n        }\n    }\n    return a\n}"
-        ]
-    },
-    {
-        "name-zh": "堆排序",
-        "name-en": "Heap Sort",
-        "description-zh": "二叉堆实现的堆排序",
-        "description-en": "Heap sort using binary heap",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "a"
-        ],
-        "input_type": [
-            "[]int"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "[]int"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "func heapSort(a []int) []int {\n    n := len(a)\n    for i := n/2 - 1; i >= 0; i-- { heapify(a, n, i) }\n    for i := n - 1; i > 0; i-- {\n        a[0], a[i] = a[i], a[0]\n        heapify(a, i, 0)\n    }\n    return a\n}\nfunc heapify(a []int, n, i int) {\n    largest := i\n    l, r := 2*i+1, 2*i+2\n    if l < n && a[l] > a[largest] { largest = l }\n    if r < n && a[r] > a[largest] { largest = r }\n    if largest != i {\n        a[i], a[largest] = a[largest], a[i]\n        heapify(a, n, largest)\n    }\n}"
-        ]
-    },
-    {
-        "name-zh": "Boyer-Moore字符串匹配",
-        "name-en": "Boyer-Moore String Match",
-        "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
-        "description-en": "Boyer-Moore string matching with bad character rule",
-        "dependencies": [],
-        "use_to": [
-            "string",
-            "search"
-        ],
-        "tags": [
-            "string",
-            "boyer-moore",
-            "algorithm"
-        ],
-        "input": [
-            "text",
-            "pattern"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "index"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 88,
-        "memory_score": 92,
-        "code": [
-            "func boyerMoore(text, pattern string) int {\n    n, m := len(text), len(pattern)\n    if m == 0 { return 0 }\n    badChar := make([]int, 256)\n    for i := range badChar { badChar[i] = -1 }\n    for i := 0; i < m; i++ { badChar[int(pattern[i])] = i }\n    shift := 0\n    for shift <= n-m {\n        j := m - 1\n        for j >= 0 && pattern[j] == text[shift+j] { j-- }\n        if j < 0 { return shift }\n        shift += j - badChar[int(text[shift+j])]\n    }\n    return -1\n}"
-        ]
-    },
-    {
-        "name-zh": "Sunday字符串匹配",
-        "name-en": "Sunday String Match",
-        "description-zh": "Sunday 字符串匹配算法",
-        "description-en": "Sunday string matching algorithm",
-        "dependencies": [],
-        "use_to": [
-            "string",
-            "search"
-        ],
-        "tags": [
-            "string",
-            "sunday",
-            "algorithm"
-        ],
-        "input": [
-            "text",
-            "pattern"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "index"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 88,
-        "memory_score": 92,
-        "code": [
-            "func sunday(text, pattern string) int {\n    n, m := len(text), len(pattern)\n    shift := make([]int, 256)\n    for i := range shift { shift[i] = m + 1 }\n    for i := 0; i < m; i++ { shift[int(pattern[i])] = m - i }\n    pos := 0\n    for pos <= n-m {\n        j := 0\n        for j < m && text[pos+j] == pattern[j] { j++ }\n        if j == m { return pos }\n        if pos+m < n { pos += shift[int(text[pos+m])] } else { return -1 }\n    }\n    return -1\n}"
-        ]
-    },
-    {
-        "name-zh": "LRU缓存（并发安全）",
-        "name-en": "LRU Cache (Thread-safe)",
-        "description-zh": "支持并发的 LRU 缓存实现",
-        "description-en": "Thread-safe LRU cache implementation",
-        "dependencies": [
-            "sync"
-        ],
-        "use_to": [
-            "cache",
-            "concurrency"
-        ],
-        "tags": [
-            "lru",
-            "cache",
-            "concurrent"
-        ],
-        "input": [
-            "capacity"
-        ],
-        "input_type": [
-            "int"
-        ],
-        "return": [
-            "cache"
-        ],
-        "return_type": [
-            "LRUCache"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "import \"sync\"\n\ntype LRUCache struct {\n    mu     sync.Mutex\n    cap    int\n    cache  map[int]*list.Element\n    order  *list.List\n}\n\ntype entry struct { key, value int }\n\nfunc NewLRU(cap int) *LRUCache {\n    return &LRUCache{cap: cap, cache: make(map[int]*list.Element), order: list.New()}\n}\nfunc (c *LRUCache) Get(key int) (int, bool) {\n    c.mu.Lock()\n    defer c.mu.Unlock()\n    if e, ok := c.cache[key]; ok {\n        c.order.MoveToFront(e)\n        return e.Value.(*entry).value, true\n    }\n    return 0, false\n}\nfunc (c *LRUCache) Put(key, value int) {\n    c.mu.Lock()\n    defer c.mu.Unlock()\n    if e, ok := c.cache[key]; ok {\n        c.order.MoveToFront(e)\n        e.Value.(*entry).value = value\n        return\n    }\n    if c.order.Len() >= c.cap {\n        old := c.order.Back()\n        c.order.Remove(old)\n        delete(c.cache, old.Value.(*entry).key)\n    }\n    e := c.order.PushFront(&entry{key, value})\n    c.cache[key] = e\n}"
-        ]
-    },
-    {
-        "name-zh": "限流器（令牌桶）",
-        "name-en": "Token Bucket Rate Limiter",
-        "description-zh": "令牌桶限流器实现",
-        "description-en": "Token bucket rate limiter",
-        "dependencies": [
-            "sync",
-            "time"
-        ],
-        "use_to": [
-            "rate limit",
-            "concurrency"
-        ],
-        "tags": [
-            "rate limit",
-            "concurrent"
-        ],
-        "input": [
-            "rate",
-            "burst"
-        ],
-        "input_type": [
-            "float64",
-            "int"
-        ],
-        "return": [
-            "limiter"
-        ],
-        "return_type": [
-            "*TokenBucket"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "import (\"sync\"\n    \"time\")\n\ntype TokenBucket struct {\n    mu      sync.Mutex\n    rate    float64\n    burst   int\n    tokens  float64\n    lastUpd time.Time\n}\n\nfunc NewTokenBucket(rate float64, burst int) *TokenBucket {\n    return &TokenBucket{rate: rate, burst: burst, tokens: float64(burst), lastUpd: time.Now()}\n}\nfunc (tb *TokenBucket) Allow() bool {\n    tb.mu.Lock()\n    defer tb.mu.Unlock()\n    now := time.Now()\n    elapsed := now.Sub(tb.lastUpd).Seconds()\n    tb.lastUpd = now\n    tb.tokens += elapsed * tb.rate\n    if tb.tokens > float64(tb.burst) { tb.tokens = float64(tb.burst) }\n    if tb.tokens >= 1 {\n        tb.tokens--\n        return true\n    }\n    return false\n}"
-        ]
-    },
-    {
-        "name-zh": "生产者消费者",
-        "name-en": "Producer Consumer",
-        "description-zh": "使用通道实现生产者消费者模型",
-        "description-en": "Producer-consumer using channels",
-        "dependencies": [
-            "sync"
-        ],
-        "use_to": [
-            "concurrency",
-            "channel"
-        ],
-        "tags": [
-            "channel",
-            "concurrent"
-        ],
-        "input": [
-            "producerFn",
-            "consumerFn",
-            "bufSize",
-            "count"
-        ],
-        "input_type": [
-            "func(chan T)",
-            "func(T)",
-            "int",
-            "int"
-        ],
-        "return": [
-            "wg"
-        ],
-        "return_type": [
-            "sync.WaitGroup"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "import \"sync\"\n\nfunc producerConsumer(producer func(chan<- int), consumer func(int), bufSize, count int) {\n    ch := make(chan int, bufSize)\n    var wg sync.WaitGroup\n    wg.Add(1)\n    go func() { defer wg.Done(); producer(ch)(); close(ch) }()\n    for i := 0; i < count; i++ {\n        v := <-ch\n        consumer(v)\n    }\n    wg.Wait()\n}"
-        ]
-    },
-    {
-        "name-zh": "跳表",
-        "name-en": "Skip List",
-        "description-zh": "简化的跳表实现（多层索引）",
-        "description-en": "Simplified skip list implementation",
-        "dependencies": [
-            "math/rand"
-        ],
-        "use_to": [
-            "data structure",
-            "skiplist"
-        ],
-        "tags": [
-            "skiplist",
-            "data structure"
-        ],
-        "input": [
-            "levels"
-        ],
-        "input_type": [
-            "int"
-        ],
-        "return": [
-            "skiplist"
-        ],
-        "return_type": [
-            "SkipList"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "import (\"math/rand\" \"sync\")\n\ntype SkipList struct {\n    mu     sync.RWMutex\n    head   *Node\n    maxLvl int\n}\n\ntype Node struct {\n    key, value interface{}\n    forward []*Node\n}\n\nfunc NewSkipList(maxLvl int) *SkipList {\n    return &SkipList{head: &Node{forward: make([]*Node, maxLvl)}, maxLvl: maxLvl}\n}\nfunc (sl *SkipList) randomLevel() int {\n    lvl := 1\n    for rand.Intn(2) == 1 && lvl < sl.maxLvl { lvl++ }\n    return lvl\n}\nfunc (sl *SkipList) Insert(key, value interface{}) {\n    sl.mu.Lock()\n    defer sl.mu.Unlock()\n    update := make([]*Node, sl.maxLvl)\n    curr := sl.head\n    for i := sl.maxLvl - 1; i >= 0; i-- {\n        for curr.forward[i] != nil && curr.forward[i].key.(int) < key.(int) {\n            curr = curr.forward[i]\n        }\n        update[i] = curr\n    }\n    lvl := sl.randomLevel()\n    newNode := &Node{key: key, value: value, forward: make([]*Node, lvl)}\n    for i := 0; i < lvl; i++ {\n        newNode.forward[i] = update[i].forward[i]\n        update[i].forward[i] = newNode\n    }\n}\nfunc (sl *SkipList) Search(key interface{}) (interface{}, bool) {\n    sl.mu.RLock()\n    defer sl.mu.RUnlock()\n    curr := sl.head\n    for i := sl.maxLvl - 1; i >= 0; i-- {\n        for curr.forward[i] != nil && curr.forward[i].key.(int) < key.(int) {\n            curr = curr.forward[i]\n        }\n    }\n    curr = curr.forward[0]\n    if curr != nil && curr.key.(int) == key.(int) {\n        return curr.value, true\n    }\n    return nil, false\n}"
-        ]
-    },
-    {
-        "name-zh": "布隆过滤器",
-        "name-en": "Bloom Filter",
-        "description-zh": "简单布隆过滤器实现",
-        "description-en": "Simple Bloom filter implementation",
-        "dependencies": [
-            "hash/fnv",
-            "math/bits"
-        ],
-        "use_to": [
-            "bloom filter",
-            "data structure"
-        ],
-        "tags": [
-            "bloom filter",
-            "data structure"
-        ],
-        "input": [
-            "items"
-        ],
-        "input_type": [
-            "[]string"
-        ],
-        "return": [
-            "filter"
-        ],
-        "return_type": [
-            "BloomFilter"
-        ],
-        "timer_score": 85,
-        "memory_score": 80,
-        "code": [
-            "import (\"hash/fnv\" \"math/bits\")\n\ntype BloomFilter struct {\n    size int\n    bits  []bool\n}\n\nfunc NewBloomFilter(size int) *BloomFilter {\n    return &BloomFilter{size: size, bits: make([]bool, size)}\n}\nfunc (bf *BloomFilter) h1(s string) int {\n    h := fnv.New64a()\n    h.Write([]byte(s))\n    return int(h.Sum64()) % bf.size\n}\nfunc (bf *BloomFilter) h2(s string) int {\n    h := fnv.New64a()\n    h.Write([]byte(s + \"salt2\"))\n    return int(h.Sum64()) % bf.size\n}\nfunc (bf *BloomFilter) Add(s string) {\n    bf.bits[bf.h1(s)] = true\n    bf.bits[bf.h2(s)] = true\n}\nfunc (bf *BloomFilter) Contains(s string) bool {\n    return bf.bits[bf.h1(s)] && bf.bits[bf.h2(s)]\n}"
-        ]
-    },
-    {
-        "name-zh": "环形缓冲区",
-        "name-en": "Ring Buffer",
-        "description-zh": "无锁环形缓冲区（FIFO）",
-        "description-en": "Lock-free ring buffer FIFO",
-        "dependencies": [
-            "sync/atomic"
-        ],
-        "use_to": [
-            "data structure",
-            "buffer"
-        ],
-        "tags": [
-            "ring buffer",
-            "data structure"
-        ],
-        "input": [
-            "size"
-        ],
-        "input_type": [
-            "int"
-        ],
-        "return": [
-            "ring"
-        ],
-        "return_type": [
-            "RingBuffer"
-        ],
-        "timer_score": 88,
-        "memory_score": 88,
-        "code": [
-            "import \"sync/atomic\"\n\ntype RingBuffer struct {\n    buf      []int\n    capacity int\n    read     atomic.Int64\n    write    atomic.Int64\n}\n\nfunc NewRingBuffer(cap int) *RingBuffer {\n    return &RingBuffer{buf: make([]int, cap), capacity: cap}\n}\nfunc (rb *RingBuffer) Push(v int) bool {\n    w := rb.write.Load()\n    if w-rb.read.Load() >= int64(rb.capacity) { return false }\n    rb.buf[w%int64(rb.capacity)] = v\n    rb.write.Add(1)\n    return true\n}\nfunc (rb *RingBuffer) Pop() (int, bool) {\n    r := rb.read.Load()\n    if r >= rb.write.Load() { return 0, false }\n    v := rb.buf[r%int64(rb.capacity)]\n    rb.read.Add(1)\n    return v, true\n}"
-        ]
-    },
-    {
-        "name-zh": "限流中间件",
-        "name-en": "Rate Limit Middleware",
-        "description-zh": "HTTP 限流中间件（滑动窗口）",
-        "description-en": "HTTP rate limit middleware (sliding window)",
-        "dependencies": [
-            "net/http",
-            "time"
-        ],
-        "use_to": [
-            "middleware",
-            "rate limit"
-        ],
-        "tags": [
-            "middleware",
-            "rate limit"
-        ],
-        "input": [
-            "next",
-            "maxRequests",
-            "windowSeconds"
-        ],
-        "input_type": [
-            "http.Handler",
-            "int",
-            "int"
-        ],
-        "return": [
-            "handler"
-        ],
-        "return_type": [
-            "http.Handler"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "import (\"net/http\"\n    \"sync\"\n    \"time\")\n\ntype RateLimitMiddleware struct {\n    next      http.Handler\n    max       int\n    window    time.Duration\n    requests  map[string][]time.Time\n    mu        sync.Mutex\n}\n\nfunc (rl *RateLimitMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {\n    ip := r.RemoteAddr\n    rl.mu.Lock()\n    now := time.Now()\n    times := rl.requests[ip]\n    times = filterTimes(times, now, rl.window)\n    if len(times) >= rl.max {\n        rl.requests[ip] = times\n        rl.mu.Unlock()\n        http.Error(w, \"429 Too Many Requests\", http.StatusTooManyRequests)\n        return\n    }\n    times = append(times, now)\n    rl.requests[ip] = times\n    rl.mu.Unlock()\n    rl.next.ServeHTTP(w, r)\n}\nfunc filterTimes(times []time.Time, now time.Time, window time.Duration) []time.Time {\n    cutoff := now.Add(-window)\n    filtered := times[:0]\n    for _, t := range times {\n        if t.After(cutoff) {\n            filtered = append(filtered, t)\n        }\n    }\n    return filtered\n}"
-        ]
-    },
-    {
-        "name-zh": "雪花ID（分布式）",
-        "name-en": "Snowflake ID (Distributed)",
-        "description-zh": "带 worker ID 的雪花 ID 生成器",
-        "description-en": "Snowflake ID generator with worker ID",
-        "dependencies": [
-            "sync"
-        ],
-        "use_to": [
-            "id",
-            "distributed"
-        ],
-        "tags": [
-            "id",
-            "snowflake"
-        ],
-        "input": [
-            "workerId"
-        ],
-        "input_type": [
-            "int64"
-        ],
-        "return": [
-            "id"
-        ],
-        "return_type": [
-            "int64"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "import \"sync\"\n\ntype Snowflake struct {\n    mu       sync.Mutex\n    workerId int64\n    seq      int64\n    lastTime int64\n}\n\nconst epoch int64 = 1609459200000 // 2021-01-01\n\nfunc NewSnowflake(workerId int64) *Snowflake {\n    return &Snowflake{workerId: workerId & 1023}\n}\nfunc (sf *Snowflake) Next() int64 {\n    sf.mu.Lock()\n    defer sf.mu.Unlock()\n    now := time.Now().UnixNano() / 1e6\n    if now == sf.lastTime {\n        sf.seq = (sf.seq + 1) & 4095\n        if sf.seq == 0 { for now == sf.lastTime { now = time.Now().UnixNano() / 1e6 } }\n    } else {\n        sf.seq = 0\n    }\n    sf.lastTime = now\n    return ((now - epoch) << 22) | (sf.workerId << 12) | sf.seq\n}"
-        ]
-    },
-    {
-        "name-zh": "配置解析（YAML）",
-        "name-en": "Parse YAML Config",
-        "description-zh": "解析 YAML 配置文件为 map",
-        "description-en": "Parse YAML config file to map",
-        "dependencies": [
-            "gopkg.in/yaml.v3"
-        ],
-        "use_to": [
-            "config",
-            "yaml"
-        ],
-        "tags": [
-            "config",
-            "yaml"
-        ],
-        "input": [
-            "content"
-        ],
-        "input_type": [
-            "[]byte"
-        ],
-        "return": [
-            "config"
-        ],
-        "return_type": [
-            "map[string]interface{}"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "import \"gopkg.in/yaml.v3\"\n\nfunc parseYAML(content []byte) (map[string]interface{}, error) {\n    var cfg map[string]interface{}\n    err := yaml.Unmarshal(content, &cfg)\n    return cfg, err\n}"
-        ]
-    },
-    {
-        "name-zh": "配置解析（TOML）",
-        "name-en": "Parse TOML Config",
-        "description-zh": "解析 TOML 配置文件",
-        "description-en": "Parse TOML config file",
-        "dependencies": [
-            "github.com/BurntSushi/toml"
-        ],
-        "use_to": [
-            "config",
-            "toml"
-        ],
-        "tags": [
-            "config",
-            "toml"
-        ],
-        "input": [
-            "content"
-        ],
-        "input_type": [
-            "[]byte"
-        ],
-        "return": [
-            "config"
-        ],
-        "return_type": [
-            "toml.Primitive"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "import \"github.com/BurntSushi/toml\"\n\nfunc parseTOML(content []byte) (map[string]interface{}, error) {\n    var cfg map[string]interface{}\n    _, err := toml.Decode(string(content), &cfg)\n    return cfg, err\n}"
-        ]
-    },
-    {
-        "name-zh": "JWT编码",
-        "name-en": "JWT Encode",
-        "description-zh": "生成 JWT 令牌",
-        "description-en": "Generate JWT token",
-        "dependencies": [
-            "github.com/golang-jwt/jwt/v5"
-        ],
-        "use_to": [
-            "jwt",
-            "auth"
-        ],
-        "tags": [
-            "jwt",
-            "auth"
-        ],
-        "input": [
-            "claims",
-            "secret"
-        ],
-        "input_type": [
-            "map[string]interface{}",
-            "string"
-        ],
-        "return": [
-            "token"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "import (\"github.com/golang-jwt/jwt/v5\" \"time\")\n\ntype Claims struct { jwt.RegisteredClaims }\n\nfunc jwtEncode(claims map[string]interface{}, secret string) (string, error) {\n    c := &Claims{RegisteredClaims: jwt.RegisteredClaims{IssuedAt: jwt.NewNumericDate(time.Now())}}\n    for k, v := range claims { c.RegisteredClaims[k] = v }\n    token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)\n    return token.SignedString([]byte(secret))\n}\nfunc jwtDecode(tokenStr, secret string) (map[string]interface{}, error) {\n    token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(t *jwt.Token) (interface{}, error) {\n        return []byte(secret), nil\n    })\n    if err != nil { return nil, err }\n    if claims, ok := token.Claims.(*Claims); ok { return map[string]interface{}(claims.RegisteredClaims), nil }\n    return nil, nil\n}"
-        ]
-    }
+  {
+    "name-zh": "切片过滤",
+    "name-en": "Slice Filter",
+    "description-zh": "根据条件函数过滤切片元素",
+    "description-en": "Filter slice elements based on predicate function",
+    "dependencies": [],
+    "use_to": [
+      "slice"
+    ],
+    "tags": [
+      "basic",
+      "slice",
+      "beginner"
+    ],
+    "input": [
+      "nums",
+      "predicate"
+    ],
+    "input_type": [
+      "[]int",
+      "func(int) bool"
+    ],
+    "return": [
+      "filtered"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "func filterSlice(nums []int, predicate func(int) bool) []int {\n    result := make([]int, 0)\n    for _, num := range nums {\n        if predicate(num) {\n            result = append(result, num)\n        }\n    }\n    return result\n}"
+    ]
+  },
+  {
+    "name-zh": "随机数生成",
+    "name-en": "Random Number",
+    "description-zh": "生成指定范围内的随机整数",
+    "description-en": "Generate random integer within range",
+    "dependencies": [
+      "math/rand",
+      "time"
+    ],
+    "use_to": [
+      "random"
+    ],
+    "tags": [
+      "basic",
+      "random",
+      "beginner"
+    ],
+    "input": [
+      "min",
+      "max"
+    ],
+    "input_type": [
+      "int",
+      "int"
+    ],
+    "return": [
+      "random"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "import (\n    \"math/rand\"\n    \"time\"\n)\n\nfunc init() {\n    rand.Seed(time.Now().UnixNano())\n}\n\nfunc randomInt(min, max int) int {\n    if min > max {\n        min, max = max, min\n    }\n    return min + rand.Intn(max-min+1)\n}"
+    ]
+  },
+  {
+    "name-zh": "文件是否存在",
+    "name-en": "File Exists",
+    "description-zh": "检查文件或目录是否存在",
+    "description-en": "Check if file or directory exists",
+    "dependencies": [
+      "os"
+    ],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "basic",
+      "file",
+      "beginner"
+    ],
+    "input": [
+      "path"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "exists"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "import \"os\"\n\nfunc fileExists(path string) bool {\n    _, err := os.Stat(path)\n    return !os.IsNotExist(err)\n}"
+    ]
+  },
+  {
+    "name-zh": "字符串包含",
+    "name-en": "String Contains Any",
+    "description-zh": "检查字符串是否包含任意给定子串",
+    "description-en": "Check if string contains any of the given substrings",
+    "dependencies": [
+      "strings"
+    ],
+    "use_to": [
+      "string"
+    ],
+    "tags": [
+      "basic",
+      "string",
+      "beginner"
+    ],
+    "input": [
+      "s",
+      "subs"
+    ],
+    "input_type": [
+      "string",
+      "[]string"
+    ],
+    "return": [
+      "contains"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "import \"strings\"\n\nfunc containsAny(s string, subs []string) bool {\n    for _, sub := range subs {\n        if strings.Contains(s, sub) {\n            return true\n        }\n    }\n    return false\n}"
+    ]
+  },
+  {
+    "name-zh": "时间格式化",
+    "name-en": "Time Format",
+    "description-zh": "将时间格式化为指定格式字符串",
+    "description-en": "Format time to specified layout string",
+    "dependencies": [
+      "time"
+    ],
+    "use_to": [
+      "time",
+      "formatting"
+    ],
+    "tags": [
+      "basic",
+      "time",
+      "beginner"
+    ],
+    "input": [
+      "t",
+      "layout"
+    ],
+    "input_type": [
+      "time.Time",
+      "string"
+    ],
+    "return": [
+      "formatted"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "import \"time\"\n\nfunc formatTime(t time.Time, layout string) string {\n    if layout == \"\" {\n        layout = \"2006-01-02 15:04:05\"\n    }\n    return t.Format(layout)\n}"
+    ]
+  },
+  {
+    "name-zh": "切片排序",
+    "name-en": "Slice Sort",
+    "description-zh": "对整数切片进行升序排序",
+    "description-en": "Sort integer slice in ascending order",
+    "dependencies": [
+      "sort"
+    ],
+    "use_to": [
+      "slice",
+      "sorting"
+    ],
+    "tags": [
+      "basic",
+      "slice",
+      "beginner"
+    ],
+    "input": [
+      "nums"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "import \"sort\"\n\nfunc sortSlice(nums []int) []int {\n    result := make([]int, len(nums))\n    copy(result, nums)\n    sort.Ints(result)\n    return result\n}"
+    ]
+  },
+  {
+    "name-zh": "切片去重",
+    "name-en": "Slice Unique",
+    "description-zh": "移除切片中的重复元素",
+    "description-en": "Remove duplicate elements from slice",
+    "dependencies": [],
+    "use_to": [
+      "slice"
+    ],
+    "tags": [
+      "basic",
+      "slice",
+      "beginner"
+    ],
+    "input": [
+      "nums"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "unique"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 90,
+    "memory_score": 85,
+    "code": [
+      "func uniqueSlice(nums []int) []int {\n    seen := make(map[int]bool)\n    result := make([]int, 0)\n    for _, num := range nums {\n        if !seen[num] {\n            seen[num] = true\n            result = append(result, num)\n        }\n    }\n    return result\n}"
+    ]
+  },
+  {
+    "name-zh": "字符串分割",
+    "name-en": "String Split",
+    "description-zh": "按指定分隔符分割字符串并移除空白字符",
+    "description-en": "Split string by delimiter and trim spaces",
+    "dependencies": [
+      "strings"
+    ],
+    "use_to": [
+      "string"
+    ],
+    "tags": [
+      "basic",
+      "string",
+      "beginner"
+    ],
+    "input": [
+      "s",
+      "sep"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "parts"
+    ],
+    "return_type": [
+      "[]string"
+    ],
+    "timer_score": 100,
+    "memory_score": 95,
+    "code": [
+      "import \"strings\"\n\nfunc splitAndTrim(s, sep string) []string {\n    parts := strings.Split(s, sep)\n    result := make([]string, 0, len(parts))\n    for _, part := range parts {\n        if trimmed := strings.TrimSpace(part); trimmed != \"\" {\n            result = append(result, trimmed)\n        }\n    }\n    return result\n}"
+    ]
+  },
+  {
+    "name-zh": "错误包装",
+    "name-en": "Error Wrap",
+    "description-zh": "为错误添加上下文信息",
+    "description-en": "Add context to an error",
+    "dependencies": [
+      "fmt"
+    ],
+    "use_to": [
+      "error handling"
+    ],
+    "tags": [
+      "basic",
+      "error",
+      "beginner"
+    ],
+    "input": [
+      "err",
+      "msg"
+    ],
+    "input_type": [
+      "error",
+      "string"
+    ],
+    "return": [
+      "wrapped"
+    ],
+    "return_type": [
+      "error"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "import \"fmt\"\n\nfunc wrapError(err error, msg string) error {\n    if err == nil {\n        return nil\n    }\n    return fmt.Errorf(\"%s: %w\", msg, err)\n}"
+    ]
+  },
+  {
+    "name-zh": "环境变量获取",
+    "name-en": "Get Environment",
+    "description-zh": "获取环境变量值，不存在则返回默认值",
+    "description-en": "Get environment variable with default value",
+    "dependencies": [
+      "os"
+    ],
+    "use_to": [
+      "configuration"
+    ],
+    "tags": [
+      "basic",
+      "env",
+      "beginner"
+    ],
+    "input": [
+      "key",
+      "defaultValue"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "value"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "import \"os\"\n\nfunc getEnv(key, defaultValue string) string {\n    if value, exists := os.LookupEnv(key); exists {\n        return value\n    }\n    return defaultValue\n}"
+    ]
+  },
+  {
+    "name-zh": "主函数示例",
+    "name-en": "Main Function Example",
+    "description-zh": "Go程序的入口函数示例，包含命令行参数处理和错误处理",
+    "description-en": "Entry point function example for Go programs, including command line arguments and error handling",
+    "dependencies": [
+      "fmt",
+      "flag",
+      "os"
+    ],
+    "use_to": [
+      "program entry",
+      "command line"
+    ],
+    "tags": [
+      "basic",
+      "entry point",
+      "command line"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [],
+    "return_type": [],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "package main\n\nimport (\n    \"fmt\"\n    \"flag\"\n    \"os\"\n)\n\n// 运行主程序逻辑\nfunc run() error {\n    // 定义命令行参数\n    name := flag.String(\"name\", \"World\", \"名字\")\n    flag.Parse()\n    \n    // 打印程序信息\n    fmt.Printf(\"Program: %s\\n\", os.Args[0])\n    \n    // 打印命令行参数\n    fmt.Printf(\"Arguments count: %d\\n\", len(os.Args[1:]))\n    fmt.Printf(\"Arguments: %v\\n\", os.Args[1:])\n    \n    // 程序主要逻辑\n    fmt.Printf(\"Hello, %s!\\n\", *name)\n    \n    return nil\n}\n\nfunc main() {\n    if err := run(); err != nil {\n        fmt.Fprintf(os.Stderr, \"Error: %v\\n\", err)\n        os.Exit(1)\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "切片长度",
+    "name-en": "Slice Length",
+    "description-zh": "获取切片的长度",
+    "description-en": "Get the length of a slice",
+    "dependencies": [],
+    "use_to": [
+      "slice operations"
+    ],
+    "tags": [
+      "basic",
+      "slice",
+      "beginner"
+    ],
+    "input": [
+      "slice"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "length"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func sliceLength(slice []int) int {\n    return len(slice)\n}"
+    ]
+  },
+  {
+    "name-zh": "HTTP GET请求",
+    "name-en": "HTTP GET Request",
+    "description-zh": "发送HTTP GET请求并返回响应",
+    "description-en": "Send HTTP GET request and return response",
+    "dependencies": [
+      "net/http",
+      "io/ioutil"
+    ],
+    "use_to": [
+      "web requests",
+      "API calls"
+    ],
+    "tags": [
+      "intermediate",
+      "http",
+      "network"
+    ],
+    "input": [
+      "url"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "body",
+      "err"
+    ],
+    "return_type": [
+      "[]byte",
+      "error"
+    ],
+    "timer_score": 70,
+    "memory_score": 80,
+    "code": [
+      "import (\n    \"io/ioutil\"\n    \"net/http\"\n)\n\nfunc httpGet(url string) ([]byte, error) {\n    resp, err := http.Get(url)\n    if err != nil {\n        return nil, err\n    }\n    defer resp.Body.Close()\n    return ioutil.ReadAll(resp.Body)\n}"
+    ]
+  },
+  {
+    "name-zh": "切片求和",
+    "name-en": "Slice Sum",
+    "description-zh": "对整数切片求和",
+    "description-en": "Sum elements of an int slice",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "slice"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "sum"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func sumSlice(a []int) int {\n    s := 0\n    for _, v := range a { s += v }\n    return s\n}"
+    ]
+  },
+  {
+    "name-zh": "切片最大值",
+    "name-en": "Slice Max",
+    "description-zh": "返回切片中的最大值",
+    "description-en": "Return max value of a slice",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "slice"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "max"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func maxSlice(a []int) int {\n    if len(a) == 0 { return 0 }\n    m := a[0]\n    for _, v := range a { if v > m { m = v } }\n    return m\n}"
+    ]
+  },
+  {
+    "name-zh": "字符串反转",
+    "name-en": "String Reverse",
+    "description-zh": "反转字符串(按 rune)",
+    "description-en": "Reverse a UTF-8 string by runes",
+    "dependencies": [],
+    "use_to": [
+      "string"
+    ],
+    "tags": [
+      "intermediate",
+      "string"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "reversed"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "func reverseString(s string) string {\n    r := []rune(s)\n    for i, j := 0, len(r)-1; i < j; i, j = i+1, j-1 {\n        r[i], r[j] = r[j], r[i]\n    }\n    return string(r)\n}"
+    ]
+  },
+  {
+    "name-zh": "读取文本文件",
+    "name-en": "Read Text File",
+    "description-zh": "读取文件为字符串",
+    "description-en": "Read file to string",
+    "dependencies": [
+      "os",
+      "io"
+    ],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "intermediate",
+      "io"
+    ],
+    "input": [
+      "path"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "content",
+      "err"
+    ],
+    "return_type": [
+      "string",
+      "error"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "import (\n    \"io\"\n    \"os\"\n)\n\nfunc readFile(path string) (string, error) {\n    f, err := os.Open(path)\n    if err != nil { return \"\", err }\n    defer f.Close()\n    b, err := io.ReadAll(f)\n    if err != nil { return \"\", err }\n    return string(b), nil\n}"
+    ]
+  },
+  {
+    "name-zh": "写入文本文件",
+    "name-en": "Write Text File",
+    "description-zh": "将字符串写入文件(覆盖)",
+    "description-en": "Write string to file (overwrite)",
+    "dependencies": [
+      "os"
+    ],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "intermediate",
+      "io"
+    ],
+    "input": [
+      "path",
+      "content"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "err"
+    ],
+    "return_type": [
+      "error"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "import \"os\"\n\nfunc writeFile(path, content string) error {\n    return os.WriteFile(path, []byte(content), 0644)\n}"
+    ]
+  },
+  {
+    "name-zh": "时间戳(毫秒)",
+    "name-en": "Unix Milli",
+    "description-zh": "返回当前时间戳(毫秒)",
+    "description-en": "Return current unix time in milliseconds",
+    "dependencies": [
+      "time"
+    ],
+    "use_to": [
+      "time"
+    ],
+    "tags": [
+      "basic",
+      "time"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "ms"
+    ],
+    "return_type": [
+      "int64"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "import \"time\"\n\nfunc unixMilli() int64 {\n    return time.Now().UnixMilli()\n}"
+    ]
+  },
+  {
+    "name-zh": "JSON 编解码",
+    "name-en": "JSON Encode/Decode",
+    "description-zh": "将 map 编码为 JSON 并解码回来",
+    "description-en": "Encode map to JSON then decode back",
+    "dependencies": [
+      "encoding/json"
+    ],
+    "use_to": [
+      "json"
+    ],
+    "tags": [
+      "intermediate",
+      "json"
+    ],
+    "input": [
+      "m"
+    ],
+    "input_type": [
+      "map[string]string"
+    ],
+    "return": [
+      "jsonStr",
+      "m2",
+      "err"
+    ],
+    "return_type": [
+      "string",
+      "map[string]string",
+      "error"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "import \"encoding/json\"\n\nfunc jsonRoundtrip(m map[string]string) (string, map[string]string, error) {\n    b, err := json.Marshal(m)\n    if err != nil { return \"\", nil, err }\n    var m2 map[string]string\n    if err := json.Unmarshal(b, &m2); err != nil { return \"\", nil, err }\n    return string(b), m2, nil\n}"
+    ]
+  },
+  {
+    "name-zh": "均值",
+    "name-en": "Mean",
+    "description-zh": "计算 float64 切片的平均值",
+    "description-en": "Compute mean of float64 slice",
+    "dependencies": [
+      "math"
+    ],
+    "use_to": [
+      "math"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]float64"
+    ],
+    "return": [
+      "m"
+    ],
+    "return_type": [
+      "float64"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "import \"math\"\n\nfunc mean(a []float64) float64 {\n    if len(a) == 0 { return math.NaN() }\n    s := 0.0\n    for _, v := range a { s += v }\n    return s / float64(len(a))\n}"
+    ]
+  },
+  {
+    "name-zh": "中位数",
+    "name-en": "Median",
+    "description-zh": "计算 float64 切片的中位数",
+    "description-en": "Compute median of float64 slice",
+    "dependencies": [
+      "sort",
+      "math"
+    ],
+    "use_to": [
+      "math"
+    ],
+    "tags": [
+      "intermediate",
+      "math"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]float64"
+    ],
+    "return": [
+      "med"
+    ],
+    "return_type": [
+      "float64"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "import (\n    \"sort\"\n    \"math\"\n)\n\nfunc median(a []float64) float64 {\n    if len(a) == 0 { return math.NaN() }\n    b := append([]float64(nil), a...)\n    sort.Float64s(b)\n    n := len(b)\n    if n%2 == 1 { return b[n/2] }\n    return (b[n/2-1] + b[n/2]) / 2\n}"
+    ]
+  },
+  {
+    "name-zh": "标准差",
+    "name-en": "Standard Deviation",
+    "description-zh": "计算样本标准差",
+    "description-en": "Compute sample standard deviation",
+    "dependencies": [
+      "math"
+    ],
+    "use_to": [
+      "math"
+    ],
+    "tags": [
+      "intermediate",
+      "math"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]float64"
+    ],
+    "return": [
+      "sd"
+    ],
+    "return_type": [
+      "float64"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "import \"math\"\n\nfunc stdev(a []float64) float64 {\n    n := len(a)\n    if n < 2 { return math.NaN() }\n    m := mean(a)\n    s := 0.0\n    for _, x := range a { d := x - m; s += d * d }\n    return math.Sqrt(s / float64(n-1))\n}"
+    ]
+  },
+  {
+    "name-zh": "GCD",
+    "name-en": "GCD",
+    "description-zh": "欧几里得算法计算整数 GCD",
+    "description-en": "Euclid algorithm for integer GCD",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "number theory"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "a",
+      "b"
+    ],
+    "input_type": [
+      "int",
+      "int"
+    ],
+    "return": [
+      "g"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func gcd(a, b int) int {\n    if a < 0 { a = -a }\n    if b < 0 { b = -b }\n    for b != 0 { a, b = b, a % b }\n    return a\n}"
+    ]
+  },
+  {
+    "name-zh": "LCM",
+    "name-en": "LCM",
+    "description-zh": "计算整数 LCM",
+    "description-en": "Compute integer LCM",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "number theory"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "a",
+      "b"
+    ],
+    "input_type": [
+      "int",
+      "int"
+    ],
+    "return": [
+      "l"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func lcm(a, b int) int {\n    if a == 0 || b == 0 { return 0 }\n    return abs(a*b) / gcd(a, b)\n}\n\nfunc abs(x int) int { if x < 0 { return -x }; return x }"
+    ]
+  },
+  {
+    "name-zh": "Clamp",
+    "name-en": "Clamp",
+    "description-zh": "将数值限制在区间内",
+    "description-en": "Clamp value into [lo, hi]",
+    "dependencies": [],
+    "use_to": [
+      "math"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "x",
+      "lo",
+      "hi"
+    ],
+    "input_type": [
+      "float64",
+      "float64",
+      "float64"
+    ],
+    "return": [
+      "y"
+    ],
+    "return_type": [
+      "float64"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func clamp(x, lo, hi float64) float64 {\n    if x < lo { return lo }\n    if x > hi { return hi }\n    return x\n}"
+    ]
+  },
+  {
+    "name-zh": "Base64 编解码",
+    "name-en": "Base64 Encode/Decode",
+    "description-zh": "Base64 编解码字符串",
+    "description-en": "Base64 encode/decode string",
+    "dependencies": [
+      "encoding/base64"
+    ],
+    "use_to": [
+      "encoding"
+    ],
+    "tags": [
+      "basic",
+      "encoding"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "enc",
+      "dec",
+      "err"
+    ],
+    "return_type": [
+      "string",
+      "string",
+      "error"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "import \"encoding/base64\"\n\nfunc b64Encode(s string) string {\n    return base64.StdEncoding.EncodeToString([]byte(s))\n}\n\nfunc b64Decode(s string) (string, error) {\n    b, err := base64.StdEncoding.DecodeString(s)\n    return string(b), err\n}"
+    ]
+  },
+  {
+    "name-zh": "SHA-256",
+    "name-en": "SHA-256",
+    "description-zh": "计算字符串的 SHA-256 十六进制哈希",
+    "description-en": "Compute SHA-256 hex of string",
+    "dependencies": [
+      "crypto/sha256",
+      "encoding/hex"
+    ],
+    "use_to": [
+      "hash"
+    ],
+    "tags": [
+      "intermediate",
+      "hash"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "hex"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": [
+      "import (\n    \"crypto/sha256\"\n    \"encoding/hex\"\n)\n\nfunc sha256Hex(s string) string {\n    sum := sha256.Sum256([]byte(s))\n    return hex.EncodeToString(sum[:])\n}"
+    ]
+  },
+  {
+    "name-zh": "HTTP 客户端(超时)",
+    "name-en": "HTTP Client (timeout)",
+    "description-zh": "创建带超时的 http.Client",
+    "description-en": "Create http.Client with timeout",
+    "dependencies": [
+      "net/http",
+      "time"
+    ],
+    "use_to": [
+      "http",
+      "client"
+    ],
+    "tags": [
+      "network",
+      "http"
+    ],
+    "input": [
+      "ms"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "client"
+    ],
+    "return_type": [
+      "*http.Client"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "import (\n  \"net/http\"\n  \"time\"\n)\n\nfunc httpClientTimeout(ms int) *http.Client {\n  return &http.Client{ Timeout: time.Duration(ms) * time.Millisecond }\n}"
+    ]
+  },
+  {
+    "name-zh": "HTTP POST(JSON)",
+    "name-en": "HTTP POST (JSON)",
+    "description-zh": "POST JSON 并返回响应文本",
+    "description-en": "POST JSON and return response body text",
+    "dependencies": [
+      "net/http",
+      "bytes",
+      "time",
+      "io"
+    ],
+    "use_to": [
+      "http",
+      "json"
+    ],
+    "tags": [
+      "network",
+      "http",
+      "json"
+    ],
+    "input": [
+      "url",
+      "jsonBody",
+      "timeoutMs"
+    ],
+    "input_type": [
+      "string",
+      "[]byte",
+      "int"
+    ],
+    "return": [
+      "text",
+      "err"
+    ],
+    "return_type": [
+      "string",
+      "error"
+    ],
+    "timer_score": 70,
+    "memory_score": 85,
+    "code": [
+      "import (\n  \"bytes\"\n  \"io\"\n  \"net/http\"\n  \"time\"\n)\n\nfunc httpPostJSON(url string, jsonBody []byte, timeoutMs int) (string, error) {\n  client := &http.Client{ Timeout: time.Duration(timeoutMs) * time.Millisecond }\n  req, err := http.NewRequest(\"POST\", url, bytes.NewBuffer(jsonBody))\n  if err != nil { return \"\", err }\n  req.Header.Set(\"Content-Type\", \"application/json\")\n  resp, err := client.Do(req)\n  if err != nil { return \"\", err }\n  defer resp.Body.Close()\n  b, err := io.ReadAll(resp.Body)\n  if err != nil { return \"\", err }\n  return string(b), nil\n}"
+    ]
+  },
+  {
+    "name-zh": "构建查询参数",
+    "name-en": "Build Query Params",
+    "description-zh": "将 map[string]string 构建为 URL 查询串",
+    "description-en": "Build URL query string from map[string]string",
+    "dependencies": [
+      "net/url"
+    ],
+    "use_to": [
+      "url",
+      "string"
+    ],
+    "tags": [
+      "url",
+      "string"
+    ],
+    "input": [
+      "params"
+    ],
+    "input_type": [
+      "map[string]string"
+    ],
+    "return": [
+      "query"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "import \"net/url\"\n\nfunc buildQuery(params map[string]string) string {\n  v := url.Values{}\n  for k, val := range params { v.Set(k, val) }\n  return v.Encode()\n}"
+    ]
+  },
+  {
+    "name-zh": "Dijkstra最短路",
+    "name-en": "Dijkstra Shortest Path",
+    "description-zh": "在非负权图上用最小堆求单源最短路",
+    "description-en": "Single-source shortest path on non-negative graph using min-heap",
+    "dependencies": [
+      "container/heap"
+    ],
+    "use_to": [
+      "graph",
+      "shortest path"
+    ],
+    "tags": [
+      "graph",
+      "dijkstra",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "adj",
+      "src"
+    ],
+    "input_type": [
+      "int",
+      "[][][2]int",
+      "int"
+    ],
+    "return": [
+      "dist"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "// adj[u] = list of [v, w]\n// Dijkstra with min-heap\nimport \"container/heap\"\n\ntype pair struct{ d, u int }\n\ntype minHeap []pair\nfunc (h minHeap) Len() int { return len(h) }\nfunc (h minHeap) Less(i, j int) bool { return h[i].d < h[j].d }\nfunc (h minHeap) Swap(i, j int) { h[i], h[j] = h[j], h[i] }\nfunc (h *minHeap) Push(x any) { *h = append(*h, x.(pair)) }\nfunc (h *minHeap) Pop() any { old := *h; n := len(old); x := old[n-1]; *h = old[:n-1]; return x }\n\nfunc dijkstra(n int, adj [][][2]int, src int) []int {\n    const INF = int(1e9)\n    dist := make([]int, n)\n    for i := range dist { dist[i] = INF }\n    dist[src] = 0\n    h := &minHeap{}\n    heap.Init(h)\n    heap.Push(h, pair{0, src})\n    for h.Len() > 0 {\n        p := heap.Pop(h).(pair)\n        d, u := p.d, p.u\n        if d != dist[u] { continue }\n        for _, e := range adj[u] { v, w := e[0], e[1]; nd := d + w; if nd < dist[v] { dist[v] = nd; heap.Push(h, pair{nd, v}) } }\n    }\n    return dist\n}"
+    ]
+  },
+  {
+    "name-zh": "Kruskal最小生成树",
+    "name-en": "Kruskal Minimum Spanning Tree",
+    "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
+    "description-en": "Kruskal with DSU to compute MST total weight (-1 if disconnected)",
+    "dependencies": [],
+    "use_to": [
+      "graph",
+      "mst"
+    ],
+    "tags": [
+      "graph",
+      "mst",
+      "kruskal",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "edges"
+    ],
+    "input_type": [
+      "int",
+      "[][3]int"
+    ],
+    "return": [
+      "mstWeight"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 88,
+    "memory_score": 92,
+    "code": [
+      "// edges: [u,v,w]\nimport \"sort\"\n\ntype dsu struct{ p, r []int }\nfunc newDSU(n int) *dsu { p:=make([]int,n); r:=make([]int,n); for i:=0;i<n;i++{p[i]=i}; return &dsu{p,r} }\nfunc (d *dsu) find(x int) int { if d.p[x]==x { return x }; d.p[x]=d.find(d.p[x]); return d.p[x] }\nfunc (d *dsu) unite(a,b int) bool { a=d.find(a); b=d.find(b); if a==b { return false }; if d.r[a]<d.r[b] { a,b=b,a }; d.p[b]=a; if d.r[a]==d.r[b] { d.r[a]++ }; return true }\n\nfunc kruskalMST(n int, edges [][3]int) int {\n    sort.Slice(edges, func(i,j int){ return edges[i][2] < edges[j][2] })\n    d := newDSU(n)\n    total, cnt := 0, 0\n    for _, e := range edges { if d.unite(e[0], e[1]) { total += e[2]; cnt++; if cnt==n-1 { break } } }\n    if cnt != n-1 { return -1 }\n    return total\n}"
+    ]
+  },
+  {
+    "name-zh": "Bellman-Ford最短路",
+    "name-en": "Bellman-Ford Shortest Path",
+    "description-zh": "允许负边权的单源最短路；检测负环",
+    "description-en": "Single-source shortest path with negative edges; detect negative cycles",
+    "dependencies": [],
+    "use_to": [
+      "graph",
+      "shortest path"
+    ],
+    "tags": [
+      "graph",
+      "bellman-ford",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "edges",
+      "src"
+    ],
+    "input_type": [
+      "int",
+      "[][3]int",
+      "int"
+    ],
+    "return": [
+      "dist",
+      "hasNegCycle"
+    ],
+    "return_type": [
+      "[]int",
+      "bool"
+    ],
+    "timer_score": 70,
+    "memory_score": 85,
+    "code": [
+      "// edges: [u,v,w]\nfunc bellmanFord(n int, edges [][3]int, src int) ([]int, bool){\n    const INF = int(1e9)\n    dist := make([]int, n)\n    for i:=range dist { dist[i]=INF }\n    dist[src]=0\n    for i:=1; i<=n-1; i++ {\n        updated := false\n        for _, e := range edges { u,v,w := e[0], e[1], e[2]; if dist[u]!=INF && dist[u]+w<dist[v] { dist[v]=dist[u]+w; updated=true } }\n        if !updated { break }\n    }\n    for _, e := range edges { u,v,w := e[0], e[1], e[2]; if dist[u]!=INF && dist[u]+w<dist[v] { return dist, true } }\n    return dist, false\n}"
+    ]
+  },
+  {
+    "name-zh": "拓扑排序(Kahn)",
+    "name-en": "Topological Sort (Kahn)",
+    "description-zh": "入度法Kahn算法返回拓扑序列",
+    "description-en": "Kahn algorithm with indegrees to return topo order",
+    "dependencies": [],
+    "use_to": [
+      "graph",
+      "topological sort"
+    ],
+    "tags": [
+      "graph",
+      "topo",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "adj"
+    ],
+    "input_type": [
+      "int",
+      "[][]int"
+    ],
+    "return": [
+      "order"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 88,
+    "memory_score": 92,
+    "code": [
+      "func topoSortKahn(n int, adj [][]int) []int {\n    indeg := make([]int, n)\n    for u:=0; u<n; u++ { for _, v := range adj[u] { indeg[v]++ } }\n    q := make([]int,0)\n    for i:=0;i<n;i++ { if indeg[i]==0 { q = append(q,i) } }\n    order := make([]int,0,n)\n    for h:=0; h<len(q); h++ { u := q[h]; order = append(order,u); for _, v := range adj[u] { indeg[v]--; if indeg[v]==0 { q = append(q,v) } } }\n    return order\n}"
+    ]
+  },
+  {
+    "name-zh": "KMP字符串匹配",
+    "name-en": "KMP String Match",
+    "description-zh": "返回所有匹配起始下标",
+    "description-en": "Return all match start indices",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "string",
+      "kmp",
+      "algorithm"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "indices"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "func kmpSearch(text, pat string) []int {\n    n, m := len(text), len(pat)\n    if m==0 { return []int{} }\n    lps := make([]int, m)\n    for i, l := 1, 0; i < m; { if pat[i]==pat[l] { lps[i]=l+1; i++; l++; } else if l>0 { l=lps[l-1] } else { lps[i]=0; i++; } }\n    res := []int{}\n    for i, j := 0, 0; i < n; { if text[i]==pat[j] { i++; j++; if j==m { res = append(res, i-m); j=lps[j-1] } } else if j>0 { j=lps[j-1] } else { i++ } }\n    return res\n}"
+    ]
+  },
+  {
+    "name-zh": "Rabin-Karp字符串匹配",
+    "name-en": "Rabin-Karp String Match",
+    "description-zh": "滚动哈希匹配，返回所有位置",
+    "description-en": "Rolling-hash based matching, return all indices",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "string",
+      "rabin-karp",
+      "algorithm"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "indices"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": [
+      "func rabinKarp(text, pat string) []int {\n    n, m := len(text), len(pat)\n    if m==0 || m>n { return []int{} }\n    const B, MOD = 131, 1000000007\n    powB := 1\n    for i:=0; i<m-1; i++ { powB = (powB*B)%MOD }\n    hpat, hwin := 0, 0\n    for i:=0; i<m; i++ { hpat=(hpat*B+int(pat[i]))%MOD; hwin=(hwin*B+int(text[i]))%MOD }\n    out := []int{}\n    for i:=0; i<=n-m; i++ {\n        if hpat==hwin && text[i:i+m]==pat { out = append(out, i) }\n        if i<n-m { hwin = ((hwin - int(text[i])*powB)%MOD + MOD)%MOD; hwin = (hwin*B + int(text[i+m]))%MOD }\n    }\n    return out\n}"
+    ]
+  },
+  {
+    "name-zh": "埃拉托斯特尼筛法",
+    "name-en": "Sieve of Eratosthenes",
+    "description-zh": "在[2,n]内标记素数",
+    "description-en": "Mark primes in [2,n]",
+    "dependencies": [],
+    "use_to": [
+      "prime",
+      "number theory"
+    ],
+    "tags": [
+      "math",
+      "prime",
+      "sieve",
+      "algorithm"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "isPrime"
+    ],
+    "return_type": [
+      "[]bool"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "func sieveIsPrime(n int) []bool {\n    is := make([]bool, n+1)\n    for i:=range is { is[i]=true }\n    if n>=0 { is[0]=false }\n    if n>=1 { is[1]=false }\n    for p:=2; p*p<=n; p++ { if is[p] { for x:=p*p; x<=n; x+=p { is[x]=false } } }\n    return is\n}"
+    ]
+  },
+  {
+    "name-zh": "编辑距离(Levenshtein)",
+    "name-en": "Levenshtein Edit Distance",
+    "description-zh": "动态规划计算编辑距离(滚动数组)",
+    "description-en": "DP edit distance with rolling array",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "dynamic programming"
+    ],
+    "tags": [
+      "dp",
+      "string",
+      "edit distance"
+    ],
+    "input": [
+      "a",
+      "b"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "distance"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 85,
+    "memory_score": 88,
+    "code": [
+      "func editDistance(a, b string) int {\n    m, n := len(a), len(b)\n    prev := make([]int, n+1)\n    cur := make([]int, n+1)\n    for j:=0; j<=n; j++ { prev[j]=j }\n    for i:=1; i<=m; i++ {\n        cur[0]=i; ai:=a[i-1]\n        for j:=1; j<=n; j++ {\n            cost := 0; if ai!=b[j-1] { cost=1 }\n            del:=prev[j]+1; ins:=cur[j-1]+1; rep:=prev[j-1]+cost\n            cur[j]=min3(del,ins,rep)\n        }\n        prev,cur = cur,prev\n    }\n    return prev[n]\n}\nfunc min3(a,b,c int) int { if a<b { if a<c { return a }; return c } else { if b<c { return b }; return c } }"
+    ]
+  },
+  {
+    "name-zh": "最长上升子序列O(n log n)",
+    "name-en": "LIS O(n log n)",
+    "description-zh": "耐心排序+二分求LIS长度",
+    "description-en": "Patience sorting + binary search for LIS length",
+    "dependencies": [],
+    "use_to": [
+      "sequence",
+      "dynamic programming"
+    ],
+    "tags": [
+      "dp",
+      "lis",
+      "algorithm"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "length"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 92,
+    "memory_score": 92,
+    "code": [
+      "func lisLength(a []int) int {\n    tails := make([]int, 0, len(a))\n    for _, x := range a {\n        i := lowerBound(tails, x)\n        if i==len(tails) { tails = append(tails, x) } else { tails[i]=x }\n    }\n    return len(tails)\n}\nfunc lowerBound(a []int, x int) int {\n    l, r := 0, len(a)\n    for l<r { m:=(l+r)/2; if a[m]>=x { r=m } else { l=m+1 } }\n    return l\n}"
+    ]
+  },
+  {
+    "name-zh": "快速选择第k小",
+    "name-en": "Quickselect k-th",
+    "description-zh": "平均线性时间找到第k小(1<=k<=n)",
+    "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
+    "dependencies": [],
+    "use_to": [
+      "selection",
+      "order statistics"
+    ],
+    "tags": [
+      "algorithm",
+      "divide-conquer"
+    ],
+    "input": [
+      "arr",
+      "k"
+    ],
+    "input_type": [
+      "[]int",
+      "int"
+    ],
+    "return": [
+      "kth"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "func quickselect(a []int, k int) int { // k: 1-based\n    l, r := 0, len(a)-1; k--\n    for l<=r {\n        pivot := a[r]; i := l\n        for j:=l; j<r; j++ { if a[j]<=pivot { a[i],a[j]=a[j],a[i]; i++ } }\n        a[i],a[r]=a[r],a[i]\n        if i==k { return a[i] } else if i>k { r=i-1 } else { l=i+1 }\n    }\n    panic(\"k out of range\")\n}"
+    ]
+  },
+  {
+    "name-zh": "二分查找(有序切片)",
+    "name-en": "Binary Search (sorted slice)",
+    "description-zh": "在升序有序切片中查找目标值，找到返回下标，否则返回-1",
+    "description-en": "Binary search in ascending sorted slice; return index or -1",
+    "dependencies": [],
+    "use_to": [
+      "search",
+      "array"
+    ],
+    "tags": [
+      "basic",
+      "algorithm",
+      "binary-search"
+    ],
+    "input": [
+      "a",
+      "target"
+    ],
+    "input_type": [
+      "[]int",
+      "int"
+    ],
+    "return": [
+      "idx"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func binarySearchInt(a []int, target int) int {\n    l, r := 0, len(a)-1\n    for l <= r {\n        m := (l + r) / 2\n        if a[m] == target { return m }\n        if a[m] < target { l = m + 1 } else { r = m - 1 }\n    }\n    return -1\n}"
+    ]
+  },
+  {
+    "name-zh": "归并排序(整数)",
+    "name-en": "Merge Sort (int)",
+    "description-zh": "使用归并排序返回新有序切片(稳定)",
+    "description-en": "Return new sorted slice using stable merge sort",
+    "dependencies": [],
+    "use_to": [
+      "sorting"
+    ],
+    "tags": [
+      "algorithm",
+      "sorting"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "b"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 90,
+    "memory_score": 85,
+    "code": [
+      "func mergeSortInt(a []int) []int {\n    n := len(a)\n    if n <= 1 { return append([]int(nil), a...) }\n    m := n/2\n    left := mergeSortInt(a[:m])\n    right := mergeSortInt(a[m:])\n    return mergeInt(left, right)\n}\nfunc mergeInt(a, b []int) []int {\n    res := make([]int, 0, len(a)+len(b))\n    i, j := 0, 0\n    for i < len(a) && j < len(b) {\n        if a[i] <= b[j] { res = append(res, a[i]); i++ } else { res = append(res, b[j]); j++ }\n    }\n    res = append(res, a[i:]...)\n    res = append(res, b[j:]...)\n    return res\n}"
+    ]
+  },
+  {
+    "name-zh": "Fenwick树(树状数组)",
+    "name-en": "Fenwick Tree (BIT)",
+    "description-zh": "支持区间前缀和与单点修改的数据结构",
+    "description-en": "Data structure supporting prefix sums and point updates",
+    "dependencies": [],
+    "use_to": [
+      "prefix sum",
+      "data structure"
+    ],
+    "tags": [
+      "fenwick",
+      "bit",
+      "data-structure"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "fenwick"
+    ],
+    "return_type": [
+      "Fenwick"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "type Fenwick struct {\n    n int\n    t []int\n}\nfunc NewFenwick(n int) Fenwick { return Fenwick{ n: n, t: make([]int, n+1) } }\nfunc (f *Fenwick) Add(i, delta int) {\n    for i += 1; i <= f.n; i += i & -i { f.t[i] += delta }\n}\nfunc (f *Fenwick) Sum(i int) int { // sum of [0..i]\n    s := 0\n    for i += 1; i > 0; i -= i & -i { s += f.t[i] }\n    return s\n}\nfunc (f *Fenwick) RangeSum(l, r int) int { if r < l { return 0 }; return f.Sum(r) - f.Sum(l-1) }"
+    ]
+  },
+  {
+    "name-zh": "BFS最短步数(无权图)",
+    "name-en": "BFS shortest steps (unweighted)",
+    "description-zh": "无权图单源最短步数，无法到达返回-1",
+    "description-en": "Single-source shortest steps in unweighted graph; -1 if unreachable",
+    "dependencies": [],
+    "use_to": [
+      "graph",
+      "shortest path"
+    ],
+    "tags": [
+      "graph",
+      "bfs",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "adj",
+      "src"
+    ],
+    "input_type": [
+      "int",
+      "[][]int",
+      "int"
+    ],
+    "return": [
+      "dist"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "func bfsDist(n int, adj [][]int, src int) []int {\n    dist := make([]int, n)\n    for i:=range dist { dist[i] = -1 }\n    q := make([]int, 1, n)\n    q[0] = src\n    dist[src] = 0\n    for h:=0; h<len(q); h++ {\n        u := q[h]\n        for _, v := range adj[u] {\n            if dist[v] == -1 { dist[v] = dist[u] + 1; q = append(q, v) }\n        }\n    }\n    return dist\n}"
+    ]
+  },
+  {
+    "name-zh": "0-1 BFS",
+    "name-en": "0-1 BFS",
+    "description-zh": "边权为0或1的图上求单源最短路",
+    "description-en": "Single-source shortest path on graph with edge weights 0 or 1",
+    "dependencies": [
+      "container/list"
+    ],
+    "use_to": [
+      "graph",
+      "shortest path"
+    ],
+    "tags": [
+      "graph",
+      "bfs",
+      "zero-one",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "adj",
+      "src"
+    ],
+    "input_type": [
+      "int",
+      "[][][2]int",
+      "int"
+    ],
+    "return": [
+      "dist"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 90,
+    "memory_score": 92,
+    "code": [
+      "// adj[u] = list of [v, w] where w in {0,1}\nimport \"container/list\"\n\nfunc zeroOneBFS(n int, adj [][][2]int, src int) []int {\n    const INF = int(1e9)\n    dist := make([]int, n)\n    for i:=range dist { dist[i]=INF }\n    dist[src]=0\n    dq := list.New()\n    dq.PushBack(src)\n    for dq.Len() > 0 {\n        front := dq.Front(); dq.Remove(front)\n        u := front.Value.(int)\n        for _, e := range adj[u] { v, w := e[0], e[1]\n            if dist[u]+w < dist[v] {\n                dist[v] = dist[u]+w\n                if w==0 { dq.PushFront(v) } else { dq.PushBack(v) }\n            }\n        }\n    }\n    return dist\n}"
+    ]
+  },
+  {
+    "name-zh": "Floyd-Warshall全源最短路",
+    "name-en": "Floyd-Warshall APSP",
+    "description-zh": "基于DP的全源最短路算法，支持负边但不支持负环",
+    "description-en": "All-pairs shortest paths using DP; supports negative edges but not negative cycles",
+    "dependencies": [],
+    "use_to": [
+      "graph",
+      "shortest path"
+    ],
+    "tags": [
+      "graph",
+      "floyd-warshall",
+      "algorithm"
+    ],
+    "input": [
+      "dist"
+    ],
+    "input_type": [
+      "[][]int"
+    ],
+    "return": [
+      "dist"
+    ],
+    "return_type": [
+      "[][]int"
+    ],
+    "timer_score": 70,
+    "memory_score": 80,
+    "code": [
+      "// dist is n x n matrix; use a big INF for no edge\nfunc floydWarshall(dist [][]int) [][]int {\n    n := len(dist)\n    d := make([][]int, n)\n    for i:=0;i<n;i++ { d[i] = append([]int(nil), dist[i]...) }\n    for k:=0;k<n;k++ {\n        for i:=0;i<n;i++ { if d[i][k] == int(1e9) { continue }\n            for j:=0;j<n;j++ { if d[k][j] == int(1e9) { continue }\n                if nd := d[i][k] + d[k][j]; nd < d[i][j] { d[i][j] = nd }\n            }\n        }\n    }\n    return d\n}"
+    ]
+  },
+  {
+    "name-zh": "前缀和(含0位)",
+    "name-en": "Prefix sums (with 0)",
+    "description-zh": "返回长度为n+1的前缀和数组，ps[0]=0，ps[i]=a[0..i-1]之和",
+    "description-en": "Return prefix sums of length n+1: ps[0]=0, ps[i]=sum a[0..i-1]",
+    "dependencies": [],
+    "use_to": [
+      "prefix sum",
+      "array"
+    ],
+    "tags": [
+      "array",
+      "prefix"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "ps"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func prefixSums(a []int) []int {\n    ps := make([]int, len(a)+1)\n    for i:=1; i<=len(a); i++ { ps[i] = ps[i-1] + a[i-1] }\n    return ps\n}"
+    ]
+  },
+  {
+    "name-zh": "最长无重复子串长度",
+    "name-en": "Length of Longest Substring (no repeat)",
+    "description-zh": "滑动窗口计算最长无重复字符子串的长度(按字节)",
+    "description-en": "Sliding window length of longest substring without repeating characters (by byte)",
+    "dependencies": [],
+    "use_to": [
+      "string"
+    ],
+    "tags": [
+      "string",
+      "sliding-window",
+      "algorithm"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "length"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "func lengthOfLongestSubstring(s string) int {\n    last := make(map[byte]int)\n    best, l := 0, 0\n    for r := 0; r < len(s); r++ {\n        if idx, ok := last[s[r]]; ok && idx >= l { l = idx + 1 }\n        last[s[r]] = r\n        if cur := r - l + 1; cur > best { best = cur }\n    }\n    return best\n}"
+    ]
+  },
+  {
+    "name-zh": "快速幂(取模)",
+    "name-en": "Fast Power (mod)",
+    "description-zh": "二分快速幂计算 a^e mod m",
+    "description-en": "Binary exponentiation: compute a^e mod m",
+    "dependencies": [],
+    "use_to": [
+      "number theory",
+      "mod"
+    ],
+    "tags": [
+      "math",
+      "pow",
+      "mod"
+    ],
+    "input": [
+      "a",
+      "e",
+      "m"
+    ],
+    "input_type": [
+      "int64",
+      "int64",
+      "int64"
+    ],
+    "return": [
+      "res"
+    ],
+    "return_type": [
+      "int64"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func modPow(a, e, m int64) int64 {\n    a %= m\n    if a < 0 { a += m }\n    res := int64(1)\n    for e > 0 {\n        if e & 1 == 1 { res = (res * a) % m }\n        a = (a * a) % m\n        e >>= 1\n    }\n    return res\n}"
+    ]
+  },
+  {
+    "name-zh": "扩展GCD/模逆",
+    "name-en": "Extended GCD / Mod Inverse",
+    "description-zh": "扩展欧几里得求 ax+by=gcd(a,b)，并据此求模逆(若存在)",
+    "description-en": "Extended Euclid to get ax+by=gcd(a,b) and modular inverse if gcd=1",
+    "dependencies": [],
+    "use_to": [
+      "number theory",
+      "mod"
+    ],
+    "tags": [
+      "math",
+      "egcd",
+      "inverse"
+    ],
+    "input": [
+      "a",
+      "b",
+      "m"
+    ],
+    "input_type": [
+      "int64",
+      "int64",
+      "int64"
+    ],
+    "return": [
+      "g",
+      "x",
+      "y",
+      "inv"
+    ],
+    "return_type": [
+      "int64",
+      "int64",
+      "int64",
+      "int64"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "func egcd(a, b int64) (g, x, y int64) {\n    if b == 0 { return a, 1, 0 }\n    g1, x1, y1 := egcd(b, a%b)\n    return g1, y1, x1 - (a/b)*y1\n}\nfunc modInverse(a, m int64) int64 {\n    g, x, _ := egcd(a, m)\n    if g != 1 && g != -1 { return -1 }\n    x %= m\n    if x < 0 { x += m }\n    return x\n}"
+    ]
+  },
+  {
+    "name-zh": "线段树(区间和, 单点更新)",
+    "name-en": "Segment Tree (range sum)",
+    "description-zh": "支持区间和查询与单点更新的线段树",
+    "description-en": "Segment tree supporting range-sum query and point update",
+    "dependencies": [],
+    "use_to": [
+      "data structure",
+      "range query"
+    ],
+    "tags": [
+      "data-structure",
+      "segment-tree"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [],
+    "return_type": [],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "type SegTree struct { n int; t []int }\nfunc NewSegTree(a []int) *SegTree { n0:=len(a); n:=1; for n<n0 { n<<=1 }; t:=make([]int, n<<1); for i:=0;i<n0;i++{ t[n+i]=a[i] }; for i:=n-1;i>0;i--{ t[i]=t[i<<1]+t[i<<1|1] }; return &SegTree{n:n, t:t} }\nfunc (s *SegTree) PointUpdate(i, val int){ p:=s.n+i; s.t[p]=val; for p>>=1; p>0; p>>=1 { s.t[p]=s.t[p<<1]+s.t[p<<1|1] } }\nfunc (s *SegTree) RangeSum(l, r int) int { l+=s.n; r+=s.n; res:=0; for l<=r { if (l&1)==1 { res+=s.t[l]; l++ } ; if (r&1)==0 { res+=s.t[r]; r-- } ; l>>=1; r>>=1 } ; return res }"
+    ]
+  },
+  {
+    "name-zh": "并查集(独立结构)",
+    "name-en": "Disjoint Set Union (standalone)",
+    "description-zh": "带路径压缩与按秩合并的并查集，支持Find/Unite/Same",
+    "description-en": "Union-Find with path compression and union by rank; supports Find/Unite/Same",
+    "dependencies": [],
+    "use_to": [
+      "data structure",
+      "union-find"
+    ],
+    "tags": [
+      "data-structure",
+      "dsu",
+      "union-find"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [],
+    "return_type": [],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "type DSU struct { p, r []int }\nfunc NewDSU(n int) *DSU { p:=make([]int,n); r:=make([]int,n); for i:=0;i<n;i++{ p[i]=i }; return &DSU{p,r} }\nfunc (d *DSU) Find(x int) int { if d.p[x]==x { return x }; d.p[x]=d.Find(d.p[x]); return d.p[x] }\nfunc (d *DSU) Unite(a, b int) bool { a=d.Find(a); b=d.Find(b); if a==b { return false }; if d.r[a]<d.r[b] { a,b=b,a }; d.p[b]=a; if d.r[a]==d.r[b] { d.r[a]++ }; return true }\nfunc (d *DSU) Same(a, b int) bool { return d.Find(a)==d.Find(b) }"
+    ]
+  },
+  {
+    "name-zh": "Modbus CRC16",
+    "name-en": "Modbus CRC16",
+    "description-zh": "计算 Modbus CRC16，返回小端2字节",
+    "description-en": "Compute Modbus CRC16, return 2 bytes little-endian",
+    "dependencies": [],
+    "use_to": [
+      "hardware",
+      "modbus",
+      "crc"
+    ],
+    "tags": [
+      "checksum",
+      "crc16",
+      "modbus"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "[]byte"
+    ],
+    "return": [
+      "crcLE"
+    ],
+    "return_type": [
+      "[]byte"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func ModbusCRC16(data []byte) []byte {\n    crc := uint16(0xFFFF)\n    for _, b := range data {\n        crc ^= uint16(b)\n        for i := 0; i < 8; i++ {\n            if (crc & 1) != 0 {\n                crc = (crc >> 1) ^ 0xA001\n            } else {\n                crc >>= 1\n            }\n        }\n    }\n    return []byte{byte(crc & 0xFF), byte(crc >> 8)}\n}"
+    ]
+  },
+  {
+    "name-zh": "CRC32(IEEE)",
+    "name-en": "CRC32 (IEEE)",
+    "description-zh": "计算 CRC-32(IEEE) 并以大端4字节返回",
+    "description-en": "Compute CRC-32 (IEEE) and return 4 bytes big-endian",
+    "dependencies": [
+      "hash/crc32"
+    ],
+    "use_to": [
+      "hardware",
+      "crc",
+      "checksum"
+    ],
+    "tags": [
+      "checksum",
+      "crc32",
+      "ieee"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "[]byte"
+    ],
+    "return": [
+      "crcBE"
+    ],
+    "return_type": [
+      "[]byte"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "import \"hash/crc32\"\n\nfunc CRC32IEEE(data []byte) []byte {\n    v := crc32.ChecksumIEEE(data)\n    return []byte{byte(v >> 24), byte(v >> 16), byte(v >> 8), byte(v)}\n}"
+    ]
+  },
+  {
+    "name-zh": "Sum8 校验",
+    "name-en": "Sum8 Checksum",
+    "description-zh": "对所有字节求和取低8位(0..255)",
+    "description-en": "Sum of all bytes modulo 256 (0..255)",
+    "dependencies": [],
+    "use_to": [
+      "hardware",
+      "checksum"
+    ],
+    "tags": [
+      "checksum",
+      "sum8"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "[]byte"
+    ],
+    "return": [
+      "sum8"
+    ],
+    "return_type": [
+      "byte"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func ChecksumSum8(data []byte) byte {\n    var s uint32\n    for _, b := range data { s += uint32(b) }\n    return byte(s & 0xFF)\n}"
+    ]
+  },
+  {
+    "name-zh": "LRC8 校验",
+    "name-en": "LRC8 Checksum",
+    "description-zh": "纵向冗余校验(LRC)，使 (sum + LRC) & 0xFF == 0",
+    "description-en": "Longitudinal Redundancy Check so that (sum + LRC) & 0xFF == 0",
+    "dependencies": [],
+    "use_to": [
+      "hardware",
+      "checksum"
+    ],
+    "tags": [
+      "checksum",
+      "lrc"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "[]byte"
+    ],
+    "return": [
+      "lrc"
+    ],
+    "return_type": [
+      "byte"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func LRC8(data []byte) byte {\n    var s uint32\n    for _, b := range data { s += uint32(b) }\n    return byte((-int32(s)) & 0xFF)\n}"
+    ]
+  },
+  {
+    "name-zh": "异或校验",
+    "name-en": "XOR Checksum",
+    "description-zh": "逐字节异或校验，返回0..255",
+    "description-en": "Byte-wise XOR checksum, returns 0..255",
+    "dependencies": [],
+    "use_to": [
+      "hardware",
+      "checksum"
+    ],
+    "tags": [
+      "checksum",
+      "xor"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "[]byte"
+    ],
+    "return": [
+      "xor"
+    ],
+    "return_type": [
+      "byte"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func ChecksumXOR(data []byte) byte {\n    var x byte\n    for _, b := range data { x ^= b }\n    return x\n}"
+    ]
+  },
+  {
+    "name-zh": "奇偶校验位",
+    "name-en": "Parity Bit",
+    "description-zh": "计算一个字节的奇/偶校验位；odd=true为奇校验",
+    "description-en": "Compute parity bit for one byte; odd=true for odd parity",
+    "dependencies": [],
+    "use_to": [
+      "hardware",
+      "parity",
+      "serial"
+    ],
+    "tags": [
+      "parity",
+      "bit"
+    ],
+    "input": [
+      "b",
+      "odd"
+    ],
+    "input_type": [
+      "byte",
+      "bool"
+    ],
+    "return": [
+      "parity"
+    ],
+    "return_type": [
+      "byte"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "func ParityBit(b byte, odd bool) byte {\n    ones := 0\n    for i := 0; i < 8; i++ { if ((b>>uint(i)) & 1) == 1 { ones++ } }\n    if odd { return byte((ones & 1) ^ 1) }\n    return byte(ones & 1)\n}"
+    ]
+  },
+  {
+    "name-zh": "最小栈(MinStack)",
+    "name-en": "Min Stack",
+    "description-zh": "支持O(1)获取最小值的栈，双栈实现",
+    "description-en": "Stack with O(1) getMin implemented by two slices",
+    "dependencies": [],
+    "use_to": [
+      "data structure",
+      "stack"
+    ],
+    "tags": [
+      "data-structure",
+      "stack",
+      "minstack"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [],
+    "return_type": [],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "type MinStack struct { s []int; mn []int }\nfunc NewMinStack() *MinStack { return &MinStack{s:make([]int,0), mn:make([]int,0)} }\nfunc (m *MinStack) Push(x int){ m.s = append(m.s, x); if len(m.mn)==0 || x <= m.mn[len(m.mn)-1] { m.mn = append(m.mn, x) } }\nfunc (m *MinStack) Pop() int { x := m.s[len(m.s)-1]; m.s = m.s[:len(m.s)-1]; if x == m.mn[len(m.mn)-1] { m.mn = m.mn[:len(m.mn)-1] }; return x }\nfunc (m *MinStack) Top() int { return m.s[len(m.s)-1] }\nfunc (m *MinStack) GetMin() int { return m.mn[len(m.mn)-1] }\nfunc (m *MinStack) IsEmpty() bool { return len(m.s)==0 }"
+    ]
+  },
+  {
+    "name-zh": "切片映射",
+    "name-en": "Slice Map",
+    "description-zh": "对切片元素执行函数转换",
+    "description-en": "Map slice elements through function",
+    "dependencies": [],
+    "use_to": [
+      "slice"
+    ],
+    "tags": [
+      "basic",
+      "slice"
+    ],
+    "input": [
+      "s",
+      "mapper"
+    ],
+    "input_type": [
+      "[]int",
+      "func(int)int"
+    ],
+    "return": [
+      "mapped"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "func mapSlice(nums []int, f func(int) int) []int {\n    result := make([]int, len(nums))\n    for i, num := range nums {\n        result[i] = f(num)\n    }\n    return result\n}"
+    ]
+  },
+  {
+    "name-zh": "快速排序",
+    "name-en": "Quick Sort",
+    "description-zh": "原地快速排序",
+    "description-en": "In-place quick sort",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "func quickSort(a []int) []int {\n    if len(a) <= 1 { return a }\n    pivot := a[len(a)/2]\n    var l, r []int\n    for _, v := range a {\n        if v < pivot { l = append(l, v) } else if v > pivot { r = append(r, v) }\n    }\n    l = quickSort(l)\n    r = quickSort(r)\n    return append(append(l, pivot), r...)\n}"
+    ]
+  },
+  {
+    "name-zh": "归并排序",
+    "name-en": "Merge Sort",
+    "description-zh": "自顶向下归并排序",
+    "description-en": "Top-down merge sort",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 80,
+    "memory_score": 75,
+    "code": [
+      "func mergeSort(a []int) []int {\n    if len(a) <= 1 { return a }\n    m := len(a) / 2\n    l := mergeSort(a[:m])\n    r := mergeSort(a[m:])\n    return merge(l, r)\n}\nfunc merge(l, r []int) []int {\n    res := make([]int, 0, len(l)+len(r))\n    i, j := 0, 0\n    for i < len(l) && j < len(r) {\n        if l[i] < r[j] { res = append(res, l[i]); i++ } else { res = append(res, r[j]); j++ }\n    }\n    res = append(res, l[i:]...)\n    res = append(res, r[j:]...)\n    return res\n}"
+    ]
+  },
+  {
+    "name-zh": "二分查找",
+    "name-en": "Binary Search",
+    "description-zh": "有序切片二分查找",
+    "description-en": "Binary search in sorted slice",
+    "dependencies": [],
+    "use_to": [
+      "search",
+      "algorithm"
+    ],
+    "tags": [
+      "search",
+      "algorithm"
+    ],
+    "input": [
+      "a",
+      "target"
+    ],
+    "input_type": [
+      "[]int",
+      "int"
+    ],
+    "return": [
+      "index"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "func binarySearch(a []int, target int) int {\n    l, r := 0, len(a)-1\n    for l <= r {\n        m := l + r >> 1\n        if a[m] == target { return m } else if a[m] < target { l = m + 1 } else { r = m - 1 }\n    }\n    return -1\n}"
+    ]
+  },
+  {
+    "name-zh": "栈封装",
+    "name-en": "Stack",
+    "description-zh": "泛型栈，支持 push/pop/peek",
+    "description-en": "Generic stack with push/pop/peek",
+    "dependencies": [],
+    "use_to": [
+      "stack",
+      "data structure"
+    ],
+    "tags": [
+      "stack",
+      "data structure"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "stack"
+    ],
+    "return_type": [
+      "Stack"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "type Stack[T any] struct { arr []T }\nfunc (s *Stack[T]) Push(v T) { s.arr = append(s.arr, v) }\nfunc (s *Stack[T]) Pop() T { v := s.arr[len(s.arr)-1]; s.arr = s.arr[:len(s.arr)-1]; return v }\nfunc (s *Stack[T]) Peek() T { return s.arr[len(s.arr)-1] }\nfunc (s *Stack[T]) IsEmpty() bool { return len(s.arr) == 0 }\nfunc (s *Stack[T]) Size() int { return len(s.arr) }"
+    ]
+  },
+  {
+    "name-zh": "队列封装",
+    "name-en": "Queue",
+    "description-zh": "FIFO 队列封装",
+    "description-en": "FIFO queue",
+    "dependencies": [],
+    "use_to": [
+      "queue",
+      "data structure"
+    ],
+    "tags": [
+      "queue",
+      "data structure"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "queue"
+    ],
+    "return_type": [
+      "Queue"
+    ],
+    "timer_score": 90,
+    "memory_score": 85,
+    "code": [
+      "type Queue[T any] struct { arr []T }\nfunc (q *Queue[T]) Enqueue(v T) { q.arr = append(q.arr, v) }\nfunc (q *Queue[T]) Dequeue() T { v := q.arr[0]; q.arr = q.arr[1:]; return v }\nfunc (q *Queue[T]) Peek() T { return q.arr[0] }\nfunc (q *Queue[T]) IsEmpty() bool { return len(q.arr) == 0 }\nfunc (q *Queue[T]) Size() int { return len(q.arr) }"
+    ]
+  },
+  {
+    "name-zh": "有序集合（跳表）",
+    "name-en": "Sorted Set (SkipList)",
+    "description-zh": "基于 map 的简化有序集合",
+    "description-en": "Simplified sorted set using map",
+    "dependencies": [],
+    "use_to": [
+      "data structure",
+      "set"
+    ],
+    "tags": [
+      "data structure",
+      "set"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "sortedset"
+    ],
+    "return_type": [
+      "SortedSet"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "type SortedSet struct {\n    m map[int]bool\n    s []int\n}\nfunc NewSortedSet() *SortedSet { return &SortedSet{m: make(map[int]bool), s: []int{}} }\nfunc (ss *SortedSet) Add(v int) { if !ss.m[v] { ss.m[v] = true; ss.s = append(ss.s, v); sort.Ints(ss.s) } }\nfunc (ss *SortedSet) Has(v int) bool { return ss.m[v] }\nfunc (ss *SortedSet) Remove(v int) { if ss.m[v] { delete(ss.m, v); i := sort.SearchInts(ss.s, v); ss.s = append(ss.s[:i], ss.s[i+1:]...) } }\nfunc (ss *SortedSet) Len() int { return len(ss.m) }\nfunc (ss *SortedSet) Slice() []int { return ss.s }"
+    ]
+  },
+  {
+    "name-zh": "定时器",
+    "name-en": "Timer",
+    "description-zh": "记录代码执行时间",
+    "description-en": "Measure code execution time",
+    "dependencies": [
+      "time"
+    ],
+    "use_to": [
+      "time",
+      "benchmark"
+    ],
+    "tags": [
+      "time",
+      "basic"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "elapsed"
+    ],
+    "return_type": [
+      "time.Duration"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "import \"time\"\ntype Timer struct{ t time.Time }\nfunc NewTimer() *Timer { return &Timer{time.Now()} }\nfunc (t *Timer) Elapsed() time.Duration { return time.Since(t.t) }\nfunc (t *Timer) Reset() { t.t = time.Now() }"
+    ]
+  },
+  {
+    "name-zh": "限流器",
+    "name-en": "Rate Limiter",
+    "description-zh": "简单令牌桶限流器",
+    "description-en": "Simple token-bucket rate limiter",
+    "dependencies": [
+      "time"
+    ],
+    "use_to": [
+      "concurrency",
+      "rate limit"
+    ],
+    "tags": [
+      "intermediate",
+      "concurrency"
+    ],
+    "input": [
+      "rate",
+      "burst"
+    ],
+    "input_type": [
+      "float64",
+      "int"
+    ],
+    "return": [
+      "allow"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "import \"time\"\ntype RateLimiter struct {\n    rate float64\n    burst int\n    tokens float64\n    last time.Time\n}\nfunc NewRateLimiter(rate float64, burst int) *RateLimiter {\n    return &RateLimiter{rate: rate, burst: burst, tokens: float64(burst), last: time.Now()}\n}\nfunc (rl *RateLimiter) Allow() bool {\n    now := time.Now()\n    elapsed := now.Sub(rl.last).Seconds()\n    rl.last = now\n    rl.tokens += elapsed * rl.rate\n    if rl.tokens > float64(rl.burst) { rl.tokens = float64(rl.burst) }\n    if rl.tokens >= 1 { rl.tokens--; return true }\n    return false\n}"
+    ]
+  },
+  {
+    "name-zh": "信号通道",
+    "name-en": "Signal Channel",
+    "description-zh": "优雅处理系统信号",
+    "description-en": "Gracefully handle OS signals",
+    "dependencies": [
+      "os",
+      "syscall",
+      "signal"
+    ],
+    "use_to": [
+      "signal",
+      "system"
+    ],
+    "tags": [
+      "intermediate",
+      "system"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "done"
+    ],
+    "return_type": [
+      "<-chan os.Signal"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "import (\n    \"os\"\n    \"syscall\"\n    \"os/signal\"\n)\nfunc sigChan() <-chan os.Signal {\n    ch := make(chan os.Signal, 1)\n    signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)\n    return ch\n}"
+    ]
+  },
+  {
+    "name-zh": "解析命令行参数",
+    "name-en": "Parse CLI Args",
+    "description-zh": "简单解析命令行键值参数",
+    "description-en": "Simple key-value CLI argument parser",
+    "dependencies": [
+      "flag"
+    ],
+    "use_to": [
+      "cli",
+      "args"
+    ],
+    "tags": [
+      "basic",
+      "cli"
+    ],
+    "input": [
+      "args"
+    ],
+    "input_type": [
+      "[]string"
+    ],
+    "return": [
+      "params"
+    ],
+    "return_type": [
+      "map[string]string"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "import \"flag\"\nfunc parseArgs(args []string) map[string]string {\n    m := make(map[string]string)\n    for _, a := range args {\n        if strings.HasPrefix(a, \"--\") {\n            kv := strings.SplitN(a[2:], \"=\", 2)\n            if len(kv) == 2 { m[kv[0]] = kv[1] }\n        }\n    }\n    return m\n}"
+    ]
+  },
+  {
+    "name-zh": "日志记录器",
+    "name-en": "Logger",
+    "description-zh": "简单日志记录器，支持 info/error/debug 级别",
+    "description-en": "Simple logger with info/error/debug levels",
+    "dependencies": [
+      "log",
+      "time"
+    ],
+    "use_to": [
+      "logging",
+      "debug"
+    ],
+    "tags": [
+      "basic",
+      "logging"
+    ],
+    "input": [
+      "level",
+      "msg"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "log"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "import \"log\"\ntype Logger struct {\n    prefix string\n}\nfunc NewLogger(prefix string) *Logger { return &Logger{prefix: prefix} }\nfunc (l *Logger) Info(msg string) { log.Printf(\"[INFO] %s %s\", l.prefix, msg) }\nfunc (l *Logger) Error(msg string) { log.Printf(\"[ERROR] %s %s\", l.prefix, msg) }\nfunc (l *Logger) Debug(msg string) { log.Printf(\"[DEBUG] %s %s\", l.prefix, msg) }"
+    ]
+  },
+  {
+    "name-zh": "配置解析",
+    "name-en": "Parse Config (INI)",
+    "description-zh": "简单解析 INI 格式配置文件",
+    "description-en": "Simple INI config file parser",
+    "dependencies": [
+      "bufio",
+      "strings"
+    ],
+    "use_to": [
+      "config",
+      "file"
+    ],
+    "tags": [
+      "intermediate",
+      "config"
+    ],
+    "input": [
+      "content"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "config"
+    ],
+    "return_type": [
+      "map[string]map[string]string"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "func parseINI(content string) map[string]map[string]string {\n    cfg := make(map[string]map[string]string)\n    var section string\n    for _, line := range strings.Split(content, \"\\n\") {\n        line = strings.TrimSpace(line)\n        if strings.HasPrefix(line, \"[\") && strings.HasSuffix(line, \"]\") {\n            section = line[1 : len(line)-1]\n            cfg[section] = make(map[string]string)\n        } else if p := strings.Index(line, \"=\"); p > 0 && section != \"\" {\n            cfg[section][strings.TrimSpace(line[:p])] = strings.TrimSpace(line[p+1:])\n        }\n    }\n    return cfg\n}"
+    ]
+  },
+  {
+    "name-zh": "CRC32 校验",
+    "name-en": "CRC32 Checksum",
+    "description-zh": "计算数据的 CRC32 校验和",
+    "description-en": "Compute CRC32 checksum of data",
+    "dependencies": [
+      "hash/crc32"
+    ],
+    "use_to": [
+      "checksum",
+      "crc"
+    ],
+    "tags": [
+      "checksum",
+      "crc32"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "[]byte"
+    ],
+    "return": [
+      "crc"
+    ],
+    "return_type": [
+      "uint32"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "import \"hash/crc32\"\nfunc crc32Checksum(data []byte) uint32 {\n    return crc32.Checksum(data, crc32.MakeTable(crc32.IEEE))\n}"
+    ]
+  },
+  {
+    "name-zh": "MD5 哈希",
+    "name-en": "MD5 Hash",
+    "description-zh": "计算字节切片的 MD5 哈希（十六进制字符串）",
+    "description-en": "Compute MD5 hash as hex string",
+    "dependencies": [
+      "crypto/md5",
+      "fmt"
+    ],
+    "use_to": [
+      "hash",
+      "md5"
+    ],
+    "tags": [
+      "hash",
+      "md5"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "[]byte"
+    ],
+    "return": [
+      "hex"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "import (\n    \"crypto/md5\"\n    \"fmt\"\n)\nfunc md5Hex(data []byte) string {\n    return fmt.Sprintf(\"%x\", md5.Sum(data))\n}"
+    ]
+  },
+  {
+    "name-zh": "雪花ID",
+    "name-en": "Snowflake ID",
+    "description-zh": "生成分布式唯一 ID（简化的雪花算法）",
+    "description-en": "Generate distributed unique ID (simplified snowflake)",
+    "dependencies": [
+      "sync",
+      "time"
+    ],
+    "use_to": [
+      "id",
+      "distributed"
+    ],
+    "tags": [
+      "intermediate",
+      "id"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "id"
+    ],
+    "return_type": [
+      "int64"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "import (\n    \"sync\"\n    \"time\"\n)\ntype Snowflake struct {\n    mu     sync.Mutex\n    stamped int64\n}\nfunc NewSnowflake() *Snowflake { return &Snowflake{stamped: time.Now().UnixNano()} }\nfunc (sf *Snowflake) Next() int64 {\n    sf.mu.Lock()\n    defer sf.mu.Unlock()\n    sf.stamped++\n    return sf.stamped\n}"
+    ]
+  },
+  {
+    "name-zh": "Once 单例",
+    "name-en": "Once (Singleton)",
+    "description-zh": "确保函数只被执行一次（用于单例初始化）",
+    "description-en": "Ensure function runs only once (for singleton init)",
+    "dependencies": [
+      "sync"
+    ],
+    "use_to": [
+      "concurrency",
+      "singleton"
+    ],
+    "tags": [
+      "intermediate",
+      "concurrency"
+    ],
+    "input": [
+      "fn"
+    ],
+    "input_type": [
+      "func()"
+    ],
+    "return": [
+      "result"
+    ],
+    "return_type": [
+      "any"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "import \"sync\"\ntype Once struct {\n    o sync.Once\n    v any\n}\nfunc (o *Once) Do(fn func() any) any {\n    o.o.Do(func() { o.v = fn() })\n    return o.v\n}"
+    ]
+  },
+  {
+    "name-zh": "快速排序（原地）",
+    "name-en": "Quick Sort Inplace",
+    "description-zh": "原地快速排序（切片）",
+    "description-en": "In-place quick sort for slices",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "func quickSort(a []int) []int {\n    if len(a) <= 1 { return a }\n    pivot := a[len(a)/2]\n    var left, right []int\n    for _, v := range a {\n        if v < pivot { left = append(left, v) } else if v > pivot { right = append(right, v) }\n    }\n    left = quickSort(left)\n    right = quickSort(right)\n    return append(append(left, pivot), right...)\n}"
+    ]
+  },
+  {
+    "name-zh": "希尔排序",
+    "name-en": "Shell Sort",
+    "description-zh": "希尔排序（递减增量）",
+    "description-en": "Shell sort with diminishing gap",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 75,
+    "memory_score": 90,
+    "code": [
+      "func shellSort(a []int) []int {\n    n := len(a)\n    for gap := n/2; gap > 0; gap /= 2 {\n        for i := gap; i < n; i++ {\n            tmp := a[i]\n            j := i\n            for j >= gap && a[j-gap] > tmp {\n                a[j] = a[j-gap]\n                j -= gap\n            }\n            a[j] = tmp\n        }\n    }\n    return a\n}"
+    ]
+  },
+  {
+    "name-zh": "堆排序",
+    "name-en": "Heap Sort",
+    "description-zh": "二叉堆实现的堆排序",
+    "description-en": "Heap sort using binary heap",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "a"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "func heapSort(a []int) []int {\n    n := len(a)\n    for i := n/2 - 1; i >= 0; i-- { heapify(a, n, i) }\n    for i := n - 1; i > 0; i-- {\n        a[0], a[i] = a[i], a[0]\n        heapify(a, i, 0)\n    }\n    return a\n}\nfunc heapify(a []int, n, i int) {\n    largest := i\n    l, r := 2*i+1, 2*i+2\n    if l < n && a[l] > a[largest] { largest = l }\n    if r < n && a[r] > a[largest] { largest = r }\n    if largest != i {\n        a[i], a[largest] = a[largest], a[i]\n        heapify(a, n, largest)\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "Boyer-Moore字符串匹配",
+    "name-en": "Boyer-Moore String Match",
+    "description-zh": "Boyer-Moore 字符串匹配（坏字符规则）",
+    "description-en": "Boyer-Moore string matching with bad character rule",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "string",
+      "boyer-moore",
+      "algorithm"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "index"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 88,
+    "memory_score": 92,
+    "code": [
+      "func boyerMoore(text, pattern string) int {\n    n, m := len(text), len(pattern)\n    if m == 0 { return 0 }\n    badChar := make([]int, 256)\n    for i := range badChar { badChar[i] = -1 }\n    for i := 0; i < m; i++ { badChar[int(pattern[i])] = i }\n    shift := 0\n    for shift <= n-m {\n        j := m - 1\n        for j >= 0 && pattern[j] == text[shift+j] { j-- }\n        if j < 0 { return shift }\n        shift += j - badChar[int(text[shift+j])]\n    }\n    return -1\n}"
+    ]
+  },
+  {
+    "name-zh": "Sunday字符串匹配",
+    "name-en": "Sunday String Match",
+    "description-zh": "Sunday 字符串匹配算法",
+    "description-en": "Sunday string matching algorithm",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "string",
+      "sunday",
+      "algorithm"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "index"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 88,
+    "memory_score": 92,
+    "code": [
+      "func sunday(text, pattern string) int {\n    n, m := len(text), len(pattern)\n    shift := make([]int, 256)\n    for i := range shift { shift[i] = m + 1 }\n    for i := 0; i < m; i++ { shift[int(pattern[i])] = m - i }\n    pos := 0\n    for pos <= n-m {\n        j := 0\n        for j < m && text[pos+j] == pattern[j] { j++ }\n        if j == m { return pos }\n        if pos+m < n { pos += shift[int(text[pos+m])] } else { return -1 }\n    }\n    return -1\n}"
+    ]
+  },
+  {
+    "name-zh": "LRU缓存（并发安全）",
+    "name-en": "LRU Cache (Thread-safe)",
+    "description-zh": "支持并发的 LRU 缓存实现",
+    "description-en": "Thread-safe LRU cache implementation",
+    "dependencies": [
+      "sync"
+    ],
+    "use_to": [
+      "cache",
+      "concurrency"
+    ],
+    "tags": [
+      "lru",
+      "cache",
+      "concurrent"
+    ],
+    "input": [
+      "capacity"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "cache"
+    ],
+    "return_type": [
+      "LRUCache"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "import \"sync\"\n\ntype LRUCache struct {\n    mu     sync.Mutex\n    cap    int\n    cache  map[int]*list.Element\n    order  *list.List\n}\n\ntype entry struct { key, value int }\n\nfunc NewLRU(cap int) *LRUCache {\n    return &LRUCache{cap: cap, cache: make(map[int]*list.Element), order: list.New()}\n}\nfunc (c *LRUCache) Get(key int) (int, bool) {\n    c.mu.Lock()\n    defer c.mu.Unlock()\n    if e, ok := c.cache[key]; ok {\n        c.order.MoveToFront(e)\n        return e.Value.(*entry).value, true\n    }\n    return 0, false\n}\nfunc (c *LRUCache) Put(key, value int) {\n    c.mu.Lock()\n    defer c.mu.Unlock()\n    if e, ok := c.cache[key]; ok {\n        c.order.MoveToFront(e)\n        e.Value.(*entry).value = value\n        return\n    }\n    if c.order.Len() >= c.cap {\n        old := c.order.Back()\n        c.order.Remove(old)\n        delete(c.cache, old.Value.(*entry).key)\n    }\n    e := c.order.PushFront(&entry{key, value})\n    c.cache[key] = e\n}"
+    ]
+  },
+  {
+    "name-zh": "限流器（令牌桶）",
+    "name-en": "Token Bucket Rate Limiter",
+    "description-zh": "令牌桶限流器实现",
+    "description-en": "Token bucket rate limiter",
+    "dependencies": [
+      "sync",
+      "time"
+    ],
+    "use_to": [
+      "rate limit",
+      "concurrency"
+    ],
+    "tags": [
+      "rate limit",
+      "concurrent"
+    ],
+    "input": [
+      "rate",
+      "burst"
+    ],
+    "input_type": [
+      "float64",
+      "int"
+    ],
+    "return": [
+      "limiter"
+    ],
+    "return_type": [
+      "*TokenBucket"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "import (\"sync\"\n    \"time\")\n\ntype TokenBucket struct {\n    mu      sync.Mutex\n    rate    float64\n    burst   int\n    tokens  float64\n    lastUpd time.Time\n}\n\nfunc NewTokenBucket(rate float64, burst int) *TokenBucket {\n    return &TokenBucket{rate: rate, burst: burst, tokens: float64(burst), lastUpd: time.Now()}\n}\nfunc (tb *TokenBucket) Allow() bool {\n    tb.mu.Lock()\n    defer tb.mu.Unlock()\n    now := time.Now()\n    elapsed := now.Sub(tb.lastUpd).Seconds()\n    tb.lastUpd = now\n    tb.tokens += elapsed * tb.rate\n    if tb.tokens > float64(tb.burst) { tb.tokens = float64(tb.burst) }\n    if tb.tokens >= 1 {\n        tb.tokens--\n        return true\n    }\n    return false\n}"
+    ]
+  },
+  {
+    "name-zh": "生产者消费者",
+    "name-en": "Producer Consumer",
+    "description-zh": "使用通道实现生产者消费者模型",
+    "description-en": "Producer-consumer using channels",
+    "dependencies": [
+      "sync"
+    ],
+    "use_to": [
+      "concurrency",
+      "channel"
+    ],
+    "tags": [
+      "channel",
+      "concurrent"
+    ],
+    "input": [
+      "producerFn",
+      "consumerFn",
+      "bufSize",
+      "count"
+    ],
+    "input_type": [
+      "func(chan T)",
+      "func(T)",
+      "int",
+      "int"
+    ],
+    "return": [
+      "wg"
+    ],
+    "return_type": [
+      "sync.WaitGroup"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "import \"sync\"\n\nfunc producerConsumer(producer func(chan<- int), consumer func(int), bufSize, count int) {\n    ch := make(chan int, bufSize)\n    var wg sync.WaitGroup\n    wg.Add(1)\n    go func() { defer wg.Done(); producer(ch)(); close(ch) }()\n    for i := 0; i < count; i++ {\n        v := <-ch\n        consumer(v)\n    }\n    wg.Wait()\n}"
+    ]
+  },
+  {
+    "name-zh": "跳表",
+    "name-en": "Skip List",
+    "description-zh": "简化的跳表实现（多层索引）",
+    "description-en": "Simplified skip list implementation",
+    "dependencies": [
+      "math/rand"
+    ],
+    "use_to": [
+      "data structure",
+      "skiplist"
+    ],
+    "tags": [
+      "skiplist",
+      "data structure"
+    ],
+    "input": [
+      "levels"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "skiplist"
+    ],
+    "return_type": [
+      "SkipList"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "import (\"math/rand\" \"sync\")\n\ntype SkipList struct {\n    mu     sync.RWMutex\n    head   *Node\n    maxLvl int\n}\n\ntype Node struct {\n    key, value interface{}\n    forward []*Node\n}\n\nfunc NewSkipList(maxLvl int) *SkipList {\n    return &SkipList{head: &Node{forward: make([]*Node, maxLvl)}, maxLvl: maxLvl}\n}\nfunc (sl *SkipList) randomLevel() int {\n    lvl := 1\n    for rand.Intn(2) == 1 && lvl < sl.maxLvl { lvl++ }\n    return lvl\n}\nfunc (sl *SkipList) Insert(key, value interface{}) {\n    sl.mu.Lock()\n    defer sl.mu.Unlock()\n    update := make([]*Node, sl.maxLvl)\n    curr := sl.head\n    for i := sl.maxLvl - 1; i >= 0; i-- {\n        for curr.forward[i] != nil && curr.forward[i].key.(int) < key.(int) {\n            curr = curr.forward[i]\n        }\n        update[i] = curr\n    }\n    lvl := sl.randomLevel()\n    newNode := &Node{key: key, value: value, forward: make([]*Node, lvl)}\n    for i := 0; i < lvl; i++ {\n        newNode.forward[i] = update[i].forward[i]\n        update[i].forward[i] = newNode\n    }\n}\nfunc (sl *SkipList) Search(key interface{}) (interface{}, bool) {\n    sl.mu.RLock()\n    defer sl.mu.RUnlock()\n    curr := sl.head\n    for i := sl.maxLvl - 1; i >= 0; i-- {\n        for curr.forward[i] != nil && curr.forward[i].key.(int) < key.(int) {\n            curr = curr.forward[i]\n        }\n    }\n    curr = curr.forward[0]\n    if curr != nil && curr.key.(int) == key.(int) {\n        return curr.value, true\n    }\n    return nil, false\n}"
+    ]
+  },
+  {
+    "name-zh": "布隆过滤器",
+    "name-en": "Bloom Filter",
+    "description-zh": "简单布隆过滤器实现",
+    "description-en": "Simple Bloom filter implementation",
+    "dependencies": [
+      "hash/fnv",
+      "math/bits"
+    ],
+    "use_to": [
+      "bloom filter",
+      "data structure"
+    ],
+    "tags": [
+      "bloom filter",
+      "data structure"
+    ],
+    "input": [
+      "items"
+    ],
+    "input_type": [
+      "[]string"
+    ],
+    "return": [
+      "filter"
+    ],
+    "return_type": [
+      "BloomFilter"
+    ],
+    "timer_score": 85,
+    "memory_score": 80,
+    "code": [
+      "import (\"hash/fnv\" \"math/bits\")\n\ntype BloomFilter struct {\n    size int\n    bits  []bool\n}\n\nfunc NewBloomFilter(size int) *BloomFilter {\n    return &BloomFilter{size: size, bits: make([]bool, size)}\n}\nfunc (bf *BloomFilter) h1(s string) int {\n    h := fnv.New64a()\n    h.Write([]byte(s))\n    return int(h.Sum64()) % bf.size\n}\nfunc (bf *BloomFilter) h2(s string) int {\n    h := fnv.New64a()\n    h.Write([]byte(s + \"salt2\"))\n    return int(h.Sum64()) % bf.size\n}\nfunc (bf *BloomFilter) Add(s string) {\n    bf.bits[bf.h1(s)] = true\n    bf.bits[bf.h2(s)] = true\n}\nfunc (bf *BloomFilter) Contains(s string) bool {\n    return bf.bits[bf.h1(s)] && bf.bits[bf.h2(s)]\n}"
+    ]
+  },
+  {
+    "name-zh": "环形缓冲区",
+    "name-en": "Ring Buffer",
+    "description-zh": "无锁环形缓冲区（FIFO）",
+    "description-en": "Lock-free ring buffer FIFO",
+    "dependencies": [
+      "sync/atomic"
+    ],
+    "use_to": [
+      "data structure",
+      "buffer"
+    ],
+    "tags": [
+      "ring buffer",
+      "data structure"
+    ],
+    "input": [
+      "size"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "ring"
+    ],
+    "return_type": [
+      "RingBuffer"
+    ],
+    "timer_score": 88,
+    "memory_score": 88,
+    "code": [
+      "import \"sync/atomic\"\n\ntype RingBuffer struct {\n    buf      []int\n    capacity int\n    read     atomic.Int64\n    write    atomic.Int64\n}\n\nfunc NewRingBuffer(cap int) *RingBuffer {\n    return &RingBuffer{buf: make([]int, cap), capacity: cap}\n}\nfunc (rb *RingBuffer) Push(v int) bool {\n    w := rb.write.Load()\n    if w-rb.read.Load() >= int64(rb.capacity) { return false }\n    rb.buf[w%int64(rb.capacity)] = v\n    rb.write.Add(1)\n    return true\n}\nfunc (rb *RingBuffer) Pop() (int, bool) {\n    r := rb.read.Load()\n    if r >= rb.write.Load() { return 0, false }\n    v := rb.buf[r%int64(rb.capacity)]\n    rb.read.Add(1)\n    return v, true\n}"
+    ]
+  },
+  {
+    "name-zh": "限流中间件",
+    "name-en": "Rate Limit Middleware",
+    "description-zh": "HTTP 限流中间件（滑动窗口）",
+    "description-en": "HTTP rate limit middleware (sliding window)",
+    "dependencies": [
+      "net/http",
+      "time"
+    ],
+    "use_to": [
+      "middleware",
+      "rate limit"
+    ],
+    "tags": [
+      "middleware",
+      "rate limit"
+    ],
+    "input": [
+      "next",
+      "maxRequests",
+      "windowSeconds"
+    ],
+    "input_type": [
+      "http.Handler",
+      "int",
+      "int"
+    ],
+    "return": [
+      "handler"
+    ],
+    "return_type": [
+      "http.Handler"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "import (\"net/http\"\n    \"sync\"\n    \"time\")\n\ntype RateLimitMiddleware struct {\n    next      http.Handler\n    max       int\n    window    time.Duration\n    requests  map[string][]time.Time\n    mu        sync.Mutex\n}\n\nfunc (rl *RateLimitMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {\n    ip := r.RemoteAddr\n    rl.mu.Lock()\n    now := time.Now()\n    times := rl.requests[ip]\n    times = filterTimes(times, now, rl.window)\n    if len(times) >= rl.max {\n        rl.requests[ip] = times\n        rl.mu.Unlock()\n        http.Error(w, \"429 Too Many Requests\", http.StatusTooManyRequests)\n        return\n    }\n    times = append(times, now)\n    rl.requests[ip] = times\n    rl.mu.Unlock()\n    rl.next.ServeHTTP(w, r)\n}\nfunc filterTimes(times []time.Time, now time.Time, window time.Duration) []time.Time {\n    cutoff := now.Add(-window)\n    filtered := times[:0]\n    for _, t := range times {\n        if t.After(cutoff) {\n            filtered = append(filtered, t)\n        }\n    }\n    return filtered\n}"
+    ]
+  },
+  {
+    "name-zh": "雪花ID（分布式）",
+    "name-en": "Snowflake ID (Distributed)",
+    "description-zh": "带 worker ID 的雪花 ID 生成器",
+    "description-en": "Snowflake ID generator with worker ID",
+    "dependencies": [
+      "sync"
+    ],
+    "use_to": [
+      "id",
+      "distributed"
+    ],
+    "tags": [
+      "id",
+      "snowflake"
+    ],
+    "input": [
+      "workerId"
+    ],
+    "input_type": [
+      "int64"
+    ],
+    "return": [
+      "id"
+    ],
+    "return_type": [
+      "int64"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "import \"sync\"\n\ntype Snowflake struct {\n    mu       sync.Mutex\n    workerId int64\n    seq      int64\n    lastTime int64\n}\n\nconst epoch int64 = 1609459200000 // 2021-01-01\n\nfunc NewSnowflake(workerId int64) *Snowflake {\n    return &Snowflake{workerId: workerId & 1023}\n}\nfunc (sf *Snowflake) Next() int64 {\n    sf.mu.Lock()\n    defer sf.mu.Unlock()\n    now := time.Now().UnixNano() / 1e6\n    if now == sf.lastTime {\n        sf.seq = (sf.seq + 1) & 4095\n        if sf.seq == 0 { for now == sf.lastTime { now = time.Now().UnixNano() / 1e6 } }\n    } else {\n        sf.seq = 0\n    }\n    sf.lastTime = now\n    return ((now - epoch) << 22) | (sf.workerId << 12) | sf.seq\n}"
+    ]
+  },
+  {
+    "name-zh": "配置解析（YAML）",
+    "name-en": "Parse YAML Config",
+    "description-zh": "解析 YAML 配置文件为 map",
+    "description-en": "Parse YAML config file to map",
+    "dependencies": [
+      "gopkg.in/yaml.v3"
+    ],
+    "use_to": [
+      "config",
+      "yaml"
+    ],
+    "tags": [
+      "config",
+      "yaml"
+    ],
+    "input": [
+      "content"
+    ],
+    "input_type": [
+      "[]byte"
+    ],
+    "return": [
+      "config"
+    ],
+    "return_type": [
+      "map[string]interface{}"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "import \"gopkg.in/yaml.v3\"\n\nfunc parseYAML(content []byte) (map[string]interface{}, error) {\n    var cfg map[string]interface{}\n    err := yaml.Unmarshal(content, &cfg)\n    return cfg, err\n}"
+    ]
+  },
+  {
+    "name-zh": "配置解析（TOML）",
+    "name-en": "Parse TOML Config",
+    "description-zh": "解析 TOML 配置文件",
+    "description-en": "Parse TOML config file",
+    "dependencies": [
+      "github.com/BurntSushi/toml"
+    ],
+    "use_to": [
+      "config",
+      "toml"
+    ],
+    "tags": [
+      "config",
+      "toml"
+    ],
+    "input": [
+      "content"
+    ],
+    "input_type": [
+      "[]byte"
+    ],
+    "return": [
+      "config"
+    ],
+    "return_type": [
+      "toml.Primitive"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "import \"github.com/BurntSushi/toml\"\n\nfunc parseTOML(content []byte) (map[string]interface{}, error) {\n    var cfg map[string]interface{}\n    _, err := toml.Decode(string(content), &cfg)\n    return cfg, err\n}"
+    ]
+  },
+  {
+    "name-zh": "JWT编码",
+    "name-en": "JWT Encode",
+    "description-zh": "生成 JWT 令牌",
+    "description-en": "Generate JWT token",
+    "dependencies": [
+      "github.com/golang-jwt/jwt/v5"
+    ],
+    "use_to": [
+      "jwt",
+      "auth"
+    ],
+    "tags": [
+      "jwt",
+      "auth"
+    ],
+    "input": [
+      "claims",
+      "secret"
+    ],
+    "input_type": [
+      "map[string]interface{}",
+      "string"
+    ],
+    "return": [
+      "token"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "import (\"github.com/golang-jwt/jwt/v5\" \"time\")\n\ntype Claims struct { jwt.RegisteredClaims }\n\nfunc jwtEncode(claims map[string]interface{}, secret string) (string, error) {\n    c := &Claims{RegisteredClaims: jwt.RegisteredClaims{IssuedAt: jwt.NewNumericDate(time.Now())}}\n    for k, v := range claims { c.RegisteredClaims[k] = v }\n    token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)\n    return token.SignedString([]byte(secret))\n}\nfunc jwtDecode(tokenStr, secret string) (map[string]interface{}, error) {\n    token, err := jwt.ParseWithClaims(tokenStr, &Claims{}, func(t *jwt.Token) (interface{}, error) {\n        return []byte(secret), nil\n    })\n    if err != nil { return nil, err }\n    if claims, ok := token.Claims.(*Claims); ok { return map[string]interface{}(claims.RegisteredClaims), nil }\n    return nil, nil\n}"
+    ]
+  },
+  {
+    "name-zh": "计数排序",
+    "name-en": "Counting Sort",
+    "description-zh": "非比较排序，适用于值域较小的整数切片。时间 O(n+k)，空间 O(k)。",
+    "description-en": "Non-comparison sort for small-range integers. Time O(n+k), space O(k).",
+    "dependencies": [],
+    "use_to": [
+      "sorting",
+      "algorithm"
+    ],
+    "tags": [
+      "algorithm",
+      "sorting",
+      "linear"
+    ],
+    "input": [
+      "arr",
+      "max"
+    ],
+    "input_type": [
+      "[]int",
+      "int"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "[]int"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "func countingSort(arr []int, maxVal int) []int {\n\tcount := make([]int, maxVal+1)\n\tfor _, v := range arr {\n\t\tcount[v]++\n\t}\n\tresult := make([]int, 0, len(arr))\n\tfor i, c := range count {\n\t\tfor j := 0; j < c; j++ {\n\t\t\tresult = append(result, i)\n\t\t}\n\t}\n\treturn result\n}"
+    ]
+  },
+  {
+    "name-zh": "阶乘",
+    "name-en": "Factorial",
+    "description-zh": "计算非负整数的阶乘。迭代实现。",
+    "description-en": "Compute factorial of a non-negative integer. Iterative.",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "basic"
+    ],
+    "tags": [
+      "math",
+      "algorithm",
+      "basic"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "result"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "func factorial(n int) int {\n\tif n < 0 {\n\t\tpanic(\"n must be non-negative\")\n\t}\n\tresult := 1\n\tfor i := 2; i <= n; i++ {\n\t\tresult *= i\n\t}\n\treturn result\n}"
+    ]
+  },
+  {
+    "name-zh": "选择排序",
+    "name-en": "Selection Sort",
+    "description-zh": "简单选择排序。时间 O(n²)，空间 O(1)。",
+    "description-en": "Simple selection sort. Time O(n²), space O(1).",
+    "dependencies": [],
+    "use_to": [
+      "sorting",
+      "algorithm"
+    ],
+    "tags": [
+      "algorithm",
+      "sorting",
+      "basic"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [],
+    "return_type": [],
+    "timer_score": 80,
+    "memory_score": 90,
+    "code": [
+      "func selectionSort(arr []int) {\n\tfor i := 0; i < len(arr)-1; i++ {\n\t\tminIdx := i\n\t\tfor j := i + 1; j < len(arr); j++ {\n\t\t\tif arr[j] < arr[minIdx] {\n\t\t\t\tminIdx = j\n\t\t\t}\n\t\t}\n\t\tarr[i], arr[minIdx] = arr[minIdx], arr[i]\n\t}\n}"
+    ]
+  },
+  {
+    "name-zh": "插入排序",
+    "name-en": "Insertion Sort",
+    "description-zh": "简单插入排序。时间 O(n²)，稳定。",
+    "description-en": "Simple insertion sort. Time O(n²), stable.",
+    "dependencies": [],
+    "use_to": [
+      "sorting",
+      "algorithm"
+    ],
+    "tags": [
+      "algorithm",
+      "sorting",
+      "basic"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "[]int"
+    ],
+    "return": [],
+    "return_type": [],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": [
+      "func insertionSort(arr []int) {\n\tfor i := 1; i < len(arr); i++ {\n\t\tkey := arr[i]\n\t\tj := i - 1\n\t\tfor j >= 0 && arr[j] > key {\n\t\t\tarr[j+1] = arr[j]\n\t\t\tj--\n\t\t}\n\t\tarr[j+1] = key\n\t}\n}"
+    ]
+  }
 ]

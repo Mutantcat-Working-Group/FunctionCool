@@ -1,2865 +1,3399 @@
 [
-    {
-        "name-zh": "主函数示例",
-        "name-en": "Main Function Example",
-        "description-zh": "PHP程序的入口函数示例，包含命令行参数处理和错误处理",
-        "description-en": "Entry point function example for PHP programs, including command line arguments and error handling",
-        "dependencies": [],
-        "use_to": [
-            "program entry",
-            "command line"
-        ],
-        "tags": [
-            "basic",
-            "entry point",
-            "command line"
-        ],
-        "input": [
-            "argv"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "status"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "<?php\n\n/**\n * 主程序入口函数\n * @param array $argv 命令行参数数组\n * @return int 退出状态码\n */\nfunction main(array $argv = []): int {\n    try {\n        // 设置错误处理\n        set_error_handler(function($severity, $message, $file, $line) {\n            throw new ErrorException($message, 0, $severity, $file, $line);\n        });\n        \n        // 打印程序信息\n        echo \"Program: {$argv[0]}\\n\";\n        \n        // 打印命令行参数\n        $args = array_slice($argv, 1);\n        echo \"Arguments count: \" . count($args) . \"\\n\";\n        echo \"Arguments: \" . implode(', ', $args) . \"\\n\";\n        \n        // 程序主要逻辑\n        $name = $args[0] ?? 'World';\n        echo \"Hello, {$name}!\\n\";\n        \n        return 0;\n    } catch (Throwable $e) {\n        fwrite(STDERR, \"Error: {$e->getMessage()}\\n\");\n        return 1;\n    }\n}\n\n// 如果是从命令行运行\nif (PHP_SAPI === 'cli' && basename($argv[0]) === basename(__FILE__)) {\n    exit(main($argv));\n}"
-        ]
-    },
-    {
-        "name-zh": "数组去重",
-        "name-en": "Array Unique",
-        "description-zh": "返回去除重复值且保持原顺序的数组",
-        "description-en": "Return an array without duplicates preserving order",
-        "dependencies": [],
-        "use_to": [
-            "array",
-            "dedup"
-        ],
-        "tags": [
-            "basic",
-            "array"
-        ],
-        "input": [
-            "arr"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "unique"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction array_unique_order(array $arr): array {\n    $seen = [];\n    $out = [];\n    foreach ($arr as $v) {\n        if (!isset($seen[$v])) {\n            $seen[$v] = true;\n            $out[] = $v;\n        }\n    }\n    return $out;\n}"
-        ]
-    },
-    {
-        "name-zh": "JSON解析",
-        "name-en": "JSON Decode",
-        "description-zh": "解析 JSON 字符串为数组或对象，失败返回 null",
-        "description-en": "Decode JSON string to array/object; return null on failure",
-        "dependencies": [],
-        "use_to": [
-            "json",
-            "parsing"
-        ],
-        "tags": [
-            "intermediate",
-            "json"
-        ],
-        "input": [
-            "json_str",
-            "assoc"
-        ],
-        "input_type": [
-            "string",
-            "bool"
-        ],
-        "return": [
-            "data"
-        ],
-        "return_type": [
-            "mixed"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction json_decode_safe(string $json_str, bool $assoc = true) {\n    $data = json_decode($json_str, $assoc);\n    if (json_last_error() !== JSON_ERROR_NONE) {\n        return null;\n    }\n    return $data;\n}"
-        ]
-    },
-    {
-        "name-zh": "JSON序列化",
-        "name-en": "JSON Encode",
-        "description-zh": "将数据编码为 JSON 字符串（UTF-8 不转义中文）",
-        "description-en": "Encode data to JSON (preserve UTF-8 characters)",
-        "dependencies": [],
-        "use_to": [
-            "json",
-            "serialization"
-        ],
-        "tags": [
-            "intermediate",
-            "json"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "mixed"
-        ],
-        "return": [
-            "json_str"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction json_encode_safe($data): string {\n    return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);\n}"
-        ]
-    },
-    {
-        "name-zh": "字符串反转",
-        "name-en": "String Reverse",
-        "description-zh": "反转 UTF-8 字符串 (按字符而不是字节)",
-        "description-en": "Reverse UTF-8 string by characters not bytes",
-        "dependencies": [],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "intermediate",
-            "string"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "reversed"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction utf8_reverse(string $s): string {\n    preg_match_all('/./us', $s, $m);\n    return implode('', array_reverse($m[0]));\n}"
-        ]
-    },
-    {
-        "name-zh": "安全字符串截断",
-        "name-en": "Safe Truncate",
-        "description-zh": "按字符长度安全截断 UTF-8 字符串并可添加后缀",
-        "description-en": "Safely truncate UTF-8 string by characters with suffix",
-        "dependencies": [],
-        "use_to": [
-            "string"
-        ],
-        "tags": [
-            "intermediate",
-            "string"
-        ],
-        "input": [
-            "s",
-            "limit",
-            "suffix"
-        ],
-        "input_type": [
-            "string",
-            "int",
-            "string"
-        ],
-        "return": [
-            "truncated"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction utf8_truncate(string $s, int $limit, string $suffix = '...'): string {\n    if (mb_strlen($s, 'UTF-8') <= $limit) return $s;\n    return mb_substr($s, 0, $limit, 'UTF-8') . $suffix;\n}"
-        ]
-    },
-    {
-        "name-zh": "文件读取",
-        "name-en": "File Read",
-        "description-zh": "读取文件内容为字符串（失败返回 null）",
-        "description-en": "Read file contents as string or return null",
-        "dependencies": [],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "intermediate",
-            "file"
-        ],
-        "input": [
-            "filename"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "content"
-        ],
-        "return_type": [
-            "?string"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction file_read(string $filename): ?string {\n    if (!is_readable($filename)) return null;\n    $data = @file_get_contents($filename);\n    return $data === false ? null : $data;\n}"
-        ]
-    },
-    {
-        "name-zh": "文件逐行生成器",
-        "name-en": "File Line Generator",
-        "description-zh": "使用生成器逐行读取文件（内存友好）",
-        "description-en": "Yield lines from file efficiently using generator",
-        "dependencies": [],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "intermediate",
-            "file",
-            "generator"
-        ],
-        "input": [
-            "filename"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "iter"
-        ],
-        "return_type": [
-            "Generator"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction file_line_generator(string $filename): \\Generator {\n    if (!is_readable($filename)) return;\n    $fh = fopen($filename, 'rb');\n    if (!$fh) return;\n    try {\n        while (($line = fgets($fh)) !== false) {\n            yield rtrim($line, \"\\r\\n\");\n        }\n    } finally {\n        fclose($fh);\n    }\n}"
-        ]
-    },
-    {
-        "name-zh": "正则匹配",
-        "name-en": "Regex Match",
-        "description-zh": "检查文本是否匹配给定正则模式",
-        "description-en": "Check if text matches regex pattern",
-        "dependencies": [],
-        "use_to": [
-            "regex"
-        ],
-        "tags": [
-            "intermediate",
-            "regex"
-        ],
-        "input": [
-            "pattern",
-            "text"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "matched"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction regex_is_match(string $pattern, string $text): bool {\n    return preg_match($pattern, $text) === 1;\n}"
-        ]
-    },
-    {
-        "name-zh": "HTTP GET",
-        "name-en": "HTTP GET",
-        "description-zh": "使用 file_get_contents 发送简单 GET 请求（失败返回 null）",
-        "description-en": "Send simple HTTP GET request using file_get_contents; null on failure",
-        "dependencies": [],
-        "use_to": [
-            "http"
-        ],
-        "tags": [
-            "network",
-            "basic"
-        ],
-        "input": [
-            "url",
-            "timeout"
-        ],
-        "input_type": [
-            "string",
-            "int"
-        ],
-        "return": [
-            "body"
-        ],
-        "return_type": [
-            "?string"
-        ],
-        "timer_score": 70,
-        "memory_score": 70,
-        "code": [
-            "<?php\nfunction http_get(string $url, int $timeout = 5): ?string {\n    $ctx = stream_context_create(['http' => ['method' => 'GET', 'timeout' => $timeout]]);\n    $data = @file_get_contents($url, false, $ctx);\n    return $data === false ? null : $data;\n}"
-        ]
-    },
-    {
-        "name-zh": "当前时间 ISO",
-        "name-en": "Now ISO",
-        "description-zh": "返回当前时间的 ISO8601 字符串",
-        "description-en": "Return current time in ISO8601 string",
-        "dependencies": [],
-        "use_to": [
-            "time",
-            "datetime"
-        ],
-        "tags": [
-            "basic",
-            "time"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "iso"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "<?php\nfunction now_iso(): string {\n    return date('c');\n}"
-        ]
-    },
-    {
-        "name-zh": "Base64 编解码",
-        "name-en": "Base64 Encode/Decode",
-        "description-zh": "对字符串进行 Base64 编解码",
-        "description-en": "Base64 encode/decode string",
-        "dependencies": [],
-        "use_to": [
-            "encoding"
-        ],
-        "tags": [
-            "basic",
-            "encoding"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "enc",
-            "dec"
-        ],
-        "return_type": [
-            "string",
-            "string"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction b64_encode_str(string $s): string {\n    return base64_encode($s);\n}\n\nfunction b64_decode_str(string $s): string {\n    return base64_decode($s, true) ?: '';\n}"
-        ]
-    },
-    {
-        "name-zh": "SHA-256",
-        "name-en": "SHA-256",
-        "description-zh": "计算字符串的 SHA-256 十六进制哈希",
-        "description-en": "Compute SHA-256 hex of string",
-        "dependencies": [],
-        "use_to": [
-            "hash"
-        ],
-        "tags": [
-            "intermediate",
-            "hash"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "hex"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 85,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction sha256_hex(string $s): string {\n    return hash('sha256', $s);\n}"
-        ]
-    },
-    {
-        "name-zh": "路径拼接",
-        "name-en": "Path Join",
-        "description-zh": "使用 DIRECTORY_SEPARATOR 拼接路径",
-        "description-en": "Join paths using DIRECTORY_SEPARATOR",
-        "dependencies": [],
-        "use_to": [
-            "path"
-        ],
-        "tags": [
-            "basic",
-            "path"
-        ],
-        "input": [
-            "segments"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "path"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction path_join(array $segments): string {\n    return implode(DIRECTORY_SEPARATOR, array_map(function($s) {\n        return trim($s, DIRECTORY_SEPARATOR);\n    }, $segments));\n}"
-        ]
-    },
-    {
-        "name-zh": "HTTP POST(JSON)",
-        "name-en": "HTTP POST (JSON)",
-        "description-zh": "使用 stream_context 发送 JSON Body 的 POST 请求，支持超时，失败返回 null",
-        "description-en": "Send POST with JSON body via stream_context; timeout supported; null on failure",
-        "dependencies": [],
-        "use_to": [
-            "http",
-            "json"
-        ],
-        "tags": [
-            "network",
-            "http",
-            "json"
-        ],
-        "input": [
-            "url",
-            "data",
-            "timeout"
-        ],
-        "input_type": [
-            "string",
-            "mixed",
-            "int"
-        ],
-        "return": [
-            "text"
-        ],
-        "return_type": [
-            "?string"
-        ],
-        "timer_score": 65,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction http_post_json(string $url, $data, int $timeout = 5): ?string {\n    $payload = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);\n    $ctx = stream_context_create([\n        'http' => [\n            'method' => 'POST',\n            'header' => \"Content-Type: application/json\\r\\n\" .\n                        \"Accept: application/json\\r\\n\",\n            'content' => $payload,\n            'timeout' => $timeout\n        ]\n    ]);\n    $res = @file_get_contents($url, false, $ctx);\n    return $res === false ? null : $res;\n}"
-        ]
-    },
-    {
-        "name-zh": "Dijkstra最短路",
-        "name-en": "Dijkstra Shortest Path",
-        "description-zh": "在非负权图上用最小堆求单源最短路",
-        "description-en": "Single-source shortest path on non-negative graph using min-heap",
-        "dependencies": [],
-        "use_to": [
-            "graph",
-            "shortest path"
-        ],
-        "tags": [
-            "graph",
-            "dijkstra",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "adj",
-            "src"
-        ],
-        "input_type": [
-            "int",
-            "array",
-            "int"
-        ],
-        "return": [
-            "dist"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "<?php\n// adj[u] = list of [v, w]\nfunction dijkstra_shortest_path(int $n, array $adj, int $src): array {\n    $INF = PHP_INT_MAX;\n    $dist = array_fill(0, $n, $INF);\n    $dist[$src] = 0;\n    // simple binary heap via SplPriorityQueue (invert priorities for min-heap)\n    $pq = new SplPriorityQueue();\n    $pq->setExtractFlags(SplPriorityQueue::EXTR_BOTH);\n    $pq->insert($src, 0 - 0);\n    while (!$pq->isEmpty()) {\n        $cur = $pq->extract();\n        $u = $cur['data'];\n        $d = 0 - $cur['priority'];\n        if ($d !== $dist[$u]) continue;\n        foreach ($adj[$u] as [$v, $w]) {\n            $nd = $d + $w;\n            if ($nd < $dist[$v]) { $dist[$v] = $nd; $pq->insert($v, 0 - $nd); }\n        }\n    }\n    return $dist;\n}"
-        ]
-    },
-    {
-        "name-zh": "Kruskal最小生成树",
-        "name-en": "Kruskal Minimum Spanning Tree",
-        "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
-        "description-en": "Kruskal with DSU to compute MST total weight (-1 if disconnected)",
-        "dependencies": [],
-        "use_to": [
-            "graph",
-            "mst"
-        ],
-        "tags": [
-            "graph",
-            "mst",
-            "kruskal",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "edges"
-        ],
-        "input_type": [
-            "int",
-            "array"
-        ],
-        "return": [
-            "mstWeight"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 88,
-        "memory_score": 92,
-        "code": [
-            "<?php\n// edges: list of [u,v,w]\nfunction kruskal_mst(int $n, array $edges): int {\n    usort($edges, fn($a,$b) => $a[2] <=> $b[2]);\n    $p = range(0, $n-1); $r = array_fill(0,$n,0);\n    $find = function($x) use (&$p, &$find) { return $p[$x]===$x ? $x : ($p[$x]=$find($p[$x])); };\n    $unite = function($a,$b) use (&$p,&$r,$find){ $a=$find($a); $b=$find($b); if($a===$b) return false; if($r[$a]<$r[$b]) [$a,$b]=[$b,$a]; $p[$b]=$a; if($r[$a]===$r[$b]) $r[$a]++; return true; };\n    $total=0; $cnt=0;\n    foreach ($edges as [$u,$v,$w]) { if($unite($u,$v)){ $total += $w; if(++$cnt === $n-1) break; } }\n    return $cnt === $n-1 ? $total : -1;\n}"
-        ]
-    },
-    {
-        "name-zh": "Bellman-Ford最短路",
-        "name-en": "Bellman-Ford Shortest Path",
-        "description-zh": "允许负边权的单源最短路；检测负环",
-        "description-en": "Single-source shortest path with negative edges; detect negative cycles",
-        "dependencies": [],
-        "use_to": [
-            "graph",
-            "shortest path"
-        ],
-        "tags": [
-            "graph",
-            "bellman-ford",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "edges",
-            "src"
-        ],
-        "input_type": [
-            "int",
-            "array",
-            "int"
-        ],
-        "return": [
-            "dist",
-            "hasNegCycle"
-        ],
-        "return_type": [
-            "array",
-            "bool"
-        ],
-        "timer_score": 70,
-        "memory_score": 85,
-        "code": [
-            "<?php\n// edges: list of [u,v,w]\nfunction bellman_ford(int $n, array $edges, int $src): array {\n    $INF = PHP_INT_MAX;\n    $dist = array_fill(0, $n, $INF);\n    $dist[$src] = 0;\n    for ($i=1; $i<=$n-1; $i++) {\n        $updated = false;\n        foreach ($edges as [$u,$v,$w]) {\n            if ($dist[$u] !== $INF && $dist[$u] + $w < $dist[$v]) { $dist[$v] = $dist[$u] + $w; $updated = true; }\n        }\n        if (!$updated) break;\n    }\n    foreach ($edges as [$u,$v,$w]) { if ($dist[$u] !== $INF && $dist[$u] + $w < $dist[$v]) return [$dist, true]; }\n    return [$dist, false];\n}"
-        ]
-    },
-    {
-        "name-zh": "拓扑排序(Kahn)",
-        "name-en": "Topological Sort (Kahn)",
-        "description-zh": "入度法Kahn算法返回拓扑序列",
-        "description-en": "Kahn algorithm using indegrees to return topo order",
-        "dependencies": [],
-        "use_to": [
-            "graph",
-            "topological sort"
-        ],
-        "tags": [
-            "graph",
-            "topo",
-            "algorithm"
-        ],
-        "input": [
-            "n",
-            "adj"
-        ],
-        "input_type": [
-            "int",
-            "array"
-        ],
-        "return": [
-            "order"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 88,
-        "memory_score": 92,
-        "code": [
-            "<?php\nfunction topo_sort_kahn(int $n, array $adj): array {\n    $indeg = array_fill(0,$n,0);\n    for($u=0;$u<$n;$u++){ foreach($adj[$u] as $v){ $indeg[$v]++; } }\n    $q = [];\n    for($i=0;$i<$n;$i++) if($indeg[$i]===0) $q[]=$i;\n    $order = [];\n    for($h=0; $h<count($q); $h++){ $u=$q[$h]; $order[]=$u; foreach($adj[$u] as $v){ if(--$indeg[$v]===0) $q[]=$v; } }\n    return $order;\n}"
-        ]
-    },
-    {
-        "name-zh": "KMP字符串匹配",
-        "name-en": "KMP String Match",
-        "description-zh": "返回所有匹配起始下标",
-        "description-en": "Return all match start indices",
-        "dependencies": [],
-        "use_to": [
-            "string",
-            "search"
-        ],
-        "tags": [
-            "string",
-            "kmp",
-            "algorithm"
-        ],
-        "input": [
-            "text",
-            "pattern"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "indices"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction kmp_search(string $text, string $pat): array {\n    $n=strlen($text); $m=strlen($pat); if($m===0) return [];\n    $lps=array_fill(0,$m,0);\n    for($i=1,$len=0;$i<$m;){ if($pat[$i]===$pat[$len]){ $lps[$i++]=++$len; } elseif($len>0){ $len=$lps[$len-1]; } else { $lps[$i++]=0; } }\n    $res=[];\n    for($i=0,$j=0;$i<$n;){ if($text[$i]===$pat[$j]){ $i++; $j++; if($j===$m){ $res[]=$i-$m; $j=$lps[$j-1]; } } elseif($j>0){ $j=$lps[$j-1]; } else { $i++; } }\n    return $res;\n}"
-        ]
-    },
-    {
-        "name-zh": "Rabin-Karp字符串匹配",
-        "name-en": "Rabin-Karp String Match",
-        "description-zh": "滚动哈希匹配，返回所有匹配位置",
-        "description-en": "Rolling-hash matching, return all indices",
-        "dependencies": [],
-        "use_to": [
-            "string",
-            "search"
-        ],
-        "tags": [
-            "string",
-            "rabin-karp",
-            "algorithm"
-        ],
-        "input": [
-            "text",
-            "pattern"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "indices"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 85,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction rabin_karp(string $text, string $pat): array {\n    $n=strlen($text); $m=strlen($pat); if($m===0 || $m>$n) return [];\n    $B=131; $MOD=1000000007;\n    $powB=1; for($i=0;$i<$m-1;$i++) $powB=($powB*$B)%$MOD;\n    $hpat=0; $hwin=0;\n    for($i=0;$i<$m;$i++){ $hpat=($hpat*$B+ord($pat[$i]))%$MOD; $hwin=($hwin*$B+ord($text[$i]))%$MOD; }\n    $out=[];\n    for($i=0;$i<=$n-$m;$i++){\n        if($hpat===$hwin && substr($text,$i,$m)===$pat) $out[]=$i;\n        if($i<$n-$m){ $hwin = (($hwin - ord($text[$i])*$powB)%$MOD + $MOD)%$MOD; $hwin = ($hwin*$B + ord($text[$i+$m]))%$MOD; }\n    }\n    return $out;\n}"
-        ]
-    },
-    {
-        "name-zh": "埃拉托斯特尼筛法",
-        "name-en": "Sieve of Eratosthenes",
-        "description-zh": "在[2,n]内标记素数",
-        "description-en": "Mark primes in [2,n]",
-        "dependencies": [],
-        "use_to": [
-            "prime",
-            "number theory"
-        ],
-        "tags": [
-            "math",
-            "prime",
-            "sieve",
-            "algorithm"
-        ],
-        "input": [
-            "n"
-        ],
-        "input_type": [
-            "int"
-        ],
-        "return": [
-            "isPrime"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction sieve_is_prime(int $n): array {\n    $is = array_fill(0,$n+1,1);\n    if($n>=0) $is[0]=0; if($n>=1) $is[1]=0;\n    for($p=2; $p*$p<=$n; $p++) if($is[$p]){ for($x=$p*$p; $x<=$n; $x+=$p) $is[$x]=0; }\n    return $is;\n}"
-        ]
-    },
-    {
-        "name-zh": "编辑距离(Levenshtein)",
-        "name-en": "Levenshtein Edit Distance",
-        "description-zh": "动态规划计算编辑距离(滚动数组)",
-        "description-en": "DP edit distance with rolling array",
-        "dependencies": [],
-        "use_to": [
-            "string",
-            "dynamic programming"
-        ],
-        "tags": [
-            "dp",
-            "string",
-            "edit distance"
-        ],
-        "input": [
-            "a",
-            "b"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "distance"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 85,
-        "memory_score": 88,
-        "code": [
-            "<?php\nfunction edit_distance(string $a, string $b): int {\n    $m=strlen($a); $n=strlen($b);\n    $prev=array_fill(0,$n+1,0); $cur=array_fill(0,$n+1,0);\n    for($j=0;$j<=$n;$j++) $prev[$j]=$j;\n    for($i=1;$i<=$m;$i++){\n        $cur[0]=$i; $ai=$a[$i-1];\n        for($j=1;$j<=$n;$j++){\n            $cost = ($ai===$b[$j-1]) ? 0 : 1;\n            $del=$prev[$j]+1; $ins=$cur[$j-1]+1; $rep=$prev[$j-1]+$cost;\n            $cur[$j]=min($del,$ins,$rep);\n        }\n        [$prev,$cur]=[$cur,$prev];\n    }\n    return $prev[$n];\n}"
-        ]
-    },
-    {
-        "name-zh": "最长上升子序列O(n log n)",
-        "name-en": "LIS O(n log n)",
-        "description-zh": "耐心排序+二分求LIS长度",
-        "description-en": "Patience sorting + binary search for LIS length",
-        "dependencies": [],
-        "use_to": [
-            "sequence",
-            "dynamic programming"
-        ],
-        "tags": [
-            "dp",
-            "lis",
-            "algorithm"
-        ],
-        "input": [
-            "arr"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "length"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 92,
-        "memory_score": 92,
-        "code": [
-            "<?php\nfunction lis_length(array $a): int {\n    $tails = [];\n    foreach ($a as $x) {\n        $i = lower_bound($tails, $x);\n        $tails[$i] = $x;\n    }\n    return count($tails);\n}\nfunction lower_bound(array $arr, $x): int {\n    $l=0; $r=count($arr);\n    while($l<$r){ $m=($l+$r)>>1; if($arr[$m]>=$x) $r=$m; else $l=$m+1; }\n    return $l;\n}"
-        ]
-    },
-    {
-        "name-zh": "快速选择第k小",
-        "name-en": "Quickselect k-th",
-        "description-zh": "平均线性时间找到第k小(1<=k<=n)",
-        "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
-        "dependencies": [],
-        "use_to": [
-            "selection",
-            "order statistics"
-        ],
-        "tags": [
-            "algorithm",
-            "divide-conquer"
-        ],
-        "input": [
-            "arr",
-            "k"
-        ],
-        "input_type": [
-            "array",
-            "int"
-        ],
-        "return": [
-            "kth"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction quickselect(array $a, int $k): int { // k: 1-based\n    $l=0; $r=count($a)-1; $k--;\n    while($l<=$r){\n        $pivot=$a[$r]; $i=$l;\n        for($j=$l;$j<$r;$j++){ if($a[$j]<=$pivot){ [$a[$i],$a[$j]] = [$a[$j],$a[$i]]; $i++; } }\n        [$a[$i],$a[$r]] = [$a[$r],$a[$i]];\n        if($i===$k) return $a[$i]; elseif($i>$k) $r=$i-1; else $l=$i+1;\n    }\n    throw new InvalidArgumentException('k out of range');\n}"
-        ]
-    },
-    {
-        "name-zh": "LRU 缓存(哈希+双向链表)",
-        "name-en": "LRU Cache (Hash + LinkedList)",
-        "description-zh": "O(1) 时间支持 get/put 的最近最少使用缓存，使用自建双向链表维护顺序+哈希表定位",
-        "description-en": "Least Recently Used cache with O(1) get/put using custom doubly-linked list and hash map",
-        "dependencies": [],
-        "use_to": [
-            "cache",
-            "data structure"
-        ],
-        "tags": [
-            "lru",
-            "cache",
-            "data structure"
-        ],
-        "input": [
-            "capacity"
-        ],
-        "input_type": [
-            "int"
-        ],
-        "return": [
-            "class"
-        ],
-        "return_type": [
-            "LRUCache"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "<?php\n/**\n * LRU 缓存: get/put 均为 O(1)\n * 通过一个双端链表维护最近使用顺序 + 哈希表(key=>节点)定位。\n * 这里用 SplDoublyLinkedList 存储 [key,value]，同时 map 里保存 key => nodeIndex。\n * 注意: SplDoublyLinkedList 不支持 O(1) 任意位置删除/移动，这里采用自建链表节点类以获得稳定 O(1)。\n */\nclass LRUNode {\n    public $key; public $val; public $prev = null; public $next = null;\n    public function __construct($key, $val){ $this->key=$key; $this->val=$val; }\n}\n\nclass LRUCache {\n    private int $capacity;\n    private array $map = []; // key => LRUNode\n    private ?LRUNode $head = null; // dummy head\n    private ?LRUNode $tail = null; // dummy tail\n\n    public function __construct(int $capacity){\n        if ($capacity <= 0) throw new InvalidArgumentException('capacity must be > 0');\n        $this->capacity = $capacity;\n        $this->head = new LRUNode(null, null);\n        $this->tail = new LRUNode(null, null);\n        $this->head->next = $this->tail;\n        $this->tail->prev = $this->head;\n    }\n\n    private function addToFront(LRUNode $node): void {\n        $node->prev = $this->head;\n        $node->next = $this->head->next;\n        $this->head->next->prev = $node;\n        $this->head->next = $node;\n    }\n\n    private function removeNode(LRUNode $node): void {\n        $prev = $node->prev; $next = $node->next;\n        if ($prev) $prev->next = $next;\n        if ($next) $next->prev = $prev;\n        $node->prev = $node->next = null;\n    }\n\n    private function moveToFront(LRUNode $node): void {\n        $this->removeNode($node);\n        $this->addToFront($node);\n    }\n\n    private function popTail(): ?LRUNode {\n        $node = $this->tail->prev;\n        if ($node === $this->head) return null;\n        $this->removeNode($node);\n        return $node;\n    }\n\n    public function get($key){\n        if (!isset($this->map[$key])) return null;\n        $node = $this->map[$key];\n        $this->moveToFront($node);\n        return $node->val;\n    }\n\n    public function put($key, $value): void {\n        if (isset($this->map[$key])) {\n            $node = $this->map[$key];\n            $node->val = $value;\n            $this->moveToFront($node);\n            return;\n        }\n        $node = new LRUNode($key, $value);\n        $this->map[$key] = $node;\n        $this->addToFront($node);\n        if (count($this->map) > $this->capacity) {\n            $old = $this->popTail();\n            if ($old && $old->key !== null) { unset($this->map[$old->key]); }\n        }\n    }\n}\n\n// 使用示例:\n// $lru = new LRUCache(2);\n// $lru->put('a', 1); $lru->put('b', 2);\n// $lru->get('a');        // 1，并将 'a' 移到最近\n// $lru->put('c', 3);     // 淘汰 'b'\n// $lru->get('b');        // null\n"
-        ]
-    },
-    {
-        "name-zh": "最小栈(支持 getMin)",
-        "name-en": "Min Stack (getMin)",
-        "description-zh": "栈支持 push/pop/top 并以 O(1) 返回最小值，使用辅助栈保存当前最小值",
-        "description-en": "Stack supporting push/pop/top and O(1) getMin using an auxiliary stack",
-        "dependencies": [],
-        "use_to": [
-            "stack",
-            "data structure"
-        ],
-        "tags": [
-            "min stack",
-            "stack",
-            "data structure"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "class"
-        ],
-        "return_type": [
-            "MinStack"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "<?php\nclass MinStack {\n    private array $stk = [];\n    private array $minStk = [];\n\n    public function push($x): void {\n        $this->stk[] = $x;\n        if (empty($this->minStk)) {\n            $this->minStk[] = $x;\n        } else {\n            $m = end($this->minStk);\n            $this->minStk[] = ($x < $m) ? $x : $m;\n        }\n    }\n\n    public function pop(){\n        if (empty($this->stk)) return null;\n        array_pop($this->minStk);\n        return array_pop($this->stk);\n    }\n\n    public function top(){\n        return empty($this->stk) ? null : end($this->stk);\n    }\n\n    public function getMin(){\n        return empty($this->minStk) ? null : end($this->minStk);\n    }\n}\n\n// 使用示例:\n// $s = new MinStack();\n// $s->push(3); $s->push(5); $s->push(2);\n// $s->getMin(); // 2\n// $s->pop();    // 2\n// $s->getMin(); // 3\n"
-        ]
-    },
-    {
-        "name-zh": "文件写入",
-        "name-en": "File Write",
-        "description-zh": "将字符串写入文件（失败返回 false）",
-        "description-en": "Write string to file or return false on failure",
-        "dependencies": [],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "intermediate",
-            "file"
-        ],
-        "input": [
-            "filename",
-            "content"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "success"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction file_write(string $filename, string $content): bool {\n    return file_put_contents($filename, $content) !== false;\n}"
-        ]
-    },
-    {
-        "name-zh": "文件追加",
-        "name-en": "File Append",
-        "description-zh": "将字符串追加到文件末尾",
-        "description-en": "Append string to end of file",
-        "dependencies": [],
-        "use_to": [
-            "file",
-            "io"
-        ],
-        "tags": [
-            "intermediate",
-            "file"
-        ],
-        "input": [
-            "filename",
-            "content"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "success"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction file_append(string $filename, string $content): bool {\n    return file_put_contents($filename, $content, FILE_APPEND) !== false;\n}"
-        ]
-    },
-    {
-        "name-zh": "文件是否存在",
-        "name-en": "File Exists",
-        "description-zh": "检查文件或目录是否存在",
-        "description-en": "Check if file or directory exists",
-        "dependencies": [],
-        "use_to": [
-            "file"
-        ],
-        "tags": [
-            "basic",
-            "file"
-        ],
-        "input": [
-            "path"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "exists"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "<?php\nfunction file_exists_check(string $path): bool {\n    return file_exists($path);\n}"
-        ]
-    },
-    {
-        "name-zh": "目录创建",
-        "name-en": "Create Directory",
-        "description-zh": "递归创建目录",
-        "description-en": "Create directory recursively",
-        "dependencies": [],
-        "use_to": [
-            "file",
-            "dir"
-        ],
-        "tags": [
-            "basic",
-            "file"
-        ],
-        "input": [
-            "path",
-            "mode"
-        ],
-        "input_type": [
-            "string",
-            "int"
-        ],
-        "return": [
-            "success"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction create_dir(string $path, int $mode = 0755): bool {\n    return mkdir($path, $mode, true);\n}"
-        ]
-    },
-    {
-        "name-zh": "目录遍历",
-        "name-en": "Directory Iterate",
-        "description-zh": "遍历目录下所有文件（生成器）",
-        "description-en": "Iterate all files in directory using generator",
-        "dependencies": [],
-        "use_to": [
-            "file",
-            "dir"
-        ],
-        "tags": [
-            "intermediate",
-            "file"
-        ],
-        "input": [
-            "dirPath"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "files"
-        ],
-        "return_type": [
-            "Generator"
-        ],
-        "timer_score": 85,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction dir_iter(string $dirPath): \\Generator {\n    if (!is_dir($dirPath)) return;\n    $dh = opendir($dirPath);\n    if (!$dh) return;\n    try {\n        while (($file = readdir($dh)) !== false) {\n            if ($file !== \".\" && $file !== \"..\") {\n                yield $dirPath . DIRECTORY_SEPARATOR . $file;\n            }\n        }\n    } finally { closedir($dh); }\n}"
-        ]
-    },
-    {
-        "name-zh": "日期时间格式化",
-        "name-en": "Date Format",
-        "description-zh": "格式化时间戳为指定字符串",
-        "description-en": "Format timestamp to specified string",
-        "dependencies": [],
-        "use_to": [
-            "time",
-            "datetime"
-        ],
-        "tags": [
-            "basic",
-            "time"
-        ],
-        "input": [
-            "format",
-            "timestamp"
-        ],
-        "input_type": [
-            "string",
-            "?int"
-        ],
-        "return": [
-            "formatted"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction date_format(string $format, ?int $timestamp = null): string {\n    return date($format, $timestamp ?? time());\n}"
-        ]
-    },
-    {
-        "name-zh": "DateTime 创建",
-        "name-en": "DateTime Create",
-        "description-zh": "从字符串创建 DateTime 对象（失败返回 null）",
-        "description-en": "Create DateTime object from string or return null",
-        "dependencies": [],
-        "use_to": [
-            "time",
-            "datetime"
-        ],
-        "tags": [
-            "intermediate",
-            "time"
-        ],
-        "input": [
-            "str",
-            "timezone"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "datetime"
-        ],
-        "return_type": [
-            "?DateTime"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction datetime_create(string $str, string $timezone = \"UTC\"): ?\\DateTime {\n    try { return new \\DateTime($str, new \\DateTimeZone($timezone)); } catch (\\Exception) { return null; }\n}"
-        ]
-    },
-    {
-        "name-zh": "cURL HTTP GET",
-        "name-en": "cURL HTTP GET",
-        "description-zh": "使用 cURL 发送 GET 请求，支持超时",
-        "description-en": "Send HTTP GET via cURL with timeout",
-        "dependencies": [],
-        "use_to": [
-            "http",
-            "network",
-            "curl"
-        ],
-        "tags": [
-            "network",
-            "http"
-        ],
-        "input": [
-            "url",
-            "timeout"
-        ],
-        "input_type": [
-            "string",
-            "int"
-        ],
-        "return": [
-            "body"
-        ],
-        "return_type": [
-            "?string"
-        ],
-        "timer_score": 75,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction curl_get(string $url, int $timeout = 5): ?string {\n    $ch = curl_init();\n    curl_setopt($ch, CURLOPT_URL, $url);\n    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);\n    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);\n    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);\n    $body = curl_exec($ch);\n    if (curl_errno($ch)) { curl_close($ch); return null; }\n    curl_close($ch); return $body;\n}"
-        ]
-    },
-    {
-        "name-zh": "cURL HTTP POST",
-        "name-en": "cURL HTTP POST",
-        "description-zh": "使用 cURL 发送 POST 请求，支持超时",
-        "description-en": "Send HTTP POST via cURL with timeout",
-        "dependencies": [],
-        "use_to": [
-            "http",
-            "network",
-            "curl"
-        ],
-        "tags": [
-            "network",
-            "http"
-        ],
-        "input": [
-            "url",
-            "data",
-            "timeout"
-        ],
-        "input_type": [
-            "string",
-            "string",
-            "int"
-        ],
-        "return": [
-            "body"
-        ],
-        "return_type": [
-            "?string"
-        ],
-        "timer_score": 75,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction curl_post(string $url, string $data, int $timeout = 5): ?string {\n    $ch = curl_init();\n    curl_setopt($ch, CURLOPT_URL, $url);\n    curl_setopt($ch, CURLOPT_POST, true);\n    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);\n    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);\n    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);\n    $body = curl_exec($ch);\n    if (curl_errno($ch)) { curl_close($ch); return null; }\n    curl_close($ch); return $body;\n}"
-        ]
-    },
-    {
-        "name-zh": "密码哈希",
-        "name-en": "Password Hash",
-        "description-zh": "对密码进行 bcrypt 哈希并验证",
-        "description-en": "Hash and verify password with bcrypt",
-        "dependencies": [],
-        "use_to": [
-            "security",
-            "hash"
-        ],
-        "tags": [
-            "intermediate",
-            "security",
-            "hash"
-        ],
-        "input": [
-            "password",
-            "hash"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "verified"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "<?php\nfunction password_hash_safe(string $password): string {\n    return password_hash($password, PASSWORD_BCRYPT);\n}\nfunction password_verify_safe(string $password, string $hash): bool {\n    return password_verify($password, $hash);\n}"
-        ]
-    },
-    {
-        "name-zh": "XML解析",
-        "name-en": "XML Parse",
-        "description-zh": "将 XML 字符串解析为 SimpleXMLElement（失败返回 null）",
-        "description-en": "Parse XML string to SimpleXMLElement or return null",
-        "dependencies": [],
-        "use_to": [
-            "xml",
-            "parsing"
-        ],
-        "tags": [
-            "intermediate",
-            "xml"
-        ],
-        "input": [
-            "xmlStr"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "xml"
-        ],
-        "return_type": [
-            "?SimpleXMLElement"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction xml_parse(string $xmlStr): ?\\SimpleXMLElement {\n    libxml_use_internal_errors(true);\n    $xml = simplexml_load_string($xmlStr);\n    if ($xml === false) { libxml_clear_errors(); return null; }\n    return $xml;\n}"
-        ]
-    },
-    {
-        "name-zh": "数组过滤",
-        "name-en": "Array Filter",
-        "description-zh": "根据回调函数过滤数组元素",
-        "description-en": "Filter array elements by callback function",
-        "dependencies": [],
-        "use_to": [
-            "array"
-        ],
-        "tags": [
-            "basic",
-            "array"
-        ],
-        "input": [
-            "arr",
-            "callback"
-        ],
-        "input_type": [
-            "array",
-            "callable"
-        ],
-        "return": [
-            "filtered"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction array_filter_call(array $arr, callable $callback): array {\n    return array_filter($arr, $callback);\n}"
-        ]
-    },
-    {
-        "name-zh": "数组映射",
-        "name-en": "Array Map",
-        "description-zh": "对数组每个元素执行回调转换",
-        "description-en": "Map array elements through callback",
-        "dependencies": [],
-        "use_to": [
-            "array"
-        ],
-        "tags": [
-            "basic",
-            "array"
-        ],
-        "input": [
-            "arr",
-            "callback"
-        ],
-        "input_type": [
-            "array",
-            "callable"
-        ],
-        "return": [
-            "mapped"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 95,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction array_map_call(array $arr, callable $callback): array {\n    return array_map($callback, $arr);\n}"
-        ]
-    },
-    {
-        "name-zh": "异常捕获",
-        "name-en": "Try Catch",
-        "description-zh": "捕获异常并返回默认值",
-        "description-en": "Catch exception and return default value",
-        "dependencies": [],
-        "use_to": [
-            "error",
-            "exception"
-        ],
-        "tags": [
-            "intermediate",
-            "error"
-        ],
-        "input": [
-            "fn",
-            "default"
-        ],
-        "input_type": [
-            "callable",
-            "mixed"
-        ],
-        "return": [
-            "result"
-        ],
-        "return_type": [
-            "mixed"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction try_catch(callable $fn, mixed $default = null): mixed {\n    try { return $fn(); } catch (\\Throwable) { return $default; }\n}"
-        ]
-    },
-    {
-        "name-zh": "Session 管理",
-        "name-en": "Session Manage",
-        "description-zh": "安全地设置/获取/删除 session 值",
-        "description-en": "Safely set/get/remove session values",
-        "dependencies": [],
-        "use_to": [
-            "session"
-        ],
-        "tags": [
-            "intermediate",
-            "session"
-        ],
-        "input": [
-            "key",
-            "value"
-        ],
-        "input_type": [
-            "string",
-            "mixed"
-        ],
-        "return": [
-            "value"
-        ],
-        "return_type": [
-            "mixed"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction session_set(string $key, mixed $value): void {\n    if (session_status() === PHP_SESSION_NONE) session_start();\n    $_SESSION[$key] = $value;\n}\nfunction session_get(string $key, mixed $default = null): mixed {\n    if (session_status() === PHP_SESSION_NONE) session_start();\n    return $_SESSION[$key] ?? $default;\n}\nfunction session_remove(string $key): void {\n    if (session_status() === PHP_SESSION_NONE) session_start();\n    unset($_SESSION[$key]);\n}"
-        ]
-    },
-    {
-        "name-zh": "随机字符串",
-        "name-en": "Random String",
-        "description-zh": "生成指定长度的随机字符串（字母+数字）",
-        "description-en": "Generate random string of specified length (letters + digits)",
-        "dependencies": [],
-        "use_to": [
-            "random",
-            "string"
-        ],
-        "tags": [
-            "basic",
-            "random"
-        ],
-        "input": [
-            "length"
-        ],
-        "input_type": [
-            "int"
-        ],
-        "return": [
-            "str"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction random_string(int $length = 16): string {\n    $chars = \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\";\n    $result = \"\";\n    for ($i = 0; $i < $length; $i++) { $result .= $chars[random_int(0, strlen($chars) - 1)]; }\n    return $result;\n}"
-        ]
-    },
-    {
-        "name-zh": "随机整数范围",
-        "name-en": "Random Int Range",
-        "description-zh": "生成指定范围内的随机整数",
-        "description-en": "Generate random integer in range",
-        "dependencies": [],
-        "use_to": [
-            "random"
-        ],
-        "tags": [
-            "basic",
-            "random"
-        ],
-        "input": [
-            "min",
-            "max"
-        ],
-        "input_type": [
-            "int",
-            "int"
-        ],
-        "return": [
-            "randInt"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "<?php\nfunction rand_int(int $min, int $max): int {\n    return random_int($min, $max);\n}"
-        ]
-    },
-    {
-        "name-zh": "UUID生成",
-        "name-en": "UUID Generate",
-        "description-zh": "生成 v4 格式的 UUID 字符串",
-        "description-en": "Generate UUID v4 string",
-        "dependencies": [],
-        "use_to": [
-            "uuid",
-            "id"
-        ],
-        "tags": [
-            "intermediate",
-            "uuid"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "uuid"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction uuid_v4(): string {\n    $data = random_bytes(16);\n    $data[6] = chr(ord($data[6]) & 0x0f | 0x40);\n    $data[8] = chr(ord($data[8]) & 0x3f | 0x80);\n    return vsprintf(\"%s%s-%s-%s-%s%s%s\", str_split(bin2hex($data), 4));\n}"
-        ]
-    },
-    {
-        "name-zh": "CLI 进度条",
-        "name-en": "CLI Progress Bar",
-        "description-zh": "在命令行输出进度条",
-        "description-en": "Output progress bar in CLI",
-        "dependencies": [],
-        "use_to": [
-            "cli",
-            "progress"
-        ],
-        "tags": [
-            "basic",
-            "cli"
-        ],
-        "input": [
-            "current",
-            "total",
-            "width"
-        ],
-        "input_type": [
-            "int",
-            "int",
-            "int"
-        ],
-        "return": [],
-        "return_type": [],
-        "timer_score": 85,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction progress_bar(int $current, int $total, int $width = 40): void {\n    if ($total <= 0) return;\n    $percent = min(1.0, $current / $total);\n    $filled = (int)($width * $percent);\n    $bar = str_repeat(\"=\", $filled) . str_repeat(\" \", $width - $filled);\n    printf(\"\\r[%s] %d%%\", $bar, (int)($percent * 100));\n    if ($current >= $total) echo \"\\n\";\n}"
-        ]
-    },
-    {
-        "name-zh": "计算执行时间",
-        "name-en": "Execution Time",
-        "description-zh": "计算脚本从开始到当前的执行时间（秒）",
-        "description-en": "Calculate script execution time from start (seconds)",
-        "dependencies": [],
-        "use_to": [
-            "time",
-            "benchmark"
-        ],
-        "tags": [
-            "basic",
-            "time"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "seconds"
-        ],
-        "return_type": [
-            "float"
-        ],
-        "timer_score": 100,
-        "memory_score": 100,
-        "code": [
-            "<?php\nfunction execution_time(): float {\n    static $start = null;\n    if ($start === null) { $start = microtime(true); return 0; }\n    return microtime(true) - $start;\n}"
-        ]
-    },
-    {
-        "name-zh": "快速排序",
-        "name-en": "Quick Sort",
-        "description-zh": "原地快速排序（简单版）",
-        "description-en": "In-place quick sort",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "arr"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "<?php\nfunction quick_sort(array &$a, int $l=0, int $r=null): array {\n    if($r===null) $r=count($a)-1;\n    if($l>=$r) return $a;\n    $p=$a[$l+r>>1]; $i=$l-1; $j=$r+1;\n    while(true){\n        while($a[++$i]<$p); while($a[--$j]>$p);\n        if($i>=$j) break;\n        [$a[$i],$a[$j]]=[$a[$j],$a[$i]];\n    }\n    quick_sort($a,$l,$j); quick_sort($a,$j+1,$r);\n    return $a;\n}"
-        ]
-    },
-    {
-        "name-zh": "归并排序",
-        "name-en": "Merge Sort",
-        "description-zh": "自顶向下归并排序",
-        "description-en": "Top-down merge sort",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "arr"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 80,
-        "memory_score": 75,
-        "code": [
-            "<?php\nfunction merge_sort(array $a): array {\n    $n=count($a);\n    if($n<=1) return $a;\n    $m=(int)($n/2);\n    $left=merge_sort(array_slice($a,0,$m));\n    $right=merge_sort(array_slice($a,$m));\n    return merge($left,$right);\n}\nfunction merge(array $l,array $r):array{\n    $res=[]; $i=$j=0;\n    while($i<count($l)&&$j<count($r)) $res[]=$l[$i]<=$r[$j]?$l[$i++]:$r[$j++];\n    while($i<count($l)) $res[]=$l[$i++];\n    while($j<count($r)) $res[]=$r[$j++];\n    return $res;\n}"
-        ]
-    },
-    {
-        "name-zh": "二分查找",
-        "name-en": "Binary Search",
-        "description-zh": "有序数组二分查找，返回索引或-1",
-        "description-en": "Binary search in sorted array, return index or -1",
-        "dependencies": [],
-        "use_to": [
-            "search",
-            "algorithm"
-        ],
-        "tags": [
-            "search",
-            "algorithm"
-        ],
-        "input": [
-            "arr",
-            "target"
-        ],
-        "input_type": [
-            "array",
-            "mixed"
-        ],
-        "return": [
-            "index"
-        ],
-        "return_type": [
-            "int"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "<?php\nfunction binary_search(array $a, $target): int {\n    $l=0; $r=count($a)-1;\n    while($l<=$r){\n        $m=$l+$r>>1;\n        if($a[$m]==$target) return $m;\n        elseif($a[$m]<$target) $l=$m+1; else $r=$m-1;\n    }\n    return -1;\n}"
-        ]
-    },
-    {
-        "name-zh": "桶排序",
-        "name-en": "Bucket Sort",
-        "description-zh": "桶排序（适用于整数范围已知的情况）",
-        "description-en": "Bucket sort for integers with known range",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "arr",
-            "max"
-        ],
-        "input_type": [
-            "array",
-            "int"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 85,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction bucket_sort(array $a, int $max): array {\n    $buckets=array_fill(0,$max+1,0);\n    foreach($a as $v) $buckets[$v]++;\n    $res=[];\n    foreach($buckets as $v=>$cnt) for($i=0;$i<$cnt;$i++) $res[]=$v;\n    return $res;\n}"
-        ]
-    },
-    {
-        "name-zh": "队列封装",
-        "name-en": "Queue",
-        "description-zh": "FIFO 队列封装",
-        "description-en": "FIFO queue wrapper",
-        "dependencies": [],
-        "use_to": [
-            "queue",
-            "data structure"
-        ],
-        "tags": [
-            "queue",
-            "data structure"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "class"
-        ],
-        "return_type": [
-            "Queue"
-        ],
-        "timer_score": 90,
-        "memory_score": 90,
-        "code": [
-            "<?php\nclass Queue{\n    private array $q=[];\n    public function enqueue($v): void{ $this->q[]=$v; }\n    public function dequeue(){ return array_shift($this->q); }\n    public function peek(){ return $this->q[0] ?? null; }\n    public function isEmpty(): bool{ return empty($this->q); }\n    public function size(): int{ return count($this->q); }\n}"
-        ]
-    },
-    {
-        "name-zh": "优先队列（最小堆）",
-        "name-en": "Min Heap / Priority Queue",
-        "description-zh": "使用 SplMinHeap 实现最小堆优先队列",
-        "description-en": "Min-heap priority queue using SplMinHeap",
-        "dependencies": [],
-        "use_to": [
-            "heap",
-            "data structure"
-        ],
-        "tags": [
-            "heap",
-            "data structure"
-        ],
-        "input": [],
-        "input_type": [],
-        "return": [
-            "class"
-        ],
-        "return_type": [
-            "SplMinHeap"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "<?php\nfunction min_heap_insert(SplMinHeap &$heap, $value): void{ $heap->insert($value); }\nfunction min_heap_extract(SplMinHeap &$heap){ return $heap->isEmpty()?null:$heap->extract(); }\nfunction min_heap_peek(SplMinHeap $heap){ return $heap->isEmpty()?null:$heap->top(); }"
-        ]
-    },
-    {
-        "name-zh": "单向链表",
-        "name-en": "Singly Linked List",
-        "description-zh": "单向链表，支持在头部/尾部插入和删除",
-        "description-en": "Singly linked list with head/tail insert and delete",
-        "dependencies": [],
-        "use_to": [
-            "linked list",
-            "data structure"
-        ],
-        "tags": [
-            "linked list",
-            "data structure"
-        ],
-        "input": [
-            "value"
-        ],
-        "input_type": [
-            "mixed"
-        ],
-        "return": [
-            "node"
-        ],
-        "return_type": [
-            "LinkedListNode"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "<?php\nclass LinkedListNode{public $val;public ?LinkedListNode $next=null;public function __construct($val){$this->val=$val;}}\nclass LinkedList{public ?LinkedListNode $head=null;public function prepend($val):void{$n=new LinkedListNode($val);$n->next=$this->head;$this->head=$n;}\npublic function append($val):void{$n=new LinkedListNode($val);if(!$this->head){$this->head=$n;return;}$t=$this->head;while($t->next)$t=$t->next;$t->next=$n;}\npublic function toArray():array{$r=[];$c=$this->head;while($c){$r[]=$c->val;$c=$c->next;}return $r;}\npublic function isEmpty():bool{return $this->head===null;}\npublic function size():int{$c=$this->head;$n=0;while($c){$n++;$c=$c->next;}return $n;}\n}"
-        ]
-    },
-    {
-        "name-zh": "树状数组",
-        "name-en": "Fenwick Tree",
-        "description-zh": "树状数组，支持前缀和与单点更新 O(log n)",
-        "description-en": "Fenwick tree supporting prefix sum and point update in O(log n)",
-        "dependencies": [],
-        "use_to": [
-            "data structure",
-            "prefix sum"
-        ],
-        "tags": [
-            "fenwick",
-            "bit",
-            "data structure"
-        ],
-        "input": [
-            "n"
-        ],
-        "input_type": [
-            "int"
-        ],
-        "return": [
-            "class"
-        ],
-        "return_type": [
-            "FenwickTree"
-        ],
-        "timer_score": 90,
-        "memory_score": 85,
-        "code": [
-            "<?php\nclass FenwickTree{private array $t;private int $n;\npublic function __construct(int $n){$this->n=$n;$this->t=array_fill(0,$n+1,0);}\npublic function add(int $i,int $delta):void{for($i++;$i<=$this->n;$i+=($i&-i))$this->t[$i]+=$delta;}\npublic function sum(int $i):int{$s=0;for($i++;$i>0;$i-=($i&-i))$s+=$this->t[$i];return $s;}\npublic function rangeSum(int $l,int $r):int{return $this->sum($r)-($l>0?$this->sum($l-1):0);}\n}"
-        ]
-    },
-    {
-        "name-zh": "线段树",
-        "name-en": "Segment Tree",
-        "description-zh": "线段树，支持区间和单点更新 O(log n)",
-        "description-en": "Segment tree for range sum and point update in O(log n)",
-        "dependencies": [],
-        "use_to": [
-            "data structure",
-            "segment tree"
-        ],
-        "tags": [
-            "segment tree",
-            "data structure"
-        ],
-        "input": [
-            "arr"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "class"
-        ],
-        "return_type": [
-            "SegmentTree"
-        ],
-        "timer_score": 85,
-        "memory_score": 80,
-        "code": [
-            "<?php\nclass SegmentTree{\n    private array $tree; private int $n;\n    public function __construct(array $a){$this->n=count($a);$this->tree=array_fill(0,$this->n*4,0);$this->build($a,0,0,$this->n-1);}\n    private function build(array $a,int $node,int $l,int $r):void{\n        if($l==$r){$this->tree[$node]=$a[$l];return;}\n        $m=($l+$r)>>1;$this->build($a,$node*2+1,$l,$m);$this->build($a,$node*2+2,$m+1,$r);$this->tree[$node]=$this->tree[$node*2+1]+$this->tree[$node*2+2];\n    }\n    public function update(int $idx,int $val):void{$this->updateR(0,0,$this->n-1,$idx,$val);}\n    private function updateR(int $node,int $l,int $r,int $idx,int $val):void{\n        if($l==$r){$this->tree[$node]=$val;return;}\n        $m=($l+$r)>>1;if($idx<=$m)$this->updateR($node*2+1,$l,$m,$idx,$val);else $this->updateR($node*2+2,$m+1,$r,$idx,$val);$this->tree[$node]=$this->tree[$node*2+1]+$this->tree[$node*2+2];\n    }\n    public function query(int $ql,int $qr):int{return $this->queryR(0,0,$this->n-1,$ql,$qr);}\n    private function queryR(int $node,int $l,int $r,int $ql,int $qr):int{\n        if($ql>$r||$qr<$l) return 0;\n        if($ql<=$l&&$r<=$qr) return $this->tree[$node];\n        $m=($l+$r)>>1;return $this->queryR($node*2+1,$l,$m,$ql,$qr)+$this->queryR($node*2+2,$m+1,$r,$ql,$qr);\n    }\n}"
-        ]
-    },
-    {
-        "name-zh": "CRC32 校验",
-        "name-en": "CRC32 Checksum",
-        "description-zh": "计算数据的 CRC32 校验和（返回十六进制字符串）",
-        "description-en": "Compute CRC32 checksum of data, return hex string",
-        "dependencies": [],
-        "use_to": [
-            "checksum",
-            "crc"
-        ],
-        "tags": [
-            "checksum",
-            "crc32"
-        ],
-        "input": [
-            "data"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "crc"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction crc32_hex(string $data): string {\n    return str_pad(dechex(crc32($data)), 8, '0', STR_PAD_LEFT);\n}"
-        ]
-    },
-    {
-        "name-zh": "MD5 哈希",
-        "name-en": "MD5 Hash",
-        "description-zh": "计算字符串的 MD5 哈希（十六进制）",
-        "description-en": "Compute MD5 hash of string as hex",
-        "dependencies": [],
-        "use_to": [
-            "hash",
-            "md5"
-        ],
-        "tags": [
-            "hash",
-            "md5"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "hex"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 90,
-        "memory_score": 95,
-        "code": [
-            "<?php\nfunction md5_hex(string $s): string { return md5($s); }"
-        ]
-    },
-    {
-        "name-zh": "URL 编码解码",
-        "name-en": "URL Encode/Decode",
-        "description-zh": "对字符串进行 URL 编码和解码",
-        "description-en": "URL encode and decode string",
-        "dependencies": [],
-        "use_to": [
-            "url",
-            "encoding"
-        ],
-        "tags": [
-            "url",
-            "encoding"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "encoded"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "<?php\nfunction url_encode_str(string $s): string { return urlencode($s); }\nfunction url_decode_str(string $s): string { return urldecode($s); }"
-        ]
-    },
-    {
-        "name-zh": "HTML 转义",
-        "name-en": "HTML Escape",
-        "description-zh": "转义 HTML 特殊字符（防止 XSS）",
-        "description-en": "Escape HTML special characters (prevent XSS)",
-        "dependencies": [],
-        "use_to": [
-            "security",
-            "html"
-        ],
-        "tags": [
-            "security",
-            "html"
-        ],
-        "input": [
-            "s"
-        ],
-        "input_type": [
-            "string"
-        ],
-        "return": [
-            "escaped"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "<?php\nfunction html_escape(string $s): string { return htmlspecialchars($s, ENT_QUOTES|ENT_HTML5, 'UTF-8'); }\nfunction html_unescape(string $s): string { return htmlspecialchars_decode($s, ENT_QUOTES|ENT_HTML5); }"
-        ]
-    },
-    {
-        "name-zh": "生成范围数组",
-        "name-en": "Range Array",
-        "description-zh": "生成指定范围内的整数数组",
-        "description-en": "Generate array of integers in range",
-        "dependencies": [],
-        "use_to": [
-            "array",
-            "utility"
-        ],
-        "tags": [
-            "basic",
-            "array"
-        ],
-        "input": [
-            "start",
-            "end",
-            "step"
-        ],
-        "input_type": [
-            "int",
-            "int",
-            "int"
-        ],
-        "return": [
-            "arr"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "<?php\nfunction range_array(int $start, int $end, int $step=1): array {\n    if($step==0) return [];\n    $res=[];\n    if($step>0) for($i=$start;$i<$end;$i+=$step) $res[]=$i;\n    else for($i=$start;$i>$end;$i+=$step) $res[]=$i;\n    return $res;\n}"
-        ]
-    },
-    {
-        "name-zh": "数组分块",
-        "name-en": "Array Chunk",
-        "description-zh": "将数组按固定大小分块",
-        "description-en": "Split array into chunks of fixed size",
-        "dependencies": [],
-        "use_to": [
-            "array"
-        ],
-        "tags": [
-            "basic",
-            "array"
-        ],
-        "input": [
-            "arr",
-            "size"
-        ],
-        "input_type": [
-            "array",
-            "int"
-        ],
-        "return": [
-            "chunks"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 95,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction array_chunk_fixed(array $arr, int $size): array {\n    return array_chunk($arr, $size);\n}"
-        ]
-    },
-    {
-        "name-zh": "二维数组转置",
-        "name-en": "2D Array Transpose",
-        "description-zh": "将二维数组转置（行列互换）",
-        "description-en": "Transpose 2D array (swap rows and columns)",
-        "dependencies": [],
-        "use_to": [
-            "matrix",
-            "array"
-        ],
-        "tags": [
-            "matrix",
-            "array"
-        ],
-        "input": [
-            "matrix"
-        ],
-        "input_type": [
-            "array[]"
-        ],
-        "return": [
-            "transposed"
-        ],
-        "return_type": [
-            "array[]"
-        ],
-        "timer_score": 90,
-        "memory_score": 85,
-        "code": [
-            "<?php\nfunction array_transpose(array $matrix): array {\n    return array_map(null, ...$matrix);\n}"
-        ]
-    },
-    {
-        "name-zh": "计算数组积",
-        "name-en": "Array Product",
-        "description-zh": "计算数组所有元素的乘积",
-        "description-en": "Compute product of all elements in array",
-        "dependencies": [],
-        "use_to": [
-            "array",
-            "math"
-        ],
-        "tags": [
-            "basic",
-            "math"
-        ],
-        "input": [
-            "arr"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "product"
-        ],
-        "return_type": [
-            "int|float"
-        ],
-        "timer_score": 95,
-        "memory_score": 100,
-        "code": [
-            "<?php\nfunction array_product(array $arr) {\n    return array_reduce($arr, fn($carry, $v) => $carry * $v, 1);\n}"
-        ]
-    },
-    {
-        "name-zh": "多维数组排序",
-        "name-en": "Multi-dim Sort",
-        "description-zh": "按指定键对二维数组排序",
-        "description-en": "Sort 2D array by specified key",
-        "dependencies": [],
-        "use_to": [
-            "array",
-            "sort"
-        ],
-        "tags": [
-            "intermediate",
-            "sort"
-        ],
-        "input": [
-            "arr",
-            "key",
-            "order"
-        ],
-        "input_type": [
-            "array[]",
-            "string",
-            "string"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "array[]"
-        ],
-        "timer_score": 90,
-        "memory_score": 85,
-        "code": [
-            "<?php\nfunction array_sort_by_key(array $arr, string $key, string $order='asc'): array {\n    usort($arr, fn($a,$b) => $order==='asc' ? $a[$key]<=>$b[$key] : $b[$key]<=>$a[$key]);\n    return $arr;\n}"
-        ]
-    },
-    {
-        "name-zh": "堆排序",
-        "name-en": "Heap Sort",
-        "description-zh": "使用二叉堆实现堆排序",
-        "description-en": "Heap sort using binary heap",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "arr"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 80,
-        "memory_score": 85,
-        "code": [
-            "<?php\nfunction heap_sort(array &$arr): void {\n    $n = count($arr);\n    for ($i = (int)($n/2) - 1; $i >= 0; $i--) heapify($arr, $n, $i);\n    for ($i = $n - 1; $i > 0; $i--) {\n        [$arr[0], $arr[$i]] = [$arr[$i], $arr[0]];\n        heapify($arr, $i, 0);\n    }\n}\nfunction heapify(array &$arr, $n, $i): void {\n    $largest = $i; $l = 2*$i+1; $r = 2*$i+2;\n    if ($l < $n && $arr[$l] > $arr[$largest]) $largest = $l;\n    if ($r < $n && $arr[$r] > $arr[$largest]) $largest = $r;\n    if ($largest != $i) { [$arr[$i], $arr[$largest]] = [$arr[$largest], $arr[$i]]; heapify($arr, $n, $largest); }\n}"
-        ]
-    },
-    {
-        "name-zh": "希尔排序",
-        "name-en": "Shell Sort",
-        "description-zh": "希尔排序（递减增量排序）",
-        "description-en": "Shell sort with diminishing gap",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "arr"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 75,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction shell_sort(array &$arr): void {\n    $n = count($arr);\n    for ($gap = (int)($n/2); $gap > 0; $gap = (int)($gap/2)) {\n        for ($i = $gap; $i < $n; $i++) {\n            $tmp = $arr[$i]; $j = $i;\n            while ($j >= $gap && $arr[$j - $gap] > $tmp) { $arr[$j] = $arr[$j - $gap]; $j -= $gap; }\n            $arr[$j] = $tmp;\n        }\n    }\n}"
-        ]
-    },
-    {
-        "name-zh": "计数排序",
-        "name-en": "Counting Sort",
-        "description-zh": "计数排序（适用于小范围整数）",
-        "description-en": "Counting sort for small integer range",
-        "dependencies": [],
-        "use_to": [
-            "sort",
-            "algorithm"
-        ],
-        "tags": [
-            "sort",
-            "algorithm"
-        ],
-        "input": [
-            "arr",
-            "max"
-        ],
-        "input_type": [
-            "array",
-            "int"
-        ],
-        "return": [
-            "sorted"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 85,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction counting_sort(array $arr, int $max): array {\n    $count = array_fill(0, $max + 1, 0);\n    foreach ($arr as $v) $count[$v]++;\n    for ($i = 1; $i <= $max; $i++) $count[$i] += $count[$i - 1];\n    $out = array_fill(0, count($arr), 0);\n    for ($i = count($arr) - 1; $i >= 0; $i--) { $out[--$count[$arr[$i]] = $arr[$i]; }\n    return $out;\n}"
-        ]
-    },
-    {
-        "name-zh": "Redis连接池",
-        "name-en": "Redis Connection Pool",
-        "description-zh": "使用 PHPRedis 扩展的连接池封装",
-        "description-en": "Connection pool wrapper for PHPRedis extension",
-        "dependencies": [
-            "redis"
-        ],
-        "use_to": [
-            "redis",
-            "cache"
-        ],
-        "tags": [
-            "redis",
-            "cache"
-        ],
-        "input": [
-            "host",
-            "port"
-        ],
-        "input_type": [
-            "string",
-            "int"
-        ],
-        "return": [
-            "pool"
-        ],
-        "return_type": [
-            "RedisPool"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "<?php\nclass RedisPool {\n    private array $pool = [];\n    private string $host;\n    private int $port;\n    private int $maxConnections;\n\n    public function __construct(string $host, int $port, int $maxConnections = 10) {\n        $this->host = $host;\n        $this->port = $port;\n        $this->maxConnections = $maxConnections;\n    }\n\n    public function get(): Redis {\n        if (!empty($this->pool)) {\n            return array_pop($this->pool);\n        }\n        $redis = new Redis();\n        $redis->connect($this->host, $this->port);\n        return $redis;\n    }\n\n    public function release(Redis $redis): void {\n        if (count($this->pool) < $this->maxConnections) {\n            $this->pool[] = $redis;\n        } else {\n            $redis->close();\n        }\n    }\n}"
-        ]
-    },
-    {
-        "name-zh": "Memcached客户端",
-        "name-en": "Memcached Client",
-        "description-zh": "Memcached 客户端封装（支持过期时间）",
-        "description-en": "Memcached client wrapper with TTL support",
-        "dependencies": [
-            "memcached"
-        ],
-        "use_to": [
-            "cache",
-            "memcached"
-        ],
-        "tags": [
-            "cache",
-            "memcached"
-        ],
-        "input": [
-            "servers"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "mc"
-        ],
-        "return_type": [
-            "Memcached"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "<?php\nclass MemcachedClient {\n    private Memcached $mc;\n    public function __construct(array $servers = [['127.0.0.1', 11211]]) {\n        $this->mc = new Memcached();\n        $this->mc->addServers($servers);\n    }\n    public function get(string $key, $default = null) {\n        $v = $this->mc->get($key);\n        if ($this->mc->getResultCode() === Memcached::RES_NOTFOUND) return $default;\n        return $v;\n    }\n    public function set(string $key, $value, int $ttl = 0): bool {\n        return $this->mc->set($key, $value, $ttl);\n    }\n    public function delete(string $key): bool {\n        return $this->mc->delete($key);\n    }\n    public function increment(string $key, int $delta = 1) {\n        return $this->mc->increment($key, $delta);\n    }\n}"
-        ]
-    },
-    {
-        "name-zh": "PDO数据库连接池",
-        "name-en": "PDO Connection Pool",
-        "description-zh": "PDO 数据库连接池（单例模式）",
-        "description-en": "PDO database connection pool (singleton)",
-        "dependencies": [
-            "pdo"
-        ],
-        "use_to": [
-            "database",
-            "pdo"
-        ],
-        "tags": [
-            "database",
-            "pdo"
-        ],
-        "input": [
-            "dsn",
-            "user",
-            "pass"
-        ],
-        "input_type": [
-            "string",
-            "string",
-            "string"
-        ],
-        "return": [
-            "pdo"
-        ],
-        "return_type": [
-            "PDO"
-        ],
-        "timer_score": 85,
-        "memory_score": 85,
-        "code": [
-            "<?php\nclass PDOPool {\n    private static ?PDO $instance = null;\n    private function __construct() {}\n    public static function getInstance(string $dsn, string $user, string $pass, array $options = []): PDO {\n        if (self::$instance === null) {\n            self::$instance = new PDO($dsn, $user, $pass, $options);\n            self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);\n        }\n        return self::$instance;\n    }\n    private function __clone() {}\n    public function __wakeup() { throw new Exception('Cannot unserialize singleton'); }\n}"
-        ]
-    },
-    {
-        "name-zh": "JWT编码解码",
-        "name-en": "JWT Encode/Decode",
-        "description-zh": "JWT 令牌编码和解码（不含外部库）",
-        "description-en": "JWT token encode and decode without external library",
-        "dependencies": [],
-        "use_to": [
-            "jwt",
-            "auth"
-        ],
-        "tags": [
-            "jwt",
-            "auth"
-        ],
-        "input": [
-            "payload",
-            "secret"
-        ],
-        "input_type": [
-            "array",
-            "string"
-        ],
-        "return": [
-            "token"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction base64url_encode(string $data): string {\n    return rtrim(strtr(base64_encode($data), '+/', '-_'));\n}\nfunction base64url_decode(string $data): string {\n    return base64_decode(strtr($data, '-_', '+/'));\n}\nfunction jwt_encode(array $payload, string $secret): string {\n    $header = base64url_encode(json_encode(['alg'=>'HS256','typ'=>'JWT']));\n    $payload['iat'] = $payload['iat'] ?? time();\n    $payload = base64url_encode(json_encode($payload));\n    $sig = base64url_encode(hash_hmac('sha256', \"$header.$payload\", $secret, true));\n    return \"$header.$payload.$sig\";\n}\nfunction jwt_decode(string $token, string $secret): ?array {\n    $parts = explode('.', $token);\n    if (count($parts) !== 3) return null;\n    [$h, $p, $s] = $parts;\n    $expected = base64url_encode(hash_hmac('sha256', \"$h.$p\", $secret, true));\n    if (!hash_equals($expected, $s)) return null;\n    return json_decode(base64url_decode($p), true);\n}"
-        ]
-    },
-    {
-        "name-zh": "SMTP发送邮件",
-        "name-en": "SMTP Send Mail",
-        "description-zh": "使用 Socket 发送 SMTP 邮件（不含外部库）",
-        "description-en": "Send SMTP mail using socket without external library",
-        "dependencies": [],
-        "use_to": [
-            "mail",
-            "smtp"
-        ],
-        "tags": [
-            "mail",
-            "smtp"
-        ],
-        "input": [
-            "to",
-            "subject",
-            "body",
-            "from"
-        ],
-        "input_type": [
-            "string",
-            "string",
-            "string",
-            "string"
-        ],
-        "return": [
-            "success"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 70,
-        "memory_score": 75,
-        "code": [
-            "<?php\nfunction smtp_send(string $to, string $subject, string $body, string $from = 'noreply@localhost'): bool {\n    $host = '127.0.0.1'; $port = 25;\n    $socket = @fsockopen($host, $port, $errno, $errstr, 5);\n    if (!$socket) return false;\n    $read = fgets($socket);\n    fwrite($socket, \"HELO localhost\\r\\n\"); fgets($socket);\n    fwrite($socket, \"MAIL FROM:<$from>\\r\\n\"); fgets($socket);\n    fwrite($socket, \"RCPT TO:<$to>\\r\\n\"); fgets($socket);\n    fwrite($socket, \"DATA\\r\\n\"); fgets($socket);\n    fwrite($socket, \"Subject: $subject\\r\\nTo: $to\\r\\n\\r\\n$body\\r\\n.\\r\\n\");\n    fgets($socket);\n    fwrite($socket, \"QUIT\\r\\n\");\n    fclose($socket);\n    return true;\n}"
-        ]
-    },
-    {
-        "name-zh": "图像缩略图",
-        "name-en": "Image Thumbnail",
-        "description-zh": "生成图像缩略图（保持宽高比）",
-        "description-en": "Generate image thumbnail preserving aspect ratio",
-        "dependencies": [
-            "gd"
-        ],
-        "use_to": [
-            "image",
-            "thumbnail"
-        ],
-        "tags": [
-            "image",
-            "gd"
-        ],
-        "input": [
-            "srcPath",
-            "dstPath",
-            "maxWidth",
-            "maxHeight"
-        ],
-        "input_type": [
-            "string",
-            "string",
-            "int",
-            "int"
-        ],
-        "return": [
-            "success"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 80,
-        "memory_score": 75,
-        "code": [
-            "<?php\nfunction make_thumbnail(string $srcPath, string $dstPath, int $maxW = 200, int $maxH = 200): bool {\n    $img = imagecreatefromstring(file_get_contents($srcPath));\n    if (!$img) return false;\n    $w = imagesx($img); $h = imagesy($img);\n    $ratio = min($maxW/$w, $maxH/$h);\n    $newW = (int)($w * $ratio); $newH = (int)($h * $ratio);\n    $thumb = imagecreatetruecolor($newW, $newH);\n    imagecopyresampled($thumb, $img, 0, 0, 0, 0, $newW, $newH, $w, $h);\n    imagejpeg($thumb, $dstPath, 85);\n    imagedestroy($img); imagedestroy($thumb);\n    return true;\n}"
-        ]
-    },
-    {
-        "name-zh": "图像水印",
-        "name-en": "Image Watermark",
-        "description-zh": "为图像添加文字水印",
-        "description-en": "Add text watermark to image",
-        "dependencies": [
-            "gd"
-        ],
-        "use_to": [
-            "image",
-            "watermark"
-        ],
-        "tags": [
-            "image",
-            "gd"
-        ],
-        "input": [
-            "srcPath",
-            "dstPath",
-            "text"
-        ],
-        "input_type": [
-            "string",
-            "string",
-            "string"
-        ],
-        "return": [
-            "success"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 80,
-        "memory_score": 75,
-        "code": [
-            "<?php\nfunction add_watermark(string $srcPath, string $dstPath, string $text): bool {\n    $img = imagecreatefromstring(file_get_contents($srcPath));\n    if (!$img) return false;\n    $w = imagesx($img); $h = imagesy($img);\n    $black = imagecolorallocate($img, 0, 0, 0);\n    $fontSize = max(5, min($w, $h) / 20);\n    imagestring($img, $fontSize, 10, $h - 30, $text, $black);\n    imagejpeg($img, $dstPath, 90);\n    imagedestroy($img);\n    return true;\n}"
-        ]
-    },
-    {
-        "name-zh": "图形验证码",
-        "name-en": "Captcha Generator",
-        "description-zh": "生成图形验证码图片",
-        "description-en": "Generate captcha image",
-        "dependencies": [
-            "gd"
-        ],
-        "use_to": [
-            "captcha",
-            "security"
-        ],
-        "tags": [
-            "captcha",
-            "security"
-        ],
-        "input": [
-            "length",
-            "width",
-            "height"
-        ],
-        "input_type": [
-            "int",
-            "int",
-            "int"
-        ],
-        "return": [
-            "captcha"
-        ],
-        "return_type": [
-            "array"
-        ],
-        "timer_score": 80,
-        "memory_score": 75,
-        "code": [
-            "<?php\nfunction generate_captcha(int $len=4,int $w=120,int $h=40): array {\n    $img=imagecreatetruecolor($w,$h);$bg=imagecolorallocate($img,255,255,255);imagefill($img,0,0,$bg);\n    $chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';$text='';\n    for($i=0;$i<$len;$i++){$ch=$chars[random_int(0,strlen($chars)-1)];$text.=$ch;\n        $x=10+$i*($w-20)/$len;$y=random_int($h/3,$h-15);\n        $color=imagecolorallocate($img,random_int(0,150),random_int(0,150),random_int(0,150));\n        imagestring($img,5,$x,$y,$ch,$color);}\n    for($i=0;$i<5;$i++){imageline($img,random_int(0,$w),random_int(0,$h),random_int(0,$w),random_int(0,$h),imagecolorallocate($img,200,200,200));}\n    ob_start();imagejpeg($img);$data=ob_get_clean();imagedestroy($img);\n    return ['text'=>$text,'image'=>base64_encode($data)];\n}"
-        ]
-    },
-    {
-        "name-zh": "二维码生成",
-        "name-en": "QR Code Generator",
-        "description-zh": "使用 QRCode.js 生成二维码（CDN方式）",
-        "description-en": "Generate QR code using QRCode.js via CDN",
-        "dependencies": [],
-        "use_to": [
-            "qrcode",
-            "utility"
-        ],
-        "tags": [
-            "qrcode",
-            "utility"
-        ],
-        "input": [
-            "data",
-            "size"
-        ],
-        "input_type": [
-            "string",
-            "int"
-        ],
-        "return": [
-            "html"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction qrcode_html(string $data, int $size = 200): string {\n    $id = 'qr_' . bin2hex(random_bytes(4));\n    return '<div id=\"'.$id.'\"></div><script src=\"https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js\"></script>'\n           .'<script>new QRCode(document.getElementById(\"'.$id.'\"),{\"text\":\"'.htmlspecialchars($data).'\",\"width\":'.$size.',\"height\":'.$size.'});</script>';\n}"
-        ]
-    },
-    {
-        "name-zh": "分页器",
-        "name-en": "Pagination",
-        "description-zh": "生成分页导航 HTML",
-        "description-en": "Generate pagination navigation HTML",
-        "dependencies": [],
-        "use_to": [
-            "pagination",
-            "ui"
-        ],
-        "tags": [
-            "pagination",
-            "ui"
-        ],
-        "input": [
-            "currentPage",
-            "totalPages",
-            "baseUrl"
-        ],
-        "input_type": [
-            "int",
-            "int",
-            "string"
-        ],
-        "return": [
-            "html"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction pagination(int $page, int $total, string $url): string {\n    if ($total <= 1) return '';\n    $html = '<nav class=\"pagination\"><ul>';\n    $range = 2; $start = max(1, $page - $range); $end = min($total, $page + $range);\n    if ($start > 1) $html .= '<li><a href=\"'.$url.'?p=1\">1</a></li>';\n    if ($start > 2) $html .= '<li><span>...</span></li>';\n    for ($i = $start; $i <= $end; $i++) {\n        $active = $i === $page ? ' class=\"active\"' : '';\n        $html .= '<li'.$active.'><a href=\"'.$url.'?p='.$i.'\">'.$i.'</a></li>';\n    }\n    if ($end < $total - 1) $html .= '<li><span>...</span></li>';\n    if ($end < $total) $html .= '<li><a href=\"'.$url.'?p='.$total.'\">'.$total.'</a></li>';\n    $html .= '</ul></nav>';\n    return $html;\n}"
-        ]
-    },
-    {
-        "name-zh": "CLI表格输出",
-        "name-en": "CLI Table Output",
-        "description-zh": "在命令行输出格式化表格",
-        "description-en": "Output formatted table in CLI",
-        "dependencies": [],
-        "use_to": [
-            "cli",
-            "table"
-        ],
-        "tags": [
-            "cli",
-            "table"
-        ],
-        "input": [
-            "headers",
-            "rows"
-        ],
-        "input_type": [
-            "array",
-            "array[]"
-        ],
-        "return": [
-            "table"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction cli_table(array $headers, array $rows): string {\n    $widths = array_map('strlen', $headers);\n    foreach ($rows as $row) { foreach ($row as $i => $cell) $widths[$i] = max($widths[$i] ?? 0, strlen((string)$cell)); }\n    $line = '+' . implode('+', array_map(fn($w) => str_repeat('-', $w + 2), $widths)) . '+';\n    $out = $line . \"\\n\";\n    $out .= '|' . implode('|', array_map(fn($h, $w) => ' ' . str_pad($h, $w), $headers, $widths)) . '|\\n';\n    $out .= str_replace('+', '+', $line) . \"\\n\";\n    foreach ($rows as $row) {\n        $out .= '|' . implode('|', array_map(fn($v, $w) => ' ' . str_pad((string)$v, $w), $row, $widths)) . '|\\n';\n    }\n    $out .= $line;\n    return $out;\n}"
-        ]
-    },
-    {
-        "name-zh": "布隆过滤器",
-        "name-en": "Bloom Filter",
-        "description-zh": "简单布隆过滤器实现",
-        "description-en": "Simple Bloom filter implementation",
-        "dependencies": [],
-        "use_to": [
-            "bloom filter",
-            "data structure"
-        ],
-        "tags": [
-            "bloom filter",
-            "data structure"
-        ],
-        "input": [
-            "items"
-        ],
-        "input_type": [
-            "array"
-        ],
-        "return": [
-            "filter"
-        ],
-        "return_type": [
-            "BloomFilter"
-        ],
-        "timer_score": 80,
-        "memory_score": 75,
-        "code": [
-            "<?php\nclass BloomFilter {\n    private int $size;\n    private array $bits = [];\n    public function __construct(int $size = 1000) { $this->size = $size; $this->bits = array_fill(0, $size, false); }\n    private function h1(string $s): int { return abs(crc32($s)) % $this->size; }\n    private function h2(string $s): int { return abs(md5($s, true)[0] . md5($s, true)[1]) % $this->size; }\n    private function h3(string $s): int { return abs(ord($s[0]) * 31 + ord($s[strlen($s)-1])) % $this->size; }\n    public function add(string $item): void { $this->bits[$this->h1($item)] = $this->bits[$this->h2($item)] = $this->bits[$this->h3($item)] = true; }\n    public function contains(string $item): bool { return $this->bits[$this->h1($item)] && $this->bits[$this->h2($item)] && $this->bits[$this->h3($item)]; }\n}"
-        ]
-    },
-    {
-        "name-zh": "限流器",
-        "name-en": "Rate Limiter",
-        "description-zh": "滑动窗口限流器",
-        "description-en": "Sliding window rate limiter",
-        "dependencies": [],
-        "use_to": [
-            "rate limit",
-            "security"
-        ],
-        "tags": [
-            "rate limit",
-            "security"
-        ],
-        "input": [
-            "key",
-            "maxRequests",
-            "windowSeconds"
-        ],
-        "input_type": [
-            "string",
-            "int",
-            "int"
-        ],
-        "return": [
-            "allowed"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 85,
-        "memory_score": 80,
-        "code": [
-            "<?php\nclass RateLimiter {\n    private array $requests = [];\n    public function allow(string $key, int $max, int $window): bool {\n        $now = time();\n        if (!isset($this->requests[$key])) $this->requests[$key] = [];\n        $this->requests[$key] = array_filter($this->requests[$key], fn($t) => $t > $now - $window);\n        if (count($this->requests[$key]) >= $max) return false;\n        $this->requests[$key][] = $now;\n        return true;\n    }\n}"
-        ]
-    },
-    {
-        "name-zh": "Webhook签名验证",
-        "name-en": "Webhook Signature Verify",
-        "description-zh": "验证 Webhook 请求签名（GitHub风格）",
-        "description-en": "Verify webhook request signature (GitHub style)",
-        "dependencies": [
-            "hash"
-        ],
-        "use_to": [
-            "webhook",
-            "security"
-        ],
-        "tags": [
-            "webhook",
-            "security"
-        ],
-        "input": [
-            "payload",
-            "signature",
-            "secret"
-        ],
-        "input_type": [
-            "string",
-            "string",
-            "string"
-        ],
-        "return": [
-            "valid"
-        ],
-        "return_type": [
-            "bool"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction verify_webhook_signature(string $payload, string $signature, string $secret): bool {\n    $expected = 'sha256=' . hash_hmac('sha256', $payload, $secret);\n    return hash_equals($expected, $signature);\n}"
-        ]
-    },
-    {
-        "name-zh": "Webhook签名生成",
-        "name-en": "Webhook Signature Generate",
-        "description-zh": "为 Webhook 载荷生成签名",
-        "description-en": "Generate signature for webhook payload",
-        "dependencies": [
-            "hash"
-        ],
-        "use_to": [
-            "webhook",
-            "security"
-        ],
-        "tags": [
-            "webhook",
-            "security"
-        ],
-        "input": [
-            "payload",
-            "secret"
-        ],
-        "input_type": [
-            "string",
-            "string"
-        ],
-        "return": [
-            "signature"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction generate_webhook_signature(string $payload, string $secret): string {\n    return 'sha256=' . hash_hmac('sha256', $payload, $secret);\n}"
-        ]
-    },
-    {
-        "name-zh": "OAuth2授权URL",
-        "name-en": "OAuth2 Auth URL",
-        "description-zh": "生成 OAuth2 授权 URL",
-        "description-en": "Generate OAuth2 authorization URL",
-        "dependencies": [],
-        "use_to": [
-            "oauth",
-            "auth"
-        ],
-        "tags": [
-            "oauth",
-            "auth"
-        ],
-        "input": [
-            "clientId",
-            "redirectUri",
-            "state",
-            "scope"
-        ],
-        "input_type": [
-            "string",
-            "string",
-            "string",
-            "string"
-        ],
-        "return": [
-            "url"
-        ],
-        "return_type": [
-            "string"
-        ],
-        "timer_score": 85,
-        "memory_score": 90,
-        "code": [
-            "<?php\nfunction oauth2_auth_url(string $clientId, string $redirectUri, string $state, string $scope = 'read'): string {\n    $params = http_build_query([\n        'client_id' => $clientId,\n        'redirect_uri' => $redirectUri,\n        'response_type' => 'code',\n        'scope' => $scope,\n        'state' => $state\n    ]);\n    return 'https://oauth.example.com/authorize?' . $params;\n}"
-        ]
-    },
-    {
-        "name-zh": "OAuth2获取Token",
-        "name-en": "OAuth2 Token Exchange",
-        "description-zh": "用授权码换取 Access Token",
-        "description-en": "Exchange authorization code for access token",
-        "dependencies": [
-            "hash"
-        ],
-        "use_to": [
-            "oauth",
-            "auth"
-        ],
-        "tags": [
-            "oauth",
-            "auth"
-        ],
-        "input": [
-            "code",
-            "clientId",
-            "clientSecret",
-            "redirectUri",
-            "tokenUrl"
-        ],
-        "input_type": [
-            "string",
-            "string",
-            "string",
-            "string",
-            "string"
-        ],
-        "return": [
-            "token"
-        ],
-        "return_type": [
-            "?array"
-        ],
-        "timer_score": 80,
-        "memory_score": 80,
-        "code": [
-            "<?php\nfunction oauth2_token(string $code, string $clientId, string $clientSecret, string $redirectUri, string $tokenUrl): ?array {\n    $ch = curl_init($tokenUrl);\n    curl_setopt_array($ch, [\n        CURLOPT_POST => true,\n        CURLOPT_POSTFIELDS => http_build_query([\n            'grant_type' => 'authorization_code',\n            'code' => $code,\n            'client_id' => $clientId,\n            'client_secret' => $clientSecret,\n            'redirect_uri' => $redirectUri\n        ]),\n        CURLOPT_RETURNTRANSFER => true,\n        CURLOPT_HTTPHEADER => ['Accept: application/json']\n    ]);\n    $res = curl_exec($ch);\n    if (!$res) return null;\n    return json_decode($res, true);\n}"
-        ]
-    }
+  {
+    "name-zh": "主函数示例",
+    "name-en": "Main Function Example",
+    "description-zh": "PHP程序的入口函数示例，包含命令行参数处理和错误处理",
+    "description-en": "Entry point function example for PHP programs, including command line arguments and error handling",
+    "dependencies": [],
+    "use_to": [
+      "program entry",
+      "command line"
+    ],
+    "tags": [
+      "basic",
+      "entry point",
+      "command line"
+    ],
+    "input": [
+      "argv"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "status"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "<?php\n\n/**\n * 主程序入口函数\n * @param array $argv 命令行参数数组\n * @return int 退出状态码\n */\nfunction main(array $argv = []): int {\n    try {\n        // 设置错误处理\n        set_error_handler(function($severity, $message, $file, $line) {\n            throw new ErrorException($message, 0, $severity, $file, $line);\n        });\n        \n        // 打印程序信息\n        echo \"Program: {$argv[0]}\\n\";\n        \n        // 打印命令行参数\n        $args = array_slice($argv, 1);\n        echo \"Arguments count: \" . count($args) . \"\\n\";\n        echo \"Arguments: \" . implode(', ', $args) . \"\\n\";\n        \n        // 程序主要逻辑\n        $name = $args[0] ?? 'World';\n        echo \"Hello, {$name}!\\n\";\n        \n        return 0;\n    } catch (Throwable $e) {\n        fwrite(STDERR, \"Error: {$e->getMessage()}\\n\");\n        return 1;\n    }\n}\n\n// 如果是从命令行运行\nif (PHP_SAPI === 'cli' && basename($argv[0]) === basename(__FILE__)) {\n    exit(main($argv));\n}"
+    ]
+  },
+  {
+    "name-zh": "数组去重",
+    "name-en": "Array Unique",
+    "description-zh": "返回去除重复值且保持原顺序的数组",
+    "description-en": "Return an array without duplicates preserving order",
+    "dependencies": [],
+    "use_to": [
+      "array",
+      "dedup"
+    ],
+    "tags": [
+      "basic",
+      "array"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "unique"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction array_unique_order(array $arr): array {\n    $seen = [];\n    $out = [];\n    foreach ($arr as $v) {\n        if (!isset($seen[$v])) {\n            $seen[$v] = true;\n            $out[] = $v;\n        }\n    }\n    return $out;\n}"
+    ]
+  },
+  {
+    "name-zh": "JSON解析",
+    "name-en": "JSON Decode",
+    "description-zh": "解析 JSON 字符串为数组或对象，失败返回 null",
+    "description-en": "Decode JSON string to array/object; return null on failure",
+    "dependencies": [],
+    "use_to": [
+      "json",
+      "parsing"
+    ],
+    "tags": [
+      "intermediate",
+      "json"
+    ],
+    "input": [
+      "json_str",
+      "assoc"
+    ],
+    "input_type": [
+      "string",
+      "bool"
+    ],
+    "return": [
+      "data"
+    ],
+    "return_type": [
+      "mixed"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction json_decode_safe(string $json_str, bool $assoc = true) {\n    $data = json_decode($json_str, $assoc);\n    if (json_last_error() !== JSON_ERROR_NONE) {\n        return null;\n    }\n    return $data;\n}"
+    ]
+  },
+  {
+    "name-zh": "JSON序列化",
+    "name-en": "JSON Encode",
+    "description-zh": "将数据编码为 JSON 字符串（UTF-8 不转义中文）",
+    "description-en": "Encode data to JSON (preserve UTF-8 characters)",
+    "dependencies": [],
+    "use_to": [
+      "json",
+      "serialization"
+    ],
+    "tags": [
+      "intermediate",
+      "json"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "mixed"
+    ],
+    "return": [
+      "json_str"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction json_encode_safe($data): string {\n    return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);\n}"
+    ]
+  },
+  {
+    "name-zh": "字符串反转",
+    "name-en": "String Reverse",
+    "description-zh": "反转 UTF-8 字符串 (按字符而不是字节)",
+    "description-en": "Reverse UTF-8 string by characters not bytes",
+    "dependencies": [],
+    "use_to": [
+      "string"
+    ],
+    "tags": [
+      "intermediate",
+      "string"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "reversed"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction utf8_reverse(string $s): string {\n    preg_match_all('/./us', $s, $m);\n    return implode('', array_reverse($m[0]));\n}"
+    ]
+  },
+  {
+    "name-zh": "安全字符串截断",
+    "name-en": "Safe Truncate",
+    "description-zh": "按字符长度安全截断 UTF-8 字符串并可添加后缀",
+    "description-en": "Safely truncate UTF-8 string by characters with suffix",
+    "dependencies": [],
+    "use_to": [
+      "string"
+    ],
+    "tags": [
+      "intermediate",
+      "string"
+    ],
+    "input": [
+      "s",
+      "limit",
+      "suffix"
+    ],
+    "input_type": [
+      "string",
+      "int",
+      "string"
+    ],
+    "return": [
+      "truncated"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction utf8_truncate(string $s, int $limit, string $suffix = '...'): string {\n    if (mb_strlen($s, 'UTF-8') <= $limit) return $s;\n    return mb_substr($s, 0, $limit, 'UTF-8') . $suffix;\n}"
+    ]
+  },
+  {
+    "name-zh": "文件读取",
+    "name-en": "File Read",
+    "description-zh": "读取文件内容为字符串（失败返回 null）",
+    "description-en": "Read file contents as string or return null",
+    "dependencies": [],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "intermediate",
+      "file"
+    ],
+    "input": [
+      "filename"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "content"
+    ],
+    "return_type": [
+      "?string"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction file_read(string $filename): ?string {\n    if (!is_readable($filename)) return null;\n    $data = @file_get_contents($filename);\n    return $data === false ? null : $data;\n}"
+    ]
+  },
+  {
+    "name-zh": "文件逐行生成器",
+    "name-en": "File Line Generator",
+    "description-zh": "使用生成器逐行读取文件（内存友好）",
+    "description-en": "Yield lines from file efficiently using generator",
+    "dependencies": [],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "intermediate",
+      "file",
+      "generator"
+    ],
+    "input": [
+      "filename"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "iter"
+    ],
+    "return_type": [
+      "Generator"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction file_line_generator(string $filename): \\Generator {\n    if (!is_readable($filename)) return;\n    $fh = fopen($filename, 'rb');\n    if (!$fh) return;\n    try {\n        while (($line = fgets($fh)) !== false) {\n            yield rtrim($line, \"\\r\\n\");\n        }\n    } finally {\n        fclose($fh);\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "正则匹配",
+    "name-en": "Regex Match",
+    "description-zh": "检查文本是否匹配给定正则模式",
+    "description-en": "Check if text matches regex pattern",
+    "dependencies": [],
+    "use_to": [
+      "regex"
+    ],
+    "tags": [
+      "intermediate",
+      "regex"
+    ],
+    "input": [
+      "pattern",
+      "text"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "matched"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction regex_is_match(string $pattern, string $text): bool {\n    return preg_match($pattern, $text) === 1;\n}"
+    ]
+  },
+  {
+    "name-zh": "HTTP GET",
+    "name-en": "HTTP GET",
+    "description-zh": "使用 file_get_contents 发送简单 GET 请求（失败返回 null）",
+    "description-en": "Send simple HTTP GET request using file_get_contents; null on failure",
+    "dependencies": [],
+    "use_to": [
+      "http"
+    ],
+    "tags": [
+      "network",
+      "basic"
+    ],
+    "input": [
+      "url",
+      "timeout"
+    ],
+    "input_type": [
+      "string",
+      "int"
+    ],
+    "return": [
+      "body"
+    ],
+    "return_type": [
+      "?string"
+    ],
+    "timer_score": 70,
+    "memory_score": 70,
+    "code": [
+      "<?php\nfunction http_get(string $url, int $timeout = 5): ?string {\n    $ctx = stream_context_create(['http' => ['method' => 'GET', 'timeout' => $timeout]]);\n    $data = @file_get_contents($url, false, $ctx);\n    return $data === false ? null : $data;\n}"
+    ]
+  },
+  {
+    "name-zh": "当前时间 ISO",
+    "name-en": "Now ISO",
+    "description-zh": "返回当前时间的 ISO8601 字符串",
+    "description-en": "Return current time in ISO8601 string",
+    "dependencies": [],
+    "use_to": [
+      "time",
+      "datetime"
+    ],
+    "tags": [
+      "basic",
+      "time"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "iso"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "<?php\nfunction now_iso(): string {\n    return date('c');\n}"
+    ]
+  },
+  {
+    "name-zh": "Base64 编解码",
+    "name-en": "Base64 Encode/Decode",
+    "description-zh": "对字符串进行 Base64 编解码",
+    "description-en": "Base64 encode/decode string",
+    "dependencies": [],
+    "use_to": [
+      "encoding"
+    ],
+    "tags": [
+      "basic",
+      "encoding"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "enc",
+      "dec"
+    ],
+    "return_type": [
+      "string",
+      "string"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction b64_encode_str(string $s): string {\n    return base64_encode($s);\n}\n\nfunction b64_decode_str(string $s): string {\n    return base64_decode($s, true) ?: '';\n}"
+    ]
+  },
+  {
+    "name-zh": "SHA-256",
+    "name-en": "SHA-256",
+    "description-zh": "计算字符串的 SHA-256 十六进制哈希",
+    "description-en": "Compute SHA-256 hex of string",
+    "dependencies": [],
+    "use_to": [
+      "hash"
+    ],
+    "tags": [
+      "intermediate",
+      "hash"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "hex"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction sha256_hex(string $s): string {\n    return hash('sha256', $s);\n}"
+    ]
+  },
+  {
+    "name-zh": "路径拼接",
+    "name-en": "Path Join",
+    "description-zh": "使用 DIRECTORY_SEPARATOR 拼接路径",
+    "description-en": "Join paths using DIRECTORY_SEPARATOR",
+    "dependencies": [],
+    "use_to": [
+      "path"
+    ],
+    "tags": [
+      "basic",
+      "path"
+    ],
+    "input": [
+      "segments"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "path"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction path_join(array $segments): string {\n    return implode(DIRECTORY_SEPARATOR, array_map(function($s) {\n        return trim($s, DIRECTORY_SEPARATOR);\n    }, $segments));\n}"
+    ]
+  },
+  {
+    "name-zh": "HTTP POST(JSON)",
+    "name-en": "HTTP POST (JSON)",
+    "description-zh": "使用 stream_context 发送 JSON Body 的 POST 请求，支持超时，失败返回 null",
+    "description-en": "Send POST with JSON body via stream_context; timeout supported; null on failure",
+    "dependencies": [],
+    "use_to": [
+      "http",
+      "json"
+    ],
+    "tags": [
+      "network",
+      "http",
+      "json"
+    ],
+    "input": [
+      "url",
+      "data",
+      "timeout"
+    ],
+    "input_type": [
+      "string",
+      "mixed",
+      "int"
+    ],
+    "return": [
+      "text"
+    ],
+    "return_type": [
+      "?string"
+    ],
+    "timer_score": 65,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction http_post_json(string $url, $data, int $timeout = 5): ?string {\n    $payload = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);\n    $ctx = stream_context_create([\n        'http' => [\n            'method' => 'POST',\n            'header' => \"Content-Type: application/json\\r\\n\" .\n                        \"Accept: application/json\\r\\n\",\n            'content' => $payload,\n            'timeout' => $timeout\n        ]\n    ]);\n    $res = @file_get_contents($url, false, $ctx);\n    return $res === false ? null : $res;\n}"
+    ]
+  },
+  {
+    "name-zh": "Dijkstra最短路",
+    "name-en": "Dijkstra Shortest Path",
+    "description-zh": "在非负权图上用最小堆求单源最短路",
+    "description-en": "Single-source shortest path on non-negative graph using min-heap",
+    "dependencies": [],
+    "use_to": [
+      "graph",
+      "shortest path"
+    ],
+    "tags": [
+      "graph",
+      "dijkstra",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "adj",
+      "src"
+    ],
+    "input_type": [
+      "int",
+      "array",
+      "int"
+    ],
+    "return": [
+      "dist"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "<?php\n// adj[u] = list of [v, w]\nfunction dijkstra_shortest_path(int $n, array $adj, int $src): array {\n    $INF = PHP_INT_MAX;\n    $dist = array_fill(0, $n, $INF);\n    $dist[$src] = 0;\n    // simple binary heap via SplPriorityQueue (invert priorities for min-heap)\n    $pq = new SplPriorityQueue();\n    $pq->setExtractFlags(SplPriorityQueue::EXTR_BOTH);\n    $pq->insert($src, 0 - 0);\n    while (!$pq->isEmpty()) {\n        $cur = $pq->extract();\n        $u = $cur['data'];\n        $d = 0 - $cur['priority'];\n        if ($d !== $dist[$u]) continue;\n        foreach ($adj[$u] as [$v, $w]) {\n            $nd = $d + $w;\n            if ($nd < $dist[$v]) { $dist[$v] = $nd; $pq->insert($v, 0 - $nd); }\n        }\n    }\n    return $dist;\n}"
+    ]
+  },
+  {
+    "name-zh": "Kruskal最小生成树",
+    "name-en": "Kruskal Minimum Spanning Tree",
+    "description-zh": "Kruskal+并查集计算MST总权(不连通返回-1)",
+    "description-en": "Kruskal with DSU to compute MST total weight (-1 if disconnected)",
+    "dependencies": [],
+    "use_to": [
+      "graph",
+      "mst"
+    ],
+    "tags": [
+      "graph",
+      "mst",
+      "kruskal",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "edges"
+    ],
+    "input_type": [
+      "int",
+      "array"
+    ],
+    "return": [
+      "mstWeight"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 88,
+    "memory_score": 92,
+    "code": [
+      "<?php\n// edges: list of [u,v,w]\nfunction kruskal_mst(int $n, array $edges): int {\n    usort($edges, fn($a,$b) => $a[2] <=> $b[2]);\n    $p = range(0, $n-1); $r = array_fill(0,$n,0);\n    $find = function($x) use (&$p, &$find) { return $p[$x]===$x ? $x : ($p[$x]=$find($p[$x])); };\n    $unite = function($a,$b) use (&$p,&$r,$find){ $a=$find($a); $b=$find($b); if($a===$b) return false; if($r[$a]<$r[$b]) [$a,$b]=[$b,$a]; $p[$b]=$a; if($r[$a]===$r[$b]) $r[$a]++; return true; };\n    $total=0; $cnt=0;\n    foreach ($edges as [$u,$v,$w]) { if($unite($u,$v)){ $total += $w; if(++$cnt === $n-1) break; } }\n    return $cnt === $n-1 ? $total : -1;\n}"
+    ]
+  },
+  {
+    "name-zh": "Bellman-Ford最短路",
+    "name-en": "Bellman-Ford Shortest Path",
+    "description-zh": "允许负边权的单源最短路；检测负环",
+    "description-en": "Single-source shortest path with negative edges; detect negative cycles",
+    "dependencies": [],
+    "use_to": [
+      "graph",
+      "shortest path"
+    ],
+    "tags": [
+      "graph",
+      "bellman-ford",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "edges",
+      "src"
+    ],
+    "input_type": [
+      "int",
+      "array",
+      "int"
+    ],
+    "return": [
+      "dist",
+      "hasNegCycle"
+    ],
+    "return_type": [
+      "array",
+      "bool"
+    ],
+    "timer_score": 70,
+    "memory_score": 85,
+    "code": [
+      "<?php\n// edges: list of [u,v,w]\nfunction bellman_ford(int $n, array $edges, int $src): array {\n    $INF = PHP_INT_MAX;\n    $dist = array_fill(0, $n, $INF);\n    $dist[$src] = 0;\n    for ($i=1; $i<=$n-1; $i++) {\n        $updated = false;\n        foreach ($edges as [$u,$v,$w]) {\n            if ($dist[$u] !== $INF && $dist[$u] + $w < $dist[$v]) { $dist[$v] = $dist[$u] + $w; $updated = true; }\n        }\n        if (!$updated) break;\n    }\n    foreach ($edges as [$u,$v,$w]) { if ($dist[$u] !== $INF && $dist[$u] + $w < $dist[$v]) return [$dist, true]; }\n    return [$dist, false];\n}"
+    ]
+  },
+  {
+    "name-zh": "拓扑排序(Kahn)",
+    "name-en": "Topological Sort (Kahn)",
+    "description-zh": "入度法Kahn算法返回拓扑序列",
+    "description-en": "Kahn algorithm using indegrees to return topo order",
+    "dependencies": [],
+    "use_to": [
+      "graph",
+      "topological sort"
+    ],
+    "tags": [
+      "graph",
+      "topo",
+      "algorithm"
+    ],
+    "input": [
+      "n",
+      "adj"
+    ],
+    "input_type": [
+      "int",
+      "array"
+    ],
+    "return": [
+      "order"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 88,
+    "memory_score": 92,
+    "code": [
+      "<?php\nfunction topo_sort_kahn(int $n, array $adj): array {\n    $indeg = array_fill(0,$n,0);\n    for($u=0;$u<$n;$u++){ foreach($adj[$u] as $v){ $indeg[$v]++; } }\n    $q = [];\n    for($i=0;$i<$n;$i++) if($indeg[$i]===0) $q[]=$i;\n    $order = [];\n    for($h=0; $h<count($q); $h++){ $u=$q[$h]; $order[]=$u; foreach($adj[$u] as $v){ if(--$indeg[$v]===0) $q[]=$v; } }\n    return $order;\n}"
+    ]
+  },
+  {
+    "name-zh": "KMP字符串匹配",
+    "name-en": "KMP String Match",
+    "description-zh": "返回所有匹配起始下标",
+    "description-en": "Return all match start indices",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "string",
+      "kmp",
+      "algorithm"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "indices"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction kmp_search(string $text, string $pat): array {\n    $n=strlen($text); $m=strlen($pat); if($m===0) return [];\n    $lps=array_fill(0,$m,0);\n    for($i=1,$len=0;$i<$m;){ if($pat[$i]===$pat[$len]){ $lps[$i++]=++$len; } elseif($len>0){ $len=$lps[$len-1]; } else { $lps[$i++]=0; } }\n    $res=[];\n    for($i=0,$j=0;$i<$n;){ if($text[$i]===$pat[$j]){ $i++; $j++; if($j===$m){ $res[]=$i-$m; $j=$lps[$j-1]; } } elseif($j>0){ $j=$lps[$j-1]; } else { $i++; } }\n    return $res;\n}"
+    ]
+  },
+  {
+    "name-zh": "Rabin-Karp字符串匹配",
+    "name-en": "Rabin-Karp String Match",
+    "description-zh": "滚动哈希匹配，返回所有匹配位置",
+    "description-en": "Rolling-hash matching, return all indices",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "string",
+      "rabin-karp",
+      "algorithm"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "indices"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction rabin_karp(string $text, string $pat): array {\n    $n=strlen($text); $m=strlen($pat); if($m===0 || $m>$n) return [];\n    $B=131; $MOD=1000000007;\n    $powB=1; for($i=0;$i<$m-1;$i++) $powB=($powB*$B)%$MOD;\n    $hpat=0; $hwin=0;\n    for($i=0;$i<$m;$i++){ $hpat=($hpat*$B+ord($pat[$i]))%$MOD; $hwin=($hwin*$B+ord($text[$i]))%$MOD; }\n    $out=[];\n    for($i=0;$i<=$n-$m;$i++){\n        if($hpat===$hwin && substr($text,$i,$m)===$pat) $out[]=$i;\n        if($i<$n-$m){ $hwin = (($hwin - ord($text[$i])*$powB)%$MOD + $MOD)%$MOD; $hwin = ($hwin*$B + ord($text[$i+$m]))%$MOD; }\n    }\n    return $out;\n}"
+    ]
+  },
+  {
+    "name-zh": "埃拉托斯特尼筛法",
+    "name-en": "Sieve of Eratosthenes",
+    "description-zh": "在[2,n]内标记素数",
+    "description-en": "Mark primes in [2,n]",
+    "dependencies": [],
+    "use_to": [
+      "prime",
+      "number theory"
+    ],
+    "tags": [
+      "math",
+      "prime",
+      "sieve",
+      "algorithm"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "isPrime"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction sieve_is_prime(int $n): array {\n    $is = array_fill(0,$n+1,1);\n    if($n>=0) $is[0]=0; if($n>=1) $is[1]=0;\n    for($p=2; $p*$p<=$n; $p++) if($is[$p]){ for($x=$p*$p; $x<=$n; $x+=$p) $is[$x]=0; }\n    return $is;\n}"
+    ]
+  },
+  {
+    "name-zh": "编辑距离(Levenshtein)",
+    "name-en": "Levenshtein Edit Distance",
+    "description-zh": "动态规划计算编辑距离(滚动数组)",
+    "description-en": "DP edit distance with rolling array",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "dynamic programming"
+    ],
+    "tags": [
+      "dp",
+      "string",
+      "edit distance"
+    ],
+    "input": [
+      "a",
+      "b"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "distance"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 85,
+    "memory_score": 88,
+    "code": [
+      "<?php\nfunction edit_distance(string $a, string $b): int {\n    $m=strlen($a); $n=strlen($b);\n    $prev=array_fill(0,$n+1,0); $cur=array_fill(0,$n+1,0);\n    for($j=0;$j<=$n;$j++) $prev[$j]=$j;\n    for($i=1;$i<=$m;$i++){\n        $cur[0]=$i; $ai=$a[$i-1];\n        for($j=1;$j<=$n;$j++){\n            $cost = ($ai===$b[$j-1]) ? 0 : 1;\n            $del=$prev[$j]+1; $ins=$cur[$j-1]+1; $rep=$prev[$j-1]+$cost;\n            $cur[$j]=min($del,$ins,$rep);\n        }\n        [$prev,$cur]=[$cur,$prev];\n    }\n    return $prev[$n];\n}"
+    ]
+  },
+  {
+    "name-zh": "最长上升子序列O(n log n)",
+    "name-en": "LIS O(n log n)",
+    "description-zh": "耐心排序+二分求LIS长度",
+    "description-en": "Patience sorting + binary search for LIS length",
+    "dependencies": [],
+    "use_to": [
+      "sequence",
+      "dynamic programming"
+    ],
+    "tags": [
+      "dp",
+      "lis",
+      "algorithm"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "length"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 92,
+    "memory_score": 92,
+    "code": [
+      "<?php\nfunction lis_length(array $a): int {\n    $tails = [];\n    foreach ($a as $x) {\n        $i = lower_bound($tails, $x);\n        $tails[$i] = $x;\n    }\n    return count($tails);\n}\nfunction lower_bound(array $arr, $x): int {\n    $l=0; $r=count($arr);\n    while($l<$r){ $m=($l+$r)>>1; if($arr[$m]>=$x) $r=$m; else $l=$m+1; }\n    return $l;\n}"
+    ]
+  },
+  {
+    "name-zh": "快速选择第k小",
+    "name-en": "Quickselect k-th",
+    "description-zh": "平均线性时间找到第k小(1<=k<=n)",
+    "description-en": "Find k-th smallest in average linear time (1<=k<=n)",
+    "dependencies": [],
+    "use_to": [
+      "selection",
+      "order statistics"
+    ],
+    "tags": [
+      "algorithm",
+      "divide-conquer"
+    ],
+    "input": [
+      "arr",
+      "k"
+    ],
+    "input_type": [
+      "array",
+      "int"
+    ],
+    "return": [
+      "kth"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction quickselect(array $a, int $k): int { // k: 1-based\n    $l=0; $r=count($a)-1; $k--;\n    while($l<=$r){\n        $pivot=$a[$r]; $i=$l;\n        for($j=$l;$j<$r;$j++){ if($a[$j]<=$pivot){ [$a[$i],$a[$j]] = [$a[$j],$a[$i]]; $i++; } }\n        [$a[$i],$a[$r]] = [$a[$r],$a[$i]];\n        if($i===$k) return $a[$i]; elseif($i>$k) $r=$i-1; else $l=$i+1;\n    }\n    throw new InvalidArgumentException('k out of range');\n}"
+    ]
+  },
+  {
+    "name-zh": "LRU 缓存(哈希+双向链表)",
+    "name-en": "LRU Cache (Hash + LinkedList)",
+    "description-zh": "O(1) 时间支持 get/put 的最近最少使用缓存，使用自建双向链表维护顺序+哈希表定位",
+    "description-en": "Least Recently Used cache with O(1) get/put using custom doubly-linked list and hash map",
+    "dependencies": [],
+    "use_to": [
+      "cache",
+      "data structure"
+    ],
+    "tags": [
+      "lru",
+      "cache",
+      "data structure"
+    ],
+    "input": [
+      "capacity"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "class"
+    ],
+    "return_type": [
+      "LRUCache"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "<?php\n/**\n * LRU 缓存: get/put 均为 O(1)\n * 通过一个双端链表维护最近使用顺序 + 哈希表(key=>节点)定位。\n * 这里用 SplDoublyLinkedList 存储 [key,value]，同时 map 里保存 key => nodeIndex。\n * 注意: SplDoublyLinkedList 不支持 O(1) 任意位置删除/移动，这里采用自建链表节点类以获得稳定 O(1)。\n */\nclass LRUNode {\n    public $key; public $val; public $prev = null; public $next = null;\n    public function __construct($key, $val){ $this->key=$key; $this->val=$val; }\n}\n\nclass LRUCache {\n    private int $capacity;\n    private array $map = []; // key => LRUNode\n    private ?LRUNode $head = null; // dummy head\n    private ?LRUNode $tail = null; // dummy tail\n\n    public function __construct(int $capacity){\n        if ($capacity <= 0) throw new InvalidArgumentException('capacity must be > 0');\n        $this->capacity = $capacity;\n        $this->head = new LRUNode(null, null);\n        $this->tail = new LRUNode(null, null);\n        $this->head->next = $this->tail;\n        $this->tail->prev = $this->head;\n    }\n\n    private function addToFront(LRUNode $node): void {\n        $node->prev = $this->head;\n        $node->next = $this->head->next;\n        $this->head->next->prev = $node;\n        $this->head->next = $node;\n    }\n\n    private function removeNode(LRUNode $node): void {\n        $prev = $node->prev; $next = $node->next;\n        if ($prev) $prev->next = $next;\n        if ($next) $next->prev = $prev;\n        $node->prev = $node->next = null;\n    }\n\n    private function moveToFront(LRUNode $node): void {\n        $this->removeNode($node);\n        $this->addToFront($node);\n    }\n\n    private function popTail(): ?LRUNode {\n        $node = $this->tail->prev;\n        if ($node === $this->head) return null;\n        $this->removeNode($node);\n        return $node;\n    }\n\n    public function get($key){\n        if (!isset($this->map[$key])) return null;\n        $node = $this->map[$key];\n        $this->moveToFront($node);\n        return $node->val;\n    }\n\n    public function put($key, $value): void {\n        if (isset($this->map[$key])) {\n            $node = $this->map[$key];\n            $node->val = $value;\n            $this->moveToFront($node);\n            return;\n        }\n        $node = new LRUNode($key, $value);\n        $this->map[$key] = $node;\n        $this->addToFront($node);\n        if (count($this->map) > $this->capacity) {\n            $old = $this->popTail();\n            if ($old && $old->key !== null) { unset($this->map[$old->key]); }\n        }\n    }\n}\n\n// 使用示例:\n// $lru = new LRUCache(2);\n// $lru->put('a', 1); $lru->put('b', 2);\n// $lru->get('a');        // 1，并将 'a' 移到最近\n// $lru->put('c', 3);     // 淘汰 'b'\n// $lru->get('b');        // null\n"
+    ]
+  },
+  {
+    "name-zh": "最小栈(支持 getMin)",
+    "name-en": "Min Stack (getMin)",
+    "description-zh": "栈支持 push/pop/top 并以 O(1) 返回最小值，使用辅助栈保存当前最小值",
+    "description-en": "Stack supporting push/pop/top and O(1) getMin using an auxiliary stack",
+    "dependencies": [],
+    "use_to": [
+      "stack",
+      "data structure"
+    ],
+    "tags": [
+      "min stack",
+      "stack",
+      "data structure"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "class"
+    ],
+    "return_type": [
+      "MinStack"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "<?php\nclass MinStack {\n    private array $stk = [];\n    private array $minStk = [];\n\n    public function push($x): void {\n        $this->stk[] = $x;\n        if (empty($this->minStk)) {\n            $this->minStk[] = $x;\n        } else {\n            $m = end($this->minStk);\n            $this->minStk[] = ($x < $m) ? $x : $m;\n        }\n    }\n\n    public function pop(){\n        if (empty($this->stk)) return null;\n        array_pop($this->minStk);\n        return array_pop($this->stk);\n    }\n\n    public function top(){\n        return empty($this->stk) ? null : end($this->stk);\n    }\n\n    public function getMin(){\n        return empty($this->minStk) ? null : end($this->minStk);\n    }\n}\n\n// 使用示例:\n// $s = new MinStack();\n// $s->push(3); $s->push(5); $s->push(2);\n// $s->getMin(); // 2\n// $s->pop();    // 2\n// $s->getMin(); // 3\n"
+    ]
+  },
+  {
+    "name-zh": "文件写入",
+    "name-en": "File Write",
+    "description-zh": "将字符串写入文件（失败返回 false）",
+    "description-en": "Write string to file or return false on failure",
+    "dependencies": [],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "intermediate",
+      "file"
+    ],
+    "input": [
+      "filename",
+      "content"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "success"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction file_write(string $filename, string $content): bool {\n    return file_put_contents($filename, $content) !== false;\n}"
+    ]
+  },
+  {
+    "name-zh": "文件追加",
+    "name-en": "File Append",
+    "description-zh": "将字符串追加到文件末尾",
+    "description-en": "Append string to end of file",
+    "dependencies": [],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "intermediate",
+      "file"
+    ],
+    "input": [
+      "filename",
+      "content"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "success"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction file_append(string $filename, string $content): bool {\n    return file_put_contents($filename, $content, FILE_APPEND) !== false;\n}"
+    ]
+  },
+  {
+    "name-zh": "文件是否存在",
+    "name-en": "File Exists",
+    "description-zh": "检查文件或目录是否存在",
+    "description-en": "Check if file or directory exists",
+    "dependencies": [],
+    "use_to": [
+      "file"
+    ],
+    "tags": [
+      "basic",
+      "file"
+    ],
+    "input": [
+      "path"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "exists"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "<?php\nfunction file_exists_check(string $path): bool {\n    return file_exists($path);\n}"
+    ]
+  },
+  {
+    "name-zh": "目录创建",
+    "name-en": "Create Directory",
+    "description-zh": "递归创建目录",
+    "description-en": "Create directory recursively",
+    "dependencies": [],
+    "use_to": [
+      "file",
+      "dir"
+    ],
+    "tags": [
+      "basic",
+      "file"
+    ],
+    "input": [
+      "path",
+      "mode"
+    ],
+    "input_type": [
+      "string",
+      "int"
+    ],
+    "return": [
+      "success"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction create_dir(string $path, int $mode = 0755): bool {\n    return mkdir($path, $mode, true);\n}"
+    ]
+  },
+  {
+    "name-zh": "目录遍历",
+    "name-en": "Directory Iterate",
+    "description-zh": "遍历目录下所有文件（生成器）",
+    "description-en": "Iterate all files in directory using generator",
+    "dependencies": [],
+    "use_to": [
+      "file",
+      "dir"
+    ],
+    "tags": [
+      "intermediate",
+      "file"
+    ],
+    "input": [
+      "dirPath"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "files"
+    ],
+    "return_type": [
+      "Generator"
+    ],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction dir_iter(string $dirPath): \\Generator {\n    if (!is_dir($dirPath)) return;\n    $dh = opendir($dirPath);\n    if (!$dh) return;\n    try {\n        while (($file = readdir($dh)) !== false) {\n            if ($file !== \".\" && $file !== \"..\") {\n                yield $dirPath . DIRECTORY_SEPARATOR . $file;\n            }\n        }\n    } finally { closedir($dh); }\n}"
+    ]
+  },
+  {
+    "name-zh": "日期时间格式化",
+    "name-en": "Date Format",
+    "description-zh": "格式化时间戳为指定字符串",
+    "description-en": "Format timestamp to specified string",
+    "dependencies": [],
+    "use_to": [
+      "time",
+      "datetime"
+    ],
+    "tags": [
+      "basic",
+      "time"
+    ],
+    "input": [
+      "format",
+      "timestamp"
+    ],
+    "input_type": [
+      "string",
+      "?int"
+    ],
+    "return": [
+      "formatted"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction date_format(string $format, ?int $timestamp = null): string {\n    return date($format, $timestamp ?? time());\n}"
+    ]
+  },
+  {
+    "name-zh": "DateTime 创建",
+    "name-en": "DateTime Create",
+    "description-zh": "从字符串创建 DateTime 对象（失败返回 null）",
+    "description-en": "Create DateTime object from string or return null",
+    "dependencies": [],
+    "use_to": [
+      "time",
+      "datetime"
+    ],
+    "tags": [
+      "intermediate",
+      "time"
+    ],
+    "input": [
+      "str",
+      "timezone"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "datetime"
+    ],
+    "return_type": [
+      "?DateTime"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction datetime_create(string $str, string $timezone = \"UTC\"): ?\\DateTime {\n    try { return new \\DateTime($str, new \\DateTimeZone($timezone)); } catch (\\Exception) { return null; }\n}"
+    ]
+  },
+  {
+    "name-zh": "cURL HTTP GET",
+    "name-en": "cURL HTTP GET",
+    "description-zh": "使用 cURL 发送 GET 请求，支持超时",
+    "description-en": "Send HTTP GET via cURL with timeout",
+    "dependencies": [],
+    "use_to": [
+      "http",
+      "network",
+      "curl"
+    ],
+    "tags": [
+      "network",
+      "http"
+    ],
+    "input": [
+      "url",
+      "timeout"
+    ],
+    "input_type": [
+      "string",
+      "int"
+    ],
+    "return": [
+      "body"
+    ],
+    "return_type": [
+      "?string"
+    ],
+    "timer_score": 75,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction curl_get(string $url, int $timeout = 5): ?string {\n    $ch = curl_init();\n    curl_setopt($ch, CURLOPT_URL, $url);\n    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);\n    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);\n    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);\n    $body = curl_exec($ch);\n    if (curl_errno($ch)) { curl_close($ch); return null; }\n    curl_close($ch); return $body;\n}"
+    ]
+  },
+  {
+    "name-zh": "cURL HTTP POST",
+    "name-en": "cURL HTTP POST",
+    "description-zh": "使用 cURL 发送 POST 请求，支持超时",
+    "description-en": "Send HTTP POST via cURL with timeout",
+    "dependencies": [],
+    "use_to": [
+      "http",
+      "network",
+      "curl"
+    ],
+    "tags": [
+      "network",
+      "http"
+    ],
+    "input": [
+      "url",
+      "data",
+      "timeout"
+    ],
+    "input_type": [
+      "string",
+      "string",
+      "int"
+    ],
+    "return": [
+      "body"
+    ],
+    "return_type": [
+      "?string"
+    ],
+    "timer_score": 75,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction curl_post(string $url, string $data, int $timeout = 5): ?string {\n    $ch = curl_init();\n    curl_setopt($ch, CURLOPT_URL, $url);\n    curl_setopt($ch, CURLOPT_POST, true);\n    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);\n    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\n    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);\n    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);\n    $body = curl_exec($ch);\n    if (curl_errno($ch)) { curl_close($ch); return null; }\n    curl_close($ch); return $body;\n}"
+    ]
+  },
+  {
+    "name-zh": "密码哈希",
+    "name-en": "Password Hash",
+    "description-zh": "对密码进行 bcrypt 哈希并验证",
+    "description-en": "Hash and verify password with bcrypt",
+    "dependencies": [],
+    "use_to": [
+      "security",
+      "hash"
+    ],
+    "tags": [
+      "intermediate",
+      "security",
+      "hash"
+    ],
+    "input": [
+      "password",
+      "hash"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "verified"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "<?php\nfunction password_hash_safe(string $password): string {\n    return password_hash($password, PASSWORD_BCRYPT);\n}\nfunction password_verify_safe(string $password, string $hash): bool {\n    return password_verify($password, $hash);\n}"
+    ]
+  },
+  {
+    "name-zh": "XML解析",
+    "name-en": "XML Parse",
+    "description-zh": "将 XML 字符串解析为 SimpleXMLElement（失败返回 null）",
+    "description-en": "Parse XML string to SimpleXMLElement or return null",
+    "dependencies": [],
+    "use_to": [
+      "xml",
+      "parsing"
+    ],
+    "tags": [
+      "intermediate",
+      "xml"
+    ],
+    "input": [
+      "xmlStr"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "xml"
+    ],
+    "return_type": [
+      "?SimpleXMLElement"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction xml_parse(string $xmlStr): ?\\SimpleXMLElement {\n    libxml_use_internal_errors(true);\n    $xml = simplexml_load_string($xmlStr);\n    if ($xml === false) { libxml_clear_errors(); return null; }\n    return $xml;\n}"
+    ]
+  },
+  {
+    "name-zh": "数组过滤",
+    "name-en": "Array Filter",
+    "description-zh": "根据回调函数过滤数组元素",
+    "description-en": "Filter array elements by callback function",
+    "dependencies": [],
+    "use_to": [
+      "array"
+    ],
+    "tags": [
+      "basic",
+      "array"
+    ],
+    "input": [
+      "arr",
+      "callback"
+    ],
+    "input_type": [
+      "array",
+      "callable"
+    ],
+    "return": [
+      "filtered"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction array_filter_call(array $arr, callable $callback): array {\n    return array_filter($arr, $callback);\n}"
+    ]
+  },
+  {
+    "name-zh": "数组映射",
+    "name-en": "Array Map",
+    "description-zh": "对数组每个元素执行回调转换",
+    "description-en": "Map array elements through callback",
+    "dependencies": [],
+    "use_to": [
+      "array"
+    ],
+    "tags": [
+      "basic",
+      "array"
+    ],
+    "input": [
+      "arr",
+      "callback"
+    ],
+    "input_type": [
+      "array",
+      "callable"
+    ],
+    "return": [
+      "mapped"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction array_map_call(array $arr, callable $callback): array {\n    return array_map($callback, $arr);\n}"
+    ]
+  },
+  {
+    "name-zh": "异常捕获",
+    "name-en": "Try Catch",
+    "description-zh": "捕获异常并返回默认值",
+    "description-en": "Catch exception and return default value",
+    "dependencies": [],
+    "use_to": [
+      "error",
+      "exception"
+    ],
+    "tags": [
+      "intermediate",
+      "error"
+    ],
+    "input": [
+      "fn",
+      "default"
+    ],
+    "input_type": [
+      "callable",
+      "mixed"
+    ],
+    "return": [
+      "result"
+    ],
+    "return_type": [
+      "mixed"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction try_catch(callable $fn, mixed $default = null): mixed {\n    try { return $fn(); } catch (\\Throwable) { return $default; }\n}"
+    ]
+  },
+  {
+    "name-zh": "Session 管理",
+    "name-en": "Session Manage",
+    "description-zh": "安全地设置/获取/删除 session 值",
+    "description-en": "Safely set/get/remove session values",
+    "dependencies": [],
+    "use_to": [
+      "session"
+    ],
+    "tags": [
+      "intermediate",
+      "session"
+    ],
+    "input": [
+      "key",
+      "value"
+    ],
+    "input_type": [
+      "string",
+      "mixed"
+    ],
+    "return": [
+      "value"
+    ],
+    "return_type": [
+      "mixed"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction session_set(string $key, mixed $value): void {\n    if (session_status() === PHP_SESSION_NONE) session_start();\n    $_SESSION[$key] = $value;\n}\nfunction session_get(string $key, mixed $default = null): mixed {\n    if (session_status() === PHP_SESSION_NONE) session_start();\n    return $_SESSION[$key] ?? $default;\n}\nfunction session_remove(string $key): void {\n    if (session_status() === PHP_SESSION_NONE) session_start();\n    unset($_SESSION[$key]);\n}"
+    ]
+  },
+  {
+    "name-zh": "随机字符串",
+    "name-en": "Random String",
+    "description-zh": "生成指定长度的随机字符串（字母+数字）",
+    "description-en": "Generate random string of specified length (letters + digits)",
+    "dependencies": [],
+    "use_to": [
+      "random",
+      "string"
+    ],
+    "tags": [
+      "basic",
+      "random"
+    ],
+    "input": [
+      "length"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "str"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction random_string(int $length = 16): string {\n    $chars = \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\";\n    $result = \"\";\n    for ($i = 0; $i < $length; $i++) { $result .= $chars[random_int(0, strlen($chars) - 1)]; }\n    return $result;\n}"
+    ]
+  },
+  {
+    "name-zh": "随机整数范围",
+    "name-en": "Random Int Range",
+    "description-zh": "生成指定范围内的随机整数",
+    "description-en": "Generate random integer in range",
+    "dependencies": [],
+    "use_to": [
+      "random"
+    ],
+    "tags": [
+      "basic",
+      "random"
+    ],
+    "input": [
+      "min",
+      "max"
+    ],
+    "input_type": [
+      "int",
+      "int"
+    ],
+    "return": [
+      "randInt"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "<?php\nfunction rand_int(int $min, int $max): int {\n    return random_int($min, $max);\n}"
+    ]
+  },
+  {
+    "name-zh": "UUID生成",
+    "name-en": "UUID Generate",
+    "description-zh": "生成 v4 格式的 UUID 字符串",
+    "description-en": "Generate UUID v4 string",
+    "dependencies": [],
+    "use_to": [
+      "uuid",
+      "id"
+    ],
+    "tags": [
+      "intermediate",
+      "uuid"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "uuid"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction uuid_v4(): string {\n    $data = random_bytes(16);\n    $data[6] = chr(ord($data[6]) & 0x0f | 0x40);\n    $data[8] = chr(ord($data[8]) & 0x3f | 0x80);\n    return vsprintf(\"%s%s-%s-%s-%s%s%s\", str_split(bin2hex($data), 4));\n}"
+    ]
+  },
+  {
+    "name-zh": "CLI 进度条",
+    "name-en": "CLI Progress Bar",
+    "description-zh": "在命令行输出进度条",
+    "description-en": "Output progress bar in CLI",
+    "dependencies": [],
+    "use_to": [
+      "cli",
+      "progress"
+    ],
+    "tags": [
+      "basic",
+      "cli"
+    ],
+    "input": [
+      "current",
+      "total",
+      "width"
+    ],
+    "input_type": [
+      "int",
+      "int",
+      "int"
+    ],
+    "return": [],
+    "return_type": [],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction progress_bar(int $current, int $total, int $width = 40): void {\n    if ($total <= 0) return;\n    $percent = min(1.0, $current / $total);\n    $filled = (int)($width * $percent);\n    $bar = str_repeat(\"=\", $filled) . str_repeat(\" \", $width - $filled);\n    printf(\"\\r[%s] %d%%\", $bar, (int)($percent * 100));\n    if ($current >= $total) echo \"\\n\";\n}"
+    ]
+  },
+  {
+    "name-zh": "计算执行时间",
+    "name-en": "Execution Time",
+    "description-zh": "计算脚本从开始到当前的执行时间（秒）",
+    "description-en": "Calculate script execution time from start (seconds)",
+    "dependencies": [],
+    "use_to": [
+      "time",
+      "benchmark"
+    ],
+    "tags": [
+      "basic",
+      "time"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "seconds"
+    ],
+    "return_type": [
+      "float"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "<?php\nfunction execution_time(): float {\n    static $start = null;\n    if ($start === null) { $start = microtime(true); return 0; }\n    return microtime(true) - $start;\n}"
+    ]
+  },
+  {
+    "name-zh": "快速排序",
+    "name-en": "Quick Sort",
+    "description-zh": "原地快速排序（简单版）",
+    "description-en": "In-place quick sort",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "<?php\nfunction quick_sort(array &$a, int $l=0, int $r=null): array {\n    if($r===null) $r=count($a)-1;\n    if($l>=$r) return $a;\n    $p=$a[$l+r>>1]; $i=$l-1; $j=$r+1;\n    while(true){\n        while($a[++$i]<$p); while($a[--$j]>$p);\n        if($i>=$j) break;\n        [$a[$i],$a[$j]]=[$a[$j],$a[$i]];\n    }\n    quick_sort($a,$l,$j); quick_sort($a,$j+1,$r);\n    return $a;\n}"
+    ]
+  },
+  {
+    "name-zh": "归并排序",
+    "name-en": "Merge Sort",
+    "description-zh": "自顶向下归并排序",
+    "description-en": "Top-down merge sort",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 80,
+    "memory_score": 75,
+    "code": [
+      "<?php\nfunction merge_sort(array $a): array {\n    $n=count($a);\n    if($n<=1) return $a;\n    $m=(int)($n/2);\n    $left=merge_sort(array_slice($a,0,$m));\n    $right=merge_sort(array_slice($a,$m));\n    return merge($left,$right);\n}\nfunction merge(array $l,array $r):array{\n    $res=[]; $i=$j=0;\n    while($i<count($l)&&$j<count($r)) $res[]=$l[$i]<=$r[$j]?$l[$i++]:$r[$j++];\n    while($i<count($l)) $res[]=$l[$i++];\n    while($j<count($r)) $res[]=$r[$j++];\n    return $res;\n}"
+    ]
+  },
+  {
+    "name-zh": "二分查找",
+    "name-en": "Binary Search",
+    "description-zh": "有序数组二分查找，返回索引或-1",
+    "description-en": "Binary search in sorted array, return index or -1",
+    "dependencies": [],
+    "use_to": [
+      "search",
+      "algorithm"
+    ],
+    "tags": [
+      "search",
+      "algorithm"
+    ],
+    "input": [
+      "arr",
+      "target"
+    ],
+    "input_type": [
+      "array",
+      "mixed"
+    ],
+    "return": [
+      "index"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "<?php\nfunction binary_search(array $a, $target): int {\n    $l=0; $r=count($a)-1;\n    while($l<=$r){\n        $m=$l+$r>>1;\n        if($a[$m]==$target) return $m;\n        elseif($a[$m]<$target) $l=$m+1; else $r=$m-1;\n    }\n    return -1;\n}"
+    ]
+  },
+  {
+    "name-zh": "桶排序",
+    "name-en": "Bucket Sort",
+    "description-zh": "桶排序（适用于整数范围已知的情况）",
+    "description-en": "Bucket sort for integers with known range",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "arr",
+      "max"
+    ],
+    "input_type": [
+      "array",
+      "int"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 85,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction bucket_sort(array $a, int $max): array {\n    $buckets=array_fill(0,$max+1,0);\n    foreach($a as $v) $buckets[$v]++;\n    $res=[];\n    foreach($buckets as $v=>$cnt) for($i=0;$i<$cnt;$i++) $res[]=$v;\n    return $res;\n}"
+    ]
+  },
+  {
+    "name-zh": "队列封装",
+    "name-en": "Queue",
+    "description-zh": "FIFO 队列封装",
+    "description-en": "FIFO queue wrapper",
+    "dependencies": [],
+    "use_to": [
+      "queue",
+      "data structure"
+    ],
+    "tags": [
+      "queue",
+      "data structure"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "class"
+    ],
+    "return_type": [
+      "Queue"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "<?php\nclass Queue{\n    private array $q=[];\n    public function enqueue($v): void{ $this->q[]=$v; }\n    public function dequeue(){ return array_shift($this->q); }\n    public function peek(){ return $this->q[0] ?? null; }\n    public function isEmpty(): bool{ return empty($this->q); }\n    public function size(): int{ return count($this->q); }\n}"
+    ]
+  },
+  {
+    "name-zh": "优先队列（最小堆）",
+    "name-en": "Min Heap / Priority Queue",
+    "description-zh": "使用 SplMinHeap 实现最小堆优先队列",
+    "description-en": "Min-heap priority queue using SplMinHeap",
+    "dependencies": [],
+    "use_to": [
+      "heap",
+      "data structure"
+    ],
+    "tags": [
+      "heap",
+      "data structure"
+    ],
+    "input": [],
+    "input_type": [],
+    "return": [
+      "class"
+    ],
+    "return_type": [
+      "SplMinHeap"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "<?php\nfunction min_heap_insert(SplMinHeap &$heap, $value): void{ $heap->insert($value); }\nfunction min_heap_extract(SplMinHeap &$heap){ return $heap->isEmpty()?null:$heap->extract(); }\nfunction min_heap_peek(SplMinHeap $heap){ return $heap->isEmpty()?null:$heap->top(); }"
+    ]
+  },
+  {
+    "name-zh": "单向链表",
+    "name-en": "Singly Linked List",
+    "description-zh": "单向链表，支持在头部/尾部插入和删除",
+    "description-en": "Singly linked list with head/tail insert and delete",
+    "dependencies": [],
+    "use_to": [
+      "linked list",
+      "data structure"
+    ],
+    "tags": [
+      "linked list",
+      "data structure"
+    ],
+    "input": [
+      "value"
+    ],
+    "input_type": [
+      "mixed"
+    ],
+    "return": [
+      "node"
+    ],
+    "return_type": [
+      "LinkedListNode"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "<?php\nclass LinkedListNode{public $val;public ?LinkedListNode $next=null;public function __construct($val){$this->val=$val;}}\nclass LinkedList{public ?LinkedListNode $head=null;public function prepend($val):void{$n=new LinkedListNode($val);$n->next=$this->head;$this->head=$n;}\npublic function append($val):void{$n=new LinkedListNode($val);if(!$this->head){$this->head=$n;return;}$t=$this->head;while($t->next)$t=$t->next;$t->next=$n;}\npublic function toArray():array{$r=[];$c=$this->head;while($c){$r[]=$c->val;$c=$c->next;}return $r;}\npublic function isEmpty():bool{return $this->head===null;}\npublic function size():int{$c=$this->head;$n=0;while($c){$n++;$c=$c->next;}return $n;}\n}"
+    ]
+  },
+  {
+    "name-zh": "树状数组",
+    "name-en": "Fenwick Tree",
+    "description-zh": "树状数组，支持前缀和与单点更新 O(log n)",
+    "description-en": "Fenwick tree supporting prefix sum and point update in O(log n)",
+    "dependencies": [],
+    "use_to": [
+      "data structure",
+      "prefix sum"
+    ],
+    "tags": [
+      "fenwick",
+      "bit",
+      "data structure"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "class"
+    ],
+    "return_type": [
+      "FenwickTree"
+    ],
+    "timer_score": 90,
+    "memory_score": 85,
+    "code": [
+      "<?php\nclass FenwickTree{private array $t;private int $n;\npublic function __construct(int $n){$this->n=$n;$this->t=array_fill(0,$n+1,0);}\npublic function add(int $i,int $delta):void{for($i++;$i<=$this->n;$i+=($i&-i))$this->t[$i]+=$delta;}\npublic function sum(int $i):int{$s=0;for($i++;$i>0;$i-=($i&-i))$s+=$this->t[$i];return $s;}\npublic function rangeSum(int $l,int $r):int{return $this->sum($r)-($l>0?$this->sum($l-1):0);}\n}"
+    ]
+  },
+  {
+    "name-zh": "线段树",
+    "name-en": "Segment Tree",
+    "description-zh": "线段树，支持区间和单点更新 O(log n)",
+    "description-en": "Segment tree for range sum and point update in O(log n)",
+    "dependencies": [],
+    "use_to": [
+      "data structure",
+      "segment tree"
+    ],
+    "tags": [
+      "segment tree",
+      "data structure"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "class"
+    ],
+    "return_type": [
+      "SegmentTree"
+    ],
+    "timer_score": 85,
+    "memory_score": 80,
+    "code": [
+      "<?php\nclass SegmentTree{\n    private array $tree; private int $n;\n    public function __construct(array $a){$this->n=count($a);$this->tree=array_fill(0,$this->n*4,0);$this->build($a,0,0,$this->n-1);}\n    private function build(array $a,int $node,int $l,int $r):void{\n        if($l==$r){$this->tree[$node]=$a[$l];return;}\n        $m=($l+$r)>>1;$this->build($a,$node*2+1,$l,$m);$this->build($a,$node*2+2,$m+1,$r);$this->tree[$node]=$this->tree[$node*2+1]+$this->tree[$node*2+2];\n    }\n    public function update(int $idx,int $val):void{$this->updateR(0,0,$this->n-1,$idx,$val);}\n    private function updateR(int $node,int $l,int $r,int $idx,int $val):void{\n        if($l==$r){$this->tree[$node]=$val;return;}\n        $m=($l+$r)>>1;if($idx<=$m)$this->updateR($node*2+1,$l,$m,$idx,$val);else $this->updateR($node*2+2,$m+1,$r,$idx,$val);$this->tree[$node]=$this->tree[$node*2+1]+$this->tree[$node*2+2];\n    }\n    public function query(int $ql,int $qr):int{return $this->queryR(0,0,$this->n-1,$ql,$qr);}\n    private function queryR(int $node,int $l,int $r,int $ql,int $qr):int{\n        if($ql>$r||$qr<$l) return 0;\n        if($ql<=$l&&$r<=$qr) return $this->tree[$node];\n        $m=($l+$r)>>1;return $this->queryR($node*2+1,$l,$m,$ql,$qr)+$this->queryR($node*2+2,$m+1,$r,$ql,$qr);\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "CRC32 校验",
+    "name-en": "CRC32 Checksum",
+    "description-zh": "计算数据的 CRC32 校验和（返回十六进制字符串）",
+    "description-en": "Compute CRC32 checksum of data, return hex string",
+    "dependencies": [],
+    "use_to": [
+      "checksum",
+      "crc"
+    ],
+    "tags": [
+      "checksum",
+      "crc32"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "crc"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction crc32_hex(string $data): string {\n    return str_pad(dechex(crc32($data)), 8, '0', STR_PAD_LEFT);\n}"
+    ]
+  },
+  {
+    "name-zh": "MD5 哈希",
+    "name-en": "MD5 Hash",
+    "description-zh": "计算字符串的 MD5 哈希（十六进制）",
+    "description-en": "Compute MD5 hash of string as hex",
+    "dependencies": [],
+    "use_to": [
+      "hash",
+      "md5"
+    ],
+    "tags": [
+      "hash",
+      "md5"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "hex"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "<?php\nfunction md5_hex(string $s): string { return md5($s); }"
+    ]
+  },
+  {
+    "name-zh": "URL 编码解码",
+    "name-en": "URL Encode/Decode",
+    "description-zh": "对字符串进行 URL 编码和解码",
+    "description-en": "URL encode and decode string",
+    "dependencies": [],
+    "use_to": [
+      "url",
+      "encoding"
+    ],
+    "tags": [
+      "url",
+      "encoding"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "encoded"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "<?php\nfunction url_encode_str(string $s): string { return urlencode($s); }\nfunction url_decode_str(string $s): string { return urldecode($s); }"
+    ]
+  },
+  {
+    "name-zh": "HTML 转义",
+    "name-en": "HTML Escape",
+    "description-zh": "转义 HTML 特殊字符（防止 XSS）",
+    "description-en": "Escape HTML special characters (prevent XSS)",
+    "dependencies": [],
+    "use_to": [
+      "security",
+      "html"
+    ],
+    "tags": [
+      "security",
+      "html"
+    ],
+    "input": [
+      "s"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "escaped"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "<?php\nfunction html_escape(string $s): string { return htmlspecialchars($s, ENT_QUOTES|ENT_HTML5, 'UTF-8'); }\nfunction html_unescape(string $s): string { return htmlspecialchars_decode($s, ENT_QUOTES|ENT_HTML5); }"
+    ]
+  },
+  {
+    "name-zh": "生成范围数组",
+    "name-en": "Range Array",
+    "description-zh": "生成指定范围内的整数数组",
+    "description-en": "Generate array of integers in range",
+    "dependencies": [],
+    "use_to": [
+      "array",
+      "utility"
+    ],
+    "tags": [
+      "basic",
+      "array"
+    ],
+    "input": [
+      "start",
+      "end",
+      "step"
+    ],
+    "input_type": [
+      "int",
+      "int",
+      "int"
+    ],
+    "return": [
+      "arr"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "<?php\nfunction range_array(int $start, int $end, int $step=1): array {\n    if($step==0) return [];\n    $res=[];\n    if($step>0) for($i=$start;$i<$end;$i+=$step) $res[]=$i;\n    else for($i=$start;$i>$end;$i+=$step) $res[]=$i;\n    return $res;\n}"
+    ]
+  },
+  {
+    "name-zh": "数组分块",
+    "name-en": "Array Chunk",
+    "description-zh": "将数组按固定大小分块",
+    "description-en": "Split array into chunks of fixed size",
+    "dependencies": [],
+    "use_to": [
+      "array"
+    ],
+    "tags": [
+      "basic",
+      "array"
+    ],
+    "input": [
+      "arr",
+      "size"
+    ],
+    "input_type": [
+      "array",
+      "int"
+    ],
+    "return": [
+      "chunks"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction array_chunk_fixed(array $arr, int $size): array {\n    return array_chunk($arr, $size);\n}"
+    ]
+  },
+  {
+    "name-zh": "二维数组转置",
+    "name-en": "2D Array Transpose",
+    "description-zh": "将二维数组转置（行列互换）",
+    "description-en": "Transpose 2D array (swap rows and columns)",
+    "dependencies": [],
+    "use_to": [
+      "matrix",
+      "array"
+    ],
+    "tags": [
+      "matrix",
+      "array"
+    ],
+    "input": [
+      "matrix"
+    ],
+    "input_type": [
+      "array[]"
+    ],
+    "return": [
+      "transposed"
+    ],
+    "return_type": [
+      "array[]"
+    ],
+    "timer_score": 90,
+    "memory_score": 85,
+    "code": [
+      "<?php\nfunction array_transpose(array $matrix): array {\n    return array_map(null, ...$matrix);\n}"
+    ]
+  },
+  {
+    "name-zh": "计算数组积",
+    "name-en": "Array Product",
+    "description-zh": "计算数组所有元素的乘积",
+    "description-en": "Compute product of all elements in array",
+    "dependencies": [],
+    "use_to": [
+      "array",
+      "math"
+    ],
+    "tags": [
+      "basic",
+      "math"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "product"
+    ],
+    "return_type": [
+      "int|float"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "<?php\nfunction array_product(array $arr) {\n    return array_reduce($arr, fn($carry, $v) => $carry * $v, 1);\n}"
+    ]
+  },
+  {
+    "name-zh": "多维数组排序",
+    "name-en": "Multi-dim Sort",
+    "description-zh": "按指定键对二维数组排序",
+    "description-en": "Sort 2D array by specified key",
+    "dependencies": [],
+    "use_to": [
+      "array",
+      "sort"
+    ],
+    "tags": [
+      "intermediate",
+      "sort"
+    ],
+    "input": [
+      "arr",
+      "key",
+      "order"
+    ],
+    "input_type": [
+      "array[]",
+      "string",
+      "string"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "array[]"
+    ],
+    "timer_score": 90,
+    "memory_score": 85,
+    "code": [
+      "<?php\nfunction array_sort_by_key(array $arr, string $key, string $order='asc'): array {\n    usort($arr, fn($a,$b) => $order==='asc' ? $a[$key]<=>$b[$key] : $b[$key]<=>$a[$key]);\n    return $arr;\n}"
+    ]
+  },
+  {
+    "name-zh": "堆排序",
+    "name-en": "Heap Sort",
+    "description-zh": "使用二叉堆实现堆排序",
+    "description-en": "Heap sort using binary heap",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 80,
+    "memory_score": 85,
+    "code": [
+      "<?php\nfunction heap_sort(array &$arr): void {\n    $n = count($arr);\n    for ($i = (int)($n/2) - 1; $i >= 0; $i--) heapify($arr, $n, $i);\n    for ($i = $n - 1; $i > 0; $i--) {\n        [$arr[0], $arr[$i]] = [$arr[$i], $arr[0]];\n        heapify($arr, $i, 0);\n    }\n}\nfunction heapify(array &$arr, $n, $i): void {\n    $largest = $i; $l = 2*$i+1; $r = 2*$i+2;\n    if ($l < $n && $arr[$l] > $arr[$largest]) $largest = $l;\n    if ($r < $n && $arr[$r] > $arr[$largest]) $largest = $r;\n    if ($largest != $i) { [$arr[$i], $arr[$largest]] = [$arr[$largest], $arr[$i]]; heapify($arr, $n, $largest); }\n}"
+    ]
+  },
+  {
+    "name-zh": "希尔排序",
+    "name-en": "Shell Sort",
+    "description-zh": "希尔排序（递减增量排序）",
+    "description-en": "Shell sort with diminishing gap",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 75,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction shell_sort(array &$arr): void {\n    $n = count($arr);\n    for ($gap = (int)($n/2); $gap > 0; $gap = (int)($gap/2)) {\n        for ($i = $gap; $i < $n; $i++) {\n            $tmp = $arr[$i]; $j = $i;\n            while ($j >= $gap && $arr[$j - $gap] > $tmp) { $arr[$j] = $arr[$j - $gap]; $j -= $gap; }\n            $arr[$j] = $tmp;\n        }\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "计数排序",
+    "name-en": "Counting Sort",
+    "description-zh": "计数排序（适用于小范围整数）",
+    "description-en": "Counting sort for small integer range",
+    "dependencies": [],
+    "use_to": [
+      "sort",
+      "algorithm"
+    ],
+    "tags": [
+      "sort",
+      "algorithm"
+    ],
+    "input": [
+      "arr",
+      "max"
+    ],
+    "input_type": [
+      "array",
+      "int"
+    ],
+    "return": [
+      "sorted"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 85,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction counting_sort(array $arr, int $max): array {\n    $count = array_fill(0, $max + 1, 0);\n    foreach ($arr as $v) $count[$v]++;\n    for ($i = 1; $i <= $max; $i++) $count[$i] += $count[$i - 1];\n    $out = array_fill(0, count($arr), 0);\n    for ($i = count($arr) - 1; $i >= 0; $i--) { $out[--$count[$arr[$i]] = $arr[$i]; }\n    return $out;\n}"
+    ]
+  },
+  {
+    "name-zh": "Redis连接池",
+    "name-en": "Redis Connection Pool",
+    "description-zh": "使用 PHPRedis 扩展的连接池封装",
+    "description-en": "Connection pool wrapper for PHPRedis extension",
+    "dependencies": [
+      "redis"
+    ],
+    "use_to": [
+      "redis",
+      "cache"
+    ],
+    "tags": [
+      "redis",
+      "cache"
+    ],
+    "input": [
+      "host",
+      "port"
+    ],
+    "input_type": [
+      "string",
+      "int"
+    ],
+    "return": [
+      "pool"
+    ],
+    "return_type": [
+      "RedisPool"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "<?php\nclass RedisPool {\n    private array $pool = [];\n    private string $host;\n    private int $port;\n    private int $maxConnections;\n\n    public function __construct(string $host, int $port, int $maxConnections = 10) {\n        $this->host = $host;\n        $this->port = $port;\n        $this->maxConnections = $maxConnections;\n    }\n\n    public function get(): Redis {\n        if (!empty($this->pool)) {\n            return array_pop($this->pool);\n        }\n        $redis = new Redis();\n        $redis->connect($this->host, $this->port);\n        return $redis;\n    }\n\n    public function release(Redis $redis): void {\n        if (count($this->pool) < $this->maxConnections) {\n            $this->pool[] = $redis;\n        } else {\n            $redis->close();\n        }\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "Memcached客户端",
+    "name-en": "Memcached Client",
+    "description-zh": "Memcached 客户端封装（支持过期时间）",
+    "description-en": "Memcached client wrapper with TTL support",
+    "dependencies": [
+      "memcached"
+    ],
+    "use_to": [
+      "cache",
+      "memcached"
+    ],
+    "tags": [
+      "cache",
+      "memcached"
+    ],
+    "input": [
+      "servers"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "mc"
+    ],
+    "return_type": [
+      "Memcached"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "<?php\nclass MemcachedClient {\n    private Memcached $mc;\n    public function __construct(array $servers = [['127.0.0.1', 11211]]) {\n        $this->mc = new Memcached();\n        $this->mc->addServers($servers);\n    }\n    public function get(string $key, $default = null) {\n        $v = $this->mc->get($key);\n        if ($this->mc->getResultCode() === Memcached::RES_NOTFOUND) return $default;\n        return $v;\n    }\n    public function set(string $key, $value, int $ttl = 0): bool {\n        return $this->mc->set($key, $value, $ttl);\n    }\n    public function delete(string $key): bool {\n        return $this->mc->delete($key);\n    }\n    public function increment(string $key, int $delta = 1) {\n        return $this->mc->increment($key, $delta);\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "PDO数据库连接池",
+    "name-en": "PDO Connection Pool",
+    "description-zh": "PDO 数据库连接池（单例模式）",
+    "description-en": "PDO database connection pool (singleton)",
+    "dependencies": [
+      "pdo"
+    ],
+    "use_to": [
+      "database",
+      "pdo"
+    ],
+    "tags": [
+      "database",
+      "pdo"
+    ],
+    "input": [
+      "dsn",
+      "user",
+      "pass"
+    ],
+    "input_type": [
+      "string",
+      "string",
+      "string"
+    ],
+    "return": [
+      "pdo"
+    ],
+    "return_type": [
+      "PDO"
+    ],
+    "timer_score": 85,
+    "memory_score": 85,
+    "code": [
+      "<?php\nclass PDOPool {\n    private static ?PDO $instance = null;\n    private function __construct() {}\n    public static function getInstance(string $dsn, string $user, string $pass, array $options = []): PDO {\n        if (self::$instance === null) {\n            self::$instance = new PDO($dsn, $user, $pass, $options);\n            self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);\n        }\n        return self::$instance;\n    }\n    private function __clone() {}\n    public function __wakeup() { throw new Exception('Cannot unserialize singleton'); }\n}"
+    ]
+  },
+  {
+    "name-zh": "JWT编码解码",
+    "name-en": "JWT Encode/Decode",
+    "description-zh": "JWT 令牌编码和解码（不含外部库）",
+    "description-en": "JWT token encode and decode without external library",
+    "dependencies": [],
+    "use_to": [
+      "jwt",
+      "auth"
+    ],
+    "tags": [
+      "jwt",
+      "auth"
+    ],
+    "input": [
+      "payload",
+      "secret"
+    ],
+    "input_type": [
+      "array",
+      "string"
+    ],
+    "return": [
+      "token"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction base64url_encode(string $data): string {\n    return rtrim(strtr(base64_encode($data), '+/', '-_'));\n}\nfunction base64url_decode(string $data): string {\n    return base64_decode(strtr($data, '-_', '+/'));\n}\nfunction jwt_encode(array $payload, string $secret): string {\n    $header = base64url_encode(json_encode(['alg'=>'HS256','typ'=>'JWT']));\n    $payload['iat'] = $payload['iat'] ?? time();\n    $payload = base64url_encode(json_encode($payload));\n    $sig = base64url_encode(hash_hmac('sha256', \"$header.$payload\", $secret, true));\n    return \"$header.$payload.$sig\";\n}\nfunction jwt_decode(string $token, string $secret): ?array {\n    $parts = explode('.', $token);\n    if (count($parts) !== 3) return null;\n    [$h, $p, $s] = $parts;\n    $expected = base64url_encode(hash_hmac('sha256', \"$h.$p\", $secret, true));\n    if (!hash_equals($expected, $s)) return null;\n    return json_decode(base64url_decode($p), true);\n}"
+    ]
+  },
+  {
+    "name-zh": "SMTP发送邮件",
+    "name-en": "SMTP Send Mail",
+    "description-zh": "使用 Socket 发送 SMTP 邮件（不含外部库）",
+    "description-en": "Send SMTP mail using socket without external library",
+    "dependencies": [],
+    "use_to": [
+      "mail",
+      "smtp"
+    ],
+    "tags": [
+      "mail",
+      "smtp"
+    ],
+    "input": [
+      "to",
+      "subject",
+      "body",
+      "from"
+    ],
+    "input_type": [
+      "string",
+      "string",
+      "string",
+      "string"
+    ],
+    "return": [
+      "success"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 70,
+    "memory_score": 75,
+    "code": [
+      "<?php\nfunction smtp_send(string $to, string $subject, string $body, string $from = 'noreply@localhost'): bool {\n    $host = '127.0.0.1'; $port = 25;\n    $socket = @fsockopen($host, $port, $errno, $errstr, 5);\n    if (!$socket) return false;\n    $read = fgets($socket);\n    fwrite($socket, \"HELO localhost\\r\\n\"); fgets($socket);\n    fwrite($socket, \"MAIL FROM:<$from>\\r\\n\"); fgets($socket);\n    fwrite($socket, \"RCPT TO:<$to>\\r\\n\"); fgets($socket);\n    fwrite($socket, \"DATA\\r\\n\"); fgets($socket);\n    fwrite($socket, \"Subject: $subject\\r\\nTo: $to\\r\\n\\r\\n$body\\r\\n.\\r\\n\");\n    fgets($socket);\n    fwrite($socket, \"QUIT\\r\\n\");\n    fclose($socket);\n    return true;\n}"
+    ]
+  },
+  {
+    "name-zh": "图像缩略图",
+    "name-en": "Image Thumbnail",
+    "description-zh": "生成图像缩略图（保持宽高比）",
+    "description-en": "Generate image thumbnail preserving aspect ratio",
+    "dependencies": [
+      "gd"
+    ],
+    "use_to": [
+      "image",
+      "thumbnail"
+    ],
+    "tags": [
+      "image",
+      "gd"
+    ],
+    "input": [
+      "srcPath",
+      "dstPath",
+      "maxWidth",
+      "maxHeight"
+    ],
+    "input_type": [
+      "string",
+      "string",
+      "int",
+      "int"
+    ],
+    "return": [
+      "success"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 80,
+    "memory_score": 75,
+    "code": [
+      "<?php\nfunction make_thumbnail(string $srcPath, string $dstPath, int $maxW = 200, int $maxH = 200): bool {\n    $img = imagecreatefromstring(file_get_contents($srcPath));\n    if (!$img) return false;\n    $w = imagesx($img); $h = imagesy($img);\n    $ratio = min($maxW/$w, $maxH/$h);\n    $newW = (int)($w * $ratio); $newH = (int)($h * $ratio);\n    $thumb = imagecreatetruecolor($newW, $newH);\n    imagecopyresampled($thumb, $img, 0, 0, 0, 0, $newW, $newH, $w, $h);\n    imagejpeg($thumb, $dstPath, 85);\n    imagedestroy($img); imagedestroy($thumb);\n    return true;\n}"
+    ]
+  },
+  {
+    "name-zh": "图像水印",
+    "name-en": "Image Watermark",
+    "description-zh": "为图像添加文字水印",
+    "description-en": "Add text watermark to image",
+    "dependencies": [
+      "gd"
+    ],
+    "use_to": [
+      "image",
+      "watermark"
+    ],
+    "tags": [
+      "image",
+      "gd"
+    ],
+    "input": [
+      "srcPath",
+      "dstPath",
+      "text"
+    ],
+    "input_type": [
+      "string",
+      "string",
+      "string"
+    ],
+    "return": [
+      "success"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 80,
+    "memory_score": 75,
+    "code": [
+      "<?php\nfunction add_watermark(string $srcPath, string $dstPath, string $text): bool {\n    $img = imagecreatefromstring(file_get_contents($srcPath));\n    if (!$img) return false;\n    $w = imagesx($img); $h = imagesy($img);\n    $black = imagecolorallocate($img, 0, 0, 0);\n    $fontSize = max(5, min($w, $h) / 20);\n    imagestring($img, $fontSize, 10, $h - 30, $text, $black);\n    imagejpeg($img, $dstPath, 90);\n    imagedestroy($img);\n    return true;\n}"
+    ]
+  },
+  {
+    "name-zh": "图形验证码",
+    "name-en": "Captcha Generator",
+    "description-zh": "生成图形验证码图片",
+    "description-en": "Generate captcha image",
+    "dependencies": [
+      "gd"
+    ],
+    "use_to": [
+      "captcha",
+      "security"
+    ],
+    "tags": [
+      "captcha",
+      "security"
+    ],
+    "input": [
+      "length",
+      "width",
+      "height"
+    ],
+    "input_type": [
+      "int",
+      "int",
+      "int"
+    ],
+    "return": [
+      "captcha"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 80,
+    "memory_score": 75,
+    "code": [
+      "<?php\nfunction generate_captcha(int $len=4,int $w=120,int $h=40): array {\n    $img=imagecreatetruecolor($w,$h);$bg=imagecolorallocate($img,255,255,255);imagefill($img,0,0,$bg);\n    $chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';$text='';\n    for($i=0;$i<$len;$i++){$ch=$chars[random_int(0,strlen($chars)-1)];$text.=$ch;\n        $x=10+$i*($w-20)/$len;$y=random_int($h/3,$h-15);\n        $color=imagecolorallocate($img,random_int(0,150),random_int(0,150),random_int(0,150));\n        imagestring($img,5,$x,$y,$ch,$color);}\n    for($i=0;$i<5;$i++){imageline($img,random_int(0,$w),random_int(0,$h),random_int(0,$w),random_int(0,$h),imagecolorallocate($img,200,200,200));}\n    ob_start();imagejpeg($img);$data=ob_get_clean();imagedestroy($img);\n    return ['text'=>$text,'image'=>base64_encode($data)];\n}"
+    ]
+  },
+  {
+    "name-zh": "二维码生成",
+    "name-en": "QR Code Generator",
+    "description-zh": "使用 QRCode.js 生成二维码（CDN方式）",
+    "description-en": "Generate QR code using QRCode.js via CDN",
+    "dependencies": [],
+    "use_to": [
+      "qrcode",
+      "utility"
+    ],
+    "tags": [
+      "qrcode",
+      "utility"
+    ],
+    "input": [
+      "data",
+      "size"
+    ],
+    "input_type": [
+      "string",
+      "int"
+    ],
+    "return": [
+      "html"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction qrcode_html(string $data, int $size = 200): string {\n    $id = 'qr_' . bin2hex(random_bytes(4));\n    return '<div id=\"'.$id.'\"></div><script src=\"https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js\"></script>'\n           .'<script>new QRCode(document.getElementById(\"'.$id.'\"),{\"text\":\"'.htmlspecialchars($data).'\",\"width\":'.$size.',\"height\":'.$size.'});</script>';\n}"
+    ]
+  },
+  {
+    "name-zh": "分页器",
+    "name-en": "Pagination",
+    "description-zh": "生成分页导航 HTML",
+    "description-en": "Generate pagination navigation HTML",
+    "dependencies": [],
+    "use_to": [
+      "pagination",
+      "ui"
+    ],
+    "tags": [
+      "pagination",
+      "ui"
+    ],
+    "input": [
+      "currentPage",
+      "totalPages",
+      "baseUrl"
+    ],
+    "input_type": [
+      "int",
+      "int",
+      "string"
+    ],
+    "return": [
+      "html"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction pagination(int $page, int $total, string $url): string {\n    if ($total <= 1) return '';\n    $html = '<nav class=\"pagination\"><ul>';\n    $range = 2; $start = max(1, $page - $range); $end = min($total, $page + $range);\n    if ($start > 1) $html .= '<li><a href=\"'.$url.'?p=1\">1</a></li>';\n    if ($start > 2) $html .= '<li><span>...</span></li>';\n    for ($i = $start; $i <= $end; $i++) {\n        $active = $i === $page ? ' class=\"active\"' : '';\n        $html .= '<li'.$active.'><a href=\"'.$url.'?p='.$i.'\">'.$i.'</a></li>';\n    }\n    if ($end < $total - 1) $html .= '<li><span>...</span></li>';\n    if ($end < $total) $html .= '<li><a href=\"'.$url.'?p='.$total.'\">'.$total.'</a></li>';\n    $html .= '</ul></nav>';\n    return $html;\n}"
+    ]
+  },
+  {
+    "name-zh": "CLI表格输出",
+    "name-en": "CLI Table Output",
+    "description-zh": "在命令行输出格式化表格",
+    "description-en": "Output formatted table in CLI",
+    "dependencies": [],
+    "use_to": [
+      "cli",
+      "table"
+    ],
+    "tags": [
+      "cli",
+      "table"
+    ],
+    "input": [
+      "headers",
+      "rows"
+    ],
+    "input_type": [
+      "array",
+      "array[]"
+    ],
+    "return": [
+      "table"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction cli_table(array $headers, array $rows): string {\n    $widths = array_map('strlen', $headers);\n    foreach ($rows as $row) { foreach ($row as $i => $cell) $widths[$i] = max($widths[$i] ?? 0, strlen((string)$cell)); }\n    $line = '+' . implode('+', array_map(fn($w) => str_repeat('-', $w + 2), $widths)) . '+';\n    $out = $line . \"\\n\";\n    $out .= '|' . implode('|', array_map(fn($h, $w) => ' ' . str_pad($h, $w), $headers, $widths)) . '|\\n';\n    $out .= str_replace('+', '+', $line) . \"\\n\";\n    foreach ($rows as $row) {\n        $out .= '|' . implode('|', array_map(fn($v, $w) => ' ' . str_pad((string)$v, $w), $row, $widths)) . '|\\n';\n    }\n    $out .= $line;\n    return $out;\n}"
+    ]
+  },
+  {
+    "name-zh": "布隆过滤器",
+    "name-en": "Bloom Filter",
+    "description-zh": "简单布隆过滤器实现",
+    "description-en": "Simple Bloom filter implementation",
+    "dependencies": [],
+    "use_to": [
+      "bloom filter",
+      "data structure"
+    ],
+    "tags": [
+      "bloom filter",
+      "data structure"
+    ],
+    "input": [
+      "items"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [
+      "filter"
+    ],
+    "return_type": [
+      "BloomFilter"
+    ],
+    "timer_score": 80,
+    "memory_score": 75,
+    "code": [
+      "<?php\nclass BloomFilter {\n    private int $size;\n    private array $bits = [];\n    public function __construct(int $size = 1000) { $this->size = $size; $this->bits = array_fill(0, $size, false); }\n    private function h1(string $s): int { return abs(crc32($s)) % $this->size; }\n    private function h2(string $s): int { return abs(md5($s, true)[0] . md5($s, true)[1]) % $this->size; }\n    private function h3(string $s): int { return abs(ord($s[0]) * 31 + ord($s[strlen($s)-1])) % $this->size; }\n    public function add(string $item): void { $this->bits[$this->h1($item)] = $this->bits[$this->h2($item)] = $this->bits[$this->h3($item)] = true; }\n    public function contains(string $item): bool { return $this->bits[$this->h1($item)] && $this->bits[$this->h2($item)] && $this->bits[$this->h3($item)]; }\n}"
+    ]
+  },
+  {
+    "name-zh": "限流器",
+    "name-en": "Rate Limiter",
+    "description-zh": "滑动窗口限流器",
+    "description-en": "Sliding window rate limiter",
+    "dependencies": [],
+    "use_to": [
+      "rate limit",
+      "security"
+    ],
+    "tags": [
+      "rate limit",
+      "security"
+    ],
+    "input": [
+      "key",
+      "maxRequests",
+      "windowSeconds"
+    ],
+    "input_type": [
+      "string",
+      "int",
+      "int"
+    ],
+    "return": [
+      "allowed"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 85,
+    "memory_score": 80,
+    "code": [
+      "<?php\nclass RateLimiter {\n    private array $requests = [];\n    public function allow(string $key, int $max, int $window): bool {\n        $now = time();\n        if (!isset($this->requests[$key])) $this->requests[$key] = [];\n        $this->requests[$key] = array_filter($this->requests[$key], fn($t) => $t > $now - $window);\n        if (count($this->requests[$key]) >= $max) return false;\n        $this->requests[$key][] = $now;\n        return true;\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "Webhook签名验证",
+    "name-en": "Webhook Signature Verify",
+    "description-zh": "验证 Webhook 请求签名（GitHub风格）",
+    "description-en": "Verify webhook request signature (GitHub style)",
+    "dependencies": [
+      "hash"
+    ],
+    "use_to": [
+      "webhook",
+      "security"
+    ],
+    "tags": [
+      "webhook",
+      "security"
+    ],
+    "input": [
+      "payload",
+      "signature",
+      "secret"
+    ],
+    "input_type": [
+      "string",
+      "string",
+      "string"
+    ],
+    "return": [
+      "valid"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction verify_webhook_signature(string $payload, string $signature, string $secret): bool {\n    $expected = 'sha256=' . hash_hmac('sha256', $payload, $secret);\n    return hash_equals($expected, $signature);\n}"
+    ]
+  },
+  {
+    "name-zh": "Webhook签名生成",
+    "name-en": "Webhook Signature Generate",
+    "description-zh": "为 Webhook 载荷生成签名",
+    "description-en": "Generate signature for webhook payload",
+    "dependencies": [
+      "hash"
+    ],
+    "use_to": [
+      "webhook",
+      "security"
+    ],
+    "tags": [
+      "webhook",
+      "security"
+    ],
+    "input": [
+      "payload",
+      "secret"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "signature"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction generate_webhook_signature(string $payload, string $secret): string {\n    return 'sha256=' . hash_hmac('sha256', $payload, $secret);\n}"
+    ]
+  },
+  {
+    "name-zh": "OAuth2授权URL",
+    "name-en": "OAuth2 Auth URL",
+    "description-zh": "生成 OAuth2 授权 URL",
+    "description-en": "Generate OAuth2 authorization URL",
+    "dependencies": [],
+    "use_to": [
+      "oauth",
+      "auth"
+    ],
+    "tags": [
+      "oauth",
+      "auth"
+    ],
+    "input": [
+      "clientId",
+      "redirectUri",
+      "state",
+      "scope"
+    ],
+    "input_type": [
+      "string",
+      "string",
+      "string",
+      "string"
+    ],
+    "return": [
+      "url"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 85,
+    "memory_score": 90,
+    "code": [
+      "<?php\nfunction oauth2_auth_url(string $clientId, string $redirectUri, string $state, string $scope = 'read'): string {\n    $params = http_build_query([\n        'client_id' => $clientId,\n        'redirect_uri' => $redirectUri,\n        'response_type' => 'code',\n        'scope' => $scope,\n        'state' => $state\n    ]);\n    return 'https://oauth.example.com/authorize?' . $params;\n}"
+    ]
+  },
+  {
+    "name-zh": "OAuth2获取Token",
+    "name-en": "OAuth2 Token Exchange",
+    "description-zh": "用授权码换取 Access Token",
+    "description-en": "Exchange authorization code for access token",
+    "dependencies": [
+      "hash"
+    ],
+    "use_to": [
+      "oauth",
+      "auth"
+    ],
+    "tags": [
+      "oauth",
+      "auth"
+    ],
+    "input": [
+      "code",
+      "clientId",
+      "clientSecret",
+      "redirectUri",
+      "tokenUrl"
+    ],
+    "input_type": [
+      "string",
+      "string",
+      "string",
+      "string",
+      "string"
+    ],
+    "return": [
+      "token"
+    ],
+    "return_type": [
+      "?array"
+    ],
+    "timer_score": 80,
+    "memory_score": 80,
+    "code": [
+      "<?php\nfunction oauth2_token(string $code, string $clientId, string $clientSecret, string $redirectUri, string $tokenUrl): ?array {\n    $ch = curl_init($tokenUrl);\n    curl_setopt_array($ch, [\n        CURLOPT_POST => true,\n        CURLOPT_POSTFIELDS => http_build_query([\n            'grant_type' => 'authorization_code',\n            'code' => $code,\n            'client_id' => $clientId,\n            'client_secret' => $clientSecret,\n            'redirect_uri' => $redirectUri\n        ]),\n        CURLOPT_RETURNTRANSFER => true,\n        CURLOPT_HTTPHEADER => ['Accept: application/json']\n    ]);\n    $res = curl_exec($ch);\n    if (!$res) return null;\n    return json_decode($res, true);\n}"
+    ]
+  },
+  {
+    "name-zh": "最大公约数",
+    "name-en": "GCD",
+    "description-zh": "使用欧几里得算法计算两个整数的最大公约数。",
+    "description-en": "Compute GCD of two integers using Euclid's algorithm.",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "number theory"
+    ],
+    "tags": [
+      "math",
+      "algorithm",
+      "basic"
+    ],
+    "input": [
+      "a",
+      "b"
+    ],
+    "input_type": [
+      "int",
+      "int"
+    ],
+    "return": [
+      "result"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "function gcd(int $a, int $b): int {\n    while ($b) { [$a, $b] = [$b, $a % $b]; }\n    return $a;\n}"
+    ]
+  },
+  {
+    "name-zh": "最小公倍数",
+    "name-en": "LCM",
+    "description-zh": "使用 GCD 计算两个整数的最小公倍数。",
+    "description-en": "Compute LCM of two integers using GCD.",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "number theory"
+    ],
+    "tags": [
+      "math",
+      "algorithm",
+      "basic"
+    ],
+    "input": [
+      "a",
+      "b"
+    ],
+    "input_type": [
+      "int",
+      "int"
+    ],
+    "return": [
+      "result"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "function lcm(int $a, int $b): int {\n    if ($a === 0 || $b === 0) return 0;\n    $g = gcd($a, $b);\n    return (int)(($a / $g) * $b);\n}\n\nfunction gcd(int $a, int $b): int {\n    while ($b) { [$a, $b] = [$b, $a % $b]; }\n    return $a;\n}"
+    ]
+  },
+  {
+    "name-zh": "中位数",
+    "name-en": "Median",
+    "description-zh": "计算数组的中位数。",
+    "description-en": "Compute the median of an array.",
+    "dependencies": [],
+    "use_to": [
+      "statistics",
+      "math"
+    ],
+    "tags": [
+      "math",
+      "statistics",
+      "basic"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "float[]"
+    ],
+    "return": [
+      "median"
+    ],
+    "return_type": [
+      "float"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "function median(array $arr): float {\n    sort($arr);\n    $n = count($arr);\n    if ($n % 2 === 1) return $arr[$n >> 1];\n    return ($arr[$n / 2 - 1] + $arr[$n / 2]) / 2.0;\n}"
+    ]
+  },
+  {
+    "name-zh": "均值",
+    "name-en": "Mean",
+    "description-zh": "计算数组的算术平均值。",
+    "description-en": "Compute the arithmetic mean of an array.",
+    "dependencies": [],
+    "use_to": [
+      "statistics",
+      "math"
+    ],
+    "tags": [
+      "math",
+      "statistics",
+      "basic"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "float[]"
+    ],
+    "return": [
+      "mean"
+    ],
+    "return_type": [
+      "float"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "function mean(array $arr): float {\n    if (empty($arr)) return 0.0;\n    return array_sum($arr) / count($arr);\n}"
+    ]
+  },
+  {
+    "name-zh": "标准差",
+    "name-en": "Standard Deviation",
+    "description-zh": "计算数组的总体标准差。",
+    "description-en": "Compute the population standard deviation of an array.",
+    "dependencies": [],
+    "use_to": [
+      "statistics",
+      "math"
+    ],
+    "tags": [
+      "math",
+      "statistics",
+      "basic"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "float[]"
+    ],
+    "return": [
+      "stddev"
+    ],
+    "return_type": [
+      "float"
+    ],
+    "timer_score": 90,
+    "memory_score": 95,
+    "code": [
+      "function stddev(array $arr): float {\n    $n = count($arr);\n    if ($n <= 1) return 0.0;\n    $mean = array_sum($arr) / $n;\n    $var = 0.0;\n    foreach ($arr as $v) { $d = $v - $mean; $var += $d * $d; }\n    return sqrt($var / $n);\n}"
+    ]
+  },
+  {
+    "name-zh": "数值钳制",
+    "name-en": "Clamp",
+    "description-zh": "将值限制在 [lo, hi] 范围内。PHP 8 内置了 clamp()，此为低版本回退。",
+    "description-en": "Clamp a value to [lo, hi]. PHP 8 has built-in clamp(); this is a fallback for older versions.",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "utility"
+    ],
+    "tags": [
+      "basic",
+      "math",
+      "utility"
+    ],
+    "input": [
+      "val",
+      "lo",
+      "hi"
+    ],
+    "input_type": [
+      "int",
+      "int",
+      "int"
+    ],
+    "return": [
+      "clamped"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "function clamp(int $val, int $lo, int $hi): int {\n    return max($lo, min($hi, $val));\n}"
+    ]
+  },
+  {
+    "name-zh": "Boyer-Moore 字符串匹配",
+    "name-en": "Boyer-Moore String Match",
+    "description-zh": "Boyer-Moore Horspool 简化版。从右向左比较，利用坏字符规则跳转。实际性能 O(n/m)。",
+    "description-en": "Boyer-Moore Horspool simplified. Right-to-left comparison with bad character skip. Practical O(n/m).",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "algorithm",
+      "string",
+      "search"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "index"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "function boyerMoore(string $text, string $pattern): int {\n    $n = strlen($text);\n    $m = strlen($pattern);\n    if ($m === 0) return 0;\n    $shift = array_fill(0, 256, $m);\n    for ($i = 0; $i < $m - 1; $i++) $shift[ord($pattern[$i])] = $m - 1 - $i;\n    $i = 0;\n    while ($i <= $n - $m) {\n        $j = $m - 1;\n        while ($j >= 0 && $pattern[$j] === $text[$i + $j]) $j--;\n        if ($j < 0) return $i;\n        $i += $shift[ord($text[$i + $m - 1])];\n    }\n    return -1;\n}"
+    ]
+  },
+  {
+    "name-zh": "读取文本文件",
+    "name-en": "Read Text File",
+    "description-zh": "读取整个文本文件内容。使用 file_get_contents。",
+    "description-en": "Read entire text file content using file_get_contents.",
+    "dependencies": [],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "file",
+      "io",
+      "basic"
+    ],
+    "input": [
+      "path"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "content"
+    ],
+    "return_type": [
+      "string"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "function readTextFile(string $path): ?string {\n    if (!file_exists($path)) return null;\n    return file_get_contents($path);\n}"
+    ]
+  },
+  {
+    "name-zh": "写入文本文件",
+    "name-en": "Write Text File",
+    "description-zh": "将内容写入文件。使用 file_put_contents。",
+    "description-en": "Write content to file using file_put_contents.",
+    "dependencies": [],
+    "use_to": [
+      "file",
+      "io"
+    ],
+    "tags": [
+      "file",
+      "io",
+      "basic"
+    ],
+    "input": [
+      "path",
+      "content"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "ok"
+    ],
+    "return_type": [
+      "bool"
+    ],
+    "timer_score": 95,
+    "memory_score": 90,
+    "code": [
+      "function writeTextFile(string $path, string $content): bool {\n    return file_put_contents($path, $content) !== false;\n}"
+    ]
+  },
+  {
+    "name-zh": "CRC32 校验",
+    "name-en": "CRC32 (IEEE)",
+    "description-zh": "使用 PHP 内置 crc32() 计算校验码。",
+    "description-en": "Compute CRC32 using PHP built-in crc32().",
+    "dependencies": [],
+    "use_to": [
+      "checksum",
+      "integrity"
+    ],
+    "tags": [
+      "checksum",
+      "crc32",
+      "basic"
+    ],
+    "input": [
+      "data"
+    ],
+    "input_type": [
+      "string"
+    ],
+    "return": [
+      "crc"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "function crc32_ieee(string $data): int {\n    return crc32($data);\n}"
+    ]
+  },
+  {
+    "name-zh": "环形缓冲区",
+    "name-en": "Ring Buffer",
+    "description-zh": "固定大小的环形缓冲区。满了覆盖最旧数据。O(1) 操作。",
+    "description-en": "Fixed-size circular buffer. Overwrites oldest when full. O(1) operations.",
+    "dependencies": [],
+    "use_to": [
+      "data structure",
+      "buffer"
+    ],
+    "tags": [
+      "data structure",
+      "buffer",
+      "queue"
+    ],
+    "input": [
+      "capacity"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [],
+    "return_type": [],
+    "timer_score": 95,
+    "memory_score": 95,
+    "code": [
+      "class RingBuffer {\n    private array $buf;\n    private int $head = 0, $tail = 0, $size = 0, $cap;\n    public function __construct(int $cap) { $this->cap = $cap; $this->buf = []; }\n    public function push(mixed $v): void { $this->buf[$this->tail % $this->cap] = $v; $this->tail++; if ($this->size < $this->cap) $this->size++; else $this->head++; }\n    public function pop(): mixed { if ($this->size === 0) return null; $v = $this->buf[$this->head % $this->cap]; $this->head++; $this->size--; return $v; }\n    public function size(): int { return $this->size; }\n}"
+    ]
+  },
+  {
+    "name-zh": "阶乘",
+    "name-en": "Factorial",
+    "description-zh": "计算非负整数的阶乘。迭代实现。",
+    "description-en": "Compute factorial of a non-negative integer. Iterative.",
+    "dependencies": [],
+    "use_to": [
+      "math",
+      "basic"
+    ],
+    "tags": [
+      "math",
+      "algorithm",
+      "basic"
+    ],
+    "input": [
+      "n"
+    ],
+    "input_type": [
+      "int"
+    ],
+    "return": [
+      "result"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 95,
+    "memory_score": 100,
+    "code": [
+      "function factorial(int $n): int {\n    if ($n < 0) throw new \\InvalidArgumentException('n must be non-negative');\n    $r = 1;\n    for ($i = 2; $i <= $n; $i++) $r *= $i;\n    return $r;\n}"
+    ]
+  },
+  {
+    "name-zh": "选择排序",
+    "name-en": "Selection Sort",
+    "description-zh": "简单选择排序。时间 O(n²)，空间 O(1)。",
+    "description-en": "Simple selection sort. Time O(n²), space O(1).",
+    "dependencies": [],
+    "use_to": [
+      "sorting",
+      "algorithm"
+    ],
+    "tags": [
+      "algorithm",
+      "sorting",
+      "basic"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [],
+    "return_type": [],
+    "timer_score": 80,
+    "memory_score": 90,
+    "code": [
+      "function selectionSort(array &$arr): void {\n    $n = count($arr);\n    for ($i = 0; $i < $n - 1; $i++) {\n        $min = $i;\n        for ($j = $i + 1; $j < $n; $j++)\n            if ($arr[$j] < $arr[$min]) $min = $j;\n        [$arr[$i], $arr[$min]] = [$arr[$min], $arr[$i]];\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "插入排序",
+    "name-en": "Insertion Sort",
+    "description-zh": "简单插入排序。时间 O(n²)，稳定。",
+    "description-en": "Simple insertion sort. Time O(n²), stable.",
+    "dependencies": [],
+    "use_to": [
+      "sorting",
+      "algorithm"
+    ],
+    "tags": [
+      "algorithm",
+      "sorting",
+      "basic"
+    ],
+    "input": [
+      "arr"
+    ],
+    "input_type": [
+      "array"
+    ],
+    "return": [],
+    "return_type": [],
+    "timer_score": 85,
+    "memory_score": 95,
+    "code": [
+      "function insertionSort(array &$arr): void {\n    $n = count($arr);\n    for ($i = 1; $i < $n; $i++) {\n        $key = $arr[$i];\n        $j = $i - 1;\n        while ($j >= 0 && $arr[$j] > $key) { $arr[$j + 1] = $arr[$j]; $j--; }\n        $arr[$j + 1] = $key;\n    }\n}"
+    ]
+  },
+  {
+    "name-zh": "字符串分割",
+    "name-en": "String Split",
+    "description-zh": "按分隔符分割字符串。使用 PHP 内置 explode。",
+    "description-en": "Split string by delimiter. Uses PHP built-in explode.",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "parsing"
+    ],
+    "tags": [
+      "string",
+      "basic",
+      "parsing"
+    ],
+    "input": [
+      "str",
+      "delim",
+      "limit"
+    ],
+    "input_type": [
+      "string",
+      "string",
+      "int"
+    ],
+    "return": [
+      "parts"
+    ],
+    "return_type": [
+      "array"
+    ],
+    "timer_score": 100,
+    "memory_score": 100,
+    "code": [
+      "function strSplit(string $str, string $delim, int $limit = PHP_INT_MAX): array {\n    return explode($delim, $str, $limit);\n}"
+    ]
+  },
+  {
+    "name-zh": "Sunday 字符串匹配",
+    "name-en": "Sunday String Match",
+    "description-zh": "Sunday 算法，通过跳过窗口末尾字符的下一次出现位置来加速。平均 O(n/m)。",
+    "description-en": "Sunday algorithm. Skips to next occurrence of char after the window. Average O(n/m).",
+    "dependencies": [],
+    "use_to": [
+      "string",
+      "search"
+    ],
+    "tags": [
+      "algorithm",
+      "string",
+      "search"
+    ],
+    "input": [
+      "text",
+      "pattern"
+    ],
+    "input_type": [
+      "string",
+      "string"
+    ],
+    "return": [
+      "index"
+    ],
+    "return_type": [
+      "int"
+    ],
+    "timer_score": 90,
+    "memory_score": 90,
+    "code": [
+      "function sundayMatch(string $text, string $pattern): int {\n    $n = strlen($text);\n    $m = strlen($pattern);\n    if ($m === 0) return 0;\n    $shift = array_fill(0, 256, $m + 1);\n    for ($i = 0; $i < $m; $i++) $shift[ord($pattern[$i])] = $m - $i;\n    $i = 0;\n    while ($i <= $n - $m) {\n        $j = 0;\n        while ($j < $m && $text[$i + $j] === $pattern[$j]) $j++;\n        if ($j === $m) return $i;\n        $i += ($i + $m < $n) ? $shift[ord($text[$i + $m])] : 1;\n    }\n    return -1;\n}"
+    ]
+  }
 ]

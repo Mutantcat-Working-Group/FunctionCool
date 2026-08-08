@@ -269,5 +269,62 @@
       "ignoring online/offline events"
     ],
     "category": "mobile"
+  },
+  {
+    "name-en": "Pull-to-Refresh Gesture",
+    "name-zh": "下拉刷新手势",
+    "description-en": "A gesture that triggers content refresh when the user pulls down from the top of a scrollable list. Threshold: 60px pull distance. Visual: a circular spinner or custom animation that appears above the content, then snaps back. Haptic: a light vibration at the threshold. Never trigger refresh on horizontal scroll. Never use pull-to-refresh on pages with a sticky header that already has a refresh button. Always show a brief 'Last updated' timestamp after refresh.",
+    "description-zh": "用户从可滚动列表顶部下拉触发内容刷新。阈值：下拉 60px。视觉：内容上方出现圆形旋转器或自定义动画，然后回弹。触觉：阈值处轻振。横向滚动不触发刷新。已有刷新按钮的粘性头部页面不要用下拉刷新。刷新后显示'最后更新'时间戳。",
+    "tags": [
+      "pull-refresh",
+      "gesture",
+      "mobile",
+      "scroll",
+      "ux"
+    ],
+    "css": ".pull-indicator{position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:24px;height:24px;border:3px solid rgba(20,58,92,.1);border-top-color:#3A8DD0;border-radius:50%;transition:transform .3s}.pull-indicator.active{animation:spin .6s linear infinite}@keyframes spin{to{transform:translateX(-50%) rotate(360deg)}}",
+    "anti": [
+      "pull-to-refresh with sticky header refresh button",
+      "triggering on horizontal scroll",
+      "no haptic feedback at threshold"
+    ]
+  },
+  {
+    "name-en": "Dark Mode Adaptation for Mobile",
+    "name-zh": "移动端暗色模式适配",
+    "description-en": "Mobile dark mode is not just inverting colors. Rules: background #121212 (not pure #000), elevated surfaces #1E1E1E and #232323, text rgba(255,255,255,.87) for primary and rgba(255,255,255,.60) for secondary. Reduce image brightness by 10-15% with filter: brightness(.9). Use color-mix() to generate dark variants of the accent color. Test with OLED screens — true black saves battery. Never use pure white text on pure black background — the contrast is too harsh for extended reading.",
+    "description-zh": "移动端暗色模式不只是反色。规则：背景 #121212（非纯 #000）、抬升面 #1E1E1E 和 #232323、主文本 rgba(255,255,255,.87)、次文本 rgba(255,255,255,.60)。图片亮度降低 10-15%：filter: brightness(.9)。用 color-mix() 生成主色暗色变体。OLED 屏测试——真黑省电。禁止纯白字配纯黑背景——对比度对长时间阅读太刺眼。",
+    "tags": [
+      "dark-mode",
+      "mobile",
+      "color",
+      "theme",
+      "accessibility"
+    ],
+    "css": "@media(prefers-color-scheme:dark){:root{--bg:#121212;--surface:#1E1E1E;--text-primary:rgba(255,255,255,.87);--text-secondary:rgba(255,255,255,.6);--accent-dark:color-mix(in srgb,#3A8DD0 80%,white)}img{filter:brightness(.9)}}",
+    "anti": [
+      "pure #000 background",
+      "pure white text on black",
+      "just inverting colors with filter: invert(1)"
+    ]
+  },
+  {
+    "name-en": "Skeleton Loading — Mobile Pattern",
+    "name-zh": "骨架屏 — 移动端模式",
+    "description-en": "A placeholder UI that mimics the layout of the content being loaded. On mobile: use a subtle shimmer animation (a light gradient sliding left-to-right) on gray blocks that match the expected content shapes. List items: gray avatar circle + gray text lines. Cards: gray rectangle for image + gray title line. Animation: 1.5s infinite shimmer. Show skeleton immediately on navigation, not after a timeout. Never use spinners as the only loading indicator on mobile — skeletons feel faster.",
+    "description-zh": "模拟正在加载内容布局的占位 UI。移动端：在灰色块上用微光动画（浅渐变从左到右滑动），灰色块匹配预期内容形状。列表项：灰色圆形头像+灰色文本行。卡片：灰色图片矩形+灰色标题行。动画：1.5s 无限微光。导航时立即显示骨架屏，不要等超时。移动端不要只用旋转器——骨架屏感觉更快。",
+    "tags": [
+      "skeleton",
+      "loading",
+      "mobile",
+      "shimmer",
+      "ux"
+    ],
+    "css": ".skeleton{background:#e8e8e8;border-radius:6px;position:relative;overflow:hidden}.skeleton::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.4) 50%,transparent 100%);animation:shimmer 1.5s infinite}@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}.skeleton-avatar{width:40px;height:40px;border-radius:50%}.skeleton-text{height:14px;margin-bottom:8px}.skeleton-text:last-child{width:60%}",
+    "anti": [
+      "spinner-only loading on mobile",
+      "showing skeleton after timeout delay",
+      "skeleton that doesn't match content shape"
+    ]
   }
 ]

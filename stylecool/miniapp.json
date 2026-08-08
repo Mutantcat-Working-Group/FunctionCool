@@ -248,5 +248,47 @@
       "no share for content that should be viral"
     ],
     "category": "miniapp"
+  },
+  {
+    "name-en": "Virtual List — Long List Performance",
+    "name-zh": "虚拟列表 — 长列表性能",
+    "description-en": "For lists with 100+ items, only render items visible in the viewport plus a small buffer (5 items above and below). Use wx.createIntersectionObserver or recycler-view component. Each item must have a fixed or estimated height. Show a placeholder for off-screen items. Performance: reduces initial render from 2s to <200ms for 1000 items. Never use virtual lists for lists under 50 items — the overhead isn't worth it. Never use without specifying item height.",
+    "description-zh": "100+ 条目的列表仅渲染视口内可见项+小缓冲（上下各 5 项）。用 wx.createIntersectionObserver 或 recycler-view 组件。每项必须有固定或预估高度。屏下项用占位符。性能：1000 项初次渲染从 2s 降至 <200ms。50 项以下不要用虚拟列表——开销不值得。禁止不指定项高度。",
+    "tags": [
+      "virtual-list",
+      "performance",
+      "scroll",
+      "long-list",
+      "mini-program"
+    ],
+    "guideline": "Use recycler-view or wx.createIntersectionObserver for lists > 100 items. Fixed item height required. Buffer: 5 items above/below viewport. Never for < 50 items."
+  },
+  {
+    "name-en": "Share Card — Social Sharing Preview",
+    "name-zh": "分享卡片 — 社交分享预览",
+    "description-en": "A pre-designed card that appears when the user shares the mini-program to friends or moments. Image: 5:4 aspect ratio, 500×400px. Content: title (max 2 lines), description (max 2 lines), mini-program name and icon. Use wx.showShareMenu with onShareAppMessage. The share image should be generated dynamically (canvas or server-side) to include personalized data. Never use a generic logo-only share image. Never exceed the 128KB image size limit.",
+    "description-zh": "用户将小程序分享给朋友或朋友圈时显示的预设卡片。图片 5:4 比例 500×400px。内容：标题（最多 2 行）、描述（最多 2 行）、小程序名称和图标。用 wx.showShareMenu 配合 onShareAppMessage。分享图应动态生成（canvas 或服务端）包含个性化数据。禁止纯 logo 的通用分享图。图片不超过 128KB。",
+    "tags": [
+      "share",
+      "card",
+      "social",
+      "wechat",
+      "mini-program"
+    ],
+    "guideline": "Share image: 500×400px, 5:4 ratio. Max 128KB. Title ≤ 2 lines, desc ≤ 2 lines. Use wx.showShareMenu + onShareAppMessage. Generate dynamically with personalized data."
+  },
+  {
+    "name-en": "Rich Text Display — Safe HTML Rendering",
+    "name-zh": "富文本展示 — 安全 HTML 渲染",
+    "description-en": "Use the <rich-text> component to render HTML content safely. Whitelist allowed tags: p, span, strong, em, img, a, br, ul, ol, li, h1-h6, blockquote. Strip all script, iframe, object, embed tags. Images: max-width 100%, lazy loading. Links: open with wx.navigateTo or wx.openEmbeddedMiniProgram. Line-height 1.8 for readability. Never render user-generated HTML without sanitization. Never allow inline styles that could break the layout.",
+    "description-zh": "用 <rich-text> 组件安全渲染 HTML 内容。白名单允许标签：p、span、strong、em、img、a、br、ul、ol、li、h1-h6、blockquote。剥离所有 script、iframe、object、embed 标签。图片 max-width 100%、懒加载。链接用 wx.navigateTo 或 wx.openEmbeddedMiniProgram 打开。行高 1.8 保证可读性。禁止不消毒渲染用户生成的 HTML。禁止允许破坏布局的内联样式。",
+    "tags": [
+      "rich-text",
+      "html",
+      "security",
+      "content",
+      "mini-program"
+    ],
+    "guideline": "Use <rich-text> with whitelist: p, span, strong, em, img, a, br, ul, ol, li, h1-h6, blockquote. Strip script/iframe/object/embed. Images max-width:100%. Line-height: 1.8."
   }
 ]
