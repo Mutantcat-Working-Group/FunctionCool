@@ -36,42 +36,78 @@ $CAT_META = [
 
 // ── 占位样例数据集 ──
 // 字段约定：
-//   id          唯一标识，对应 list/{id}.html
-//   name-zh/en  中英文名（列表卡片显示 name-zh）
-//   desc-zh/en  中英文描述
-//   tags        检索关键词（中文/英文均可）
-//   cat         分类（web/desktop/miniapp/mobile）
-//   thumb       缩略图 CSS 背景（渐变作为视觉标识）
-//   thumb-dark  缩略图文字是否采用深色（白底浅色背景时翻深）
-//   file        完整示例文件路径（点击卡片跳转）
-//   prompt      完整可复制的设计提示词（示例页内一键复制）
+//   id             唯一标识，对应 list/{id}.html
+//   name-zh/en     中英文名（列表卡片显示 name-zh）
+//   desc-zh/en     中英文描述
+//   tags           检索关键词（中文/英文均可）
+//   cat            分类（web/desktop/miniapp/mobile）
+//   thumb          缩略图 CSS 背景（占位条目用渐变作为视觉标识）
+//   thumb-image    缩略图真实截图 URL（存在时优先于 thumb，使用 background-image）
+//   thumb-dark     缩略图文字是否采用深色（白底浅色背景时翻深；真实截图忽略）
+//   file           完整示例文件路径（点击卡片跳转）
+//   prompt         完整可复制的设计提示词（示例页内一键复制）
 $EXAMPLES = [
+    // ── 真实示例（已渲染截图）：液态玻璃 ──
     [
-        'id'         => 'glassmorphism',
-        'name-zh'    => '玻璃拟态',
-        'name-en'    => 'Glassmorphism',
-        'desc-zh'    => '半透明磨砂玻璃质感，搭配柔和渐变背景',
-        'desc-en'    => 'Frosted glass cards over a soft gradient backdrop',
-        'tags'       => ['glass', 'card', 'modern', '透明', '渐变', 'web'],
-        'cat'        => 'web',
-        'thumb'      => 'linear-gradient(135deg, #73B9E6 0%, #C5DFF0 50%, #FFFFFF 100%)',
-        'thumb-dark' => false,
-        'file'       => 'list/glassmorphism.html',
-        'prompt'     => "采用玻璃拟态（Glassmorphism）设计风格。背景为大面积柔和渐变（蓝 #73B9E6 → 白 #FFFFFF）。卡片背景 rgba(255,255,255,0.4)，backdrop-filter: blur(20px)，圆角 16px，1px 白色半透明边框。文字深色 #15324C。整体轻盈通透、富有层次。",
+        'id'          => 'liquid-glass',
+        'name-zh'     => '液态玻璃',
+        'name-en'     => 'Liquid Glass',
+        'desc-zh'     => '高斯模糊 + 流动渐变光晕 + 多层透明叠加，模拟液体玻璃质感',
+        'desc-en'     => 'Gaussian blur + flowing gradient orbs + translucent layers, simulating liquid glass',
+        'tags'        => ['liquid', 'glass', 'blur', 'orb', '液态', '玻璃', '玻璃拟态', '动画', 'web'],
+        'cat'         => 'web',
+        'thumb-image' => 'list/images/liquid-glass.png',
+        'thumb'       => 'linear-gradient(135deg, #1e1b4b 0%, #4c1d95 50%, #831843 100%)',
+        'thumb-dark'  => true,
+        'file'        => 'list/liquid-glass.html',
+        'prompt'      => "采用液态玻璃（Liquid Glass）设计风格。背景使用动态渐变（深紫 #1e1b4b → 紫 #4c1d95 → 深蓝 #1e3a8a → 玫红 #831843），多色径向光晕（紫水晶 #6B46C1 / 玫粉 #F472B6 / 青蓝 #38BDF8 / 深海军 #1B4E7A）以 18s 缓动周期缓慢漂移，形成液态流动感。卡片使用高斯模糊：backdrop-filter: blur(40px) saturate(180%)，背景色 rgba(255,255,255,0.18)，1px 白色半透明边框，圆角 24px，内嵌 1px 顶部反射阴影。所有按钮、输入框、标签、导航、警告框均沿用相同的玻璃语言：blur 20-40px + 半透明白底 + 渐变主色按钮。整体节奏轻盈、富有未来感。",
     ],
+    // ── 真实示例（已渲染截图）：玻璃拟态 ──
     [
-        'id'         => 'minimal-white',
-        'name-zh'    => '极简白',
-        'name-en'    => 'Minimal White',
-        'desc-zh'    => '克制的白色，大量留白，仅一抹强调色',
-        'desc-en'    => 'Restrained white, generous whitespace, single accent',
-        'tags'       => ['minimal', 'white', 'clean', '白', '极简', 'web'],
-        'cat'        => 'web',
-        'thumb'      => 'linear-gradient(135deg, #FFFFFF 0%, #F4F8FC 100%)',
-        'thumb-dark' => false,
-        'file'       => 'list/minimal-white.html',
-        'prompt'     => "极简白风格。背景纯白 #FFFFFF，大量留白。卡片背景 #FFFFFF，1px 边框 #EAF2F8，圆角 10px。字体使用系统字体，标题字重 700，正文 16px / 行高 1.7。颜色极少：主色 #15324C，强调仅 #73B9E6 一抹。",
+        'id'          => 'glassmorphism',
+        'name-zh'     => '玻璃拟态',
+        'name-en'     => 'Glassmorphism',
+        'desc-zh'     => '中等强度模糊 + 浅色渐变光晕 + 柔和投影，轻盈梦幻',
+        'desc-en'     => 'Medium blur + light gradient orbs + soft shadows, light and dreamy',
+        'tags'        => ['glass', 'blur', 'translucent', 'soft', '玻璃', '浅色', '梦幻', 'web'],
+        'cat'         => 'web',
+        'thumb-image' => 'list/images/glassmorphism.png',
+        'thumb'       => 'linear-gradient(135deg, #E0F4FF 0%, #FFE0EC 50%, #F0E5FF 100%)',
+        'thumb-dark'  => false,
+        'file'        => 'list/glassmorphism.html',
+        'prompt'      => "采用玻璃拟态（Glassmorphism）设计风格。背景使用浅色渐变（浅天蓝 #E0F4FF → 浅樱粉 #FFE0EC → 浅薰衣草 #F0E5FF），柔和漂浮大色斑（天蓝 #4D96FF / 樱粉 #FF6B9D / 薰衣草 #A18CD1 / 樱花粉 #FBC2EB）以 16-20s 缓动周期缓慢漂移。卡片使用中等强度模糊：backdrop-filter: blur(20px) saturate(180%)，背景色 rgba(255,255,255,0.4)，1px 白色半透明边框，圆角 16-24px，单层柔和浅灰投影 0 8px 32px rgba(128,142,174,0.18)。所有按钮、输入框、标签、导航、警告框均沿用相同的玻璃语言：blur 20px + 半透明白底 + 圆角 12px + 浅灰边框。整体保持轻盈、梦幻、专业的玻璃质感。",
     ],
+    // ── 真实示例（已渲染截图）：孟菲斯 ──
+    [
+        'id'          => 'memphis',
+        'name-zh'     => '孟菲斯',
+        'name-en'     => 'Memphis',
+        'desc-zh'     => '大胆几何 + 多彩碰撞，年轻张扬的 80 年代设计复兴',
+        'desc-en'     => 'Bold geometry + colorful clashes, 80s design revival',
+        'tags'        => ['memphis', 'colorful', 'geometric', '80s', '几何', '多彩', '年轻', 'web'],
+        'cat'         => 'web',
+        'thumb-image' => 'list/images/memphis.png',
+        'thumb'       => 'linear-gradient(135deg, #FF6B6B 0%, #FFEAB0 33%, #73B9E6 66%, #95E1D3 100%)',
+        'thumb-dark'  => false,
+        'file'        => 'list/memphis.html',
+        'prompt'      => "采用孟菲斯（Memphis）设计风格。背景使用奶油色 #FFF8E7 浅暖基底，点缀大胆几何元素：随机散布的圆点（珊瑚红 #FF6B6B 8px）、斑马纹波浪（黑白相间 4px）、三角形（樱草黄 #FFD93D 异向）、网格线条（天蓝 #4D96FF 半透明）。配色高饱和：珊瑚红 #FF6B6B + 樱草黄 #FFD93D + 薄荷绿 #6BCB77 + 天蓝 #4D96FF + 樱花粉 #FF8FAB。主容器使用 12px 实色硬边框（无圆角）、背景纯色硬块（如 #FFEAB0 浅黄）。字体圆润粗体（Inter Black / 思源黑体 Heavy）。圆角 0-12px 极端对比。整体活泼、张扬、年轻、充满街头感。",
+    ],
+    // ── 真实示例（已渲染截图）：极简白 ──
+    [
+        'id'          => 'minimal-white',
+        'name-zh'     => '极简白',
+        'name-en'     => 'Minimal White',
+        'desc-zh'     => '克制的白色 + 大量留白 + 单一蓝色重音 + 极轻描边',
+        'desc-en'     => 'Restrained white, generous whitespace, single accent',
+        'tags'        => ['minimal', 'white', 'clean', 'whitespace', '白', '极简', '克制', 'web'],
+        'cat'         => 'web',
+        'thumb-image' => 'list/images/minimal-white.png',
+        'thumb'       => 'linear-gradient(135deg, #FFFFFF 0%, #F4F8FC 100%)',
+        'thumb-dark'  => false,
+        'file'        => 'list/minimal-white.html',
+        'prompt'      => "采用极简白（Minimal White）设计风格。背景纯白 #FFFFFF，大量留白（区块间距 64-96px）。卡片背景 #FFFFFF，1px 边框 #EAF2F8，圆角 10px，无阴影。字体使用系统无衬线（-apple-system / Inter），标题字重 700，正文 16px / 行高 1.7，颜色极少：主色 #15324C 文字 + #8395A6 次要 + 单一重音 #73B9E6（仅用于强调、聚焦、选中态）。按钮无填充 + 1px 边框 #DCE6EE，hover 加深至 #15324C；主要按钮填充 #73B9E6 + 白字。输入框聚焦时蓝色 1px 边框 + 3px rgba(115,185,230,0.15) 光环。导航选中态用单色 2px 底部蓝色下划线。整页只用 1 个主色 + 1 个重音色，所有元素极度克制、留白充足、阅读优先。",
+    ],
+    // ── 下方 16 条为占位（仅 CSS 渐变作为视觉标识，无真实 HTML 文件）──
     [
         'id'         => 'dark-cyber',
         'name-zh'    => '暗色科技',
@@ -84,19 +120,6 @@ $EXAMPLES = [
         'thumb-dark' => true,
         'file'       => 'list/dark-cyber.html',
         'prompt'     => "暗色科技（Dark Cyber）风格。背景 #0E2E4A 深海军蓝。卡片背景 #15324C，1px 边框 #1B4E7A，圆角 6px。强调色 #73B9E6。霓虹 #F2B53C 作为高亮。代码块使用等宽字体。整体冷静、专业、未来感。",
-    ],
-    [
-        'id'         => 'memphis',
-        'name-zh'    => '孟菲斯',
-        'name-en'    => 'Memphis',
-        'desc-zh'    => '大胆几何 + 多彩碰撞，年轻张扬',
-        'desc-en'    => 'Bold geometry, colorful clashes, youthful',
-        'tags'       => ['memphis', 'colorful', 'geometric', '几何', '多彩', 'web'],
-        'cat'        => 'web',
-        'thumb'      => 'linear-gradient(135deg, #FF6B6B 0%, #FFEAB0 33%, #73B9E6 66%, #95E1D3 100%)',
-        'thumb-dark' => false,
-        'file'       => 'list/memphis.html',
-        'prompt'     => "孟菲斯（Memphis）风格。配色大胆：珊瑚红 #FF6B6B、薄荷绿 #95E1D3、奶黄 #FFEAB0、天蓝 #73B9E6。几何形状：圆点、波浪、网格线散落背景。字体圆润粗体，圆角 12px。整体活泼、张扬、年轻。",
     ],
     [
         'id'         => 'neumorphism',
@@ -364,75 +387,163 @@ $I18N = [
     <script src="https://www.functioncool.xyz/assets/i18n.js?v=20260610"></script>
     <style>
     /* ============================================================
-       示例页专用样式
-       设计原则：全部复用全局 token（var(--*)），不污染 style.css
+       示例页专用样式 — 液态玻璃（Liquid Glass）主题
+       ------------------------------------------------------------
+       设计语言四要素：
+       1. 高斯模糊背景：backdrop-filter: blur(40px) saturate(180%)
+       2. 半透明叠加：rgba(255,255,255, 0.5~0.7) 营造玻璃质感
+       3. 流动渐变光晕：背景色随时间缓慢漂移
+       4. 折射边缘：圆角 + 1px 白色半透明边框 + 多层投影
        ============================================================ */
+
+    /* —— 液态玻璃颜色变量 —— */
+    :root {
+        --liquid-1: #6B46C1;
+        --liquid-2: #1B4E7A;
+        --liquid-3: #F472B6;
+        --liquid-4: #38BDF8;
+        --glass-bg:     rgba(255, 255, 255, 0.55);
+        --glass-bg-2:   rgba(255, 255, 255, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.5);
+        --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.08);
+    }
+
+    /* —— 页面背景：流动渐变 —— */
+    body {
+        background: linear-gradient(135deg,
+            #f5f3ff 0%,      /* 薰衣草白 */
+            #ffffff 25%,     /* 纯白 */
+            #fff5f7 50%,     /* 樱花粉 */
+            #f0f9ff 75%,     /* 天蓝白 */
+            #f5f3ff 100%);
+        background-size: 400% 400%;
+        animation: liquid-bg 30s ease-in-out infinite;
+    }
+    @keyframes liquid-bg {
+        0%, 100% { background-position: 0% 50%; }
+        50%      { background-position: 100% 50%; }
+    }
+
+    /* —— 主容器 —— */
+    .example-main {
+        padding: clamp(32px, 5vw, 64px) clamp(20px, 4vw, 32px) clamp(48px, 6vw, 80px);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* —— 标题区 —— */
     .example-intro {
         text-align: center;
-        padding: var(--s-6) 0 var(--s-8);
+        padding: var(--s-8) 0 var(--s-10);
+    }
+    .example-intro .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 14px;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--liquid-1);
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 999px;
+        margin-bottom: var(--s-3);
+    }
+    .example-intro .kicker::before {
+        content: "";
+        width: 6px; height: 6px;
+        background: var(--liquid-3);
+        border-radius: 50%;
     }
     .example-intro h2 {
-        font-size: var(--fs-3xl);
+        font-size: clamp(2rem, 4vw, 2.75rem);
         font-weight: 800;
-        letter-spacing: -0.02em;
-        margin: var(--s-3) 0 var(--s-3);
-        color: var(--ink);
+        letter-spacing: -0.025em;
+        margin: var(--s-3) 0;
+        background: linear-gradient(135deg, var(--liquid-1) 0%, var(--liquid-2) 50%, var(--liquid-3) 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
     }
     .example-intro p {
         max-width: 560px;
         margin: 0 auto;
         color: var(--ink-2);
         line-height: 1.7;
+        font-size: 1.0625rem;
     }
 
-    /* 搜索表单 */
+    /* —— 搜索表单 —— */
     .example-search-form {
         display: flex;
         gap: var(--s-2);
         max-width: 560px;
-        margin: 0 auto var(--s-5);
+        margin: 0 auto var(--s-6);
+        padding: 8px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border: 1px solid var(--glass-border);
+        border-radius: 999px;
+        box-shadow: var(--glass-shadow);
     }
     .example-search-input {
         flex: 1;
         min-width: 0;
-        padding: var(--s-3) var(--s-4);
+        padding: 12px 20px;
         font-size: var(--fs-base);
         color: var(--ink);
-        background: var(--surface);
-        border: 1px solid var(--line-2);
-        border-radius: var(--r-sm);
+        background: transparent;
+        border: 0;
+        border-radius: 999px;
         outline: none;
-        transition: border-color var(--t) var(--ease),
-                    box-shadow var(--t) var(--ease);
+        font-family: inherit;
     }
+    .example-search-input::placeholder { color: var(--ink-3); }
     .example-search-input:focus {
-        border-color: var(--sky-500);
-        box-shadow: 0 0 0 3px var(--sky-100);
+        background: rgba(255, 255, 255, 0.4);
     }
     .example-search-btn {
-        padding: var(--s-3) var(--s-5);
+        padding: 12px 28px;
         font-size: var(--fs-sm);
         font-weight: 600;
-        color: var(--surface);
-        background: var(--sky-700);
-        border: 0;
-        border-radius: var(--r-sm);
+        color: #fff;
+        background: linear-gradient(135deg, var(--liquid-1), var(--liquid-2));
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 999px;
         cursor: pointer;
-        transition: background var(--t) var(--ease);
+        transition: all 0.3s var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
         white-space: nowrap;
+        font-family: inherit;
+        box-shadow: 0 4px 16px rgba(107, 70, 193, 0.3);
     }
-    .example-search-btn:hover { background: var(--sky-900); }
+    .example-search-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(107, 70, 193, 0.45);
+    }
 
-    /* 结果计数 */
+    /* —— 结果计数 —— */
     .example-meta {
         text-align: center;
         color: var(--ink-3);
         font-size: var(--fs-sm);
         margin-bottom: var(--s-6);
         font-variant-numeric: tabular-nums;
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(20px);
+        border-radius: 999px;
+        display: inline-block;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
-    /* 卡片网格 */
+    /* —— 卡片网格 —— */
     .example-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -440,31 +551,44 @@ $I18N = [
         margin-bottom: var(--s-10);
     }
 
-    /* 卡片 */
+    /* —— 玻璃卡片 —— */
     .example-card {
         display: flex;
         flex-direction: column;
-        background: var(--surface);
-        border: 1px solid var(--line);
-        border-radius: var(--r-md);
+        background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.65),
+            rgba(255, 255, 255, 0.4));
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
         overflow: hidden;
         text-decoration: none;
         color: inherit;
-        transition: transform var(--t) var(--ease),
-                    box-shadow var(--t) var(--ease),
-                    border-color var(--t) var(--ease);
+        box-shadow: var(--glass-shadow);
+        transition: transform 0.5s var(--ease, cubic-bezier(0.22, 1, 0.36, 1)),
+                    box-shadow 0.5s var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+        position: relative;
+    }
+    .example-card::before {
+        /* 顶部反光线 */
+        content: "";
+        position: absolute;
+        top: 0; left: 10%; right: 10%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        pointer-events: none;
     }
     .example-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(20, 58, 92, 0.08);
-        border-color: var(--sky-200);
+        transform: translateY(-4px);
+        box-shadow: 0 16px 48px rgba(31, 38, 135, 0.15);
     }
     .example-card:focus-visible {
-        outline: 2px solid var(--sky-500);
+        outline: 2px solid var(--liquid-1);
         outline-offset: 2px;
     }
 
-    /* 缩略图（用 CSS 渐变作为视觉标识） */
+    /* —— 缩略图 —— */
     .example-thumb {
         position: relative;
         aspect-ratio: 16 / 9;
@@ -472,6 +596,13 @@ $I18N = [
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    .example-thumb-image::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.05));
+        pointer-events: none;
     }
     .example-thumb-label {
         font-size: var(--fs-lg);
@@ -487,7 +618,7 @@ $I18N = [
         text-shadow: none;
     }
 
-    /* 卡片正文 */
+    /* —— 卡片正文 —— */
     .example-body {
         padding: var(--s-4);
         flex: 1;
@@ -511,26 +642,39 @@ $I18N = [
     .example-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: var(--s-1);
+        gap: 6px;
     }
     .example-tag {
         font-size: var(--fs-xs);
-        color: var(--ink-3);
-        background: var(--canvas-2);
-        padding: 2px var(--s-2);
-        border-radius: var(--r-pill);
+        color: var(--ink-2);
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        padding: 2px 10px;
+        border-radius: 999px;
         white-space: nowrap;
     }
 
-    /* 空状态 */
+    /* —— 空状态 —— */
     .example-empty {
         text-align: center;
         padding: var(--s-16) var(--s-4);
-        background: var(--surface);
-        border: 1px dashed var(--line-2);
-        border-radius: var(--r-md);
+        background: var(--glass-bg);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border: 1px dashed rgba(107, 70, 193, 0.3);
+        border-radius: 16px;
         color: var(--ink-2);
         margin-bottom: var(--s-10);
+        box-shadow: var(--glass-shadow);
+        position: relative;
+    }
+    .example-empty::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 10%; right: 10%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
     }
     .example-empty h3 {
         font-size: var(--fs-lg);
@@ -544,18 +688,22 @@ $I18N = [
     }
     .example-empty a {
         display: inline-block;
-        padding: var(--s-2) var(--s-4);
+        padding: 10px 20px;
         font-size: var(--fs-sm);
-        color: var(--sky-700);
-        background: var(--sky-50);
-        border: 1px solid var(--sky-100);
-        border-radius: var(--r-sm);
+        font-weight: 600;
+        color: #fff;
+        background: linear-gradient(135deg, var(--liquid-1), var(--liquid-2));
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 999px;
         text-decoration: none;
-        transition: background var(--t) var(--ease);
+        transition: all 0.3s var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+        box-shadow: 0 4px 16px rgba(107, 70, 193, 0.3);
     }
-    .example-empty a:hover { background: var(--sky-100); }
+    .example-empty a:hover {
+        transform: scale(1.05);
+    }
 
-    /* 分页 */
+    /* —— 分页 —— */
     .example-pagination {
         display: flex;
         justify-content: center;
@@ -569,40 +717,102 @@ $I18N = [
     .example-pagination .example-pagination-disabled {
         display: inline-flex;
         align-items: center;
-        padding: var(--s-2) var(--s-4);
+        padding: 10px 20px;
         color: var(--ink-2);
-        background: var(--surface);
-        border: 1px solid var(--line-2);
-        border-radius: var(--r-sm);
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 999px;
         text-decoration: none;
-        transition: color var(--t) var(--ease),
-                    border-color var(--t) var(--ease),
-                    background var(--t) var(--ease);
-        min-width: 88px;
+        transition: all 0.3s var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+        min-width: 100px;
         justify-content: center;
+        font-weight: 500;
     }
     .example-pagination a:hover {
-        color: var(--sky-700);
-        border-color: var(--sky-300);
-        background: var(--sky-50);
+        color: #fff;
+        background: linear-gradient(135deg, var(--liquid-1), var(--liquid-2));
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+        box-shadow: 0 4px 16px rgba(107, 70, 193, 0.3);
     }
     .example-pagination .example-pagination-disabled {
         color: var(--ink-4);
         background: transparent;
-        border-color: var(--line);
+        border-color: rgba(255, 255, 255, 0.3);
         cursor: not-allowed;
     }
     .example-pagination-info {
-        color: var(--ink-3);
+        color: var(--ink-2);
         font-variant-numeric: tabular-nums;
-        padding: 0 var(--s-2);
+        padding: 10px 16px;
+        background: rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(10px);
+        border-radius: 999px;
+        font-weight: 500;
     }
 
-    /* 响应式 */
+    /* —— 液态玻璃底部（自定义） —— */
+    .liquid-footer {
+        margin: 32px clamp(20px, 4vw, 32px) 16px;
+        padding: 24px 32px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        box-shadow: var(--glass-shadow);
+        text-align: center;
+        position: relative;
+    }
+    .liquid-footer::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 10%; right: 10%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        pointer-events: none;
+    }
+    .liquid-footer p {
+        font-size: var(--fs-sm);
+        color: var(--ink-2);
+        margin: 0 0 8px;
+    }
+    .liquid-footer-links {
+        font-size: var(--fs-xs);
+        color: var(--ink-3);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+    .liquid-footer-links span { margin-right: 8px; }
+    .liquid-footer-links a {
+        color: var(--ink-3);
+        text-decoration: none;
+        margin: 0 8px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        transition: all 0.3s var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+    }
+    .liquid-footer-links a:hover {
+        color: var(--liquid-1);
+        background: rgba(107, 70, 193, 0.08);
+    }
+
+    /* —— 响应式 —— */
     @media (max-width: 768px) {
+        header {
+            padding: var(--s-3) 0;
+        }
+        header .container {
+            flex-direction: column;
+            gap: var(--s-3);
+            text-align: center;
+        }
         .example-grid { grid-template-columns: 1fr; }
-        .example-search-form { flex-direction: column; }
+        .example-search-form { flex-direction: column; border-radius: 16px; }
         .example-search-btn { width: 100%; }
+        .liquid-footer { padding: 20px 16px; border-radius: 20px; }
+        .liquid-footer-links a { margin: 4px; }
     }
     </style>
 </head>
@@ -626,7 +836,7 @@ $I18N = [
     </header>
 
     <main>
-        <div class="container">
+        <div class="example-main">
 
             <!-- 标题区 -->
             <section class="example-intro reveal reveal-1">
@@ -669,10 +879,18 @@ $I18N = [
                 <div class="example-grid reveal reveal-4">
                     <?php foreach ($pageItems as $ex): ?>
                         <a class="example-card" href="<?=htmlspecialchars($ex['file'], ENT_QUOTES)?>" target="_blank" rel="noopener">
-                            <div class="example-thumb" style="background: <?=htmlspecialchars($ex['thumb'], ENT_QUOTES)?>;">
-                                <span class="example-thumb-label <?=!empty($ex['thumb-dark']) ? 'dark' : ''?>">
-                                    <?=htmlspecialchars($ex['name-zh'], ENT_QUOTES)?>
-                                </span>
+                            <div class="example-thumb<?php echo !empty($ex['thumb-image']) ? ' example-thumb-image' : ''; ?>"
+                                <?php if (!empty($ex['thumb-image'])): ?>
+                                    style="background-image: url('<?=htmlspecialchars($ex['thumb-image'], ENT_QUOTES)?>'); background-size: cover; background-position: center; background-color: <?=htmlspecialchars($ex['thumb'] ?? 'transparent', ENT_QUOTES)?>;"
+                                <?php else: ?>
+                                    style="background: <?=htmlspecialchars($ex['thumb'], ENT_QUOTES)?>;"
+                                <?php endif; ?>
+                            >
+                                <?php if (empty($ex['thumb-image'])): ?>
+                                    <span class="example-thumb-label <?=!empty($ex['thumb-dark']) ? 'dark' : ''?>">
+                                        <?=htmlspecialchars($ex['name-zh'], ENT_QUOTES)?>
+                                    </span>
+                                <?php endif; ?>
                             </div>
                             <div class="example-body">
                                 <h3 class="example-card-title">
@@ -716,15 +934,13 @@ $I18N = [
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p data-i18n="example-footer-text"><?=$I18N['footer-text'][0]?></p>
-            <div class="friend-links">
-                <span data-i18n="example-friend-links"><?=$I18N['friend-links'][0]?></span>
-                <a href="https://www.mutantcat.org/" target="_blank" rel="noopener">异猫工作群</a>
-                <a href="https://www.fcnesyouxi.top/" target="_blank" rel="noopener">FC/NES游戏</a>
-                <a href="https://www.jqshengtian.top/" target="_blank" rel="noopener">学习资料</a>
-            </div>
+    <footer class="liquid-footer">
+        <p data-i18n="example-footer-text"><?=$I18N['footer-text'][0]?></p>
+        <div class="liquid-footer-links">
+            <span data-i18n="example-friend-links"><?=$I18N['friend-links'][0]?></span>
+            <a href="https://www.mutantcat.org/" target="_blank" rel="noopener">异猫工作群</a>
+            <a href="https://www.fcnesyouxi.top/" target="_blank" rel="noopener">FC/NES游戏</a>
+            <a href="https://www.jqshengtian.top/" target="_blank" rel="noopener">学习资料</a>
         </div>
     </footer>
 
