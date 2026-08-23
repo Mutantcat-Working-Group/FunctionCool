@@ -110,7 +110,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['cat'])) {
                 <p data-i18n="stylecool-header-subtitle">给 AI 与自动化工作流的设计样式 StyleCool — 联网为 AI 注入审美判断力</p>
             </div>
             <div class="language-switcher">
-                <a href="example.php" class="skill-link" aria-label="样式示例预览" data-i18n="stylecool-example-link">🎨 样式示例</a>
+                <a href="example" class="skill-link" aria-label="样式示例预览" data-i18n="stylecool-example-link">🎨 样式示例</a>
                 <a href="https://www.functioncool.xyz/" class="home-link" aria-label="返回首页" data-i18n="stylecool-back-link">← 返回首页</a>
                 <button id="lang-btn" type="button">English</button>
             </div>
@@ -143,7 +143,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['cat'])) {
                 <h3 style="color:var(--ink);font-size:1.15rem;margin-bottom:0.4rem;" data-i18n="stylecool-example-gallery-title">在线预览 100 种设计风格</h3>
                 <p style="color:var(--ink-2);margin-bottom:1.2rem;" data-i18n="stylecool-example-gallery-desc">每种风格都有完整示例页面 + 真实截图 + 一键复制完整提示词，帮助 AI 和开发者直观理解设计语言。</p>
                 <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-                    <a class="skill-github-link" href="example.php" style="background:var(--sky-700);">
+                    <a class="skill-github-link" href="example" style="background:var(--sky-700);">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
                         <span data-i18n="stylecool-example-gallery-btn">浏览样式示例 →</span>
                     </a>

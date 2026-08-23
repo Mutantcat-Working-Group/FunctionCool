@@ -1582,10 +1582,10 @@ $I18N = [
     <title>样式示例 — StyleCool</title>
     <meta name="robots" content="noindex,nofollow">
     <link rel="canonical" href="https://style.functioncool.xyz/example">
-    <link rel="stylesheet" href="https://www.functioncool.xyz/assets/style.css?v=20260610">
-    <link rel="icon" type="image/png" href="https://www.functioncool.xyz/assets/logo.png">
-    <link rel="apple-touch-icon" href="https://www.functioncool.xyz/assets/logo.png">
-    <script src="https://www.functioncool.xyz/assets/i18n.js?v=20260610"></script>
+    <link rel="stylesheet" href="../assets/style.css?v=20260610">
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="apple-touch-icon" href="../assets/logo.png">
+    <script src="../assets/i18n.js?v=20260610"></script>
     <style>
     /* ============================================================
        示例页专用样式 — 液态玻璃（Liquid Glass）主题

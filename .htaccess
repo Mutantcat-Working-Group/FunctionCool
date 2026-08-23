@@ -27,11 +27,15 @@ RewriteRule ^skillapi/?$ skillapi.php [L,QSA]
 RewriteRule ^mcpapi/?$ /skillapi [L,R=301,QSA]
 
 # 7. StyleCool: style.functioncool.xyz 域名 → 委托给 stylecool/index.php（子站点，文件夹自包含可独立部署）
+# 7a. 在 catch-all 之前处理 /example 路由
+RewriteRule ^example/?$ stylecool/example.php [L,QSA]
 RewriteCond %{HTTP_HOST} ^style\.functioncool\.xyz$ [NC]
 RewriteRule ^(.*)$ stylecool/index.php [L,QSA]
 
 # 7.1 本地/开发：/stylecool 直接访问
 RewriteRule ^stylecool/?$ stylecool.php [L,QSA]
+# 7.2 /stylecool/example → stylecool/example.php
+RewriteRule ^stylecool/example/?$ stylecool/example.php [L,QSA]
 
 # 6.1 文章笔记: /notes/001 -> notes/note001.php
 RewriteRule ^notes/([0-9]{3,})/?$ notes/note$1.php [L,QSA]

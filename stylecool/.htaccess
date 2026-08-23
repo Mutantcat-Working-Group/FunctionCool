@@ -8,3 +8,6 @@ DirectoryIndex index.php
 
 # /skillapi → index.php（带参时为 JSON，无参时为文档页）
 RewriteRule ^skillapi/?$ index.php [L,QSA]
+
+# /example → example.php（样式示例画廊）
+RewriteRule ^example/?$ example.php [L,QSA]
