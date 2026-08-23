@@ -695,9 +695,8 @@
 
     /* —— 覆盖 style.css 的 main 留白 —— */
     /* 演示界面：无 padding，全程由各 section 自己控制间距 */
-    main {
-        padding: 0;
-        /* 将渐变背景提到 main 层级，hero / components / footer 共享同一背景，无缝融合 */
+    /* body 与 main 共享同一渐变背景，确保整页风格统一 */
+    body {
         background: linear-gradient(135deg,
             var(--liquid-bg-1) 0%,
             var(--liquid-bg-2) 25%,
@@ -706,6 +705,11 @@
             var(--liquid-bg-1) 100%);
         background-size: 400% 400%;
         animation: liquid-bg 25s ease-in-out infinite;
+        background-attachment: fixed;
+    }
+    main {
+        padding: 0;
+        background: transparent;
     }
 
     /* —— 液态玻璃底部 —— */

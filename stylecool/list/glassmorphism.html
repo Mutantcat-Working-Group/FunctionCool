@@ -604,9 +604,8 @@
     }
 
     /* —— 覆盖 style.css 的 main 留白 —— */
-    /* 演示界面：无 padding，渐变背景提到 main 层级，hero / components / footer 共享同一背景，无缝融合 */
-    main {
-        padding: 0;
+    /* 演示界面：无 padding，body 承载渐变，整页风格统一 */
+    body {
         background: linear-gradient(135deg,
             var(--glass-bg-1) 0%,
             var(--glass-bg-2) 35%,
@@ -614,6 +613,11 @@
             var(--glass-bg-4) 100%);
         background-size: 400% 400%;
         animation: glass-bg 25s ease-in-out infinite;
+        background-attachment: fixed;
+    }
+    main {
+        padding: 0;
+        background: transparent;
     }
     @keyframes glass-bg {
         0%, 100% { background-position: 0% 50%; }

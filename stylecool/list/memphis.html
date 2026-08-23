@@ -144,7 +144,7 @@
         min-height: 620px;
         margin-top: 0;
         padding: calc(92px + 64px) 24px 64px;
-        background: var(--mem-bg-1);
+        background: transparent;  /* 背景由 body 统一提供 */
         overflow: hidden;
         display: flex;
         align-items: center;
@@ -238,7 +238,7 @@
         width: 100%;
         margin: 0;
         padding: 80px 0 96px;
-        background: var(--mem-bg-1);  /* 共享 hero 的奶油底色，无视觉断层 */
+        background: transparent;  /* 背景由 body 统一提供 */
         overflow: hidden;
     }
     /* 添加散布几何元素（与 hero 风格统一） */
@@ -622,16 +622,21 @@
         box-shadow: 3px 3px 0 var(--mem-ink);
     }
 
-    /* —— 覆盖 style.css 的 main 顶部留白 + 底部留白 —— */
-    /* 演示界面：main 顶部用 padding-top 让出 header 空间，底部不需 padding */
+    /* —— 覆盖 style.css 的 main 留白 —— */
+    /* 演示界面：无 padding，body 承载奶油底色，整页风格统一 */
+    body {
+        background: var(--mem-bg-1);
+        background-attachment: fixed;
+    }
     main {
         padding: 0;
+        background: transparent;
     }
 
     /* —— 孟菲斯底部 —— */
     /* 覆盖全局 footer 的白底编辑风，改为 Memphis 风格 */
     footer {
-        background: var(--mem-bg-1) !important;
+        background: transparent !important;  /* 背景由 body 统一提供 */
         border: none !important;
         border-top: 4px solid var(--mem-ink) !important;
         padding: 32px 0 !important;

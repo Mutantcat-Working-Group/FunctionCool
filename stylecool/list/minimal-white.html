@@ -142,7 +142,7 @@
         min-height: 620px;
         margin-top: 0;
         padding: calc(92px + 80px) 24px 80px;
-        background: var(--mw-bg);
+        background: transparent;  /* 背景由 body 统一提供 */
         overflow: hidden;
         display: flex;
         align-items: center;
@@ -212,7 +212,7 @@
         width: 100%;
         margin: 0;
         padding: 80px 0 96px;
-        background: var(--mw-bg-2);
+        background: transparent;  /* 背景由 body 统一提供 */
         overflow: hidden;
     }
     /* 顶部一根细线作为分隔 */
@@ -522,13 +522,19 @@
     }
 
     /* —— 覆盖 style.css 的 main 留白 —— */
+    /* 演示界面：无 padding，body 承载白色底色，整页风格统一 */
+    body {
+        background: var(--mw-bg);
+        background-attachment: fixed;
+    }
     main {
         padding: 0;
+        background: transparent;
     }
 
     /* —— 极简白底部 —— */
     footer, body > footer {
-        background: #fff !important;
+        background: transparent !important;  /* 背景由 body 统一提供 */
         border: none !important;
         border-top: 1px solid var(--mw-line) !important;
         padding: 32px 0 !important;
