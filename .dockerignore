@@ -1,0 +1,10 @@
+.git
+.github
+.claude
+**/.claude
+.DS_Store
+**/.DS_Store
+*.log
+.idea
+.vscode
+data/ratelimit/

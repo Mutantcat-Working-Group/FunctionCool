@@ -1,0 +1,122 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: FunctionCool
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Lint PHP files
+        run: |
+          find . -name '*.php' -type f -print0 | xargs -0 -n1 php -l
+
+  package:
+    needs: verify
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: FunctionCool
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: version
+        run: echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Package release archive
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.value }}"
+          STAGE="staging/${APP_NAME}-${VERSION}"
+          mkdir -p dist "${STAGE}"
+          git archive --format=tar HEAD | tar -x -C "${STAGE}"
+          tar -czf "dist/${APP_NAME}-${VERSION}.tar.gz" -C staging "${APP_NAME}-${VERSION}"
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: dist/*.tar.gz
+
+  docker:
+    needs: verify
+    runs-on: ubuntu-latest
+    env:
+      IMAGE: ghcr.io/mutantcat-working-group/functioncool
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: version
+        run: echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          build-args: |
+            VERSION=${{ steps.version.outputs.value }}
+          tags: |
+            ${{ env.IMAGE }}:${{ github.ref_name }}
+            ${{ env.IMAGE }}:latest
+
+  publish:
+    needs:
+      - package
+      - docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - name: Generate checksums
+        run: |
+          cd release-assets
+          sha256sum -- * > ../checksums.txt
+
+      - name: Create or update release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          if gh release view "${TAG}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            gh release upload "${TAG}" release-assets/* checksums.txt --repo "${GITHUB_REPOSITORY}" --clobber
+          else
+            gh release create "${TAG}" release-assets/* checksums.txt --repo "${GITHUB_REPOSITORY}" --title "${TAG}" --generate-notes
+          fi
