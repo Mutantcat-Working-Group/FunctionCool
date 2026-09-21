@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>永久免费的承诺 — 函数库与 StyleCool 坚持开放 | FunctionCool</title>
 	<meta name="description" content="FunctionCool 函数库和 StyleCool 设计样式库为什么选择永久免费？我们聊聊开源知识、社区驱动和长期主义的信念。">
-	<link rel="canonical" href="https://www.functioncool.xyz/notes/004">
+	<link rel="canonical" href="https://functioncool.mutantcat.org/notes/004">
 	<link rel="stylesheet" href="../assets/style.css?v=20260610">
 	<link rel="icon" type="image/png" href="../assets/logo.png">
 	<link rel="apple-touch-icon" href="../assets/logo.png">
@@ -28,8 +28,8 @@
 	<meta property="og:title" content="永久免费的承诺 — 函数库与 StyleCool 坚持开放 | FunctionCool">
 	<meta property="og:description" content="FunctionCool 和 StyleCool 为什么选择永久免费？聊聊开源知识、社区驱动和长期主义。">
 	<meta property="og:type" content="article">
-	<meta property="og:image" content="https://www.functioncool.xyz/assets/logo.png">
-	<meta property="og:url" content="https://www.functioncool.xyz/notes/004">
+	<meta property="og:image" content="https://functioncool.mutantcat.org/assets/logo.png">
+	<meta property="og:url" content="https://functioncool.mutantcat.org/notes/004">
 </head>
 <body>
 	<header>
@@ -40,7 +40,7 @@
 			</div>
 			<div class="language-switcher">
 				<a href="/skillapi" class="skill-link" aria-label="Skill API">Skill</a>
-				<a href="/stylecool" class="skill-link" aria-label="StyleCool">StyleCool</a>
+				<a href="https://stylecool.mutantcat.org/" class="skill-link" aria-label="StyleCool">StyleCool</a>
 				<a href="/" class="back-link" style="color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.3);padding:.45rem .9rem;border-radius:20px;background:rgba(255,255,255,.18)">返回首页</a>
 			</div>
 		</div>
@@ -76,7 +76,7 @@
 				</ul>
 
 				<h2>4. StyleCool — 免费精神的新延伸</h2>
-				<p>2026 年 6 月，我们上线了 <a href="/stylecool">StyleCool 设计样式库</a>。它是免费理念的又一次实践：</p>
+				<p>2026 年 6 月，我们上线了 <a href="https://stylecool.mutantcat.org/">StyleCool 设计样式库</a>。它是免费理念的又一次实践：</p>
 				<ul>
 					<li><strong>联网为 AI 注入审美判断力</strong>——AI 擅长逻辑但审美是盲区，StyleCool 用人类设计师精心筛选的规则告诉 AI：这个按钮为什么不能霓虹发光、这张卡片为什么不能三等分。</li>
 					<li><strong>永久密钥，直接调用</strong>——和 FunctionCool 一样，密钥硬编码在文档里，没有注册流程，没有配额限制。</li>

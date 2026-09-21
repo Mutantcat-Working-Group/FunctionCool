@@ -1,13 +1,12 @@
 <?php
 header('Content-Type: application/xml; charset=utf-8');
 
-$base = 'https://www.functioncool.xyz';
+$base = 'https://functioncool.mutantcat.org';
 
 $pages = [
     ['loc' => "$base/",          'changefreq' => 'daily',   'priority' => '1.0'],
     ['loc' => "$base/search",    'changefreq' => 'daily',   'priority' => '0.9'],
     ['loc' => "$base/skillapi",  'changefreq' => 'weekly',  'priority' => '0.8'],
-    ['loc' => "$base/stylecool", 'changefreq' => 'daily',   'priority' => '0.8'],
 ];
 
 $noteFiles = glob(__DIR__ . '/notes/note*.php');

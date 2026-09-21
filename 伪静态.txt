@@ -4,8 +4,8 @@ location / {
   }
 
   location @rewriteapp {
-      if ($host = 'functioncool.xyz') {
-          return 301 https://www.functioncool.xyz$request_uri;
+      if ($host = 'functioncool.mutantcat.org') {
+          return 301 https://functioncool.mutantcat.org$request_uri;
       }
 
       rewrite ^/sitemap\.xml$ /sitemap.php last;

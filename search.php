@@ -88,7 +88,7 @@ function searchFunctions($query, $language) {
 
 $searchResults = searchFunctions($query, $language);
 $encodedQuery = urlencode($query);
-$canonical = 'https://www.functioncool.xyz/search';
+$canonical = 'https://functioncool.mutantcat.org/search';
 if ($query !== '') {
     // 仅对 query 添加，lang 为 all 不附加
     $canonical .= '?q=' . $encodedQuery . ($language !== 'all' ? '&lang=' . urlencode($language) : '');
@@ -113,13 +113,13 @@ if ($query !== '') {
     <meta property="og:title" content="<?php echo htmlspecialchars($seoTitle); ?>">
     <meta property="og:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
     <meta property="og:url" content="<?php echo htmlspecialchars($canonical); ?>">
-    <meta property="og:image" content="https://www.functioncool.xyz/assets/logo.png">
+    <meta property="og:image" content="https://functioncool.mutantcat.org/assets/logo.png">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo htmlspecialchars($seoTitle); ?>">
     <meta name="twitter:description" content="<?php echo htmlspecialchars($metaDescription); ?>">
-    <meta name="twitter:image" content="https://www.functioncool.xyz/assets/logo.png">
+    <meta name="twitter:image" content="https://functioncool.mutantcat.org/assets/logo.png">
 
     <!-- JSON-LD: Breadcrumb + SearchAction (可扩展) -->
     <script type="application/ld+json">{
@@ -127,12 +127,12 @@ if ($query !== '') {
       "@type": "CollectionPage",
       "name": "函数搜索结果",
       "url": "<?php echo htmlspecialchars($canonical); ?>",
-      "isPartOf": {"@type": "WebSite", "name": "函数库 FunctionCool", "url": "https://www.functioncool.xyz/"},
+      "isPartOf": {"@type": "WebSite", "name": "函数库 FunctionCool", "url": "https://functioncool.mutantcat.org/"},
       "about": "多语言函数搜索结果页面",
       "inLanguage": ["zh-CN","en"],
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://www.functioncool.xyz/search?q={search_term_string}",
+        "target": "https://functioncool.mutantcat.org/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     }</script>
@@ -152,7 +152,7 @@ if ($query !== '') {
             </div>
             <div class="language-switcher">
                 <a href="/skillapi" class="skill-link" aria-label="Skill API">Skill</a>
-                <a href="/stylecool" class="skill-link" aria-label="StyleCool">StyleCool</a>
+                <a href="https://stylecool.mutantcat.org/" class="skill-link" aria-label="StyleCool">StyleCool</a>
                 <button id="lang-btn" onclick="toggleLanguage()">English</button>
             </div>
         </div>

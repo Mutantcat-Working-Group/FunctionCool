@@ -18,13 +18,20 @@ if (preg_match('#^/mcpapi/?$#', $path)) {
     exit;
 }
 
-// StyleCool 子站点（主域 /stylecool 或独立域 style.functioncool.xyz）→ stylecool/index.php
-if (preg_match('#^/stylecool/?$#', $path)) {
-    require __DIR__ . '/stylecool.php';
+// StyleCool 已独立部署: /stylecool、/example、style.functioncool.xyz 统一 301 到 stylecool.mutantcat.org
+if (preg_match('#^/stylecool(/.*)?$#', $path, $m)) {
+    $sub = $m[1] ?? '/';
+    if ($sub === '') $sub = '/';
+    header('Location: https://stylecool.mutantcat.org' . $sub, true, 301);
+    exit;
+}
+if (preg_match('#^/example/?$#', $path)) {
+    header('Location: https://stylecool.mutantcat.org/example', true, 301);
     exit;
 }
 if (isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] === 'style.functioncool.xyz') {
-    require __DIR__ . '/stylecool/index.php';
+    $qs = isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] !== '' ? '?' . $_SERVER['QUERY_STRING'] : '';
+    header('Location: https://stylecool.mutantcat.org' . $path . $qs, true, 301);
     exit;
 }
 
@@ -42,7 +49,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
     <meta name="description" content="函数库(FunctionCool) - 覆盖 C/C++, Go, Python, Java, JavaScript, Rust, MATLAB, PHP 等多语言的常用函数与代码示例，支持中英文切换，帮助开发者快速查找与复用。">
     <meta name="keywords" content="函数库, Function Library, 编程函数, 代码示例, C, C++, Go, Python, Java, JavaScript, Rust, MATLAB, PHP, 常用函数, 算法, 代码片段">
     <meta name="author" content="Mutantcat Working Group">
-    <link rel="canonical" href="https://www.functioncool.xyz/">
+    <link rel="canonical" href="https://functioncool.mutantcat.org/">
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow,sitelinkssearchbox">
     <meta name="bingbot" content="index,follow">
@@ -54,14 +61,14 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
     <meta property="og:site_name" content="函数库 FunctionCool">
     <meta property="og:title" content="函数库 - 多语言编程函数与代码示例库">
     <meta property="og:description" content="多语言常用函数速查：C/C++, Go, Python, Java, JavaScript, Rust, MATLAB, PHP。结构化整理 + 性能评分，支持中英文。">
-    <meta property="og:url" content="https://www.functioncool.xyz/">
-    <meta property="og:image" content="https://www.functioncool.xyz/assets/logo.png">
+    <meta property="og:url" content="https://functioncool.mutantcat.org/">
+    <meta property="og:image" content="https://functioncool.mutantcat.org/assets/logo.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="函数库 FunctionCool - 多语言函数速查">
     <meta name="twitter:description" content="收录多语言常用函数与代码示例，支持中英文切换与搜索。">
-    <meta name="twitter:image" content="https://www.functioncool.xyz/assets/logo.png">
+    <meta name="twitter:image" content="https://functioncool.mutantcat.org/assets/logo.png">
     <meta name="referrer" content="no-referrer-when-downgrade" />
 
     <!-- Favicon Start -->
@@ -77,12 +84,12 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "函数库 FunctionCool",
-      "url": "https://www.functioncool.xyz/",
+      "url": "https://functioncool.mutantcat.org/",
       "inLanguage": ["zh-CN","en"],
       "description": "多语言编程函数与代码示例集合，支持搜索与中英文切换。",
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "https://www.functioncool.xyz/search?q={search_term_string}",
+        "target": "https://functioncool.mutantcat.org/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     }</script>
@@ -100,7 +107,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
             </div>
             <div class="language-switcher">
                 <a href="/skillapi" class="skill-link" aria-label="Skill API">Skill</a>
-                <a href="/stylecool" class="skill-link" aria-label="StyleCool">StyleCool</a>
+                <a href="https://stylecool.mutantcat.org/" class="skill-link" aria-label="StyleCool">StyleCool</a>
                 <button id="lang-btn" onclick="toggleLanguage()">English</button>
             </div>
         </div>
@@ -225,7 +232,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
                     <h3 class="post-title">永久免费的承诺 — 函数库与 StyleCool 为什么坚持开放</h3>
                     <p class="post-desc">编程知识应该是公共品，品味也不应该是商品。聊聊 FunctionCool 和 StyleCool 为什么选择永久免费——不烧钱、不膨胀、不死锁，以及你可以如何参与让这件事持续下去。</p>
                 </a>
-                <a class="post-item reveal reveal-2" href="/stylecool">
+                <a class="post-item reveal reveal-2" href="https://stylecool.mutantcat.org/">
                     <div class="post-meta">
                         <span class="post-date">2026-06-13</span>
                         <span class="post-tag">设计</span>

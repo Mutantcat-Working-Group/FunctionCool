@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>函数库助力AI - Skill 接口发布</title>
 	<meta name="description" content="函数库 FunctionCool 发布 Skill 接口：让 AI 先查询方法索引再拼装代码，把昂贵的输出 token 折成便宜的输入 token，并最大化 Prompt 缓存命中。">
-	<link rel="canonical" href="https://www.functioncool.xyz/notes/001">
+	<link rel="canonical" href="https://functioncool.mutantcat.org/notes/001">
 		<link rel="stylesheet" href="../assets/style.css?v=20260610">
 	<link rel="icon" type="image/png" href="../assets/logo.png">
 	<link rel="apple-touch-icon" href="../assets/logo.png">
@@ -25,8 +25,8 @@
 	<meta property="og:title" content="函数库助力AI - Skill 接口发布">
 	<meta property="og:description" content="函数库 FunctionCool 发布 Skill 接口：让 AI 先查询方法索引再拼装代码，把昂贵的输出 token 折成便宜的输入 token，并最大化 Prompt 缓存命中。">
 	<meta property="og:type" content="article">
-	<meta property="og:image" content="https://www.functioncool.xyz/assets/logo.png">
-	<meta property="og:url" content="https://www.functioncool.xyz/notes/001">
+	<meta property="og:image" content="https://functioncool.mutantcat.org/assets/logo.png">
+	<meta property="og:url" content="https://functioncool.mutantcat.org/notes/001">
 </head>
 <body>
 	<header>
@@ -57,7 +57,7 @@
 				</ul>
 
 				<h2 style="margin-top:1.2rem;color:#1B4E7A">快速开始</h2>
-				<pre><code>GET https://www.functioncool.xyz/skillapi?token={your_token}&q={keyword}&lang={language}</code></pre>
+				<pre><code>GET https://functioncool.mutantcat.org/skillapi?token={your_token}&q={keyword}&lang={language}</code></pre>
 				<p>接口采用 <strong>Token</strong> 访问：支持 30 分钟周期 Token 与永久 Token。可以在 <a href="/skillapi">/skillapi</a> 文档页一键获取 Token 并查看快速调用示例。</p>
 				<p>响应字段：<code>results</code>（函数数组，含名称 / 签名 / 描述 / 标签 / 时间空间评分 / 代码示例）、<code>query</code>、<code>lang</code>。支持的 <code>lang</code> 包括 C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VERILOG 或 <code>all</code>。</p>
 

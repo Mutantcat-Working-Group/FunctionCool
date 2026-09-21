@@ -131,7 +131,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Skill 函数库接口 - FunctionCool</title>
 	<meta name="robots" content="noindex,nofollow">
-	<link rel="canonical" href="https://www.functioncool.xyz/skillapi">
+	<link rel="canonical" href="https://functioncool.mutantcat.org/skillapi">
 	<link rel="stylesheet" href="assets/style.css?v=20260610">
 	<script src="assets/i18n.js?v=20260610"></script>
     <link rel="icon" type="image/png" href="assets/logo.png">
@@ -146,7 +146,7 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 			</div>
 			<div class="language-switcher">
 				<a href="/" class="home-link" data-i18n="home-link" aria-label="返回首页">返回首页</a>
-					<a href="/stylecool" class="skill-link" aria-label="StyleCool">StyleCool</a>
+					<a href="https://stylecool.mutantcat.org/" class="skill-link" aria-label="StyleCool">StyleCool</a>
 				<button id="lang-btn" type="button">English</button>
 			</div>
 		</div>
@@ -183,8 +183,8 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 						<table class="skillapi-addr-table">
 							<thead><tr><th data-i18n="region-header">地区</th><th data-i18n="address-header">推荐地址</th></tr></thead>
 							<tbody>
-								<tr><td data-i18n="international-region">国际</td><td><code>www.functioncool.xyz</code></td></tr>
-								<tr><td data-i18n="china-region">中国地区</td><td><code>cn.functioncool.xyz</code></td></tr>
+								<tr><td data-i18n="international-region">国际</td><td><code>functioncool.mutantcat.org</code></td></tr>
+								<tr><td data-i18n="china-region">中国地区</td><td><code>cn.functioncool.mutantcat.org</code></td></tr>
 							</tbody>
 						</table>
 					</div>
@@ -227,12 +227,12 @@ if (isset($_GET['token'], $_GET['q'], $_GET['lang'])) {
 				<div id="skillapi-quicktip" class="skill-prompt-box">
 					<div class="quicktip-section zh-section">
 						<p style="margin:0 0 0.3rem;"><strong data-i18n="quicktip-zh-title">【中文】</strong> <span data-i18n="quicktip-zh-request">请向以下地址发送 GET 请求，先取回方法索引，再据此拼装代码（输出 token → 输入 token，命中 Prompt 缓存）：</span></p>
-						<p style="margin:0.2rem 0 0.7rem 0;"><code class="api-url-zh" style="word-break:break-word;overflow-wrap:anywhere;">https://www.functioncool.xyz/skillapi?token=mutantcat&q={关键词}&lang={编程语言}</code></p>
+						<p style="margin:0.2rem 0 0.7rem 0;"><code class="api-url-zh" style="word-break:break-word;overflow-wrap:anywhere;">https://functioncool.mutantcat.org/skillapi?token=mutantcat&q={关键词}&lang={编程语言}</code></p>
 						<p data-i18n="quicktip-zh-params" style="margin:0;">参数：token=mutantcat（永久密钥）；q=搜索关键词；lang=语言代码或 all（可选：C、CPP、GO、PYTHON、JAVA、JAVASCRIPT、RUST、MATLAB、PHP、RUBY、VERILOG）。响应：JSON，包含 results（函数数组）、query（原查询）、lang（语言）。</p>
 					</div>
 					<div class="quicktip-section en-section" style="margin-top:0.8rem;">
 						<p style="margin:0 0 0.3rem;"><strong data-i18n="quicktip-en-title">[English]</strong> <span data-i18n="quicktip-en-request">Send a GET request below to fetch method indices first, then assemble code from them (output → input tokens, prompt-cache friendly):</span></p>
-						<p style="margin:0.2rem 0 0.7rem 0;"><code class="api-url-en" style="word-break:break-word;overflow-wrap:anywhere;">https://www.functioncool.xyz/skillapi?token=mutantcat&q={keyword}&lang={language}</code></p>
+						<p style="margin:0.2rem 0 0.7rem 0;"><code class="api-url-en" style="word-break:break-word;overflow-wrap:anywhere;">https://functioncool.mutantcat.org/skillapi?token=mutantcat&q={keyword}&lang={language}</code></p>
 						<p data-i18n="quicktip-en-params" style="margin:0;">Params: token=mutantcat (permanent key); q=search keyword; lang=language code or all (allowed: C, CPP, GO, PYTHON, JAVA, JAVASCRIPT, RUST, MATLAB, PHP, RUBY, VERILOG). Response: JSON with results (array of functions), query (string), lang (string).</p>
 					</div>
 				</div>

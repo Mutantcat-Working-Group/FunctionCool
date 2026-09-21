@@ -10,7 +10,7 @@ http_response_code(404);
     <title>页面未找到 - 函数库 FunctionCool</title>
     <meta name="description" content="抱歉，您访问的页面不存在。请返回函数库首页继续浏览编程函数与代码示例。">
     <meta name="robots" content="noindex,nofollow">
-    <link rel="canonical" href="https://www.functioncool.xyz/">
+    <link rel="canonical" href="https://functioncool.mutantcat.org/">
     <link rel="stylesheet" href="assets/style.css?v=20260610">
     <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="apple-touch-icon" href="assets/logo.png">
@@ -25,7 +25,7 @@ http_response_code(404);
             </div>
             <div class="language-switcher">
                 <a href="/skillapi" class="skill-link" aria-label="Skill API">Skill</a>
-                <a href="/stylecool" class="skill-link" aria-label="StyleCool">StyleCool</a>
+                <a href="https://stylecool.mutantcat.org/" class="skill-link" aria-label="StyleCool">StyleCool</a>
                 <button id="lang-btn" onclick="toggleLanguage()">English</button>
             </div>
         </div>

@@ -1,7 +1,8 @@
 # Playwright CLI 临时文件
 .playwright-cli/
 
-# 示例页静态预览（临时生成，非正式文件）
-stylecool/_preview-*.png
-stylecool/_preview-static.html
-stylecool/_render-static.js
+# 运行时限流桶文件（按 IP 哈希生成）
+data/ratelimit/
+
+# 本机 Claude Code 目录（含项目副本与密钥，不入库）
+.claude/

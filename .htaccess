@@ -4,9 +4,13 @@
 
 RewriteEngine On
 
-# 1. 将非 www 主域 301 重定向到 www.functioncool.xyz
-RewriteCond %{HTTP_HOST} ^functioncool\.xyz$ [NC]
-RewriteRule ^(.*)$ https://www.functioncool.xyz/$1 [L,R=301]
+# 1. 老域名 functioncool.xyz / www.functioncool.xyz 301 到 functioncool.mutantcat.org
+RewriteCond %{HTTP_HOST} ^(www\.)?functioncool\.xyz$ [NC]
+RewriteRule ^(.*)$ https://functioncool.mutantcat.org/$1 [L,R=301]
+
+# 1.1 新域名 www 前缀规范化为无 www
+RewriteCond %{HTTP_HOST} ^www\.functioncool\.mutantcat\.org$ [NC]
+RewriteRule ^(.*)$ https://functioncool.mutantcat.org/$1 [L,R=301]
 
 # 2. 设定默认首页为 index.php
 DirectoryIndex index.php
@@ -26,16 +30,11 @@ RewriteRule ^skillapi/?$ skillapi.php [L,QSA]
 # 6a. 兼容旧链接：/mcpapi -> /skillapi (301)
 RewriteRule ^mcpapi/?$ /skillapi [L,R=301,QSA]
 
-# 7. StyleCool: style.functioncool.xyz 域名 → 委托给 stylecool/index.php（子站点，文件夹自包含可独立部署）
-# 7a. 在 catch-all 之前处理 /example 路由
-RewriteRule ^example/?$ stylecool/example.php [L,QSA]
+# 7. StyleCool 已独立部署: /stylecool、/example、style.functioncool.xyz 统一 301 到 stylecool.mutantcat.org
+RewriteRule ^stylecool/?(.*)$ https://stylecool.mutantcat.org/$1 [L,R=301,QSA]
+RewriteRule ^example/?$ https://stylecool.mutantcat.org/example [L,R=301,QSA]
 RewriteCond %{HTTP_HOST} ^style\.functioncool\.xyz$ [NC]
-RewriteRule ^(.*)$ stylecool/index.php [L,QSA]
-
-# 7.1 本地/开发：/stylecool 直接访问
-RewriteRule ^stylecool/?$ stylecool.php [L,QSA]
-# 7.2 /stylecool/example → stylecool/example.php
-RewriteRule ^stylecool/example/?$ stylecool/example.php [L,QSA]
+RewriteRule ^(.*)$ https://stylecool.mutantcat.org/$1 [L,R=301,QSA]
 
 # 6.1 文章笔记: /notes/001 -> notes/note001.php
 RewriteRule ^notes/([0-9]{3,})/?$ notes/note$1.php [L,QSA]

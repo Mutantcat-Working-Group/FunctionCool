@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>给大学编程课的有力帮助 - 函数库</title>
 	<meta name="description" content="函数库 FunctionCool 为大学生提供编程课程的学习资源，快速查询常用函数，帮助理解算法和数据结构，提高编程效率。">
-	<link rel="canonical" href="https://www.functioncool.xyz/notes/002">
+	<link rel="canonical" href="https://functioncool.mutantcat.org/notes/002">
 	<link rel="stylesheet" href="../assets/style.css?v=20260610">
 	<link rel="icon" type="image/png" href="../assets/logo.png">
 	<link rel="apple-touch-icon" href="../assets/logo.png">
@@ -26,8 +26,8 @@
 	<meta property="og:title" content="给大学编程课的有力帮助 - 函数库">
 	<meta property="og:description" content="函数库 FunctionCool 为大学生提供编程课程的学习资源，快速查询常用函数，帮助理解算法和数据结构，提高编程效率。">
 	<meta property="og:type" content="article">
-	<meta property="og:image" content="https://www.functioncool.xyz/assets/logo.png">
-	<meta property="og:url" content="https://www.functioncool.xyz/notes/002">
+	<meta property="og:image" content="https://functioncool.mutantcat.org/assets/logo.png">
+	<meta property="og:url" content="https://functioncool.mutantcat.org/notes/002">
 </head>
 <body>
 	<header>

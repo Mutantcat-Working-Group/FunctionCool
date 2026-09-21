@@ -6,4 +6,4 @@ Disallow: /admin/
 Disallow: /tmp/
 Disallow: /404.php
 
-Sitemap: https://www.functioncool.xyz/sitemap.xml
+Sitemap: https://functioncool.mutantcat.org/sitemap.xml
