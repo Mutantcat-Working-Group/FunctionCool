@@ -1,4 +1,6 @@
 <?php
+// 函数库 — 由异猫工作群（mutantcat.org）发行
+// GitHub: https://github.com/Mutantcat-Working-Group
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 if (preg_match('#^/search/?$#', $path)) {
@@ -300,6 +302,7 @@ if (preg_match('#^/notes/(\d{3,})/?$#', $path, $m)) {
     <footer>
         <div class="container">
             <p id="footer-text">&copy; 2025-2026 函数库 | Powered by Mutantcat</p>
+            <p class="footer-publisher">由异猫工作群（mutantcat.org）发行 · <a href="https://github.com/Mutantcat-Working-Group" target="_blank" rel="noopener">github.com/Mutantcat-Working-Group</a></p>
             <div class="friend-links">
                 <span id="friend-links-text">友情链接：</span>
                 <a href="https://www.mutantcat.org/" target="_blank" rel="noopener">异猫工作群</a>
